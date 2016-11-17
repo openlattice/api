@@ -9,23 +9,23 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
 
 /**
  * Created by yao on 9/20/16.
  */
 public class CreateEntityRequest {
-    private final Optional<UUID>                           aclId;
-    private final Optional<UUID>                           syncId;
-    private final Optional<String>                                   entitySetName;
-    private final FullQualifiedName                        entityType;
-    private final Set<Multimap<FullQualifiedName, Object>> propertyValues;
+    private final Optional<UUID>                              aclId;
+    private final Optional<UUID>                              syncId;
+    private final Optional<String>                            entitySetName;
+    private final FullQualifiedName                           entityType;
+    private final Set<SetMultimap<FullQualifiedName, Object>> propertyValues;
 
     @JsonCreator
     public CreateEntityRequest(
             @JsonProperty( SerializationConstants.ENTITY_SET_NAME ) Optional<String> entitySetName,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName entityType,
-            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<Multimap<FullQualifiedName, Object>> propertyValues,
+            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<SetMultimap<FullQualifiedName, Object>> propertyValues,
             @JsonProperty( SerializationConstants.ACL_ID_FIELD ) Optional<UUID> aclId,
             @JsonProperty( SerializationConstants.SYNC_ID ) Optional<UUID> syncId ) {
         this.aclId = aclId;
@@ -58,7 +58,7 @@ public class CreateEntityRequest {
     }
 
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
-    public Set<Multimap<FullQualifiedName, Object>> getPropertyValues() {
+    public Set<SetMultimap<FullQualifiedName, Object>> getPropertyValues() {
         return propertyValues;
     }
 
@@ -79,8 +79,8 @@ public class CreateEntityRequest {
             return false;
         if ( entityType != null ? !entityType.equals( that.entityType ) : that.entityType != null )
             return false;
-        return propertyValues != null ? propertyValues.equals( that.propertyValues ) : that.propertyValues == null;
 
+        return propertyValues != null ? propertyValues.equals( that.propertyValues ) : that.propertyValues == null;
     }
 
     @Override
@@ -91,6 +91,12 @@ public class CreateEntityRequest {
         result = 31 * result + ( entityType != null ? entityType.hashCode() : 0 );
         result = 31 * result + ( propertyValues != null ? propertyValues.hashCode() : 0 );
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateEntityRequest [aclId=" + aclId + ", syncId=" + syncId + ", entitySetName=" + entitySetName
+                + ", entityType=" + entityType + ", propertyValues=" + propertyValues + "]";
     }
 
 }
