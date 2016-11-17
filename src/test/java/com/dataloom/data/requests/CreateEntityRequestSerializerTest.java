@@ -20,15 +20,13 @@ import com.kryptnostic.rhizome.hazelcast.serializers.BaseJacksonSerializationTes
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public class CreateEntityRequestSerializerTest extends BaseJacksonSerializationTest<CreateEntityRequest> {
-    private static final SetMultimap<FullQualifiedName, Object>         a              = HashMultimap.create();
-    private static final SetMultimap<FullQualifiedName, Object>         b              = HashMultimap.create();
+    private static final SetMultimap<FullQualifiedName, Object>      a              = HashMultimap.create();
+    private static final SetMultimap<FullQualifiedName, Object>      b              = HashMultimap.create();
     private static final Set<SetMultimap<FullQualifiedName, Object>> propertyValues = new LinkedHashSet<>( 2 );
 
     static {
-        FullQualifedNameJacksonSerializer.registerWithMapper( mapper );
-        FullQualifedNameJacksonDeserializer.registerWithMapper( mapper );
-        FullQualifedNameJacksonSerializer.registerWithMapper( smile );
-        FullQualifedNameJacksonDeserializer.registerWithMapper( smile );
+        registerModule( FullQualifedNameJacksonSerializer::registerWithMapper );
+        registerModule( FullQualifedNameJacksonDeserializer::registerWithMapper );
         a.put( new FullQualifiedName(
                 RandomStringUtils.randomAlphanumeric( 10 ),
                 RandomStringUtils.randomAlphanumeric( 10 ) ), "A" );

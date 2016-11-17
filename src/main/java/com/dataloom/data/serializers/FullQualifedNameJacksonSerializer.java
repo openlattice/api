@@ -13,7 +13,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class FullQualifedNameJacksonSerializer extends StdSerializer<FullQualifiedName> {
-    private static final long serialVersionUID = 642017294181795076L;
+    private static final long         serialVersionUID = 642017294181795076L;
+    private static final SimpleModule module           = new SimpleModule();
+
+    static {
+        module.addSerializer( FullQualifiedName.class, new FullQualifedNameJacksonSerializer() );
+    }
 
     public FullQualifedNameJacksonSerializer() {
         this( FullQualifiedName.class );
@@ -33,8 +38,6 @@ public class FullQualifedNameJacksonSerializer extends StdSerializer<FullQualifi
     }
 
     public static void registerWithMapper( ObjectMapper mapper ) {
-        SimpleModule module = new SimpleModule();
-        module.addSerializer( FullQualifiedName.class, new FullQualifedNameJacksonSerializer() );
         mapper.registerModule( module );
     }
 }
