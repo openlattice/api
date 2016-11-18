@@ -1,5 +1,5 @@
 description = "Loom REST APIs"
-group = "com.kryptnostic"
+group = "com.dataloom"
 ext.projectName = "loom-api"
 
 apply plugin: "java"

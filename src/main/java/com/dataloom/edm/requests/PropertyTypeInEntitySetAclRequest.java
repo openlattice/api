@@ -1,10 +1,14 @@
-package com.dataloom.authorization.requests;
+package com.dataloom.edm.requests;
 
 import java.util.EnumSet;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import com.dataloom.authorization.requests.Action;
+import com.dataloom.authorization.requests.EntitySetAclRequest;
+import com.dataloom.authorization.requests.Permission;
+import com.dataloom.authorization.requests.Principal;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

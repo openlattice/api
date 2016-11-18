@@ -13,9 +13,9 @@ import com.dataloom.authorization.requests.Permission;
 import com.dataloom.authorization.requests.PermissionsInfo;
 import com.dataloom.authorization.requests.Principal;
 import com.dataloom.authorization.requests.PropertyTypeInEntitySetAclRemovalRequest;
-import com.dataloom.authorization.requests.PropertyTypeInEntitySetAclRequest;
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRemovalRequest;
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRequest;
+import com.dataloom.edm.requests.PropertyTypeInEntitySetAclRequest;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
