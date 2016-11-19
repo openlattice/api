@@ -17,11 +17,12 @@ import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRemovalReq
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRequest;
 import com.dataloom.edm.requests.PropertyTypeInEntitySetAclRequest;
 
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+
 
 /**
  * 

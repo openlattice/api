@@ -12,23 +12,25 @@ import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.kryptnostic.rhizome.mapstores.cassandra.CassandraKey;
 
-public class TypePK implements CassandraKey {
+/**
+ * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
+ *
+ */
+public class TypePK {
     @PartitionKey(
         value = 0 )
-    protected String          namespace;
+    protected String                 namespace;
     @ClusteringColumn(
         value = 0 )
-    protected String          name;
-    
+    protected String                 name;
+
     @Column(
-            name = "schemas" )
-    protected Set<FullQualifiedName>  schemas = Collections.emptySet();
-    
+        name = "schemas" )
+    protected Set<FullQualifiedName> schemas = Collections.emptySet();
+
     @Transient
-    private FullQualifiedName fqn;
+    private FullQualifiedName        fqn;
 
     public String getNamespace() {
         return namespace;
@@ -51,11 +53,12 @@ public class TypePK implements CassandraKey {
     }
 
     public Set<FullQualifiedName> getSchemas() {
-    	//Ho Chung: very artificial - but this is because Cassandra does not distinguish null and empty things right now :/
-        if( schemas != null){
-        	return schemas;
+        // Ho Chung: very artificial - but this is because Cassandra does not distinguish null and empty things right
+        // now :/
+        if ( schemas != null ) {
+            return schemas;
         } else {
-        	return Collections.emptySet();
+            return Collections.emptySet();
         }
     }
 
@@ -63,7 +66,7 @@ public class TypePK implements CassandraKey {
         this.schemas = schemas;
         return this;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -121,8 +124,4 @@ public class TypePK implements CassandraKey {
         return fqn;
     }
 
-    @Override
-    public Object[] asPrimaryKey() {
-        return new Object[] { namespace, name };
-    }
 }
