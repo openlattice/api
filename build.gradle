@@ -29,6 +29,8 @@ dependencies {
     compile 'com.esotericsoftware:reflectasm:1.11.3'
     compile 'org.objenesis:objenesis:2.4'
 
+    compile "org.apache.commons:commons-lang3:${commonsLang_version}"
+    compile "commons-io:commons-io:${commonsio_version}"
     
     compile "com.google.guava:guava:${guava_version}"
     compile "org.apache.olingo:odata-commons-api:${odata_version}"
@@ -41,18 +43,39 @@ dependencies {
     compile group: 'com.datastax.cassandra', name: 'cassandra-driver-mapping', version: "${cassandra_driver_version}"
     compile "org.xerial.snappy:snappy-java:${snappy_version}"
     compile "net.jpountz.lz4:lz4:${lz4_version}"
+    compile "com.squareup.retrofit2:retrofit:${retrofit2_version}"
+
+    /*
+     * JACKSON SERIALIZATION
+     * YAML via SnakeYaml
+     * Afterburner for faster serialization
+     * Guava integration
+     * Smile for binary serialization
+     * Jersey integration
+     * Jaxb annotation support
+     */
+    compile "com.fasterxml.jackson.core:jackson-core:${jackson_version}"
+    compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-guava:${jackson_version}"
+    compile "com.fasterxml.jackson.module:jackson-module-jaxb-annotations:${jackson_version}"
+    compile "com.fasterxml.jackson.module:jackson-module-afterburner:${jackson_version}"
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-smile:${jackson_version}"
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jackson_version}"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jackson_version}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jackson_version}"
+    compile 'org.yaml:snakeyaml:1.13'
 
 	/*
      * Kryptnostic dependencies
      */
     if( project.hasProperty('developmentMode') && project.developmentMode ) {
         logger.quiet(project.name + " using project dependencies.")
-        compile project(":kryptnostic-mapstores")
-        testCompile( project(path: ":rhizome", configuration: "tests"))
+        //compile project(":kryptnostic-mapstores")
+        //testCompile( project(path: ":rhizome", configuration: "tests"))
     } else {
         logger.quiet(project.name + " using jar dependencies.")
-        compile "com.kryptnostic:kryptnostic-mapstores:${mapstores_version}"
-        testCompile "com.kryptnostic:rhizome:${rhizome_version}:tests"
+        //compile "com.kryptnostic:kryptnostic-mapstores:${mapstores_version}"
+        //testCompile "com.kryptnostic:rhizome:${rhizome_version}:tests"
     }
 
     /*

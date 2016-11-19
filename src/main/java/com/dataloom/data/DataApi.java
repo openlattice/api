@@ -10,13 +10,12 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import com.dataloom.data.requests.CreateEntityRequest;
 import com.dataloom.data.requests.LookupEntitiesRequest;
 import com.google.common.collect.Multimap;
-import com.squareup.okhttp.Response;
 
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface DataApi {
     String CONTROLLER                      = "/data";
@@ -71,7 +70,7 @@ public interface DataApi {
     Iterable<UUID> getFilteredEntities( @Body LookupEntitiesRequest lookupEntitiesRequest );
 
     @POST( CONTROLLER + ENTITY_DATA )
-    Response createEntityData( @Body CreateEntityRequest createEntityRequest );
+    void createEntityData( @Body CreateEntityRequest createEntityRequest );
 
     @GET( CONTROLLER + INTEGRATION )
     Map<String, String> getAllIntegrationScripts();
@@ -80,6 +79,6 @@ public interface DataApi {
     Map<String, String> getIntegrationScript( @Body Set<String> url );
 
     @POST( CONTROLLER + INTEGRATION )
-    Response createIntegrationScript( @Body Map<String, String> integrationScripts );
+    void createIntegrationScript( @Body Map<String, String> integrationScripts );
 
 }
