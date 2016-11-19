@@ -115,7 +115,6 @@ public interface EdmApi {
      * @param namespace
      * @param name
      * @param entityTypes
-     * @return
      */
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     void addEntityTypesToSchema(
@@ -145,7 +144,6 @@ public interface EdmApi {
      * Creates multiple entity sets, if they do not exist.
      *
      * @param entitySets The entity sets to create.
-     * @return A map of describing whether or not each entity set was created.
      */
     @POST( ENTITY_SETS_BASE_PATH )
     void postEntitySets( @Body Set<EntitySet> entitySets );
@@ -154,7 +152,6 @@ public interface EdmApi {
      * Creates or updates multiple entity sets.
      *
      * @param entitySets The entity sets to create.
-     * @return A map of describing whether or not posted entity sets were created or updated.
      */
     @PUT( ENTITY_SETS_BASE_PATH )
     void putEntitySets( @Body Set<EntitySet> entitySets );
@@ -180,7 +177,6 @@ public interface EdmApi {
      * Creates an entity type if it doesn't already exist.
      *
      * @param entityType the entity to create.
-     * @return True if object type was created, false if container already exists.
      */
     @POST( ENTITY_TYPE_BASE_PATH )
     void postEntityType( @Body EntityType entityType );
@@ -204,7 +200,6 @@ public interface EdmApi {
      * @param namespace
      * @param name
      * @param properties Set of (Existing) Property Types to add to EntityType
-     * @return
      */
     @PUT( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ADD_PROPERTY_TYPES_PATH )
     void addPropertyTypesToEntityType(
@@ -225,15 +220,12 @@ public interface EdmApi {
      * Creates a property type if doesn't already exist.
      *
      * @param propertyType The property to create.
-     * @return True if property type was created, false if container already exists.
      */
     @POST( PROPERTY_TYPE_BASE_PATH )
     void createPropertyType( @Body PropertyType propertyType );
 
     /**
      * @param typeInfo
-     * @return An HTTP 200 void with an empty body, if successful. Otherwise, an appropriate HttpStatus code and
-     * potential error message.
      */
     @PUT( PROPERTY_TYPE_BASE_PATH )
     void putPropertyType( @Body PropertyType typeInfo );
