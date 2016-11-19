@@ -1,6 +1,5 @@
 package com.dataloom.edm;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -108,7 +107,7 @@ public interface EdmApi {
      * @return All schemas identified by namespace and name, across all accessible Acls.
      */
     @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Iterable<Schema> getSchemaContents(
+    Schema getSchemaContents(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name );
 
@@ -149,7 +148,7 @@ public interface EdmApi {
      * @return A map of describing whether or not each entity set was created.
      */
     @POST( ENTITY_SETS_BASE_PATH )
-    Map<String, Boolean> postEntitySets( @Body Set<EntitySet> entitySets );
+    void postEntitySets( @Body Set<EntitySet> entitySets );
 
     /**
      * Creates or updates multiple entity sets.
