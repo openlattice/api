@@ -17,7 +17,6 @@ import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRemovalReq
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRequest;
 import com.dataloom.edm.requests.PropertyTypeInEntitySetAclRequest;
 
-import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -62,7 +61,7 @@ public interface PermissionsApi {
      * @return
      */
     @POST( CONTROLLER + ENTITY_TYPE_BASE_PATH )
-    Response updateEntityTypesAcls( @Body Set<EntityTypeAclRequest> requests );
+    void updateEntityTypesAcls( @Body Set<EntityTypeAclRequest> requests );
 
     /**
      * 
@@ -76,7 +75,7 @@ public interface PermissionsApi {
      * @return
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH )
-    Response updateEntitySetsAcls( @Body Set<EntitySetAclRequest> requests );
+    void updateEntitySetsAcls( @Body Set<EntitySetAclRequest> requests );
 
     /**
      * 
@@ -91,7 +90,7 @@ public interface PermissionsApi {
      * @return
      */
     @POST( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    Response updatePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRequest> requests );
+    void updatePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRequest> requests );
 
     /**
      * 
@@ -106,7 +105,7 @@ public interface PermissionsApi {
      * @return
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    Response updatePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
+    void updatePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
 
     /**
      * 
@@ -115,7 +114,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH )
-    Response removeEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
+    void removeEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
 
     /**
      * 
@@ -124,7 +123,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH )
-    Response removeEntitySetAcls( @Body Set<String> entitySetNames );
+    void removeEntitySetAcls( @Body Set<String> entitySetNames );
 
     /**
      * 
@@ -137,7 +136,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    Response removePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRemovalRequest> requests );
+    void removePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRemovalRequest> requests );
 
     /**
      * 
@@ -146,7 +145,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH + ALL_PATH )
-    Response removeAllPropertyTypesInEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
+    void removeAllPropertyTypesInEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
 
     /**
      * 
@@ -159,7 +158,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    Response removePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRemovalRequest> requests );
+    void removePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRemovalRequest> requests );
 
     /**
      * 
@@ -168,7 +167,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH + ALL_PATH )
-    Response removeAllPropertyTypesInEntitySetAcls( @Body Set<String> entitySetNames );
+    void removeAllPropertyTypesInEntitySetAcls( @Body Set<String> entitySetNames );
 
     /***************************************
      * Methods for retrieving permissions
@@ -256,7 +255,7 @@ public interface PermissionsApi {
      * @return
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH + REQUEST_PERMISSIONS_PATH )
-    Response addPermissionsRequestForPropertyTypesInEntitySet( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
+    void addPermissionsRequestForPropertyTypesInEntitySet( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
     
     /**
      * Delete a PermissionsRequest by requestId. This action is authorized for user who created the request, 
@@ -265,7 +264,7 @@ public interface PermissionsApi {
      * @return
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + REQUEST_PERMISSIONS_PATH )
-    Response removePermissionsRequestForEntitySet( @Query( REQUEST_ID ) UUID id );
+    void removePermissionsRequestForEntitySet( @Query( REQUEST_ID ) UUID id );
 
     /**
      * Get All Received Permissions Request for a user. entitySetName is optional - if it goes missing, the method
