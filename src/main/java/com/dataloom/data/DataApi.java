@@ -70,7 +70,7 @@ public interface DataApi {
     Iterable<UUID> getFilteredEntities( @Body LookupEntitiesRequest lookupEntitiesRequest );
 
     @POST( CONTROLLER + ENTITY_DATA )
-    void createEntityData( @Body CreateEntityRequest createEntityRequest );
+    Void createEntityData( @Body CreateEntityRequest createEntityRequest );
 
     @GET( CONTROLLER + INTEGRATION )
     Map<String, String> getAllIntegrationScripts();
@@ -79,6 +79,6 @@ public interface DataApi {
     Map<String, String> getIntegrationScript( @Body Set<String> url );
 
     @POST( CONTROLLER + INTEGRATION )
-    void createIntegrationScript( @Body Map<String, String> integrationScripts );
+    Void createIntegrationScript( @Body Map<String, String> integrationScripts );
 
 }

@@ -61,7 +61,7 @@ public interface PermissionsApi {
      * - permissions: [Set &lt; Enum discover/read/write/alter &gt; ] set of permissions to be added/set/removed, according to the action.
      */
     @POST( CONTROLLER + ENTITY_TYPE_BASE_PATH )
-    void updateEntityTypesAcls( @Body Set<EntityTypeAclRequest> requests );
+    Void updateEntityTypesAcls( @Body Set<EntityTypeAclRequest> requests );
 
     /**
      * 
@@ -74,7 +74,7 @@ public interface PermissionsApi {
      * - permissions: [Set &lt; Enum discover/read/write/alter &gt; ] set of permissions to be added/set/removed, according to the action.
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH )
-    void updateEntitySetsAcls( @Body Set<EntitySetAclRequest> requests );
+    Void updateEntitySetsAcls( @Body Set<EntitySetAclRequest> requests );
 
     /**
      * 
@@ -88,7 +88,7 @@ public interface PermissionsApi {
      * - permissions: [Set &lt; Enum discover/read/write/alter &gt; ] set of permissions to be added/set/removed, according to the action.
      */
     @POST( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    void updatePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRequest> requests );
+    Void updatePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRequest> requests );
 
     /**
      * 
@@ -102,7 +102,7 @@ public interface PermissionsApi {
      * - permissions: [Set &lt; Enum discover/read/write/alter &gt; ] set of permissions to be added/set/removed, according to the action.
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    void updatePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
+    Void updatePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
 
     /**
      * 
@@ -110,7 +110,7 @@ public interface PermissionsApi {
      *            are to be removed.
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH )
-    void removeEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
+    Void removeEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
 
     /**
      * 
@@ -118,7 +118,7 @@ public interface PermissionsApi {
      *            to be removed.
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH )
-    void removeEntitySetAcls( @Body Set<String> entitySetNames );
+    Void removeEntitySetAcls( @Body Set<String> entitySetNames );
 
     /**
      * 
@@ -130,7 +130,7 @@ public interface PermissionsApi {
      * - properties: [Set &lt; FullQualifiedName &gt; ] FullQualifiedName of properties to be removed.
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    void removePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRemovalRequest> requests );
+    Void removePropertyTypeInEntityTypeAcls( @Body Set<PropertyTypeInEntityTypeAclRemovalRequest> requests );
 
     /**
      * 
@@ -138,7 +138,7 @@ public interface PermissionsApi {
      *            associated to each entity type are removed.
      */
     @DELETE( CONTROLLER + ENTITY_TYPE_BASE_PATH + PROPERTY_TYPE_BASE_PATH + ALL_PATH )
-    void removeAllPropertyTypesInEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
+    Void removeAllPropertyTypesInEntityTypeAcls( @Body Set<FullQualifiedName> entityTypeFqns );
 
     /**
      * 
@@ -150,15 +150,16 @@ public interface PermissionsApi {
      * - properties: [Set &lt; FullQualifiedName &gt; ] FullQualifiedName of properties to be removed.
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH )
-    void removePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRemovalRequest> requests );
+    Void removePropertyTypeInEntitySetAcls( @Body Set<PropertyTypeInEntitySetAclRemovalRequest> requests );
 
     /**
      * 
      * @param entitySetNames Set of names of entity sets, where the access rights of all property types associated to
      *            them will be removed.
+     * @return 
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + PROPERTY_TYPE_BASE_PATH + ALL_PATH )
-    void removeAllPropertyTypesInEntitySetAcls( @Body Set<String> entitySetNames );
+    Void removeAllPropertyTypesInEntitySetAcls( @Body Set<String> entitySetNames );
 
     /***************************************
      * Methods for retrieving permissions
@@ -244,7 +245,7 @@ public interface PermissionsApi {
      * - permissions: [Set &lt; Enum discover/read/write/alter &gt; ] set of permissions to be requested.
      */
     @POST( CONTROLLER + ENTITY_SETS_BASE_PATH + REQUEST_PERMISSIONS_PATH )
-    void addPermissionsRequestForPropertyTypesInEntitySet( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
+    Void addPermissionsRequestForPropertyTypesInEntitySet( @Body Set<PropertyTypeInEntitySetAclRequest> requests );
     
     /**
      * Delete a PermissionsRequest by requestId. This action is authorized for user who created the request, 
@@ -252,7 +253,7 @@ public interface PermissionsApi {
      * @param id UUID for the request
      */
     @DELETE( CONTROLLER + ENTITY_SETS_BASE_PATH + REQUEST_PERMISSIONS_PATH )
-    void removePermissionsRequestForEntitySet( @Query( REQUEST_ID ) UUID id );
+    Void removePermissionsRequestForEntitySet( @Query( REQUEST_ID ) UUID id );
 
     /**
      * Get All Received Permissions Request for a user. entitySetName is optional - if it goes missing, the method

@@ -65,7 +65,7 @@ public interface EdmApi {
      * @param request The namespace for the schema.
      */
     @PUT( SCHEMA_BASE_PATH )
-    void putSchema( @Body PutSchemaRequest request );
+    Void putSchema( @Body PutSchemaRequest request );
 
     /**
      * Retrieves schemas matching the namespace provided in the {@code request} parameter. If no namespace is specified
@@ -117,25 +117,25 @@ public interface EdmApi {
      * @param entityTypes
      */
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    void addEntityTypesToSchema(
+    Void addEntityTypesToSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
     @DELETE( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    void removeEntityTypeFromSchema(
+    Void removeEntityTypeFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ADD_PROPERTY_TYPES_PATH )
-    void addPropertyTypesToSchema(
+    Void addPropertyTypesToSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties );
 
     @DELETE( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + DELETE_PROPERTY_TYPES_PATH )
-    void removePropertyTypesFromSchema(
+    Void removePropertyTypesFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties );
@@ -146,7 +146,7 @@ public interface EdmApi {
      * @param entitySets The entity sets to create.
      */
     @POST( ENTITY_SETS_BASE_PATH )
-    void postEntitySets( @Body Set<EntitySet> entitySets );
+    Void postEntitySets( @Body Set<EntitySet> entitySets );
 
     /**
      * Creates or updates multiple entity sets.
@@ -154,7 +154,7 @@ public interface EdmApi {
      * @param entitySets The entity sets to create.
      */
     @PUT( ENTITY_SETS_BASE_PATH )
-    void putEntitySets( @Body Set<EntitySet> entitySets );
+    Void putEntitySets( @Body Set<EntitySet> entitySets );
 
     /**
      * 
@@ -168,10 +168,10 @@ public interface EdmApi {
     EntitySet getEntitySet( @Path( NAME ) String entitySetName );
 
     @POST( ENTITY_SETS_BASE_PATH + NAME_PATH )
-    void assignEntityToEntitySet( @Path( NAME) String entitySetName, @Body Set<UUID> entityIds );
+    Void assignEntityToEntitySet( @Path( NAME) String entitySetName, @Body Set<UUID> entityIds );
 
     @DELETE( ENTITY_SETS_BASE_PATH + NAME_PATH )
-    void deleteEntitySet( @Path( NAME ) String entitySetName );
+    Void deleteEntitySet( @Path( NAME ) String entitySetName );
     
     /**
      * Creates an entity type if it doesn't already exist.
@@ -179,10 +179,10 @@ public interface EdmApi {
      * @param entityType the entity to create.
      */
     @POST( ENTITY_TYPE_BASE_PATH )
-    void postEntityType( @Body EntityType entityType );
+    Void postEntityType( @Body EntityType entityType );
 
     @PUT( ENTITY_TYPE_BASE_PATH )
-    void putEntityType( @Body EntityType entityType );
+    Void putEntityType( @Body EntityType entityType );
 
     @GET( ENTITY_TYPE_BASE_PATH )
     Iterable<EntityType> getEntityTypes();
@@ -194,7 +194,7 @@ public interface EdmApi {
     EntityType getEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
 
     @DELETE( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    void deleteEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
+    Void deleteEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
 
     /**
      * @param namespace
@@ -202,14 +202,14 @@ public interface EdmApi {
      * @param properties Set of (Existing) Property Types to add to EntityType
      */
     @PUT( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ADD_PROPERTY_TYPES_PATH )
-    void addPropertyTypesToEntityType(
+    Void addPropertyTypesToEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties
     );
     
     @DELETE( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH + DELETE_PROPERTY_TYPES_PATH )
-    void removePropertyTypesFromEntityType(
+    Void removePropertyTypesFromEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties
@@ -222,16 +222,16 @@ public interface EdmApi {
      * @param propertyType The property to create.
      */
     @POST( PROPERTY_TYPE_BASE_PATH )
-    void createPropertyType( @Body PropertyType propertyType );
+    Void createPropertyType( @Body PropertyType propertyType );
 
     /**
      * @param typeInfo
      */
     @PUT( PROPERTY_TYPE_BASE_PATH )
-    void putPropertyType( @Body PropertyType typeInfo );
+    Void putPropertyType( @Body PropertyType typeInfo );
 
     @DELETE( PROPERTY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    void deletePropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
+    Void deletePropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     @GET( PROPERTY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     PropertyType getPropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
