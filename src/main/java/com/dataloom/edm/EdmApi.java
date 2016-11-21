@@ -67,7 +67,6 @@ public interface EdmApi {
      * @param namespace The namespace for the schema.
      * @param name The name for the schema.
      */
-<<<<<<< HEAD
     @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
