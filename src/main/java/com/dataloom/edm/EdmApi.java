@@ -52,6 +52,8 @@ public interface EdmApi {
     String PROPERTY_TYPE_BASE_PATH = "/property/type";
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
     String NAME_PATH               = "/{" + NAME + "}";
+    String ACL_ID_PATH                = "/{" + ACL_ID + "}";
+    String ACL_ID_WITH_DOT            = "/{" + ACL_ID + ":.+}";
 
     String ADD_PROPERTY_TYPES_PATH    = "/addPropertyTypes";
     String DELETE_PROPERTY_TYPES_PATH = "/deletePropertyTypes";
@@ -61,12 +63,24 @@ public interface EdmApi {
     EntityDataModel getEntityDataModel();
 
     /**
-     * Creates a schema.
+     * Creates an empty schema with default ACL_ID.
      *
-     * @param request The namespace for the schema.
+     * @param namespace The namespace for the schema.
+     * @param name The name for the schema.
      */
-    @PUT( SCHEMA_BASE_PATH )
-    Response putSchema( @Body PutSchemaRequest request );
+    @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
+    Response createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
+
+    /**
+     * Creates an empty schema with ACL_ID.
+     *
+     * @param namespace The namespace for the schema.
+     * @param name The name for the schema.
+     * @param aclId The ACL_ID for the schema.
+     */
+    @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ACL_ID_PATH )
+    Response createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name, @Path( ACL_ID ) UUID aclId );
+
 
     /**
      * Retrieves schemas matching the namespace provided in the {@code request} parameter. If no namespace is specified
