@@ -4,22 +4,22 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.serializers.jackson.AbstractBaseJacksonSerializationTest;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import com.kryptnostic.rhizome.hazelcast.serializers.BaseJacksonSerializationTest;
 
 /**
  * Test for create entity request serialization
  * 
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
-public class CreateEntityRequestSerializerTest extends BaseJacksonSerializationTest<CreateEntityRequest> {
+public class CreateEntityRequestSerializerTest extends AbstractBaseJacksonSerializationTest<CreateEntityRequest> {
     private static final SetMultimap<FullQualifiedName, Object>      a              = HashMultimap.create();
     private static final SetMultimap<FullQualifiedName, Object>      b              = HashMultimap.create();
     private static final Set<SetMultimap<FullQualifiedName, Object>> propertyValues = new LinkedHashSet<>( 2 );

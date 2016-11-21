@@ -1,6 +1,5 @@
 package com.dataloom.edm;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,14 +14,14 @@ import com.dataloom.edm.internal.Schema;
 import com.dataloom.edm.requests.GetSchemasRequest;
 import com.dataloom.edm.requests.PutSchemaRequest;
 
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -68,8 +67,9 @@ public interface EdmApi {
      * @param namespace The namespace for the schema.
      * @param name The name for the schema.
      */
+<<<<<<< HEAD
     @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Response createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
+    Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     /**
      * Creates an empty schema with ACL_ID.
@@ -79,8 +79,7 @@ public interface EdmApi {
      * @param aclId The ACL_ID for the schema.
      */
     @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ACL_ID_PATH )
-    Response createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name, @Path( ACL_ID ) UUID aclId );
-
+    Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name, @Path( ACL_ID ) UUID aclId );
 
     /**
      * Retrieves schemas matching the namespace provided in the {@code request} parameter. If no namespace is specified
@@ -122,7 +121,7 @@ public interface EdmApi {
      * @return All schemas identified by namespace and name, across all accessible Acls.
      */
     @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Iterable<Schema> getSchemaContents(
+    Schema getSchemaContents(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name );
 
@@ -130,28 +129,27 @@ public interface EdmApi {
      * @param namespace
      * @param name
      * @param entityTypes
-     * @return
      */
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Response addEntityTypesToSchema(
+    Void addEntityTypesToSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
     @DELETE( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Response removeEntityTypeFromSchema(
+    Void removeEntityTypeFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ADD_PROPERTY_TYPES_PATH )
-    Response addPropertyTypesToSchema(
+    Void addPropertyTypesToSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties );
 
     @DELETE( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + DELETE_PROPERTY_TYPES_PATH )
-    Response removePropertyTypesFromSchema(
+    Void removePropertyTypesFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties );
@@ -160,19 +158,17 @@ public interface EdmApi {
      * Creates multiple entity sets, if they do not exist.
      *
      * @param entitySets The entity sets to create.
-     * @return A map of describing whether or not each entity set was created.
      */
     @POST( ENTITY_SETS_BASE_PATH )
-    Map<String, Boolean> postEntitySets( @Body Set<EntitySet> entitySets );
+    Void postEntitySets( @Body Set<EntitySet> entitySets );
 
     /**
      * Creates or updates multiple entity sets.
      *
      * @param entitySets The entity sets to create.
-     * @return A map of describing whether or not posted entity sets were created or updated.
      */
     @PUT( ENTITY_SETS_BASE_PATH )
-    Response putEntitySets( @Body Set<EntitySet> entitySets );
+    Void putEntitySets( @Body Set<EntitySet> entitySets );
 
     /**
      * 
@@ -186,22 +182,21 @@ public interface EdmApi {
     EntitySet getEntitySet( @Path( NAME ) String entitySetName );
 
     @POST( ENTITY_SETS_BASE_PATH + NAME_PATH )
-    Response assignEntityToEntitySet( @Path( NAME) String entitySetName, @Body Set<UUID> entityIds );
+    Void assignEntityToEntitySet( @Path( NAME) String entitySetName, @Body Set<UUID> entityIds );
 
     @DELETE( ENTITY_SETS_BASE_PATH + NAME_PATH )
-    Response deleteEntitySet( @Path( NAME ) String entitySetName );
+    Void deleteEntitySet( @Path( NAME ) String entitySetName );
     
     /**
      * Creates an entity type if it doesn't already exist.
      *
      * @param entityType the entity to create.
-     * @return True if object type was created, false if container already exists.
      */
     @POST( ENTITY_TYPE_BASE_PATH )
-    Response postEntityType( @Body EntityType entityType );
+    Void postEntityType( @Body EntityType entityType );
 
     @PUT( ENTITY_TYPE_BASE_PATH )
-    Response putEntityType( @Body EntityType entityType );
+    Void putEntityType( @Body EntityType entityType );
 
     @GET( ENTITY_TYPE_BASE_PATH )
     Iterable<EntityType> getEntityTypes();
@@ -213,23 +208,22 @@ public interface EdmApi {
     EntityType getEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
 
     @DELETE( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Response deleteEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
+    Void deleteEntityType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
 
     /**
      * @param namespace
      * @param name
      * @param properties Set of (Existing) Property Types to add to EntityType
-     * @return
      */
     @PUT( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH + ADD_PROPERTY_TYPES_PATH )
-    Response addPropertyTypesToEntityType(
+    Void addPropertyTypesToEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties
     );
     
     @DELETE( ENTITY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH + DELETE_PROPERTY_TYPES_PATH )
-    Response removePropertyTypesFromEntityType(
+    Void removePropertyTypesFromEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties
@@ -240,21 +234,18 @@ public interface EdmApi {
      * Creates a property type if doesn't already exist.
      *
      * @param propertyType The property to create.
-     * @return True if property type was created, false if container already exists.
      */
     @POST( PROPERTY_TYPE_BASE_PATH )
-    Response createPropertyType( @Body PropertyType propertyType );
+    Void createPropertyType( @Body PropertyType propertyType );
 
     /**
      * @param typeInfo
-     * @return An HTTP 200 response with an empty body, if successful. Otherwise, an appropriate HttpStatus code and
-     * potential error message.
      */
     @PUT( PROPERTY_TYPE_BASE_PATH )
-    Response putPropertyType( @Body PropertyType typeInfo );
+    Void putPropertyType( @Body PropertyType typeInfo );
 
     @DELETE( PROPERTY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    Response deletePropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
+    Void deletePropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     @GET( PROPERTY_TYPE_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     PropertyType getPropertyType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String entityTypeName );
