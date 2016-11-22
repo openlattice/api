@@ -157,6 +157,7 @@ public interface PermissionsApi {
      * 
      * @param entitySetNames Set of names of entity sets, where the access rights of all property types associated to
      *            them will be removed.
+     * @return 
      */
     @HTTP(method="DELETE", path = CONTROLLER + "/" + ENTITY_SETS_BASE_PATH + "/" + PROPERTY_TYPE_BASE_PATH + "/" + ALL_PATH, hasBody = true )    
     Void removeAllPropertyTypesInEntitySetAcls( @Body Set<String> entitySetNames );
