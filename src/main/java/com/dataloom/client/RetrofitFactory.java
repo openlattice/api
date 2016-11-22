@@ -2,6 +2,7 @@ package com.dataloom.client;
 
 import java.util.function.Supplier;
 
+import com.dataloom.client.serialization.ObjectMappers;
 import com.dataloom.client.serialization.SerializableSupplier;
 
 import okhttp3.OkHttpClient;
@@ -11,7 +12,7 @@ public final class RetrofitFactory {
     private static final String BASE_URL         = "https://api.thedataloom.com/";
     private static final String STAGING_BASE_URL = "https://api.staging.thedataloom.com/";
     private static final String LOCAL_BASE_URL   = "http://localhost:8080/";
-    private static final String TESTING_BASE_URL = "http://localhost:8080/datastore/ontology";
+    private static final String TESTING_BASE_URL = "http://localhost:8080/datastore/ontology/";
 
     private RetrofitFactory() {}
 
@@ -68,7 +69,8 @@ public final class RetrofitFactory {
 
     public static final Retrofit.Builder decorateWithLoomFactories( Retrofit.Builder builder ) {
         return builder.addConverterFactory( new LoomByteConverterFactory() )
-                .addConverterFactory( new LoomJacksonConverterFactory() )
+                //Debug by Ho Chung: Ask Matt - right way to fix it like this? Goal is to add back the FQN serializers
+                .addConverterFactory( new LoomJacksonConverterFactory( ObjectMappers.getJsonMapper() ) )
                 .addCallAdapterFactory( new LoomCallAdapterFactory() );
     }
 
