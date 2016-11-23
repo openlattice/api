@@ -12,7 +12,6 @@ import com.dataloom.edm.internal.EntityTypeWithDetails;
 import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.edm.internal.Schema;
 import com.dataloom.edm.requests.GetSchemasRequest;
-import com.dataloom.edm.requests.PutSchemaRequest;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -61,12 +60,13 @@ public interface EdmApi {
     EntityDataModel getEntityDataModel();
 
     /**
-     * Creates a schema.
+     * Creates an empty schema.
      *
-     * @param request The namespace for the schema.
+     * @param namespace The namespace for the schema.
+     * @param name The name for the schema.
      */
-    @PUT( SCHEMA_BASE_PATH )
-    Void putSchema( @Body PutSchemaRequest request );
+    @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
+    Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     /**
      * Retrieves schemas matching the namespace provided in the {@code request} parameter. If no namespace is specified
