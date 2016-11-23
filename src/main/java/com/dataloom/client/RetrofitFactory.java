@@ -69,7 +69,6 @@ public final class RetrofitFactory {
 
     public static final Retrofit.Builder decorateWithLoomFactories( Retrofit.Builder builder ) {
         return builder.addConverterFactory( new LoomByteConverterFactory() )
-                //Debug by Ho Chung: Ask Matt - right way to fix it like this? Goal is to add back the FQN serializers
                 .addConverterFactory( new LoomJacksonConverterFactory( ObjectMappers.getJsonMapper() ) )
                 .addCallAdapterFactory( new LoomCallAdapterFactory() );
     }
