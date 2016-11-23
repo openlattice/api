@@ -14,7 +14,7 @@ public final class SerializationConstants {
     public static final String ACL_ID_FIELD     = "aclId";
     public static final String SYNC_ID          = "syncId";
     public static final String ENTITY_SET_NAME  = "entitySetName";
-    public static final String TITLE_FIELD      = "title";        // for EntitySet
+    public static final String TITLE_FIELD      = "title";         // for EntitySet
     public static final String USER_ID          = "userId";
     public static final String SCHEMAS          = "schemas";
     public static final String FQN              = "fqn";
@@ -24,5 +24,9 @@ public final class SerializationConstants {
     public static final String IS_OWNER         = "isOwner";
 
     public static final String TIMESTAMP        = "timestamp";
+
     public static final String REQUEST_ID       = "requestId";
+    public static final String REQUESTING_USER  = "requestingUser";
+    public static final String REQUEST          = "request";
+
 }
