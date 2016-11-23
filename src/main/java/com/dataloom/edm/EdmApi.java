@@ -45,12 +45,12 @@ public interface EdmApi {
      * /entity/type/{namespace}/{name} /entity/set/{namespace}/{name} /schema/{namespace}/{name}
      * /property/{namespace}/{name}
      */
-    String SCHEMA_BASE_PATH        = "/schema";
-    String ENTITY_SETS_BASE_PATH   = "/entity/set";
-    String ENTITY_TYPE_BASE_PATH   = "/entity/type";
-    String PROPERTY_TYPE_BASE_PATH = "/property/type";
-    String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
-    String NAME_PATH               = "/{" + NAME + "}";
+    String SCHEMA_BASE_PATH        = "schema";
+    String ENTITY_SETS_BASE_PATH   = "entity/set";
+    String ENTITY_TYPE_BASE_PATH   = "entity/type";
+    String PROPERTY_TYPE_BASE_PATH = "property/type";
+    String NAMESPACE_PATH          = "{" + NAMESPACE + "}";
+    String NAME_PATH               = "{" + NAME + "}";
 
     String ADD_PROPERTY_TYPES_PATH    = "addPropertyTypes";
     String DELETE_PROPERTY_TYPES_PATH = "deletePropertyTypes";
