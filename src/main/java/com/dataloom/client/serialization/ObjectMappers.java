@@ -2,6 +2,8 @@ package com.dataloom.client.serialization;
 
 import java.util.Map;
 
+import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
+import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.smile.SmileFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -50,7 +52,9 @@ public final class ObjectMappers {
         mapper.registerModule( new GuavaModule() );
         mapper.registerModule( new JodaModule() );
         mapper.registerModule( new AfterburnerModule() );
-        mapper.registerModule( new JodaModule() );
+        //Debug by Ho Chung: Ask Matt - right way to fix it like this? Goal is to add back the FQN serializers
+        FullQualifedNameJacksonSerializer.registerWithMapper( mapper );
+        FullQualifedNameJacksonDeserializer.registerWithMapper( mapper );
         return mapper;
     }
 
