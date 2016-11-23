@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -31,7 +34,10 @@ public class LoomJacksonConverterFactory extends Converter.Factory {
     private final ObjectMapper  objectMapper;
 
     public LoomJacksonConverterFactory() {
-        this( new ObjectMapper() );
+        this( new ObjectMapper()
+                .registerModule( new GuavaModule() )
+                .registerModule( new JodaModule() )
+                .registerModule( new AfterburnerModule() ) );
     }
 
     public LoomJacksonConverterFactory( ObjectMapper mapper ) {
