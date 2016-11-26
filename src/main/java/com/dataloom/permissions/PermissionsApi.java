@@ -13,6 +13,7 @@ import com.dataloom.authorization.requests.Permission;
 import com.dataloom.authorization.requests.PermissionsInfo;
 import com.dataloom.authorization.requests.Principal;
 import com.dataloom.authorization.requests.PropertyTypeInEntitySetAclRemovalRequest;
+import com.dataloom.authorization.requests.PropertyTypeInEntitySetAclRequestWithRequestingUser;
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRemovalRequest;
 import com.dataloom.authorization.requests.PropertyTypeInEntityTypeAclRequest;
 import com.dataloom.edm.requests.PropertyTypeInEntitySetAclRequest;
@@ -263,7 +264,7 @@ public interface PermissionsApi {
      * @return
      */
     @GET( CONTROLLER + "/" + ENTITY_SETS_BASE_PATH + "/" + OWNER_PATH + "/" + REQUEST_PERMISSIONS_PATH )
-    Iterable<PropertyTypeInEntitySetAclRequest> getAllReceivedRequestsForPermissions( @Query( NAME ) String entitySetName );
+    Iterable<PropertyTypeInEntitySetAclRequestWithRequestingUser> getAllReceivedRequestsForPermissions( @Query( NAME ) String entitySetName );
     
     /**
      * Get All Received Permissions Request for a user. entitySetName is optional - if it goes missing, the method
@@ -272,5 +273,5 @@ public interface PermissionsApi {
      * @return
      */
     @GET( CONTROLLER + "/" + ENTITY_SETS_BASE_PATH + "/" + REQUEST_PERMISSIONS_PATH )
-    Iterable<PropertyTypeInEntitySetAclRequest> getAllSentRequestsForPermissions( @Query( NAME ) String entitySetName );
+    Iterable<PropertyTypeInEntitySetAclRequestWithRequestingUser> getAllSentRequestsForPermissions( @Query( NAME ) String entitySetName );
 }
