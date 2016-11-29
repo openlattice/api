@@ -36,5 +36,5 @@ public interface UserDirectoryApi {
     List<Auth0UserBasic> getAllUsersOfRole( @Path( ROLE ) String role );
 
     @PATCH( CONTROLLER + "／" + USERS + "／" + ROLES + "／" + RESET + "／" + USER_ID_PATH )
-    void resetRolesOfUser( @Path( USER_ID ) String userId, @Body List<String> roles );
+    Void resetRolesOfUser( @Path( USER_ID ) String userId, @Body List<String> roles );
 }
