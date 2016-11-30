@@ -52,6 +52,8 @@ public interface EdmApi {
     String NAMESPACE_PATH          = "{" + NAMESPACE + "}";
     String NAME_PATH               = "{" + NAME + "}";
 
+    String ADD_ENTITY_TYPES_PATH    = "addEntityTypes";
+    String DELETE_ENTITY_TYPES_PATH = "deleteEntityTypes";
     String ADD_PROPERTY_TYPES_PATH    = "addPropertyTypes";
     String DELETE_PROPERTY_TYPES_PATH = "deletePropertyTypes";
     String DETAILS_PATH               = "details";
@@ -65,7 +67,7 @@ public interface EdmApi {
      * @param namespace The namespace for the schema.
      * @param name The name for the schema.
      */
-    @POST( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
+    @POST( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
     Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     /**
@@ -117,13 +119,13 @@ public interface EdmApi {
      * @param name
      * @param entityTypes
      */
-    @PUT( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
+    @PUT( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + ADD_ENTITY_TYPES_PATH )
     Void addEntityTypesToSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
-    @HTTP(method="DELETE", path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH, hasBody = true )
+    @HTTP(method="DELETE", path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_ENTITY_TYPES_PATH, hasBody = true )
     Void removeEntityTypeFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
