@@ -1,7 +1,9 @@
 package com.dataloom.edm.internal;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -17,17 +19,20 @@ import com.google.common.base.Preconditions;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class TypePK {
+public class TypePK implements Serializable {
     @PartitionKey(
         value = 0 )
     protected String                 namespace;
     @ClusteringColumn(
         value = 0 )
     protected String                 name;
-
+    
     @Column(
         name = "schemas" )
     protected Set<FullQualifiedName> schemas = Collections.emptySet();
+    
+    @Transient
+    protected UUID id;
 
     @Transient
     private FullQualifiedName        fqn;
@@ -66,11 +71,22 @@ public class TypePK {
         this.schemas = schemas;
         return this;
     }
+    
+    public UUID getId() {
+        return id;
+    }
+    
+    public TypePK setId( UUID id ) {
+        this.id = id;
+        return this;
+    }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ( ( fqn == null ) ? 0 : fqn.hashCode() );
+        result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
         result = prime * result + ( ( namespace == null ) ? 0 : namespace.hashCode() );
         result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
@@ -89,6 +105,20 @@ public class TypePK {
             return false;
         }
         TypePK other = (TypePK) obj;
+        if ( fqn == null ) {
+            if ( other.fqn != null ) {
+                return false;
+            }
+        } else if ( !fqn.equals( other.fqn ) ) {
+            return false;
+        }
+        if ( id == null ) {
+            if ( other.id != null ) {
+                return false;
+            }
+        } else if ( !id.equals( other.id ) ) {
+            return false;
+        }
         if ( name == null ) {
             if ( other.name != null ) {
                 return false;

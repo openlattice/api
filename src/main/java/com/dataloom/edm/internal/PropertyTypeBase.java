@@ -1,5 +1,6 @@
 package com.dataloom.edm.internal;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
@@ -7,7 +8,7 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.datastax.driver.mapping.annotations.Column;
 
-public class PropertyTypeBase extends TypePK {
+public class PropertyTypeBase extends TypePK implements Serializable {
 
     @Column(
         name = "datatype" )

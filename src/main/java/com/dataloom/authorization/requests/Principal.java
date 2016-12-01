@@ -1,22 +1,24 @@
 package com.dataloom.authorization.requests;
 
+import java.io.Serializable;
+
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Principal {
+public class Principal implements Serializable {
     
     @JsonProperty( SerializationConstants.TYPE_FIELD )
     private PrincipalType type;
     @JsonProperty( SerializationConstants.NAME_FIELD )
-    private String name;
+    private String id;
 
     @JsonCreator
     public Principal( 
             @JsonProperty( SerializationConstants.TYPE_FIELD ) PrincipalType type, 
-            @JsonProperty( SerializationConstants.NAME_FIELD ) String name ){
+            @JsonProperty( SerializationConstants.NAME_FIELD ) String id ){
         this.type = type;
-        this.name = name;
+        this.id = id;
     }
     
     public PrincipalType getType() {
@@ -28,17 +30,17 @@ public class Principal {
     }
 
     public String getName() {
-        return name;
+        return id;
     }
 
     public void setName( String name ) {
-        this.name = name;
+        this.id = name;
     }
 
     @Override
     public int hashCode() {
         int result = ( type == null ) ? 0 : type.hashCode();
-        result = 31 * result + ( ( name == null ) ? 0 : name.hashCode() );
+        result = 31 * result + ( ( id == null ) ? 0 : id.hashCode() );
         return result;
     }
 
@@ -55,11 +57,11 @@ public class Principal {
 
         if ( type != null ? !type.equals( that.type ) : that.type != null )
             return false;
-        return name != null ? name.equals( that.name ) : that.name == null;
+        return id != null ? id.equals( that.id ) : that.id == null;
     }
 
     @Override
     public String toString() {
-        return "Principal [type=" + type + ", name=" + name + "]";
+        return "Principal [type=" + type + ", name=" + id + "]";
     }
 }
