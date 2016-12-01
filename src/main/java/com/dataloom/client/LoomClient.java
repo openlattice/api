@@ -2,8 +2,6 @@ package com.dataloom.client;
 
 import java.util.concurrent.ExecutionException;
 
-import javax.activity.InvalidActivityException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

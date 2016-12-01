@@ -1,5 +1,7 @@
 package com.dataloom.edm.internal;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
@@ -17,7 +19,7 @@ import com.google.common.base.Preconditions;
 @Table(
     keyspace = DatastoreConstants.KEYSPACE,
     name = DatastoreConstants.ENTITY_SETS_TABLE )
-public class EntitySet {
+public class EntitySet implements Serializable {
     @PartitionKey(
         value = 0 )
     @JsonIgnore
