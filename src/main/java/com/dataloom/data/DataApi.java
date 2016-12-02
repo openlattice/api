@@ -26,6 +26,7 @@ public interface DataApi {
     String TYPE_NAME                       = "typename";
 
     String MULTIPLE                        = "multiple";
+    String SELECTED                        = "selected";
     String ENTITYSET                       = "entityset";
     String ENTITY_DATA                     = "entitydata";
     String FILTERED                        = "filtered";
@@ -42,6 +43,13 @@ public interface DataApi {
             @Path( NAME_SPACE ) String entityTypeNamespace,
             @Path( TYPE_NAME ) String entityTypeName );
 
+    @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + TYPE_NAME_PATH + "/" + NAME_PATH + "/" + SELECTED )
+    Iterable<Multimap<FullQualifiedName, Object>> getSelectedEntitiesOfEntitySet(
+            @Path( NAME ) String entitySetName,
+            @Path( NAME_SPACE ) String entityTypeNamespace,
+            @Path( TYPE_NAME ) String entityTypeName,
+            @Body Set<FullQualifiedName> selectedProperties );
+
     @PUT( CONTROLLER + "/" + ENTITY_DATA )
     Iterable<Multimap<FullQualifiedName, Object>> getAllEntitiesOfType( @Body FullQualifiedName fqn );
 
@@ -57,6 +65,12 @@ public interface DataApi {
     Iterable<Multimap<FullQualifiedName, Object>> getAllEntitiesOfType(
             @Path( NAME_SPACE ) String namespace,
             @Path( NAME ) String name );
+
+    @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + NAME_PATH + "/" + SELECTED )
+    Iterable<Multimap<FullQualifiedName, Object>> getSelectedEntitiesOfType(
+            @Path( NAME_SPACE ) String namespace,
+            @Path( NAME ) String name,
+            @Body Set<FullQualifiedName> selectedProperties );
 
     @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + FILTERED )
     /**
