@@ -23,9 +23,10 @@ public interface DataApi {
     String FULLQUALIFIEDNAME               = "fqn";
     String NAME                            = "name";
     String NAME_SPACE                      = "namespace";
-    String TYPE_NAME                       = "typename";
+    String SET_NAME                        = "setname";
 
     String MULTIPLE                        = "multiple";
+    String SELECTED                        = "selected";
     String ENTITYSET                       = "entityset";
     String ENTITY_DATA                     = "entitydata";
     String FILTERED                        = "filtered";
@@ -34,13 +35,20 @@ public interface DataApi {
     String FULLQUALIFIEDNAME_PATH_WITH_DOT = "{" + FULLQUALIFIEDNAME + ":.+}";
     String NAME_PATH                       = "{" + NAME + "}";
     String NAME_SPACE_PATH                 = "{" + NAME_SPACE + "}";
-    String TYPE_NAME_PATH                  = "{" + TYPE_NAME + "}";
+    String SET_NAME_PATH                   = "{" + SET_NAME + "}";
 
-    @GET( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + TYPE_NAME_PATH + "/" + NAME_PATH )
+    @GET( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + NAME_PATH + "/" + SET_NAME_PATH )
     Iterable<Multimap<FullQualifiedName, Object>> getAllEntitiesOfEntitySet(
-            @Path( NAME ) String entitySetName,
+            @Path( SET_NAME ) String entitySetName,
             @Path( NAME_SPACE ) String entityTypeNamespace,
-            @Path( TYPE_NAME ) String entityTypeName );
+            @Path( NAME ) String entityTypeName );
+
+    @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + NAME_PATH + "/" + SET_NAME_PATH + "/" + SELECTED )
+    Iterable<Multimap<FullQualifiedName, Object>> getSelectedEntitiesOfEntitySet(
+            @Path( SET_NAME ) String entitySetName,
+            @Path( NAME_SPACE ) String entityTypeNamespace,
+            @Path( NAME ) String entityTypeName,
+            @Body Set<FullQualifiedName> selectedProperties );
 
     @PUT( CONTROLLER + "/" + ENTITY_DATA )
     Iterable<Multimap<FullQualifiedName, Object>> getAllEntitiesOfType( @Body FullQualifiedName fqn );
@@ -57,6 +65,12 @@ public interface DataApi {
     Iterable<Multimap<FullQualifiedName, Object>> getAllEntitiesOfType(
             @Path( NAME_SPACE ) String namespace,
             @Path( NAME ) String name );
+
+    @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + NAME_SPACE_PATH + "/" + NAME_PATH + "/" + SELECTED )
+    Iterable<Multimap<FullQualifiedName, Object>> getSelectedEntitiesOfType(
+            @Path( NAME_SPACE ) String namespace,
+            @Path( NAME ) String name,
+            @Body Set<FullQualifiedName> selectedProperties );
 
     @PUT( CONTROLLER + "/" + ENTITY_DATA + "/" + FILTERED )
     /**
