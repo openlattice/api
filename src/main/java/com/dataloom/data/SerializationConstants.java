@@ -7,6 +7,7 @@ public final class SerializationConstants {
     public static final String NAMESPACE_FIELD  = "namespace";
     public static final String TYPE_FIELD       = "type";
     public static final String KEY_FIELD        = "key";
+    public static final String ID_FIELD         = "id";
     public static final String PROPERTIES_FIELD = "properties";
     public static final String PROPERTY_FIELD   = "property";
     public static final String NAME_FIELD       = "name";
