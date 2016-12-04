@@ -9,15 +9,6 @@ import retrofit2.http.POST;
 
 public interface NewPermissionsApi {
     String PERMISSIONS                                 = "permissions";
-    String ENTITY_SET                                  = "entityset";
-    String PROPERTY_TYPE                               = "propertytype";
-    String ES_NAME                                     = "esname";
-    String PROPERTY_TYPE_NAMESPACE                     = "namespace";
-    String PROPERTY_TYPE_NAME                          = "name";
-
-    String PERMISSIONS_FOR_ENTITY_SET                  = PERMISSIONS + "/{" + ES_NAME + "}";
-    String PERMISSIONS_FOR_PROPERTY_TYPE_IN_ENTITY_SET = PERMISSIONS_FOR_ENTITY_SET + "/{" + PROPERTY_TYPE_NAMESPACE
-            + "}/" + PROPERTY_TYPE_NAME;
 
     /**
      * Used to load a list of all entity sets that caller can managed via the Permissions API.
