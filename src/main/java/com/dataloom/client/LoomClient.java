@@ -44,14 +44,17 @@ public class LoomClient implements ApiFactoryFactory {
     }
 
     public DataApi getDataApi() throws ExecutionException {
+        ensureInitialized();
         return (DataApi) apiCache.get( DataApi.class );
     }
 
     public PermissionsApi getPermissionsApi() throws ExecutionException {
+        ensureInitialized();
         return (PermissionsApi) apiCache.get( PermissionsApi.class );
     }
 
     public EdmApi getEdmApi() throws ExecutionException {
+        ensureInitialized();
         return (EdmApi) apiCache.get( EdmApi.class );
     }
 
