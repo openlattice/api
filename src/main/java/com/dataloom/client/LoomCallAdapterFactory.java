@@ -28,14 +28,16 @@ public class LoomCallAdapterFactory extends CallAdapter.Factory {
             public <R> Object adapt( Call<R> call ) {
                 try {
                     Response<R> response = call.execute();
-                    if ( response.code() != 200 ) {
+                    if ( response.code() >= 400 ) {
                         logger.error( "Call failed with code {} and message {} and error body {}",
                                 response.code(),
                                 response.message(),
                                 IOUtils.toString( response.errorBody().byteStream() ) );
+                        return null;
                     }
                     return response.body();
                 } catch ( IOException e ) {
+                    logger.error( "Call failed.", e );
                     return null;
                 }
             }
