@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 public final class RetrofitFactory {
-    private static final String BASE_URL         = "https://api.thedataloom.com/";
+    private static final String BASE_URL         = "https://api.thedataloom.com/datastore/ontology/";
     private static final String STAGING_BASE_URL = "https://api.staging.thedataloom.com/";
     private static final String LOCAL_BASE_URL   = "http://localhost:8080/";
     private static final String TESTING_BASE_URL = "http://localhost:8080/datastore/ontology/";
