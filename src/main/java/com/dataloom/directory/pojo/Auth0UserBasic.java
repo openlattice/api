@@ -1,16 +1,22 @@
 package com.dataloom.directory.pojo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.Map;
 
 public class Auth0UserBasic {
-    public static final String USER_ID_FIELD  = "user_id";
-    public static final String EMAIL_FIELD    = "email";
-    public static final String NICKNAME_FIELD = "nickname";
-    public static final String USERNAME_FIELD = "username";
-    public static final String ROLES_FIELD    = "roles";
+    public static final String USER_ID_FIELD      = "user_id";
+    public static final String EMAIL_FIELD        = "email";
+    public static final String NICKNAME_FIELD     = "nickname";
+    public static final String USERNAME_FIELD     = "username";
+    public static final String APP_METADATA_FIELD = "app_metadata";
+    public static final String ROLES_FIELD        = "roles";
 
     private final String       userId;
     private final String       email;
@@ -19,15 +25,15 @@ public class Auth0UserBasic {
     private final List<String> roles;
 
     @JsonCreator
+    @JsonIgnoreProperties( ignoreUnknown = true )
     public Auth0UserBasic(
             @JsonProperty( USER_ID_FIELD ) String userId,
             @JsonProperty( EMAIL_FIELD ) String email,
             @JsonProperty( NICKNAME_FIELD ) String nickname,
-            @JsonProperty( ROLES_FIELD ) List<String> roles ) {
+            @JsonProperty( APP_METADATA_FIELD ) Map<String, Object> appMetadata ) {
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
-        this.roles = roles;
         if ( this.email != null ) {
             this.username = this.email;
         } else if ( this.nickname != null ) {
@@ -35,6 +41,8 @@ public class Auth0UserBasic {
         } else {
             this.username = this.userId;
         }
+        this.roles = (List<String>) MoreObjects.firstNonNull( appMetadata, ImmutableMap.of() ).getOrDefault( "roles",
+                Lists.newArrayList() );
     }
 
     @JsonProperty( USER_ID_FIELD )
