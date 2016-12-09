@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -27,13 +29,16 @@ public class EntitySet implements Serializable {
 
     @ClusteringColumn(
         value = 0 )
+    @NotBlank
     protected String            name;
 
     @Column(
         name = "title" )
+    @NotBlank
     protected String            title;
 
     @Transient
+    @ValidateFullQualifiedName
     protected FullQualifiedName type;
 
     public String getName() {

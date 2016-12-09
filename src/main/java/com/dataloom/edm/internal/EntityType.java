@@ -2,10 +2,17 @@ package com.dataloom.edm.internal;
 
 import java.util.Set;
 
+import javax.validation.GroupSequence;
+import javax.validation.Valid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateKeysInProperties;
+import com.dataloom.edm.validation.tags.Extended;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.Table;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,6 +25,9 @@ import com.google.common.collect.ImmutableSet;
 @Table(
     keyspace = DatastoreConstants.KEYSPACE,
     name = DatastoreConstants.ENTITY_TYPES_TABLE )
+@GroupSequence( { EntityType.class, Extended.class } )
+@ValidateKeysInProperties(
+    groups = Extended.class )
 public class EntityType extends TypePK {
     @Column(
         name = "typename" )
@@ -25,11 +35,15 @@ public class EntityType extends TypePK {
 
     @Column(
         name = "key" )
-    private Set<FullQualifiedName> key;
+    @NotEmpty
+    @Valid
+    private Set<@ValidateFullQualifiedName FullQualifiedName> key;
 
     @Column(
         name = "properties" )
-    public Set<FullQualifiedName>  properties;
+    @NotEmpty
+    @Valid
+    public Set<@ValidateFullQualifiedName FullQualifiedName>  properties;
 
     public EntityType setNamespace( String namespace ) {
         this.namespace = namespace;
