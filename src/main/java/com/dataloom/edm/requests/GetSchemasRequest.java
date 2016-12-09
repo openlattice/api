@@ -4,16 +4,18 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import com.dataloom.edm.EdmApi;
+import com.dataloom.edm.validation.ValidateGetSchemasRequest;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 
 /**
  * Class specifying request options for loading schemas.
+ * 
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
+@ValidateGetSchemasRequest
 public class GetSchemasRequest {
     public static enum TypeDetails {
         ENTITY_TYPES,
@@ -29,8 +31,6 @@ public class GetSchemasRequest {
             @JsonProperty( EdmApi.NAMESPACE ) Optional<String> namespace,
             @JsonProperty( EdmApi.NAME ) Optional<String> name,
             @JsonProperty( EdmApi.LOAD_DETAILS ) Optional<Set<TypeDetails>> loadDetails ) {
-        Preconditions.checkArgument( (name.isPresent() && namespace.isPresent()) || (!name.isPresent() && !namespace.isPresent()),
-                "Namespace must provided if name is present." );
         this.namespace = namespace;
         this.name = name;
         this.typeDetails = loadDetails.or( EnumSet.of( TypeDetails.ENTITY_TYPES, TypeDetails.PROPERTY_TYPES ) );

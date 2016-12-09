@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.datastax.driver.mapping.annotations.Column;
@@ -20,9 +21,11 @@ import com.google.common.base.Preconditions;
 public class TypePK {
     @PartitionKey(
         value = 0 )
+    @NotBlank
     protected String                 namespace;
     @ClusteringColumn(
         value = 0 )
+    @NotBlank
     protected String                 name;
 
     @Column(
