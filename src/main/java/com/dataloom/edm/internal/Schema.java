@@ -42,11 +42,11 @@ public class Schema {
         this.propertyTypes = Sets.newHashSet( propertyTypes );
 
         setEntityTypeFqns( entityTypes.stream()
-                .map( entityType -> new FullQualifiedName( entityType.getNamespace(), entityType.getName() ) )
+                .map( EntityType::getType )
                 .collect( Collectors.toSet() ) );
 
         setPropertyTypeFqns( propertyTypes.stream()
-                .map( propertyType -> new FullQualifiedName( propertyType.getNamespace(), propertyType.getName() ) )
+                .map( PropertyType::getType )
                 .collect( Collectors.toSet() ) );
     }
 
@@ -105,14 +105,14 @@ public class Schema {
         this.entityTypes.addAll( entityTypes );
         // Need to sync entity type names
         entityTypes.forEach( entityType -> entityTypeFqns
-                .add( new FullQualifiedName( entityType.getNamespace(), entityType.getName() ) ) );
+                .add( entityType.getType() ) );
     }
 
     public void addPropertyTypes( Set<PropertyType> propertyTypes ) {
         this.propertyTypes.addAll( propertyTypes );
         // Need to sync property type names
         propertyTypes.forEach( propertyType -> propertyTypeFqns
-                .add( new FullQualifiedName( propertyType.getNamespace(), propertyType.getName() ) ) );
+                .add( propertyType.getType() ) );
     }
 
     @Override
