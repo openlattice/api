@@ -55,13 +55,12 @@ public class CreateEntityRequestSerializerTest extends AbstractBaseJacksonSerial
     @Override
     protected CreateEntityRequest getSampleData() {
         return new CreateEntityRequest(
-                Optional.of( RandomStringUtils.randomAlphanumeric( 10 ) ),
+                RandomStringUtils.randomAlphanumeric( 10 ),
                 new FullQualifiedName(
                         RandomStringUtils.randomAlphanumeric( 10 ),
                         RandomStringUtils.randomAlphanumeric( 10 ) ),
                 propertyValues,
-                Optional.of( UUID.randomUUID() ),
-                Optional.of( UUID.randomUUID() ) );
+                UUID.randomUUID() );
     }
 
     @Override
