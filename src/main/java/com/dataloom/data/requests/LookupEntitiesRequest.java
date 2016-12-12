@@ -6,15 +6,22 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateUUID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LookupEntitiesRequest {
-    private final Set<FullQualifiedName>         entityTypes;
+    @Valid
+    private final Set<@ValidateFullQualifiedName FullQualifiedName>         entityTypes;
+    //TODO Validate keys of the map
     private final Map<FullQualifiedName, Object> propertyTypeToValueMap;
+    @ValidateUUID
     private final UUID                           userId;
 
     public LookupEntitiesRequest(

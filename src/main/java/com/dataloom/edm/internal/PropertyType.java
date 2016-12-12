@@ -2,6 +2,8 @@ package com.dataloom.edm.internal;
 
 import java.util.Set;
 
+import javax.validation.constraints.Min;
+
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
@@ -25,6 +27,7 @@ public class PropertyType extends PropertyTypeBase {
 
     @Column(
         name = "multiplicity" )
+    @Min(0)
     public long      multiplicity;
 
     @Override
