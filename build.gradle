@@ -68,7 +68,7 @@ dependencies {
     /*
      * Validation
     */
-    compile 'org.hibernate:hibernate-validator:${hibernate_version}'
+    compile "org.hibernate:hibernate-validator:${hibernate_version}"
     
 	/*
      * Kryptnostic dependencies
