@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateUUID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
@@ -14,8 +16,10 @@ import com.google.common.collect.SetMultimap;
  * Created by yao on 9/20/16.
  */
 public class CreateEntityRequest {
+    @ValidateUUID
     private final UUID                                        syncId;
     private final String                                      entitySetName;
+    @ValidateFullQualifiedName
     private final FullQualifiedName                           entityType;
     private final Set<SetMultimap<FullQualifiedName, Object>> propertyValues;
 

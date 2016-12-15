@@ -3,15 +3,14 @@ package com.dataloom.edm.internal;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
 /**
@@ -20,7 +19,9 @@ import com.google.common.collect.ImmutableSet;
  */
 public class EntitySet extends TypePK {
     private static final long serialVersionUID = 1643809693309599032L;
+    @NotBlank( message = "Entity set name cannot be blank.")
     protected final String    name;
+    @NotBlank( message = "Entity set title cannot be blank.")
     protected final String    title;
 
     /**
@@ -46,8 +47,6 @@ public class EntitySet extends TypePK {
 
     public EntitySet( UUID id, FullQualifiedName type, String name, String title, Set<FullQualifiedName> schemas ) {
         super( id, type, schemas );
-        Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
-        Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
         this.title = title;
     }

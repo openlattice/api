@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.AclKey;
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateUUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,9 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public abstract class TypePK implements Serializable {
     private static final long              serialVersionUID = -154529013746983795L;
+    @ValidateUUID
     protected final UUID                   id;
+    @ValidateFullQualifiedName
     protected final FullQualifiedName      type;
-    protected final Set<FullQualifiedName> schemas;
+    @Valid
+    protected final Set<@ValidateFullQualifiedName FullQualifiedName> schemas;
     protected final AclKey                 aclKey;
 
     protected TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {

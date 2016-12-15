@@ -3,20 +3,33 @@ package com.dataloom.edm.internal;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.validation.GroupSequence;
+import javax.validation.Valid;
+
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateKeysInProperties;
+import com.dataloom.edm.validation.tags.Extended;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
+@GroupSequence( { EntityType.class, Extended.class } )
+@ValidateKeysInProperties(
+    groups = Extended.class )
 public class EntityType extends TypePK {
     private static final long      serialVersionUID = -9006708363024044315L;
-    private final Set<FullQualifiedName> key;
-    private final Set<FullQualifiedName> properties;
+    @NotEmpty( message = "Key properties of entity type cannot be null or empty." )
+    @Valid
+    private final Set<@ValidateFullQualifiedName FullQualifiedName> key;
+    @NotEmpty( message = "Properties of entity type cannot be null or empty." )
+    @Valid
+    private final Set<@ValidateFullQualifiedName FullQualifiedName> properties;
 
     @JsonCreator
     public EntityType(
@@ -35,9 +48,8 @@ public class EntityType extends TypePK {
             Set<FullQualifiedName> key,
             Set<FullQualifiedName> properties ) {
         super( id, type, schemas );
-        Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
-        this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        this.key = key;
+        this.properties = properties;
     }
 
     // TODO: It seems the objects do not allow property types from the different schemas.

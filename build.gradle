@@ -65,6 +65,11 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jackson_version}"
     compile 'org.yaml:snakeyaml:1.13'
 
+    /*
+     * Validation
+    */
+    compile "org.hibernate:hibernate-validator:${hibernate_version}"
+    
 	/*
      * Kryptnostic dependencies
      */
