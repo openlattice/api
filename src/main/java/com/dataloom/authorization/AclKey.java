@@ -3,8 +3,6 @@ package com.dataloom.authorization;
 import java.io.Serializable;
 import java.util.UUID;
 
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import com.google.common.base.Preconditions;
 
 /**
@@ -16,14 +14,14 @@ import com.google.common.base.Preconditions;
 public class AclKey implements Comparable<AclKey>,Serializable {
     private static final long serialVersionUID = 8377824935472079891L;
     private final SecurableObjectType type;
-    private final FullQualifiedName fqn;
+    private final UUID id;
 
-    public AclKey( SecurableObjectType type, FullQualifiedName id ) {
+    public AclKey( SecurableObjectType type, UUID id ) {
         this.type = Preconditions.checkNotNull( type );
         this.id = Preconditions.checkNotNull( id );
     }
 
-    public FullQualifiedName getId() {
+    public UUID getId() {
         return id;
     }
 

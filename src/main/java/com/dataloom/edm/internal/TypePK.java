@@ -1,95 +1,62 @@
 package com.dataloom.edm.internal;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.Valid;
 
-import com.datastax.driver.mapping.annotations.ClusteringColumn;
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Transient;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
+import com.dataloom.authorization.AclKey;
+import com.dataloom.authorization.SecurableObjectType;
+import com.dataloom.data.SerializationConstants;
+import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.ValidateUUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.Preconditions;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
-public class TypePK implements Serializable {
-    @PartitionKey(
-        value = 0 )
-    @NotBlank( message = "Namespace cannot be empty." )
-    protected String                 namespace;
-    @ClusteringColumn(
-        value = 0 )
-    @NotBlank( message = "Name cannot be empty." )
-    protected String                 name;
-    
-    @Column(
-        name = "schemas" )
-    protected Set<FullQualifiedName> schemas = Collections.emptySet();
-    
-    @Transient
-    protected UUID id;
+public abstract class TypePK implements Serializable {
+    private static final long              serialVersionUID = -154529013746983795L;
+    @ValidateUUID
+    protected final UUID                   id;
+    @ValidateFullQualifiedName
+    protected final FullQualifiedName      type;
+    @Valid
+    protected final Set<@ValidateFullQualifiedName FullQualifiedName> schemas;
+    protected final AclKey                 aclKey;
 
-    @Transient
-    private FullQualifiedName        fqn;
-
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public TypePK setNamespace( String namespace ) {
-        this.namespace = namespace;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public TypePK setName( String name ) {
-        this.name = name;
-        return this;
-    }
-
-    public Set<FullQualifiedName> getSchemas() {
-        // Ho Chung: very artificial - but this is because Cassandra does not distinguish null and empty things right
-        // now :/
-        if ( schemas != null ) {
-            return schemas;
-        } else {
-            return Collections.emptySet();
-        }
-    }
-
-    public TypePK setSchemas( Set<FullQualifiedName> schemas ) {
+    protected TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
+        this.id = id;
+        this.type = type;
         this.schemas = schemas;
-        return this;
+        aclKey = new AclKey( this.getCategory(), id );
     }
-    
+
+    @JsonProperty( SerializationConstants.ID_FIELD )
     public UUID getId() {
         return id;
     }
-    
-    public TypePK setId( UUID id ) {
-        this.id = id;
-        return this;
+
+    @JsonProperty( SerializationConstants.TYPE_FIELD )
+    public FullQualifiedName getType() {
+        return type;
+    }
+
+    @JsonProperty( SerializationConstants.SCHEMAS )
+    public Set<FullQualifiedName> getSchemas() {
+        return schemas;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ( ( fqn == null ) ? 0 : fqn.hashCode() );
+        result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
         result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
-        result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
-        result = prime * result + ( ( namespace == null ) ? 0 : namespace.hashCode() );
         result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
         return result;
     }
@@ -106,11 +73,11 @@ public class TypePK implements Serializable {
             return false;
         }
         TypePK other = (TypePK) obj;
-        if ( fqn == null ) {
-            if ( other.fqn != null ) {
+        if ( type == null ) {
+            if ( other.type != null ) {
                 return false;
             }
-        } else if ( !fqn.equals( other.fqn ) ) {
+        } else if ( !type.equals( other.type ) ) {
             return false;
         }
         if ( id == null ) {
@@ -118,20 +85,6 @@ public class TypePK implements Serializable {
                 return false;
             }
         } else if ( !id.equals( other.id ) ) {
-            return false;
-        }
-        if ( name == null ) {
-            if ( other.name != null ) {
-                return false;
-            }
-        } else if ( !name.equals( other.name ) ) {
-            return false;
-        }
-        if ( namespace == null ) {
-            if ( other.namespace != null ) {
-                return false;
-            }
-        } else if ( !namespace.equals( other.namespace ) ) {
             return false;
         }
         if ( schemas == null ) {
@@ -145,14 +98,16 @@ public class TypePK implements Serializable {
     }
 
     @JsonIgnore
-    @Transient
-    public FullQualifiedName getFullQualifiedName() {
-        if ( fqn == null ) {
-            Preconditions.checkState( StringUtils.isNotBlank( namespace ), "Namespace must not be blank." );
-            Preconditions.checkState( StringUtils.isNotBlank( name ), "Name must not be blank." );
-            fqn = new FullQualifiedName( namespace, name );
-        }
-        return fqn;
+    public AclKey getAclKey() {
+        return aclKey;
+    }
+
+    @JsonIgnore
+    public abstract SecurableObjectType getCategory();
+
+    @Override
+    public String toString() {
+        return "TypePK [id=" + id + ", fqn=" + type + ", schemas=" + schemas + "]";
     }
 
 }

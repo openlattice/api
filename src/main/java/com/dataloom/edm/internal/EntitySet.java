@@ -1,97 +1,70 @@
 package com.dataloom.edm.internal;
 
-import java.io.Serializable;
+import java.util.Set;
+import java.util.UUID;
 
-import javax.validation.constraints.Null;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
-import com.dataloom.edm.validation.ValidateFullQualifiedName;
-import com.dataloom.edm.validation.tags.Extended;
-import com.datastax.driver.mapping.annotations.ClusteringColumn;
-import com.datastax.driver.mapping.annotations.Column;
-import com.datastax.driver.mapping.annotations.PartitionKey;
-import com.datastax.driver.mapping.annotations.Table;
-import com.datastax.driver.mapping.annotations.Transient;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Preconditions;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 
-@Table(
-    keyspace = DatastoreConstants.KEYSPACE,
-    name = DatastoreConstants.ENTITY_SETS_TABLE )
-public class EntitySet implements Serializable {
-    @PartitionKey(
-        value = 0 )
-    @JsonIgnore
-    @Null( groups = Extended.class )
-    protected String            typename = null;
+/**
+ * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
+ *
+ */
+public class EntitySet extends TypePK {
+    private static final long serialVersionUID = 1643809693309599032L;
+    @NotBlank( message = "Entity set name cannot be blank.")
+    protected final String    name;
+    @NotBlank( message = "Entity set title cannot be blank.")
+    protected final String    title;
 
-    @ClusteringColumn(
-        value = 0 )
-    @NotBlank
-    protected String            name;
+    /**
+     * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
+     * 
+     * @param id An optional UUID for the entity set.
+     * @param type The full qualified name of the entity type to be collected in this entity set.
+     * @param name The name of the entity set.
+     * @param title The friendly name for the entity set.
+     */
+    @JsonCreator
+    public EntitySet(
+            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
+            @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title ) {
+        this( id.or( UUID::randomUUID ), type, name, title );
+    }
 
-    @Column(
-        name = "title" )
-    @NotBlank
-    protected String            title;
+    public EntitySet( UUID id, FullQualifiedName type, String name, String title ) {
+        this( id, type, name, title, ImmutableSet.of() );
+    }
 
-    @Transient
-    @ValidateFullQualifiedName
-    protected FullQualifiedName type;
+    public EntitySet( UUID id, FullQualifiedName type, String name, String title, Set<FullQualifiedName> schemas ) {
+        super( id, type, schemas );
+        this.name = name;
+        this.title = title;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public EntitySet setName( String name ) {
-        this.name = name;
-        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public EntitySet setTitle( String title ) {
-        this.title = title;
-        return this;
-    }
-
-    public String getTypename() {
-        return typename;
-    }
-
-    public EntitySet setTypename( String typename ) {
-        // typename must only be set once
-        Preconditions.checkState( StringUtils.isBlank( this.typename ) );
-        this.typename = typename;
-        return this;
-    }
-
-    // this shall only be called the first time EntitySet is created, otherwise the return value will be null;
-    // to actually getType after the first time, retrieve the value from the EntityType lookup table
-    public FullQualifiedName getType() {
-        return type;
-    }
-
-    public EntitySet setType( FullQualifiedName type ) {
-        this.type = type;
-        return this;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = super.hashCode();
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
         result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
-        result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
         return result;
     }
 
@@ -100,20 +73,13 @@ public class EntitySet implements Serializable {
         if ( this == obj ) {
             return true;
         }
-        if ( obj == null ) {
+        if ( !super.equals( obj ) ) {
             return false;
         }
         if ( !( obj instanceof EntitySet ) ) {
             return false;
         }
         EntitySet other = (EntitySet) obj;
-        if ( type == null ) {
-            if ( other.type != null ) {
-                return false;
-            }
-        } else if ( !type.equals( other.type ) ) {
-            return false;
-        }
         if ( name == null ) {
             if ( other.name != null ) {
                 return false;
@@ -133,18 +99,12 @@ public class EntitySet implements Serializable {
 
     @Override
     public String toString() {
-        return "EntitySet [type=" + type + ", name=" + name + ", title=" + title + "]";
+        return "EntitySet [name=" + name + ", title=" + title + ", id=" + id + ", type=" + type + ", schemas=" + schemas
+                + "]";
     }
 
-    @JsonCreator
-    public static EntitySet newEntitySet(
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
-            @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
-            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title ) {
-        return new EntitySet()
-                .setType( type )
-                .setName( name )
-                .setTitle( title );
+    @Override
+    public SecurableObjectType getCategory() {
+        return SecurableObjectType.EntitySet;
     }
-
 }

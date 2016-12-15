@@ -4,14 +4,12 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.dataloom.data.SerializationConstants;
 import com.dataloom.edm.validation.ValidateFullQualifiedName;
 import com.dataloom.edm.validation.ValidateUUID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Optional;
 import com.google.common.collect.SetMultimap;
 
 /**
@@ -19,43 +17,31 @@ import com.google.common.collect.SetMultimap;
  */
 public class CreateEntityRequest {
     @ValidateUUID
-    private final Optional<UUID>                              aclId;
-    @ValidateUUID
-    private final Optional<UUID>                              syncId;
-    @NotBlank
-    private final Optional<String>                            entitySetName;
+    private final UUID                                        syncId;
+    private final String                                      entitySetName;
     @ValidateFullQualifiedName
     private final FullQualifiedName                           entityType;
     private final Set<SetMultimap<FullQualifiedName, Object>> propertyValues;
 
     @JsonCreator
     public CreateEntityRequest(
-            @JsonProperty( SerializationConstants.ENTITY_SET_NAME ) Optional<String> entitySetName,
+            @JsonProperty( SerializationConstants.ENTITY_SET_NAME ) String entitySetName,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName entityType,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<SetMultimap<FullQualifiedName, Object>> propertyValues,
-            @JsonProperty( SerializationConstants.ACL_ID_FIELD ) Optional<UUID> aclId,
-            @JsonProperty( SerializationConstants.SYNC_ID ) Optional<UUID> syncId ) {
-        this.aclId = aclId;
+            @JsonProperty( SerializationConstants.SYNC_ID ) UUID syncId ) {
         this.syncId = syncId;
         this.entitySetName = entitySetName;
-
         this.entityType = entityType;
         this.propertyValues = propertyValues;
     }
 
-    @JsonProperty( SerializationConstants.ACL_ID_FIELD )
-    public Optional<UUID> getAclId() {
-
-        return aclId;
-    }
-
     @JsonProperty( SerializationConstants.SYNC_ID )
-    public Optional<UUID> getSyncId() {
+    public UUID getSyncId() {
         return syncId;
     }
 
     @JsonProperty( SerializationConstants.ENTITY_SET_NAME )
-    public Optional<String> getEntitySetName() {
+    public String getEntitySetName() {
         return entitySetName;
     }
 
@@ -70,40 +56,63 @@ public class CreateEntityRequest {
     }
 
     @Override
-    public boolean equals( Object o ) {
-        if ( this == o )
+    public boolean equals( Object obj ) {
+        if ( this == obj ) {
             return true;
-        if ( o == null || getClass() != o.getClass() )
+        }
+        if ( obj == null ) {
             return false;
-
-        CreateEntityRequest that = (CreateEntityRequest) o;
-
-        if ( aclId != null ? !aclId.equals( that.aclId ) : that.aclId != null )
+        }
+        if ( !( obj instanceof CreateEntityRequest ) ) {
             return false;
-        if ( syncId != null ? !syncId.equals( that.syncId ) : that.syncId != null )
+        }
+        CreateEntityRequest other = (CreateEntityRequest) obj;
+        if ( entitySetName == null ) {
+            if ( other.entitySetName != null ) {
+                return false;
+            }
+        } else if ( !entitySetName.equals( other.entitySetName ) ) {
             return false;
-        if ( entitySetName != null ? !entitySetName.equals( that.entitySetName ) : that.entitySetName != null )
+        }
+        if ( entityType == null ) {
+            if ( other.entityType != null ) {
+                return false;
+            }
+        } else if ( !entityType.equals( other.entityType ) ) {
             return false;
-        if ( entityType != null ? !entityType.equals( that.entityType ) : that.entityType != null )
+        }
+        if ( propertyValues == null ) {
+            if ( other.propertyValues != null ) {
+                return false;
+            }
+        } else if ( !propertyValues.equals( other.propertyValues ) ) {
             return false;
-
-        return propertyValues != null ? propertyValues.equals( that.propertyValues ) : that.propertyValues == null;
+        }
+        if ( syncId == null ) {
+            if ( other.syncId != null ) {
+                return false;
+            }
+        } else if ( !syncId.equals( other.syncId ) ) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = aclId != null ? aclId.hashCode() : 0;
-        result = 31 * result + ( syncId != null ? syncId.hashCode() : 0 );
-        result = 31 * result + ( entitySetName != null ? entitySetName.hashCode() : 0 );
-        result = 31 * result + ( entityType != null ? entityType.hashCode() : 0 );
-        result = 31 * result + ( propertyValues != null ? propertyValues.hashCode() : 0 );
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ( ( entitySetName == null ) ? 0 : entitySetName.hashCode() );
+        result = prime * result + ( ( entityType == null ) ? 0 : entityType.hashCode() );
+        result = prime * result + ( ( propertyValues == null ) ? 0 : propertyValues.hashCode() );
+        result = prime * result + ( ( syncId == null ) ? 0 : syncId.hashCode() );
         return result;
     }
 
     @Override
     public String toString() {
-        return "CreateEntityRequest [aclId=" + aclId + ", syncId=" + syncId + ", entitySetName=" + entitySetName
-                + ", entityType=" + entityType + ", propertyValues=" + propertyValues + "]";
+        return "CreateEntityRequest [syncId=" + syncId + ", entitySetName=" + entitySetName + ", entityType="
+                + entityType + ", propertyValues=" + propertyValues + "]";
     }
 
 }
