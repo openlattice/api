@@ -2,12 +2,15 @@ package com.dataloom.edm.internal;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Null;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.dataloom.data.SerializationConstants;
 import com.dataloom.edm.validation.ValidateFullQualifiedName;
+import com.dataloom.edm.validation.tags.Extended;
 import com.datastax.driver.mapping.annotations.ClusteringColumn;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -25,6 +28,7 @@ public class EntitySet implements Serializable {
     @PartitionKey(
         value = 0 )
     @JsonIgnore
+    @Null( groups = Extended.class )
     protected String            typename = null;
 
     @ClusteringColumn(

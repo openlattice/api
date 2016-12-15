@@ -23,11 +23,11 @@ import com.google.common.base.Preconditions;
 public class TypePK implements Serializable {
     @PartitionKey(
         value = 0 )
-    @NotBlank
+    @NotBlank( message = "Namespace cannot be empty." )
     protected String                 namespace;
     @ClusteringColumn(
         value = 0 )
-    @NotBlank
+    @NotBlank( message = "Name cannot be empty." )
     protected String                 name;
     
     @Column(
@@ -45,7 +45,6 @@ public class TypePK implements Serializable {
     }
 
     public TypePK setNamespace( String namespace ) {
-        Preconditions.checkArgument( StringUtils.isNotBlank( namespace ), "Namespace cannot be null" );
         this.namespace = namespace;
         return this;
     }
@@ -55,7 +54,6 @@ public class TypePK implements Serializable {
     }
 
     public TypePK setName( String name ) {
-        Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Name cannot be null" );
         this.name = name;
         return this;
     }
