@@ -66,13 +66,9 @@ dependencies {
     compile 'org.yaml:snakeyaml:1.13'
 
     /*
-     * TEMP FIX BY HO CHUNG
-     * VALIDATION SUPPORT
+     * Validation
     */
-    compile 'org.hibernate:hibernate-validator:5.2.4.Final'
-    compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.2'
-    compile group: 'javax.el', name: 'javax.el-api', version: '2.2.4'
-    compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.4'
+    compile 'org.hibernate:hibernate-validator:${hibernate_version}'
     
 	/*
      * Kryptnostic dependencies
