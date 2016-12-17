@@ -8,6 +8,7 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
+import com.datastax.driver.core.Row;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
@@ -100,8 +101,8 @@ public class EntitySet extends TypePK {
 
     @Override
     public String toString() {
-        return "EntitySet [name=" + name + ", title=" + title + ", id=" + id + ", type=" + type + ", schemas=" + schemas
-                + "]";
+        return "EntitySet [name=" + name + ", title=" + title + ", type=" + type + ", schemas=" + schemas + ", aclKey="
+                + aclKey + "]";
     }
 
     @Override

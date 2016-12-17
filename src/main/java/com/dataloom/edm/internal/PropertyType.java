@@ -61,11 +61,12 @@ public class PropertyType extends TypePK {
 
     @Override
     public String toString() {
-        return "PropertyType [datatype=" + datatype + ", id=" + id + ", fqn=" + type + ", schemas=" + schemas + "]";
+        return "PropertyType [datatype=" + datatype + ", type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey
+                + "]";
     }
 
     @Override
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.EntityType;
+        return SecurableObjectType.PropertyTypeInEntitySet;
     }
 }
