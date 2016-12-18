@@ -29,12 +29,12 @@ public interface UserDirectoryApi {
     @GET( CONTROLLER + "／" + USERS + "／" + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
 
-    @GET( CONTROLLER + "／" + USERS + "／" + ROLES )
+    @GET( CONTROLLER + "／" + ROLES )
     Map<String, List<Auth0UserBasic>> getAllUsersGroupByRole();
 
-    @GET( CONTROLLER + "／" + USERS + "／" + ROLES + "／" + ROLE_PATH )
+    @GET( CONTROLLER + "／" + ROLES + "／" + ROLE_PATH )
     List<Auth0UserBasic> getAllUsersOfRole( @Path( ROLE ) String role );
 
-    @PATCH( CONTROLLER + "／" + USERS + "／" + ROLES + "／" + RESET + "／" + USER_ID_PATH )
+    @PATCH( CONTROLLER + "／" + ROLES + "／" + RESET + "／" + USER_ID_PATH )
     Void resetRolesOfUser( @Path( USER_ID ) String userId, @Body List<String> roles );
 }
