@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Internal bstract base class for categorical types in the entity data model.
+ * Internal abstract base class for categorical types in the entity data model.
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class TypePK implements Serializable {
@@ -22,6 +22,8 @@ public abstract class TypePK implements Serializable {
     protected final Set<FullQualifiedName> schemas;
     protected final AclKey                 aclKey;
 
+    //TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.   
+    
     protected TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
         this.type = type;
         this.schemas = schemas;

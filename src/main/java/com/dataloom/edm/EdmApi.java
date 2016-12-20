@@ -11,7 +11,6 @@ import com.dataloom.edm.internal.EntityType;
 import com.dataloom.edm.internal.EntityTypeWithDetails;
 import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.edm.internal.Schema;
-import com.dataloom.edm.requests.GetSchemasRequest;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -22,38 +21,37 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public interface EdmApi {
-    String ALIAS          = "alias";
-    String ACL_ID         = "aclId";
-    String LOAD_DETAILS   = "loadDetails";
-    String NAME           = "name";
-    String NAMESPACE      = "namespace";
-    String NAMESPACES     = "namespaces";
-    String ENTITY_SETS    = "entitySets";
-    String ENTITY_TYPES   = "objectTypes";
-    String PROPERTY_TYPES = "propertyTypes";
-    String SCHEMA         = "schema";
-    String SCHEMAS        = "schemas";
-    String IS_OWNER       = "isOwner";
+    String ALIAS                      = "alias";
+    String ACL_ID                     = "aclId";
+    String LOAD_DETAILS               = "loadDetails";
+    String NAME                       = "name";
+    String NAMESPACE                  = "namespace";
+    String NAMESPACES                 = "namespaces";
+    String ENTITY_SETS                = "entitySets";
+    String ENTITY_TYPES               = "objectTypes";
+    String PROPERTY_TYPES             = "propertyTypes";
+    String SCHEMA                     = "schema";
+    String SCHEMAS                    = "schemas";
+    String IS_OWNER                   = "isOwner";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
      * /entity/type/{namespace}/{name} /entity/set/{namespace}/{name} /schema/{namespace}/{name}
      * /property/{namespace}/{name}
      */
-    String SCHEMA_BASE_PATH        = "schema";
-    String ENTITY_SETS_BASE_PATH   = "entity/set";
-    String ENTITY_TYPE_BASE_PATH   = "entity/type";
-    String PROPERTY_TYPE_BASE_PATH = "property/type";
-    String NAMESPACE_PATH          = "{" + NAMESPACE + "}";
-    String NAME_PATH               = "{" + NAME + "}";
+    String SCHEMA_BASE_PATH           = "schema";
+    String ENTITY_SETS_BASE_PATH      = "entity/set";
+    String ENTITY_TYPE_BASE_PATH      = "entity/type";
+    String PROPERTY_TYPE_BASE_PATH    = "property/type";
+    String NAMESPACE_PATH             = "{" + NAMESPACE + "}";
+    String NAME_PATH                  = "{" + NAME + "}";
 
-    String ADD_ENTITY_TYPES_PATH    = "addEntityTypes";
-    String DELETE_ENTITY_TYPES_PATH = "deleteEntityTypes";
+    String ADD_ENTITY_TYPES_PATH      = "addEntityTypes";
+    String DELETE_ENTITY_TYPES_PATH   = "deleteEntityTypes";
     String ADD_PROPERTY_TYPES_PATH    = "addPropertyTypes";
     String DELETE_PROPERTY_TYPES_PATH = "deletePropertyTypes";
     String DETAILS_PATH               = "details";
@@ -70,23 +68,20 @@ public interface EdmApi {
     @PUT( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
     Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
+    @POST( SCHEMA_BASE_PATH  )
+    Void createSchemaIfNotExists( @Body Schema schema );
+    
     /**
-     * Retrieves schemas matching the namespace provided in the {@code request} parameter. If no namespace is specified
-     * then all schemas will be returned.
-     * <p>
-     * The level of type detail returned by the server is determined those provided in the {@code typeDetails } field of
-     * the request. If no type details are specified then the server return all type details.
-     * <p>
-     * The server will only return schemas that the calling user is authorized to see.
-     *
-     * @param request The request options to use when filtering schemas.
-     * @return An iterable of Schema objects.
+     * Loads schemas from the server.
+     * 
+     * @param namespace A valid entity data model name space.
+     * @return All schemas in the name space specified {@code namespace} parameter.
      */
-    @POST( SCHEMA_BASE_PATH )
-    Iterable<Schema> getSchemas( @Body GetSchemasRequest request );
+    @GET( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH )
+    Iterable<Schema> getSchemas( @Path( NAMESPACE ) String namespace );
 
     /**
-     * Gets all schemas available to the calling user.
+     * Gets all schemas.
      *
      * @return An iterable containing all the schemas available to the calling user.
      */
@@ -125,7 +120,10 @@ public interface EdmApi {
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> entityTypes );
 
-    @HTTP(method="DELETE", path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_ENTITY_TYPES_PATH, hasBody = true )
+    @HTTP(
+        method = "DELETE",
+        path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_ENTITY_TYPES_PATH,
+        hasBody = true )
     Void removeEntityTypeFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
@@ -137,7 +135,10 @@ public interface EdmApi {
             @Path( NAME ) String name,
             @Body Set<FullQualifiedName> properties );
 
-    @HTTP(method="DELETE", path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_PROPERTY_TYPES_PATH, hasBody = true )
+    @HTTP(
+        method = "DELETE",
+        path = SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_PROPERTY_TYPES_PATH,
+        hasBody = true )
     Void removePropertyTypesFromSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
@@ -161,7 +162,8 @@ public interface EdmApi {
 
     /**
      * 
-     * @param isOwner Optional. If isOwner is true, return all EntitySets user owns. If isOwner is false, return all EntitySetsWithPermissions user does not own. If isOwner is null, return all EntitySetsWithPermissions.
+     * @param isOwner Optional. If isOwner is true, return all EntitySets user owns. If isOwner is false, return all
+     *            EntitySetsWithPermissions user does not own. If isOwner is null, return all EntitySetsWithPermissions.
      * @return
      */
     @GET( ENTITY_SETS_BASE_PATH )
@@ -171,11 +173,11 @@ public interface EdmApi {
     EntitySet getEntitySet( @Path( NAME ) String entitySetName );
 
     @POST( ENTITY_SETS_BASE_PATH + "/" + NAME_PATH )
-    Void assignEntityToEntitySet( @Path( NAME) String entitySetName, @Body Set<UUID> entityIds );
+    Void assignEntityToEntitySet( @Path( NAME ) String entitySetName, @Body Set<UUID> entityIds );
 
     @DELETE( ENTITY_SETS_BASE_PATH + "/" + NAME_PATH )
     Void deleteEntitySet( @Path( NAME ) String entitySetName );
-    
+
     /**
      * Creates an entity type if it doesn't already exist.
      *
@@ -208,16 +210,16 @@ public interface EdmApi {
     Void addPropertyTypesToEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
-            @Body Set<FullQualifiedName> properties
-    );
-    
-    @HTTP(method="DELETE", path = ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_PROPERTY_TYPES_PATH, hasBody = true )
+            @Body Set<FullQualifiedName> properties );
+
+    @HTTP(
+        method = "DELETE",
+        path = ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" + DELETE_PROPERTY_TYPES_PATH,
+        hasBody = true )
     Void removePropertyTypesFromEntityType(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
-            @Body Set<FullQualifiedName> properties
-    );
-
+            @Body Set<FullQualifiedName> properties );
 
     /**
      * Creates a property type if doesn't already exist.
@@ -244,5 +246,8 @@ public interface EdmApi {
 
     @GET( PROPERTY_TYPE_BASE_PATH )
     Iterable<PropertyType> getPropertyTypes();
+
+
+    
 
 }
