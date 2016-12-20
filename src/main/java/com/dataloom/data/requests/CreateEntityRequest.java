@@ -3,12 +3,15 @@ package com.dataloom.data.requests;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Created by yao on 9/20/16.
@@ -25,10 +28,11 @@ public class CreateEntityRequest {
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName entityType,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<SetMultimap<FullQualifiedName, Object>> propertyValues,
             @JsonProperty( SerializationConstants.SYNC_ID ) UUID syncId ) {
-        this.syncId = syncId;
+        checkArgument( StringUtils.isNotBlank( entitySetName ), "Entity set name cannot be blank." );
+        this.syncId = checkNotNull( syncId );
         this.entitySetName = entitySetName;
-        this.entityType = entityType;
-        this.propertyValues = propertyValues;
+        this.entityType = checkNotNull( entityType );
+        this.propertyValues = checkNotNull( propertyValues );
     }
 
     @JsonProperty( SerializationConstants.SYNC_ID )

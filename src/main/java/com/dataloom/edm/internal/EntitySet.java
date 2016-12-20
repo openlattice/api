@@ -8,7 +8,6 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
-import com.datastax.driver.core.Row;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
@@ -41,6 +40,10 @@ public class EntitySet extends TypePK {
         this( id.or( UUID::randomUUID ), type, name, title );
     }
 
+    public EntitySet( FullQualifiedName type, String name, String title, Set<FullQualifiedName> schemas ) {
+        this( UUID.randomUUID() , type, name, title, schemas );
+    }
+    
     public EntitySet( UUID id, FullQualifiedName type, String name, String title ) {
         this( id, type, name, title, ImmutableSet.of() );
     }

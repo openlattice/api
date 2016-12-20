@@ -29,5 +29,7 @@ public final class SerializationConstants {
     public static final String REQUEST_ID       = "requestId";
     public static final String REQUESTING_USER  = "requestingUser";
     public static final String REQUEST          = "request";
+    public static final String ENTITY_TYPES     = "entityTypes";
+    public static final String PROPERTY_TYPES   = "propertyTypes";
 
 }

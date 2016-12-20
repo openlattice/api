@@ -10,6 +10,7 @@ import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -21,12 +22,22 @@ public class PropertyType extends TypePK {
 
     @JsonCreator
     public PropertyType(
-            @JsonProperty( SerializationConstants.ID_FIELD ) UUID id,
+            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.FQN ) FullQualifiedName fqn,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
-        super( id, fqn, schemas );
+        super(
+                id.or( UUID::randomUUID ),
+                fqn,
+                schemas );
         this.datatype = datatype;
+    }
+
+    public PropertyType(
+            FullQualifiedName fqn,
+            Set<FullQualifiedName> schemas,
+            EdmPrimitiveTypeKind datatype ) {
+        this( Optional.absent(), fqn, schemas, datatype );
     }
 
     public EdmPrimitiveTypeKind getDatatype() {
