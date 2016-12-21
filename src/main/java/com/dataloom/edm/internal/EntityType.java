@@ -28,7 +28,7 @@ public class EntityType extends TypePK {
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.KEY_FIELD ) Set<FullQualifiedName> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<FullQualifiedName> properties ) {
-        super( id.or( UUID::randomUUID ), type, schemas );
+        super( id, type, schemas );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );

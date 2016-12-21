@@ -27,7 +27,7 @@ public class PropertyType extends TypePK {
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
         super(
-                id.or( UUID::randomUUID ),
+                id,
                 fqn,
                 schemas );
         this.datatype = datatype;
