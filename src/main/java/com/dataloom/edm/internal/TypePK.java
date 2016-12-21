@@ -11,9 +11,12 @@ import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * Internal abstract base class for categorical types in the entity data model.
+ * 
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class TypePK implements Serializable {
@@ -21,13 +24,20 @@ public abstract class TypePK implements Serializable {
     protected final FullQualifiedName      type;
     protected final Set<FullQualifiedName> schemas;
     protected final AclKey                 aclKey;
+    private final boolean                  idPresent;
+    private transient int                  h                = 0;
 
-    //TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.   
-    
-    protected TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
+    // TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.
+
+    protected TypePK( Optional<UUID> id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
+        this( id.or( UUID::randomUUID ), type, schemas, id.isPresent() );
+    }
+
+    private TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas, boolean idPresent ) {
         this.type = type;
-        this.schemas = schemas;
+        this.schemas = ImmutableSet.copyOf( schemas );
         aclKey = new AclKey( this.getCategory(), id );
+        this.idPresent = idPresent;
     }
 
     @JsonProperty( SerializationConstants.ID_FIELD )
@@ -45,14 +55,31 @@ public abstract class TypePK implements Serializable {
         return schemas;
     }
 
+    @JsonIgnore
+    public boolean wasIdPresent() {
+        return idPresent;
+    }
+
+    @JsonIgnore
+    public AclKey getAclKey() {
+        return aclKey;
+    }
+
+    @JsonIgnore
+    public abstract SecurableObjectType getCategory();
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ( ( aclKey == null ) ? 0 : aclKey.hashCode() );
-        result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
-        result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ( ( aclKey == null ) ? 0 : aclKey.hashCode() );
+            result = prime * result + ( idPresent ? 1231 : 1237 );
+            result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
+            result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
+            h = result;
+        }
+        return h;
     }
 
     @Override
@@ -74,6 +101,9 @@ public abstract class TypePK implements Serializable {
         } else if ( !aclKey.equals( other.aclKey ) ) {
             return false;
         }
+        if ( idPresent != other.idPresent ) {
+            return false;
+        }
         if ( schemas == null ) {
             if ( other.schemas != null ) {
                 return false;
@@ -91,17 +121,10 @@ public abstract class TypePK implements Serializable {
         return true;
     }
 
-    @JsonIgnore
-    public AclKey getAclKey() {
-        return aclKey;
-    }
-
-    @JsonIgnore
-    public abstract SecurableObjectType getCategory();
-
     @Override
     public String toString() {
-        return "TypePK [type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey + "]";
+        return "TypePK [type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey + ", idPresent=" + idPresent
+                + "]";
     }
 
 }

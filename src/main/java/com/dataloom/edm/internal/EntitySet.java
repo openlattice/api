@@ -1,6 +1,5 @@
 package com.dataloom.edm.internal;
 
-import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,23 +36,15 @@ public class EntitySet extends TypePK {
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title ) {
-        this( id.or( UUID::randomUUID ), type, name, title );
-    }
-
-    public EntitySet( FullQualifiedName type, String name, String title, Set<FullQualifiedName> schemas ) {
-        this( UUID.randomUUID() , type, name, title, schemas );
-    }
-    
-    public EntitySet( UUID id, FullQualifiedName type, String name, String title ) {
-        this( id, type, name, title, ImmutableSet.of() );
-    }
-
-    public EntitySet( UUID id, FullQualifiedName type, String name, String title, Set<FullQualifiedName> schemas ) {
-        super( id, type, schemas );
+        super( id, type, ImmutableSet.of() );
         Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
         this.title = title;
+    }
+
+    public EntitySet( FullQualifiedName type, String name, String title ) {
+        this( Optional.absent(), type, name, title );
     }
 
     public String getName() {
