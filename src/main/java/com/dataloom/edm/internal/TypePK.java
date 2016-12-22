@@ -12,7 +12,6 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
 
 /**
  * Internal abstract base class for categorical types in the entity data model.
@@ -35,7 +34,7 @@ public abstract class TypePK implements Serializable {
 
     private TypePK( UUID id, FullQualifiedName type, Set<FullQualifiedName> schemas, boolean idPresent ) {
         this.type = type;
-        this.schemas = ImmutableSet.copyOf( schemas );
+        this.schemas = schemas;
         aclKey = new AclKey( this.getCategory(), id );
         this.idPresent = idPresent;
     }
