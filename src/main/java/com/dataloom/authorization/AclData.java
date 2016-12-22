@@ -1,8 +1,8 @@
 package com.dataloom.authorization;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.dataloom.authorization.requests.Action;
 import com.dataloom.authorization.requests.Permission;
@@ -11,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.google.common.base.Optional;
 
 public class AclData {
-    private final List<AclKey>                                  aclKeys;
-    private final Optional<Map<Principal, EnumSet<Permission>>> aces;
-    private final Optional<Action>                              action;
+    private final List<AclKey>                    aclKeys;
+    private final Map<Principal, Set<Permission>> aces;
+    private final Optional<Action>                action;
 
     @JsonCreator
     public AclData(
             List<AclKey> aclKeys,
-            Optional<Map<Principal, EnumSet<Permission>>> aces,
+            Map<Principal, Set<Permission>> aces,
             Optional<Action> action ) {
         this.aclKeys = aclKeys;
         this.aces = aces;
@@ -29,10 +29,10 @@ public class AclData {
         return aclKeys;
     }
 
-    public Optional<Map<Principal, EnumSet<Permission>>> getAces() {
+    public Map<Principal, Set<Permission>> getAces() {
         return aces;
     }
-    
+
     public Optional<Action> getAction() {
         return action;
     }
@@ -77,7 +77,7 @@ public class AclData {
 
     @Override
     public String toString() {
-        return "AclKeyRequest [aclKeys=" + aclKeys + ", aces=" + aces + "]";
+        return "AclData [aclKeys=" + aclKeys + ", aces=" + aces + "]";
     }
 
 }
