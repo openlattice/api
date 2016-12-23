@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableSet;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class EntitySet extends TypePK {
+public class EntitySet extends AbstractSchemaAssociatedSecurableType {
     private static final long serialVersionUID = 1643809693309599032L;
     protected final String    name;
     protected final String    title;
@@ -41,6 +41,10 @@ public class EntitySet extends TypePK {
         Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
         this.title = title;
+    }
+
+    public EntitySet( UUID id, FullQualifiedName type, String name, String title ) {
+        this( Optional.of( id ), type, name, title );
     }
 
     public EntitySet( FullQualifiedName type, String name, String title ) {
