@@ -16,7 +16,7 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class PropertyType extends TypePK {
+public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     private static final long      serialVersionUID = -1215885855868336578L;
     protected EdmPrimitiveTypeKind datatype;
 
@@ -31,6 +31,14 @@ public class PropertyType extends TypePK {
                 fqn,
                 schemas );
         this.datatype = datatype;
+    }
+
+    public PropertyType(
+            UUID id,
+            FullQualifiedName fqn,
+            Set<FullQualifiedName> schemas,
+            EdmPrimitiveTypeKind datatype ) {
+        this( Optional.of( id ), fqn, schemas, datatype );
     }
 
     public PropertyType(

@@ -16,10 +16,11 @@ import com.google.common.base.Preconditions;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class EntityType extends TypePK {
+public class EntityType extends AbstractSchemaAssociatedSecurableType {
     private static final long            serialVersionUID = -9006708363024044315L;
     private final Set<FullQualifiedName> key;
     private final Set<FullQualifiedName> properties;
+    private transient int                h                = 0;
 
     @JsonCreator
     public EntityType(
@@ -32,6 +33,15 @@ public class EntityType extends TypePK {
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+    }
+
+    public EntityType(
+            UUID id,
+            FullQualifiedName type,
+            Set<FullQualifiedName> schemas,
+            Set<FullQualifiedName> key,
+            Set<FullQualifiedName> properties ) {
+        this( Optional.of( id ), type, schemas, key, properties );
     }
 
     public EntityType(
@@ -51,17 +61,6 @@ public class EntityType extends TypePK {
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     public Set<FullQualifiedName> getProperties() {
         return properties;
-    }
-
-    // TODO: Don't do this. Make this immutable
-    public EntityType addProperties( Set<FullQualifiedName> properties ) {
-        this.properties.addAll( properties );
-        return this;
-    }
-
-    public EntityType removeProperties( Set<FullQualifiedName> properties ) {
-        this.properties.removeAll( properties );
-        return this;
     }
 
     public SecurableObjectType getCategory() {
