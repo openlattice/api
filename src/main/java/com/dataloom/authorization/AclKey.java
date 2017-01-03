@@ -3,6 +3,9 @@ package com.dataloom.authorization;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 
 /**
@@ -17,7 +20,10 @@ public class AclKey implements Comparable<AclKey>, Serializable {
     private final UUID                id;
     private transient int             h                = 0;
 
-    public AclKey( SecurableObjectType type, UUID id ) {
+    @JsonCreator
+    public AclKey(
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) SecurableObjectType type,
+            @JsonProperty( SerializationConstants.ID_FIELD ) UUID id ) {
         this.type = Preconditions.checkNotNull( type );
         this.id = Preconditions.checkNotNull( id );
     }
