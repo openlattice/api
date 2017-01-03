@@ -1,20 +1,22 @@
 package com.dataloom.authorization;
 
-import java.util.List;
-
 import com.dataloom.authorization.requests.Action;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AclData extends Acl {
+public class AclData {
+    private final Acl    acl;
     private final Action action;
 
     @JsonCreator
     public AclData(
-            List<AclKey> aclKey,
-            Iterable<Ace> aces,
+            Acl acl,
             Action action ) {
-        super( aclKey, aces );
+        this.acl = acl;
         this.action = action;
+    }
+
+    public Acl getAcl() {
+        return acl;
     }
 
     public Action getAction() {
@@ -24,7 +26,8 @@ public class AclData extends Acl {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 1;
+        result = prime * result + ( ( acl == null ) ? 0 : acl.hashCode() );
         result = prime * result + ( ( action == null ) ? 0 : action.hashCode() );
         return result;
     }
@@ -32,16 +35,19 @@ public class AclData extends Acl {
     @Override
     public boolean equals( Object obj ) {
         if ( this == obj ) return true;
-        if ( !super.equals( obj ) ) return false;
+        if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
         AclData other = (AclData) obj;
+        if ( acl == null ) {
+            if ( other.acl != null ) return false;
+        } else if ( !acl.equals( other.acl ) ) return false;
         if ( action != other.action ) return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "AclData [action=" + action + ", aclKey=" + aclKey + ", aces=" + aces + "]";
+        return "AclData [acl=" + acl + ", action=" + action + "]";
     }
 
 }
