@@ -20,7 +20,6 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
     private static final long            serialVersionUID = -9006708363024044315L;
     private final Set<FullQualifiedName> key;
     private final Set<FullQualifiedName> properties;
-    private transient int                h                = 0;
 
     @JsonCreator
     public EntityType(

@@ -1,7 +1,8 @@
 package com.dataloom.edm.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
-import java.util.Set;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -22,9 +23,8 @@ public abstract class AbstractSecurableType implements Serializable {
     protected AbstractSecurableType(
             UUID id,
             FullQualifiedName type,
-            Set<FullQualifiedName> schemas,
             boolean idPresent ) {
-        this.type = type;
+        this.type = checkNotNull( type );
         aclKey = new AclKey( this.getCategory(), id );
         this.idPresent = idPresent;
     }

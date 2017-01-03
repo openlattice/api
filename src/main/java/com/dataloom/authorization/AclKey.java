@@ -1,12 +1,13 @@
 package com.dataloom.authorization;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Preconditions;
+import com.fasterxml.jackson.annotation.JsonProperty;;
 
 /**
  * This class is intended to be used as the key for the hazelcast map storing permission information.
@@ -24,8 +25,8 @@ public class AclKey implements Comparable<AclKey>, Serializable {
     public AclKey(
             @JsonProperty( SerializationConstants.TYPE_FIELD ) SecurableObjectType type,
             @JsonProperty( SerializationConstants.ID_FIELD ) UUID id ) {
-        this.type = Preconditions.checkNotNull( type );
-        this.id = Preconditions.checkNotNull( id );
+        this.type = checkNotNull( type );
+        this.id = checkNotNull( id );
     }
 
     public UUID getId() {

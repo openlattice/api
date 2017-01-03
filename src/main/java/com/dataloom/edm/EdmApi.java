@@ -186,7 +186,7 @@ public interface EdmApi {
             @Path( NAME ) String name );
 
     @PATCH( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" )
-    Void updatePropertyTypes(
+    Void updateSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
@@ -196,5 +196,4 @@ public interface EdmApi {
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
-
 }
