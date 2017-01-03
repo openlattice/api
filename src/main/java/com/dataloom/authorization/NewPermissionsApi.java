@@ -2,6 +2,7 @@ package com.dataloom.authorization;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
@@ -15,7 +16,7 @@ public interface NewPermissionsApi {
      * @return The aces for the acl key, after applying the request changes.
      */
     @PATCH( PERMISSIONS )
-    Acl updateAcl( AclData req );
+    Acl updateAcl( @Body AclData req );
 
     /**
      * Retrieves the acl for a particular acl key. Only return if user is the owner of acl key.
@@ -24,5 +25,5 @@ public interface NewPermissionsApi {
      * @return The aces for the requested acl key.
      */
     @POST( PERMISSIONS )
-    Acl getAcl( List<AclKey> aclKeys );
+    Acl getAcl( @Body List<AclKey> aclKeys );
 }

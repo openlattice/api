@@ -1,7 +1,9 @@
 package com.dataloom.authorization;
 
 import com.dataloom.authorization.requests.Action;
+import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AclData {
     private final Acl    acl;
@@ -9,8 +11,8 @@ public class AclData {
 
     @JsonCreator
     public AclData(
-            Acl acl,
-            Action action ) {
+            @JsonProperty( SerializationConstants.ACL ) Acl acl,
+            @JsonProperty( SerializationConstants.ACTION ) Action action ) {
         this.acl = acl;
         this.action = action;
     }

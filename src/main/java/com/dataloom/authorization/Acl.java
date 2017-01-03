@@ -2,11 +2,18 @@ package com.dataloom.authorization;
 
 import java.util.List;
 
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Acl {
     protected final List<AclKey>  aclKey;
     protected final Iterable<Ace> aces;
 
-    public Acl( List<AclKey> aclKey, Iterable<Ace> aces ) {
+    @JsonCreator
+    public Acl( 
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKey> aclKey, 
+            @JsonProperty( SerializationConstants.ACES ) Iterable<Ace> aces ) {
         this.aclKey = aclKey;
         this.aces = aces;
     }
