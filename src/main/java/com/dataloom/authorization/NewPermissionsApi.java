@@ -1,42 +1,29 @@
 package com.dataloom.authorization;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
-import retrofit2.http.GET;
+import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface NewPermissionsApi {
-    String PERMISSIONS                                 = "permissions";
+    String PERMISSIONS = "permissions";
 
     /**
-     * Used to load a list of all entity sets that caller can managed via the Permissions API.
+     * Add, removes, or sets the ace for a particular acl key. Successful only if user is the owner of acl key.
      * 
-     * @return A map of all administerable entity sets.
-     */
-    @GET( PERMISSIONS )
-    Map<String, AclKeyInfo> getAdministerableEntitySets();
-
-    /**
-     * Retrieves the acl for a particular acl key.
-     * 
-     * @param request The acl key for which to return an acl. Any aces included in the request will be ignored.
-     * @return The aces for the requested acl key.
-     */
-    /**
-     * @param request
-     * @return
-     */
-    @POST( PERMISSIONS )
-    Set<AclData> getAcl( AclData request );
-
-    /**
-     * Add, removes, or sets the acl for a particular acl key.
-     * 
-     * @param request The acl key and the aces to set for that particular acl key.
-     * @return The acl for acl key, after applying the request changes.
+     * @param req The acl key, the principals, and the aces to set for that particular ace key.
+     * @return The aces for the acl key, after applying the request changes.
      */
     @PATCH( PERMISSIONS )
-    Set<AclData> updateAcl( AclData request );
+    Acl updateAcl( @Body AclData req );
+
+    /**
+     * Retrieves the acl for a particular acl key. Only return if user is the owner of acl key.
+     * 
+     * @param aclKeys The acl key.
+     * @return The aces for the requested acl key.
+     */
+    @POST( PERMISSIONS )
+    Acl getAcl( @Body List<AclKey> aclKeys );
 }
