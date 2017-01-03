@@ -11,13 +11,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class EntitySet extends AbstractSchemaAssociatedSecurableType {
+public class EntitySet extends AbstractSecurableType {
     private static final long serialVersionUID = 1643809693309599032L;
     protected final String    name;
     protected final String    title;
@@ -36,7 +35,7 @@ public class EntitySet extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title ) {
-        super( id, type, ImmutableSet.of() );
+        super( id.or( UUID::randomUUID ), type, id.isPresent() );
         Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
@@ -99,8 +98,7 @@ public class EntitySet extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public String toString() {
-        return "EntitySet [name=" + name + ", title=" + title + ", type=" + type + ", schemas=" + schemas + ", aclKey="
-                + aclKey + "]";
+        return "EntitySet [name=" + name + ", title=" + title + ", type=" + type + ", aclKey=" + aclKey + "]";
     }
 
     @Override

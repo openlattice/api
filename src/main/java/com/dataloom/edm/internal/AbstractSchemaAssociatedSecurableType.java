@@ -24,7 +24,7 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
     // TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.
 
     protected AbstractSchemaAssociatedSecurableType( Optional<UUID> id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
-        super( id.or( UUID::randomUUID ), type, schemas, id.isPresent() );
+        super( id.or( UUID::randomUUID ), type, id.isPresent() );
         this.schemas = checkNotNull( schemas );
     }
 
