@@ -23,11 +23,21 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
 
     // TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.
 
-    protected AbstractSchemaAssociatedSecurableType( Optional<UUID> id, FullQualifiedName type, Set<FullQualifiedName> schemas ) {
-        super( id.or( UUID::randomUUID ), type, id.isPresent() );
-        this.schemas = checkNotNull( schemas );
+    protected AbstractSchemaAssociatedSecurableType(
+            Optional<UUID> id,
+            FullQualifiedName type,
+            Set<FullQualifiedName> schemas ) {
+        this( id, type, schemas, "" );
     }
 
+    protected AbstractSchemaAssociatedSecurableType(
+            Optional<UUID> id,
+            FullQualifiedName type,
+            Set<FullQualifiedName> schemas,
+            String description ) {
+        super( id.or( UUID::randomUUID ), type, description, id.isPresent() );
+        this.schemas = checkNotNull( schemas );
+    }
 
     @JsonProperty( SerializationConstants.SCHEMAS )
     public Set<FullQualifiedName> getSchemas() {

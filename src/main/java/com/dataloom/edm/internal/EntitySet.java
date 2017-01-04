@@ -18,8 +18,8 @@ import com.google.common.base.Preconditions;
  */
 public class EntitySet extends AbstractSecurableType {
     private static final long serialVersionUID = 1643809693309599032L;
-    protected final String    name;
-    protected final String    title;
+    private final String      name;
+    private final String      title;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
@@ -28,26 +28,28 @@ public class EntitySet extends AbstractSecurableType {
      * @param type The full qualified name of the entity type to be collected in this entity set.
      * @param name The name of the entity set.
      * @param title The friendly name for the entity set.
+     * @param description A description of the entity set.
      */
     @JsonCreator
     public EntitySet(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
-            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title ) {
-        super( id.or( UUID::randomUUID ), type, id.isPresent() );
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) String description ) {
+        super( id.or( UUID::randomUUID ), type, description, id.isPresent() );
         Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
         this.title = title;
     }
 
-    public EntitySet( UUID id, FullQualifiedName type, String name, String title ) {
-        this( Optional.of( id ), type, name, title );
+    public EntitySet( UUID id, FullQualifiedName type, String name, String title, String description ) {
+        this( Optional.of( id ), type, name, title, description );
     }
 
-    public EntitySet( FullQualifiedName type, String name, String title ) {
-        this( Optional.absent(), type, name, title );
+    public EntitySet( FullQualifiedName type, String name, String title, String description ) {
+        this( Optional.absent(), type, name, title, "description" );
     }
 
     public String getName() {
