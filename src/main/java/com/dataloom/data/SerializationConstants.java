@@ -6,6 +6,7 @@ public final class SerializationConstants {
     public static final String ACL_ID_FIELD     = "aclId";
     public static final String ACTION           = "action";
     public static final String DATATYPE_FIELD   = "datatype";
+    public static final String DESCRIPTION_FIELD = "description";
     public static final String ENTITY_FIELD     = "entity";
     public static final String ENTITY_SET_NAME  = "entitySetName";
     public static final String ENTITY_TYPES     = "entityTypes";
