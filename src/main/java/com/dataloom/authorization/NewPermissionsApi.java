@@ -16,7 +16,7 @@ public interface NewPermissionsApi {
      * @return The aces for the acl key, after applying the request changes.
      */
     @PATCH( PERMISSIONS )
-    Acl updateAcl( @Body AclData req );
+    Void updateAcl( @Body AclData req );
 
     /**
      * Retrieves the acl for a particular acl key. Only return if user is the owner of acl key.
