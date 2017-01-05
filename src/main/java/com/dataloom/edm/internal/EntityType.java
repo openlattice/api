@@ -1,5 +1,6 @@
 package com.dataloom.edm.internal;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -55,16 +57,24 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
     // TODO: It seems the objects do not allow property types from the different schemas.
     @JsonProperty( SerializationConstants.KEY_FIELD )
     public Set<UUID> getKey() {
-        return key;
+        return Collections.unmodifiableSet( key );
     }
 
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     public Set<UUID> getProperties() {
-        return properties;
+        return Collections.unmodifiableSet( properties );
     }
 
     public SecurableObjectType getCategory() {
         return SecurableObjectType.EntityType;
+    }
+
+    public void addPropertyTypes( Set<UUID> propertyTypeIds ) {
+        properties.addAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
+    }
+
+    public void removePropertyTypes( Set<UUID> propertyTypeIds ) {
+        properties.removeAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
     }
 
     @Override
