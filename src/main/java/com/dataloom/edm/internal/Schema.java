@@ -1,6 +1,6 @@
 package com.dataloom.edm.internal;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
@@ -17,17 +17,17 @@ import com.google.common.base.Preconditions;
  * 
  */
 public class Schema {
-    private final FullQualifiedName                fqn;
+    private final FullQualifiedName        fqn;
 
     // These columns aren't stored in cassandra
-    private final transient Set<FullQualifiedName> propertyTypes;
-    private final transient Set<FullQualifiedName> entityTypes;
+    private final Collection<PropertyType> propertyTypes;
+    private final Collection<EntityType>   entityTypes;
 
     @JsonCreator
     public Schema(
             @JsonProperty( SerializationConstants.FQN ) FullQualifiedName fqn,
-            @JsonProperty( SerializationConstants.ENTITY_TYPES ) Set<FullQualifiedName> entityTypes,
-            @JsonProperty( SerializationConstants.PROPERTY_TYPES ) Set<FullQualifiedName> propertyTypes ) {
+            @JsonProperty( SerializationConstants.PROPERTY_TYPES ) Collection<PropertyType> propertyTypes,
+            @JsonProperty( SerializationConstants.ENTITY_TYPES ) Collection<EntityType> entityTypes ) {
         this.fqn = Preconditions.checkNotNull( fqn );
         this.entityTypes = Preconditions.checkNotNull( entityTypes );
         this.propertyTypes = Preconditions.checkNotNull( propertyTypes );
@@ -39,12 +39,12 @@ public class Schema {
     }
 
     @JsonProperty( SerializationConstants.ENTITY_TYPES )
-    public Set<FullQualifiedName> getEntityTypes() {
+    public Collection<EntityType> getEntityTypes() {
         return entityTypes;
     }
 
     @JsonProperty( SerializationConstants.PROPERTY_TYPES )
-    public Set<FullQualifiedName> getPropertyTypes() {
+    public Collection<PropertyType> getPropertyTypes() {
         return propertyTypes;
     }
 

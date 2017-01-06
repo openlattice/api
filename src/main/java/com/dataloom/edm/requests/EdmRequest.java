@@ -1,7 +1,9 @@
 package com.dataloom.edm.requests;
 
+import java.util.Set;
+import java.util.UUID;
+
 import com.dataloom.data.SerializationConstants;
-import com.dataloom.edm.internal.Schema;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,15 +14,19 @@ public class EdmRequest {
         REPLACE
     };
 
-    private final Action action;
-    private final Schema schema;
+    private final Action    action;
+    private final Set<UUID> propertyTypes;
+    private final Set<UUID> entityTypes;
 
     @JsonCreator
     public EdmRequest(
             @JsonProperty( SerializationConstants.ACTION ) Action action,
-            @JsonProperty( SerializationConstants.SCHEMA ) Schema schema ) {
+            @JsonProperty( SerializationConstants.PROPERTY_TYPES ) Set<UUID> propertyTypes,
+            @JsonProperty( SerializationConstants.ENTITY_TYPES ) Set<UUID> entityTypes ) {
         this.action = action;
-        this.schema = schema;
+        this.propertyTypes = propertyTypes;
+        ;
+        this.entityTypes = entityTypes;
     }
 
     @JsonProperty( SerializationConstants.ACTION )
@@ -28,8 +34,14 @@ public class EdmRequest {
         return action;
     }
 
-    @JsonProperty( SerializationConstants.SCHEMA )
-    public Schema getSchema() {
-        return schema;
+    @JsonProperty( SerializationConstants.PROPERTY_TYPES )
+    public Set<UUID> getPropertyTypes() {
+        return propertyTypes;
     }
+
+    @JsonProperty( SerializationConstants.ENTITY_TYPES )
+    public Set<UUID> getEntityTypes() {
+        return entityTypes;
+    }
+
 }
