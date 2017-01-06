@@ -6,7 +6,7 @@ import com.dataloom.authorization.requests.Permission;
 
 public class EntitySetWithPermissions {
     private EntitySet           entitySet;
-    private EnumSet<Permission> permissions;
+    private final Acl
     private Boolean             isOwner;
 
     public EntitySet getEntitySet() {
