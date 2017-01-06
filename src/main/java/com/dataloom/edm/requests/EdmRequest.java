@@ -25,7 +25,6 @@ public class EdmRequest {
             @JsonProperty( SerializationConstants.ENTITY_TYPES ) Set<UUID> entityTypes ) {
         this.action = action;
         this.propertyTypes = propertyTypes;
-        ;
         this.entityTypes = entityTypes;
     }
 

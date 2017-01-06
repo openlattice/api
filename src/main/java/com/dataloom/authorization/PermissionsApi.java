@@ -6,7 +6,11 @@ import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
-public interface NewPermissionsApi {
+/**
+ * @author Ho Chung Siu
+ * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt; 
+ */
+public interface PermissionsApi {
     String PERMISSIONS = "permissions";
 
     /**

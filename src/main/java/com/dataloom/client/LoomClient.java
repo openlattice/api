@@ -5,10 +5,10 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dataloom.authorization.PermissionsApi;
 import com.dataloom.client.serialization.SerializableSupplier;
 import com.dataloom.data.DataApi;
 import com.dataloom.edm.EdmApi;
-import com.dataloom.permissions.PermissionsApi;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;

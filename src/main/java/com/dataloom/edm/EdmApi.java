@@ -55,10 +55,10 @@ public interface EdmApi {
 
     @GET( PROPERTY_TYPE_BASE_PATH + "/" + ID_PATH )
     PropertyType getPropertyType( @Path( ID ) UUID propertyTypeId );
-    
-    @GET( NAMESPACE + "/" + NAMESPACE_PATH + "/" + PROPERTY_TYPE_BASE_PATH  )
+
+    @GET( NAMESPACE + "/" + NAMESPACE_PATH + "/" + PROPERTY_TYPE_BASE_PATH )
     Iterable<PropertyType> getPropertyTypesInNamespace( String namespace );
-    
+
     /**
      * Creates a property type if it doesn't exist. If property type already exists, then no action is taken.
      *
@@ -87,18 +87,17 @@ public interface EdmApi {
     @DELETE( ENTITY_TYPE_BASE_PATH + "/" + ID_PATH )
     Void deleteEntityType( @Path( ID ) UUID entityTypeId );
 
-    @PATCH( ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
+    @PATCH( ENTITY_TYPE_BASE_PATH + "/" + ID_PATH )
     Void updatePropertyTypesInEntityType(
-            @Path( NAMESPACE ) String namespace,
-            @Path( NAME ) String name,
-            @Body EdmRequest request );
+            @Path( ID ) UUID entityTypeId,
+            @Body Set<UUID> request );
 
     /**
      * @return All entity sets available to the calling user.
      */
     @GET( ENTITY_SETS_BASE_PATH )
     Iterable<EntitySet> getEntitySets();
-    
+
     /**
      * Creates multiple entity sets, if they do not exist.
      *
@@ -111,7 +110,7 @@ public interface EdmApi {
     EntitySet getEntitySet( @Path( ID ) UUID entitySetId );
 
     @DELETE( ENTITY_SETS_BASE_PATH + "/" + NAME_PATH )
-    Void deleteEntitySet( @Path( NAME ) String entitySetName );
+    Void deleteEntitySet( @Path( ID ) UUID entitySetId );
 
     /**
      * Creates an empty schema, if it doesn't exist. If schema exists then no action is taken.
@@ -165,12 +164,6 @@ public interface EdmApi {
 
     @PATCH( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" )
     Void updateSchema(
-            @Path( NAMESPACE ) String namespace,
-            @Path( NAME ) String name,
-            @Body EdmRequest request );
-
-    @PATCH( SCHEMA_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH + "/" )
-    Void updateEntityTypes(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
