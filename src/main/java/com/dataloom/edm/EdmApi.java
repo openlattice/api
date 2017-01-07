@@ -167,5 +167,4 @@ public interface EdmApi {
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
-
 }
