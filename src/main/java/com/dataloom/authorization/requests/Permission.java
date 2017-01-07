@@ -9,6 +9,7 @@ public enum Permission {
     ALTER,
     DISCOVER,
     LINK,
+    OWNER,
     READ,
     WRITE
 }

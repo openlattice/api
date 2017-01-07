@@ -29,6 +29,7 @@ public final class DatastoreConstants {
     public static final String ENTITY_SETS_OWNER_TABLE     = "entity_sets_owners";
     public static final String ENTITY_SETS_OWNER_LOOKUP_TABLE    = "entity_sets_owners_lookup";
     
+    public static final String SCHEMAS_TABLE        = "schemas";
     public static final String SCHEMAS_ACLS_TABLE        = "schema_acls";   
 
     public static final String PROPERTY_TYPES_IN_ENTITY_TYPES_ROLES_ACLS_TABLE = "property_types_in_entity_types_roles_acls";
