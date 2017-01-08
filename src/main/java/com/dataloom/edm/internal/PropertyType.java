@@ -19,11 +19,12 @@ import com.google.common.base.Optional;
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     private static final long      serialVersionUID = -1215885855868336578L;
     protected EdmPrimitiveTypeKind datatype;
+    private transient int          h                = 0;
 
     @JsonCreator
     public PropertyType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
-            @JsonProperty( SerializationConstants.FQN ) FullQualifiedName fqn,
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
         super(
@@ -48,16 +49,20 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         this( Optional.absent(), fqn, schemas, datatype );
     }
 
+    @JsonProperty( SerializationConstants.DATATYPE_FIELD )
     public EdmPrimitiveTypeKind getDatatype() {
         return datatype;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ( ( datatype == null ) ? 0 : datatype.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            final int prime = 31;
+            int result = super.hashCode();
+            result = prime * result + ( ( datatype == null ) ? 0 : datatype.hashCode() );
+            h = result;
+        }
+        return h;
     }
 
     @Override

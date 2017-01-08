@@ -29,5 +29,5 @@ public interface PermissionsApi {
      * @return The aces for the requested acl key.
      */
     @POST( PERMISSIONS )
-    Acl getAcl( @Body List<AclKey> aclKeys );
+    Acl getAcl( @Body List<AclKeyPathFragment> aclKeys );
 }
