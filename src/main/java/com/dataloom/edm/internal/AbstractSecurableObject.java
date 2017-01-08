@@ -46,7 +46,7 @@ public abstract class AbstractSecurableObject implements Serializable {
     }
 
     @JsonIgnore
-    public AclKeyPathFragment getAclKey() {
+    public AclKeyPathFragment getAclKeyPathFragment() {
         return aclKey;
     }
 

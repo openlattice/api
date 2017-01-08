@@ -4,6 +4,9 @@ import java.util.function.Supplier;
 
 import com.dataloom.client.serialization.ObjectMappers;
 import com.dataloom.client.serialization.SerializableSupplier;
+import com.dataloom.retrofit.LoomByteConverterFactory;
+import com.dataloom.retrofit.LoomCallAdapterFactory;
+import com.dataloom.retrofit.LoomJacksonConverterFactory;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
