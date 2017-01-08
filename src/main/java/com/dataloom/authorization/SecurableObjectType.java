@@ -4,5 +4,6 @@ public enum SecurableObjectType {
     EntityType,
     EntitySet,
     PropertyTypeInEntitySet,
-    Datasource
+    Datasource,
+    Organization
 }

@@ -15,14 +15,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class AclKey implements Comparable<AclKey>, Serializable {
+public class AclKeyPathFragment implements Comparable<AclKeyPathFragment>, Serializable {
     private static final long         serialVersionUID = 8377824935472079891L;
     private final SecurableObjectType type;
     private final UUID                id;
     private transient int             h                = 0;
 
     @JsonCreator
-    public AclKey(
+    public AclKeyPathFragment(
             @JsonProperty( SerializationConstants.TYPE_FIELD ) SecurableObjectType type,
             @JsonProperty( SerializationConstants.ID_FIELD ) UUID id ) {
         this.type = checkNotNull( type );
@@ -65,10 +65,10 @@ public class AclKey implements Comparable<AclKey>, Serializable {
         if ( obj == null ) {
             return false;
         }
-        if ( !( obj instanceof AclKey ) ) {
+        if ( !( obj instanceof AclKeyPathFragment ) ) {
             return false;
         }
-        AclKey other = (AclKey) obj;
+        AclKeyPathFragment other = (AclKeyPathFragment) obj;
         if ( id == null ) {
             if ( other.id != null ) {
                 return false;
@@ -88,7 +88,7 @@ public class AclKey implements Comparable<AclKey>, Serializable {
     }
 
     @Override
-    public int compareTo( AclKey o ) {
+    public int compareTo( AclKeyPathFragment o ) {
         int c = type.compareTo( o.getType() );
         return c == 0 ? id.compareTo( o.getId() ) : c;
     }

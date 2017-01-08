@@ -7,18 +7,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Acl {
-    protected final List<AclKey>  aclKey;
+    protected final List<AclKeyPathFragment>  aclKey;
     protected final Iterable<Ace> aces;
 
     @JsonCreator
     public Acl( 
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKey> aclKey, 
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKeyPathFragment> aclKey, 
             @JsonProperty( SerializationConstants.ACES ) Iterable<Ace> aces ) {
         this.aclKey = aclKey;
         this.aces = aces;
     }
 
-    public List<AclKey> getAclKey() {
+    public List<AclKeyPathFragment> getAclKey() {
         return aclKey;
     }
 

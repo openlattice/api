@@ -6,19 +6,19 @@ import java.util.Map;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 public class AclKeyInfo {
-    private final List<AclKey>                   aclKey;
-    private final Map<FullQualifiedName, AclKey> propertyTypes;
+    private final List<AclKeyPathFragment>                   aclKey;
+    private final Map<FullQualifiedName, AclKeyPathFragment> propertyTypes;
 
-    public AclKeyInfo( List<AclKey> aclKey, Map<FullQualifiedName, AclKey> propertyTypes ) {
+    public AclKeyInfo( List<AclKeyPathFragment> aclKey, Map<FullQualifiedName, AclKeyPathFragment> propertyTypes ) {
         this.aclKey = aclKey;
         this.propertyTypes = propertyTypes;
     }
 
-    public List<AclKey> getAclKey() {
+    public List<AclKeyPathFragment> getAclKey() {
         return aclKey;
     }
 
-    public Map<FullQualifiedName, AclKey> getPropertyTypes() {
+    public Map<FullQualifiedName, AclKeyPathFragment> getPropertyTypes() {
         return propertyTypes;
     }
 
