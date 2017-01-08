@@ -67,7 +67,7 @@ public interface EdmApi {
     @POST( PROPERTY_TYPE_BASE_PATH )
     UUID createPropertyType( @Body PropertyType propertyType );
 
-    @DELETE( PROPERTY_TYPE_BASE_PATH + "/" + ID_PATH + "/" + NAME_PATH )
+    @DELETE( PROPERTY_TYPE_BASE_PATH + "/" + ID_PATH )
     Void deletePropertyType( @Path( ID ) UUID propertyTypeId );
 
     @GET( ENTITY_TYPE_BASE_PATH )
@@ -87,7 +87,7 @@ public interface EdmApi {
     @DELETE( ENTITY_TYPE_BASE_PATH + "/" + ID_PATH )
     Void deleteEntityType( @Path( ID ) UUID entityTypeId );
 
-    @PATCH( ENTITY_TYPE_BASE_PATH + "/" + ID_PATH )
+    @PUT( ENTITY_TYPE_BASE_PATH + "/" + ID_PATH )
     Void updatePropertyTypesInEntityType(
             @Path( ID ) UUID entityTypeId,
             @Body Set<UUID> request );
@@ -109,7 +109,7 @@ public interface EdmApi {
     @GET( ENTITY_SETS_BASE_PATH + "/" + ID_PATH )
     EntitySet getEntitySet( @Path( ID ) UUID entitySetId );
 
-    @DELETE( ENTITY_SETS_BASE_PATH + "/" + NAME_PATH )
+    @DELETE( ENTITY_SETS_BASE_PATH + "/" + ID_PATH )
     Void deleteEntitySet( @Path( ID ) UUID entitySetId );
 
     /**

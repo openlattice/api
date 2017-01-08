@@ -16,11 +16,11 @@ import com.dataloom.authorization.requests.Principal;
  */
 public class AceKey implements Serializable {
     private static final long serialVersionUID = 7360380787390696122L;
-    private final List<AclKey> keys;
+    private final List<AclKeyPathFragment> keys;
     private final Principal    principal;
 
     public AceKey( UUID objectId, SecurableObjectType objectType, Principal principal ) {
-        this( principal, new AclKey( checkNotNull( objectType ), checkNotNull( objectId ) ) );
+        this( principal, new AclKeyPathFragment( checkNotNull( objectType ), checkNotNull( objectId ) ) );
     }
 
     /**
@@ -29,17 +29,17 @@ public class AceKey implements Serializable {
      * @param key Set of object key to put in canonical order
      * @param principal The principal for this ACE
      */
-    public AceKey( List<AclKey> key, Principal principal ) {
+    public AceKey( List<AclKeyPathFragment> key, Principal principal ) {
         this.keys = checkNotNull( key );
         this.principal = checkNotNull( principal );
         checkArgument( key.size() > 0, "At least one key must be provided." );
     }
 
-    public AceKey( Principal principal, AclKey... key ) {
+    public AceKey( Principal principal, AclKeyPathFragment... key ) {
         this( Arrays.asList( key ), principal );
     }
 
-    public List<AclKey> getKey() {
+    public List<AclKeyPathFragment> getKey() {
         return keys;
     }
 
