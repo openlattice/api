@@ -1,10 +1,13 @@
 package com.dataloom.data;
 
+import java.util.Map;
 import java.util.UUID;
 
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
 import com.dataloom.data.internal.Entity;
-import com.dataloom.data.requests.CreateEntityRequest;
 import com.dataloom.data.requests.GetEntitySetRequest;
+import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,18 +24,19 @@ public interface NewDataApi {
     String GET_DATA_PATH = "getData";
 
     String SET_ID        = "setId";
+    String SYNC_ID        = "syncId";
     String SET_ID_PATH   = "{" + SET_ID + "}";
+    String SYNC_ID_PATH   = "{" + SYNC_ID + "}";
 
     @GET( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    Iterable<Entity> getEntitySetData( @Path( SET_ID ) UUID entitySetId );
+    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData( @Path( SET_ID ) UUID entitySetId );
 
     // TODO Should discuss what this path should be
     @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + GET_DATA_PATH )
-    Iterable<Entity> getEntitySetData(
+    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Body GetEntitySetRequest req );
 
-    // TODO Add an endpoint that takes POST request at Controller + ENTITY_DATA + SET_ID_PATH?
-    @POST( CONTROLLER + "/" + ENTITY_DATA )
-    Void createEntityData( @Body CreateEntityRequest req );
+    @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    Void createEntityData( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId, @Body Map<String, SetMultimap<UUID, Object>> entities );
 }
