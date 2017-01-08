@@ -72,10 +72,12 @@ dependencies {
         logger.quiet(project.name + " using project dependencies.")
         testCompile( project(path: ":rhizome", configuration: "tests"))
         compile( project(path: ":rhizome-client" ))
+        testCompile( project(path: ":rhizome-client", configuration: "tests"))
     } else {
         logger.quiet(project.name + " using jar dependencies.")
         testCompile "com.kryptnostic:rhizome:${rhizome_version}:tests"
         compile "com.kryptnostic:rhizome-client:${rhizome_client_version}"
+        testCompile "com.kryptnostic:rhizome-client:${rhizome_client_version}:tests"
     }
 
     /*
