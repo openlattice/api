@@ -1,28 +1,34 @@
 package com.dataloom.search;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface SearchApi {
 	
 	String SEARCH = "search";
-	String QUERY = "query";
-	String NAME = "name";
-	String NAMESPACE = "namespace";
-	String ENTITY_SET = "entitySet";
-	String ENTITY_TYPE = "entityType";
-	String PROPERTY_TYPE = "propertyType";
+	String KEYWORD = "kw";
+	String ENTITY_TYPE_ID = "eid";
+	String PROPERTY_TYPE_ID = "pid";
+		
+	@GET( SEARCH )
+	String executeQueryJson(
+			@Query(KEYWORD) String query,
+			@Query(ENTITY_TYPE_ID) UUID entityType,
+			@Query(PROPERTY_TYPE_ID) Set<UUID> propertyTypes );
 	
-	String QUERY_PATH = "{" + QUERY + "}";
-	
-	@POST( SEARCH + "/" + QUERY_PATH )
-	Object executeQuery(
-			@Path(QUERY) String query,
-			FullQualifiedName entityType,
-			Set<FullQualifiedName> propertyTypes );
+	@POST( SEARCH )
+	Map<String, Object> executeQuery(
+			@Query(KEYWORD) String query,
+			@Query(ENTITY_TYPE_ID) UUID entityType,
+			@Body Set<UUID> propertyTypes );
 
 }
