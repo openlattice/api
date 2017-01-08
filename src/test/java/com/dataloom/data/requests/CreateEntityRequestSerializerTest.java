@@ -8,7 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.dataloom.data.internal.Entity;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
-import com.dataloom.serializers.jackson.AbstractBaseJacksonSerializationTest;
+import com.dataloom.serializer.AbstractBaseJacksonSerializationTest;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
