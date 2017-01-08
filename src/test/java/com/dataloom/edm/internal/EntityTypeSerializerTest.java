@@ -4,7 +4,7 @@ import org.junit.BeforeClass;
 
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
-import com.kryptnostic.rhizome.hazelcast.serializers.BaseJacksonSerializationTest;
+import com.dataloom.serializer.BaseJacksonSerializationTest;
 
 public class EntityTypeSerializerTest extends BaseJacksonSerializationTest<EntityType> {
 
