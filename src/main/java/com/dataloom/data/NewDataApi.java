@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.data.internal.Entity;
 import com.dataloom.data.requests.GetEntitySetRequest;
 import com.google.common.collect.SetMultimap;
 
