@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import com.dataloom.authorization.requests.Principal;
-
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *

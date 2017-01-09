@@ -2,8 +2,6 @@ package com.dataloom.authorization;
 
 import java.util.Set;
 
-import com.dataloom.authorization.requests.Permission;
-import com.dataloom.authorization.requests.Principal;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

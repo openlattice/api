@@ -1,6 +1,5 @@
 package com.dataloom.authorization;
 
-import com.dataloom.authorization.requests.Action;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
