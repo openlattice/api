@@ -25,11 +25,15 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     public PropertyType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
         super(
                 id,
                 fqn,
+                title,
+                description,
                 schemas );
         this.datatype = datatype;
     }
@@ -37,16 +41,11 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     public PropertyType(
             UUID id,
             FullQualifiedName fqn,
+            String title,
+            Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.of( id ), fqn, schemas, datatype );
-    }
-
-    public PropertyType(
-            FullQualifiedName fqn,
-            Set<FullQualifiedName> schemas,
-            EdmPrimitiveTypeKind datatype ) {
-        this( Optional.absent(), fqn, schemas, datatype );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype );
     }
 
     @JsonProperty( SerializationConstants.DATATYPE_FIELD )
@@ -85,8 +84,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public String toString() {
-        return "PropertyType [datatype=" + datatype + ", type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey
-                + "]";
+        return "PropertyType [datatype=" + datatype + ", schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey
+                + ", title=" + title + ", description=" + description + "]";
     }
 
     @Override

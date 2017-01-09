@@ -1,5 +1,8 @@
 package com.dataloom.edm.internal;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +13,6 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -18,8 +20,8 @@ import com.google.common.base.Preconditions;
  */
 public class EntitySet extends AbstractSecurableType {
     private static final long serialVersionUID = 1643809693309599032L;
+    private final UUID        entityTypeId;
     private final String      name;
-    private final String      title;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
@@ -34,38 +36,50 @@ public class EntitySet extends AbstractSecurableType {
     public EntitySet(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
+            @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD ) UUID entityTypeId,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
-            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) String description ) {
-        super( id.or( UUID::randomUUID ), type, description, id.isPresent() );
-        Preconditions.checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
-        Preconditions.checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
+        super( id, type, title, description );
+        checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
+        checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
-        this.title = title;
+        this.entityTypeId = checkNotNull( entityTypeId );
     }
 
-    public EntitySet( UUID id, FullQualifiedName type, String name, String title, String description ) {
-        this( Optional.of( id ), type, name, title, description );
+    public EntitySet(
+            UUID id,
+            FullQualifiedName type,
+            UUID entityTypeId,
+            String name,
+            String title,
+            Optional<String> description ) {
+        this( Optional.of( id ), type, entityTypeId, name, title, description );
     }
 
-    public EntitySet( FullQualifiedName type, String name, String title, String description ) {
-        this( Optional.absent(), type, name, title, "description" );
+    public EntitySet(
+            FullQualifiedName type,
+            UUID entityTypeId,
+            String name,
+            String title,
+            Optional<String> description ) {
+        this( Optional.absent(), type, entityTypeId, name, title, description );
+    }
+
+    public UUID getEntityTypeId() {
+        return entityTypeId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
+        result = prime * result + ( ( entityTypeId == null ) ? 0 : entityTypeId.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
-        result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
         return result;
     }
 
@@ -81,18 +95,18 @@ public class EntitySet extends AbstractSecurableType {
             return false;
         }
         EntitySet other = (EntitySet) obj;
+        if ( entityTypeId == null ) {
+            if ( other.entityTypeId != null ) {
+                return false;
+            }
+        } else if ( !entityTypeId.equals( other.entityTypeId ) ) {
+            return false;
+        }
         if ( name == null ) {
             if ( other.name != null ) {
                 return false;
             }
         } else if ( !name.equals( other.name ) ) {
-            return false;
-        }
-        if ( title == null ) {
-            if ( other.title != null ) {
-                return false;
-            }
-        } else if ( !title.equals( other.title ) ) {
             return false;
         }
         return true;

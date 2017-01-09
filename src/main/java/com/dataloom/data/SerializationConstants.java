@@ -47,5 +47,6 @@ public final class SerializationConstants {
     public static final String VISIBILITY_FIELD            = "visibility";
     public static final String TRUSTED_ORGANIZATIONS_FIELD = "trustedOrganizations";
     public static final String EMAILS_FIELD                = "emails";
+    public static final String ENTITY_TYPE_ID_FIELD        = "entityTypeId";
 
 }

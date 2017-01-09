@@ -26,17 +26,11 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
     protected AbstractSchemaAssociatedSecurableType(
             Optional<UUID> id,
             FullQualifiedName type,
+            String title,
+            Optional<String> description,
             Set<FullQualifiedName> schemas ) {
-        this( id, type, schemas, "" );
-    }
-
-    protected AbstractSchemaAssociatedSecurableType(
-            Optional<UUID> id,
-            FullQualifiedName type,
-            Set<FullQualifiedName> schemas,
-            String description ) {
-        super( id.or( UUID::randomUUID ), type, description, id.isPresent() );
-        this.schemas = checkNotNull( schemas );
+        super( id, type, title, description );
+        this.schemas = checkNotNull( schemas, "Schemas can be empty, but not null." );
     }
 
     @JsonProperty( SerializationConstants.SCHEMAS )
@@ -79,7 +73,8 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
 
     @Override
     public String toString() {
-        return "TypePK [schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey + "]";
+        return "AbstractSchemaAssociatedSecurableType [schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey
+                + ", title=" + title + ", description=" + description + "]";
     }
 
 }
