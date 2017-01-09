@@ -78,8 +78,8 @@ public class EntitySet extends AbstractSecurableType {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
+        result = prime * result + ( ( entityTypeId == null ) ? 0 : entityTypeId.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
-        result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
         return result;
     }
 
@@ -95,18 +95,18 @@ public class EntitySet extends AbstractSecurableType {
             return false;
         }
         EntitySet other = (EntitySet) obj;
+        if ( entityTypeId == null ) {
+            if ( other.entityTypeId != null ) {
+                return false;
+            }
+        } else if ( !entityTypeId.equals( other.entityTypeId ) ) {
+            return false;
+        }
         if ( name == null ) {
             if ( other.name != null ) {
                 return false;
             }
         } else if ( !name.equals( other.name ) ) {
-            return false;
-        }
-        if ( title == null ) {
-            if ( other.title != null ) {
-                return false;
-            }
-        } else if ( !title.equals( other.title ) ) {
             return false;
         }
         return true;

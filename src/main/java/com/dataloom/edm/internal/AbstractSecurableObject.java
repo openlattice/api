@@ -149,9 +149,6 @@ public abstract class AbstractSecurableObject implements Serializable {
         } else if ( !description.equals( other.description ) ) {
             return false;
         }
-        if ( idPresent != other.idPresent ) {
-            return false;
-        }
         if ( title == null ) {
             if ( other.title != null ) {
                 return false;
