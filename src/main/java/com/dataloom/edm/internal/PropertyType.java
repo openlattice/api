@@ -19,16 +19,21 @@ import com.google.common.base.Optional;
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     private static final long      serialVersionUID = -1215885855868336578L;
     protected EdmPrimitiveTypeKind datatype;
+    private transient int          h                = 0;
 
     @JsonCreator
     public PropertyType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
-            @JsonProperty( SerializationConstants.FQN ) FullQualifiedName fqn,
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
         super(
                 id,
                 fqn,
+                title,
+                description,
                 schemas );
         this.datatype = datatype;
     }
@@ -36,28 +41,27 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     public PropertyType(
             UUID id,
             FullQualifiedName fqn,
+            String title,
+            Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.of( id ), fqn, schemas, datatype );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype );
     }
 
-    public PropertyType(
-            FullQualifiedName fqn,
-            Set<FullQualifiedName> schemas,
-            EdmPrimitiveTypeKind datatype ) {
-        this( Optional.absent(), fqn, schemas, datatype );
-    }
-
+    @JsonProperty( SerializationConstants.DATATYPE_FIELD )
     public EdmPrimitiveTypeKind getDatatype() {
         return datatype;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ( ( datatype == null ) ? 0 : datatype.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            final int prime = 31;
+            int result = super.hashCode();
+            result = prime * result + ( ( datatype == null ) ? 0 : datatype.hashCode() );
+            h = result;
+        }
+        return h;
     }
 
     @Override
@@ -80,8 +84,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public String toString() {
-        return "PropertyType [datatype=" + datatype + ", type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey
-                + "]";
+        return "PropertyType [datatype=" + datatype + ", schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey
+                + ", title=" + title + ", description=" + description + "]";
     }
 
     @Override
