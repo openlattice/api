@@ -73,7 +73,8 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
 
     @Override
     public String toString() {
-        return "TypePK [schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey + "]";
+        return "AbstractSchemaAssociatedSecurableType [schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey
+                + ", title=" + title + ", description=" + description + "]";
     }
 
 }

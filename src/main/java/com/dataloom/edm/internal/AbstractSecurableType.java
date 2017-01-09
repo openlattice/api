@@ -74,4 +74,10 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "AbstractSecurableType [type=" + type + ", aclKey=" + aclKey + ", title=" + title + ", description="
+                + description + "]";
+    }
+
 }

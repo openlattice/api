@@ -84,8 +84,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public String toString() {
-        return "PropertyType [datatype=" + datatype + ", type=" + type + ", schemas=" + schemas + ", aclKey=" + aclKey
-                + "]";
+        return "PropertyType [datatype=" + datatype + ", schemas=" + schemas + ", type=" + type + ", aclKey=" + aclKey
+                + ", title=" + title + ", description=" + description + "]";
     }
 
     @Override
