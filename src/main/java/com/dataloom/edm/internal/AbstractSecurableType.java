@@ -8,9 +8,10 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
 
 /**
- * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt; 
+ * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
 public abstract class AbstractSecurableType extends AbstractSecurableObject {
@@ -21,16 +22,17 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
     protected AbstractSecurableType(
             UUID id,
             FullQualifiedName type,
-            boolean idPresent ) {
-        this( id, type, "", idPresent );
+            String title,
+            Optional<String> description ) {
+        this( Optional.of( id ), type, title, description );
     }
 
     protected AbstractSecurableType(
-            UUID id,
+            Optional<UUID> id,
             FullQualifiedName type,
-            String description,
-            boolean idPresent ) {
-        super( id, description, idPresent );
+            String title,
+            Optional<String> description ) {
+        super( id, title, description );
         this.type = checkNotNull( type );
     }
 
@@ -43,10 +45,9 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
     public int hashCode() {
         if ( h == 0 ) {
             final int prime = 31;
-            int result = 1;
-            result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
+            int result = super.hashCode();
             result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
-            result = h;
+            h = result;
         }
         return h;
     }
@@ -56,27 +57,13 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
         if ( this == obj ) {
             return true;
         }
-        if ( obj == null ) {
+        if ( !super.equals( obj ) ) {
             return false;
         }
         if ( !( obj instanceof AbstractSecurableType ) ) {
             return false;
         }
         AbstractSecurableType other = (AbstractSecurableType) obj;
-        if ( aclKey == null ) {
-            if ( other.aclKey != null ) {
-                return false;
-            }
-        } else if ( !aclKey.equals( other.aclKey ) ) {
-            return false;
-        }
-        if ( description == null ) {
-            if ( other.description != null ) {
-                return false;
-            }
-        } else if ( !description.equals( other.description ) ) {
-            return false;
-        }
         if ( type == null ) {
             if ( other.type != null ) {
                 return false;

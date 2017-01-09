@@ -1,5 +1,7 @@
 package com.dataloom.edm.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
@@ -12,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -28,10 +29,12 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
     public EntityType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.KEY_FIELD ) Set<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<UUID> properties ) {
-        super( id, type, schemas );
+        super( id, type, title, description, schemas );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
@@ -40,18 +43,22 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
     public EntityType(
             UUID id,
             FullQualifiedName type,
+            String title,
+            Optional<String> description,
             Set<FullQualifiedName> schemas,
             Set<UUID> key,
             Set<UUID> properties ) {
-        this( Optional.of( id ), type, schemas, key, properties );
+        this( Optional.of( id ), type, title, description, schemas, key, properties );
     }
 
     public EntityType(
             FullQualifiedName type,
+            String title,
+            String description,
             Set<FullQualifiedName> schemas,
             Set<UUID> key,
             Set<UUID> properties ) {
-        this( Optional.absent(), type, schemas, key, properties );
+        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties );
     }
 
     // TODO: It seems the objects do not allow property types from the different schemas.
