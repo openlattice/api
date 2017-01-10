@@ -29,10 +29,12 @@ public class AclKeyPathFragment implements Comparable<AclKeyPathFragment>, Seria
         this.id = checkNotNull( id );
     }
 
+    @JsonProperty( SerializationConstants.ID_FIELD ) 
     public UUID getId() {
         return id;
     }
 
+    @JsonProperty( SerializationConstants.TYPE_FIELD ) 
     public SecurableObjectType getType() {
         return type;
     }
