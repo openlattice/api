@@ -1,5 +1,6 @@
 package com.dataloom.search;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public interface SearchApi {
 			@Query(PROPERTY_TYPE_ID) Set<UUID> propertyTypes );
 	
 	@POST( SEARCH )
-	Map<String, Object> executeQuery(
+	List<Map<String, Object>> executeQuery(
 			@Query(KEYWORD) String query,
 			@Query(ENTITY_TYPE_ID) UUID entityType,
 			@Body Set<UUID> propertyTypes );
