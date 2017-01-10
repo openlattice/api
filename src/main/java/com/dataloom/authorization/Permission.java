@@ -1,4 +1,4 @@
-package com.dataloom.authorization.requests;
+package com.dataloom.authorization;
 
 /**
  * @author Ho Chung Modified from Drew's Permission.java in mapstore

@@ -1,4 +1,4 @@
-package com.dataloom.authorization.requests;
+package com.dataloom.authorization;
 
 import java.io.Serializable;
 

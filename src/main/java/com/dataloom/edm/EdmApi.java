@@ -23,6 +23,7 @@ import retrofit2.http.Path;
  */
 public interface EdmApi {
     String ID                      = "id";
+    String IDS                     = "ids";
     String NAME                    = "name";
     String NAMESPACE               = "namespace";
     String NAMESPACES              = "namespaces";
@@ -167,4 +168,14 @@ public interface EdmApi {
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
+
+    @GET( IDS + "/" + ENTITY_SETS_BASE_PATH + "/" + NAME_PATH )
+    UUID getEntitySetId( @Path( NAME ) String entitySetName );
+
+    @GET( IDS + "/" + PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
+    UUID getPropertyTypeId( @Path( NAME ) String namespace, @Path( NAMESPACE ) String name );
+
+    @GET( IDS + "/" + ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
+    UUID getEntityTypeId( @Path( NAME ) String namespace, @Path( NAMESPACE ) String name );
+
 }
