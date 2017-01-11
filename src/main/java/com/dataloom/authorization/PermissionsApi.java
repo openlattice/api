@@ -25,9 +25,9 @@ public interface PermissionsApi {
     /**
      * Retrieves the acl for a particular acl key. Only return if user is the owner of acl key.
      * 
-     * @param aclKeys The acl key.
+     * @param aclKey The acl key.
      * @return The aces for the requested acl key.
      */
     @POST( PERMISSIONS )
-    Acl getAcl( @Body List<AclKeyPathFragment> aclKeys );
+    Acl getAcl( @Body List<AclKeyPathFragment> aclKey );
 }
