@@ -16,7 +16,7 @@ public class Principal implements Serializable {
     @JsonCreator
     public Principal(
             @JsonProperty( SerializationConstants.TYPE_FIELD ) PrincipalType type,
-            @JsonProperty( SerializationConstants.NAME_FIELD ) String id ) {
+            @JsonProperty( SerializationConstants.ID_FIELD ) String id ) {
         this.type = type;
         this.id = id;
     }
