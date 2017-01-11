@@ -12,8 +12,15 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface DataApi {
+
+    public static enum FileType {
+        json,
+        csv;
+    }
+
     /**
      * To discuss paths later; perhaps batch this with EdmApi paths
      */
@@ -23,19 +30,27 @@ public interface DataApi {
     String GET_DATA_PATH = "getData";
 
     String SET_ID        = "setId";
-    String SYNC_ID        = "syncId";
+    String SYNC_ID       = "syncId";
     String SET_ID_PATH   = "{" + SET_ID + "}";
-    String SYNC_ID_PATH   = "{" + SYNC_ID + "}";
+    String SYNC_ID_PATH  = "{" + SYNC_ID + "}";
+
+    String FILE_TYPE     = "fileType";
 
     @GET( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData( @Path( SET_ID ) UUID entitySetId );
+    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
+            @Path( SET_ID ) UUID entitySetId,
+            @Query( FILE_TYPE ) FileType fileType );
 
     // TODO Should discuss what this path should be
     @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + GET_DATA_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
-            @Body GetEntitySetRequest req );
+            @Body GetEntitySetRequest req,
+            @Query( FILE_TYPE ) FileType fileType );
 
     @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
-    Void createEntityData( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId, @Body Map<String, SetMultimap<UUID, Object>> entities );
+    Void createEntityData(
+            @Path( SET_ID ) UUID entitySetId,
+            @Path( SYNC_ID ) UUID syncId,
+            @Body Map<String, SetMultimap<UUID, Object>> entities );
 }
