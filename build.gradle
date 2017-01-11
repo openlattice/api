@@ -16,7 +16,7 @@ dependencies {
     /*
      * SL4J
      */
-    compile group: "org.slf4j", name: "slf4j-api", version:"1.7.21"
+    compile group: "org.slf4j", name: "slf4j-api", version:"${slf4j_version}"
   
     /*
      * @Inject and @Nullable support
