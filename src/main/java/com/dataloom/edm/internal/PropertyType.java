@@ -47,6 +47,15 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             EdmPrimitiveTypeKind datatype ) {
         this( Optional.of( id ), fqn, title, description, schemas, datatype );
     }
+    
+    public PropertyType(
+            FullQualifiedName fqn,
+            String title,
+            Optional<String> description,
+            Set<FullQualifiedName> schemas,
+            EdmPrimitiveTypeKind datatype ) {
+        this( Optional.absent(), fqn, title, description, schemas, datatype );
+    }
 
     @JsonProperty( SerializationConstants.DATATYPE_FIELD )
     public EdmPrimitiveTypeKind getDatatype() {
