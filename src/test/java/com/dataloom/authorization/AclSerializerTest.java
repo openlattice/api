@@ -1,13 +1,14 @@
-package com.dataloom.edm.internal;
+package com.dataloom.authorization;
 
 import org.junit.BeforeClass;
 
-import com.dataloom.authorization.Ace;
+import com.dataloom.authorization.Acl;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.edm.internal.TestDataFactory;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class AceSerializerTest extends BaseJacksonSerializationTest<Ace> {
+public class AclSerializerTest extends BaseJacksonSerializationTest<AclData> {
 
     @BeforeClass
     public static void configureSerializer() {
@@ -18,12 +19,12 @@ public class AceSerializerTest extends BaseJacksonSerializationTest<Ace> {
     }
 
     @Override
-    protected Ace getSampleData() {
-        return TestDataFactory.ace();
+    protected AclData getSampleData() {
+        return TestDataFactory.aclData();
     }
 
     @Override
-    protected Class<Ace> getClazz() {
-        return Ace.class;
+    protected Class<AclData> getClazz() {
+        return AclData.class;
     }
 }

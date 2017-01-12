@@ -14,7 +14,9 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.Ace;
 import com.dataloom.authorization.Acl;
+import com.dataloom.authorization.AclData;
 import com.dataloom.authorization.AclKeyPathFragment;
+import com.dataloom.authorization.Action;
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
@@ -27,6 +29,7 @@ import com.google.common.collect.ImmutableSet;
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
     private static final Permission[]          permissions          = Permission.values();
+    private static final Action[]              actions              = Action.values();
     private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
@@ -86,7 +89,7 @@ public final class TestDataFactory {
     }
 
     public static SecurableObjectType securableObjectType() {
-        return securableObjectTypes[ RandomUtils.nextInt( 0, securableObjectTypes.length ) ];
+        return securableObjectTypes[ r.nextInt( securableObjectTypes.length ) ];
     }
 
     public static AclKeyPathFragment aclKeyPathFragment() {
@@ -108,6 +111,12 @@ public final class TestDataFactory {
         return new Acl(
                 ImmutableList.of( aclKeyPathFragment(), aclKeyPathFragment() ),
                 ImmutableList.of( ace(), ace(), ace(), ace() ) );
+    }
+
+    public static AclData aclData() {
+        return new AclData(
+                acl(),
+                actions[ r.nextInt( actions.length ) ] );
     }
 
 }

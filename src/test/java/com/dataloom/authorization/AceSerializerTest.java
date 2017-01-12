@@ -1,13 +1,14 @@
-package com.dataloom.edm.internal;
+package com.dataloom.authorization;
 
 import org.junit.BeforeClass;
 
-import com.dataloom.authorization.AclKeyPathFragment;
+import com.dataloom.authorization.Ace;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.edm.internal.TestDataFactory;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class AclKeyPathFragmentSerializerTest extends BaseJacksonSerializationTest<AclKeyPathFragment> {
+public class AceSerializerTest extends BaseJacksonSerializationTest<Ace> {
 
     @BeforeClass
     public static void configureSerializer() {
@@ -18,12 +19,12 @@ public class AclKeyPathFragmentSerializerTest extends BaseJacksonSerializationTe
     }
 
     @Override
-    protected AclKeyPathFragment getSampleData() {
-        return TestDataFactory.aclKeyPathFragment();
+    protected Ace getSampleData() {
+        return TestDataFactory.ace();
     }
 
     @Override
-    protected Class<AclKeyPathFragment> getClazz() {
-        return AclKeyPathFragment.class;
+    protected Class<Ace> getClazz() {
+        return Ace.class;
     }
 }

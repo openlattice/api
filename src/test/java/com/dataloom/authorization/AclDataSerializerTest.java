@@ -1,13 +1,14 @@
-package com.dataloom.edm.internal;
+package com.dataloom.authorization;
 
 import org.junit.BeforeClass;
 
 import com.dataloom.authorization.Acl;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.edm.internal.TestDataFactory;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class AclSerializerTest extends BaseJacksonSerializationTest<Acl> {
+public class AclDataSerializerTest extends BaseJacksonSerializationTest<Acl> {
 
     @BeforeClass
     public static void configureSerializer() {
