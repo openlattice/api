@@ -1,14 +1,14 @@
 package com.dataloom.directory.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-
-import java.util.List;
-import java.util.Map;
 
 public class Auth0UserBasic {
     public static final String USER_ID_FIELD      = "user_id";
@@ -24,8 +24,10 @@ public class Auth0UserBasic {
     private final String       username;
     private final List<String> roles;
 
+    @SuppressWarnings( "unchecked" )
     @JsonCreator
-    @JsonIgnoreProperties( ignoreUnknown = true )
+    @JsonIgnoreProperties(
+        ignoreUnknown = true )
     public Auth0UserBasic(
             @JsonProperty( USER_ID_FIELD ) String userId,
             @JsonProperty( EMAIL_FIELD ) String email,
@@ -41,8 +43,8 @@ public class Auth0UserBasic {
         } else {
             this.username = this.userId;
         }
-        this.roles = (List<String>) MoreObjects.firstNonNull( appMetadata, ImmutableMap.of() ).getOrDefault( "roles",
-                Lists.newArrayList() );
+        this.roles = ( (List<String>) MoreObjects.firstNonNull( appMetadata, ImmutableMap.of() ).getOrDefault( "roles",
+                new ArrayList<String>() ) );
     }
 
     @JsonProperty( USER_ID_FIELD )
