@@ -7,32 +7,38 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Acl {
-    protected final List<AclKeyPathFragment>  aclKey;
-    protected final Iterable<Ace> aces;
+    protected final List<AclKeyPathFragment> aclKey;
+    protected final Iterable<Ace>            aces;
+    private transient int                    h = 0;
 
     @JsonCreator
-    public Acl( 
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKeyPathFragment> aclKey, 
+    public Acl(
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKeyPathFragment> aclKey,
             @JsonProperty( SerializationConstants.ACES ) Iterable<Ace> aces ) {
         this.aclKey = aclKey;
         this.aces = aces;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     public List<AclKeyPathFragment> getAclKey() {
         return aclKey;
     }
 
+    @JsonProperty( SerializationConstants.ACES )
     public Iterable<Ace> getAces() {
         return aces;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ( ( aces == null ) ? 0 : aces.hashCode() );
-        result = prime * result + ( ( aclKey == null ) ? 0 : aclKey.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ( ( aces == null ) ? 0 : aces.hashCode() );
+            result = prime * result + ( ( aclKey == null ) ? 0 : aclKey.hashCode() );
+            h = result;
+        }
+        return h;
     }
 
     @Override
