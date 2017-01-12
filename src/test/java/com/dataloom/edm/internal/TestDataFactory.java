@@ -13,6 +13,7 @@ import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.Ace;
+import com.dataloom.authorization.Acl;
 import com.dataloom.authorization.AclKeyPathFragment;
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
@@ -20,6 +21,7 @@ import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.organization.Organization;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
 public final class TestDataFactory {
@@ -100,6 +102,12 @@ public final class TestDataFactory {
 
     public static Ace ace() {
         return new Ace( userPrincipal(), permissions() );
+    }
+
+    public static Acl acl() {
+        return new Acl(
+                ImmutableList.of( aclKeyPathFragment(), aclKeyPathFragment() ),
+                ImmutableList.of( ace(), ace(), ace(), ace() ) );
     }
 
 }
