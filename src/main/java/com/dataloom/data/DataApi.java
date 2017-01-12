@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.data.requests.GetEntitySetRequest;
+import com.dataloom.data.requests.EntitySetSelection;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -26,8 +26,8 @@ public interface DataApi {
      */
 
     String CONTROLLER    = "data";
+    String HISTORICAL    = "historical";
     String ENTITY_DATA   = "entitydata";
-    String GET_DATA_PATH = "getData";
 
     String SET_ID        = "setId";
     String SYNC_ID       = "syncId";
@@ -41,11 +41,10 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType );
 
-    // TODO Should discuss what this path should be
-    @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + GET_DATA_PATH )
+    @GET( CONTROLLER + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
-            @Body GetEntitySetRequest req,
+            @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
     @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )

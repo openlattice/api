@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
-public class GetEntitySetRequest {
+public class EntitySetSelection {
     @JsonProperty( SerializationConstants.SYNC_IDS )
     private Optional<Set<UUID>> syncIds;
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     private Optional<Set<UUID>> selectedProperties;
 
     @JsonCreator
-    public GetEntitySetRequest(
+    public EntitySetSelection(
             @JsonProperty( SerializationConstants.SYNC_IDS ) Optional<Set<UUID>> syncIds,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Optional<Set<UUID>> selectedProperties ) {
         this.syncIds = syncIds;
@@ -44,7 +44,7 @@ public class GetEntitySetRequest {
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
-        GetEntitySetRequest other = (GetEntitySetRequest) obj;
+        EntitySetSelection other = (EntitySetSelection) obj;
         if ( selectedProperties == null ) {
             if ( other.selectedProperties != null ) return false;
         } else if ( !selectedProperties.equals( other.selectedProperties ) ) return false;
@@ -56,7 +56,7 @@ public class GetEntitySetRequest {
 
     @Override
     public String toString() {
-        return "GetEntitySetRequest [syncIds=" + syncIds + ", selectedProperties=" + selectedProperties + "]";
+        return "EntitySetSelection [syncIds=" + syncIds + ", selectedProperties=" + selectedProperties + "]";
     }
 
 }
