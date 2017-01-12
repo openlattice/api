@@ -8,7 +8,7 @@ import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
 import com.dataloom.edm.internal.TestDataFactory;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class AclSerializerTest extends BaseJacksonSerializationTest<AclData> {
+public class AclSerializerTest extends BaseJacksonSerializationTest<Acl> {
 
     @BeforeClass
     public static void configureSerializer() {
@@ -19,12 +19,12 @@ public class AclSerializerTest extends BaseJacksonSerializationTest<AclData> {
     }
 
     @Override
-    protected AclData getSampleData() {
-        return TestDataFactory.aclData();
+    protected Acl getSampleData() {
+        return TestDataFactory.acl();
     }
 
     @Override
-    protected Class<AclData> getClazz() {
-        return AclData.class;
+    protected Class<Acl> getClazz() {
+        return Acl.class;
     }
 }
