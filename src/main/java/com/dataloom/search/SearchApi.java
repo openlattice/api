@@ -1,16 +1,12 @@
 package com.dataloom.search;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SearchApi {
@@ -27,7 +23,7 @@ public interface SearchApi {
 			@Query(PROPERTY_TYPE_ID) Set<UUID> propertyTypes );
 	
 	@POST( SEARCH )
-	List<Map<String, Object>> executeQuery(
+	Iterable<Map<String, Object>> executeQuery(
 			@Query(KEYWORD) String query,
 			@Query(ENTITY_TYPE_ID) UUID entityType,
 			@Body Set<UUID> propertyTypes );
