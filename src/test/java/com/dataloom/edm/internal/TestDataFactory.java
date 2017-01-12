@@ -1,13 +1,20 @@
 package com.dataloom.edm.internal;
 
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import com.dataloom.authorization.Ace;
 import com.dataloom.authorization.AclKeyPathFragment;
+import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.SecurableObjectType;
@@ -17,6 +24,8 @@ import com.google.common.collect.ImmutableSet;
 
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
+    private static final Permission[]          permissions          = Permission.values();
+    private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
 
@@ -80,6 +89,17 @@ public final class TestDataFactory {
 
     public static AclKeyPathFragment aclKeyPathFragment() {
         return new AclKeyPathFragment( securableObjectType(), UUID.randomUUID() );
+    }
+
+    public static Set<Permission> permissions() {
+        return Arrays.asList( permissions )
+                .stream()
+                .filter( elem -> r.nextBoolean() )
+                .collect( Collectors.toCollection( () -> EnumSet.noneOf( Permission.class ) ) );
+    }
+
+    public static Ace ace() {
+        return new Ace( userPrincipal(), permissions() );
     }
 
 }
