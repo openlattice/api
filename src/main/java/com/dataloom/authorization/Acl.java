@@ -18,10 +18,12 @@ public class Acl {
         this.aces = aces;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) 
     public List<AclKeyPathFragment> getAclKey() {
         return aclKey;
     }
 
+    @JsonProperty( SerializationConstants.ACES ) 
     public Iterable<Ace> getAces() {
         return aces;
     }

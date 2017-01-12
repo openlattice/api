@@ -16,10 +16,12 @@ public class AclData {
         this.action = action;
     }
 
+    @JsonProperty( SerializationConstants.ACL ) 
     public Acl getAcl() {
         return acl;
     }
 
+    @JsonProperty( SerializationConstants.ACTION ) 
     public Action getAction() {
         return action;
     }

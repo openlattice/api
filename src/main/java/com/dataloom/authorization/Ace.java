@@ -18,10 +18,12 @@ public class Ace {
         this.permissions = permissions;
     }
 
+    @JsonProperty( SerializationConstants.PRINCIPAL ) 
     public Principal getPrincipal() {
         return principal;
     }
 
+    @JsonProperty( SerializationConstants.PERMISSIONS ) 
     public Set<Permission> getPermissions() {
         return permissions;
     }
