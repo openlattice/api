@@ -100,10 +100,11 @@ public interface OrganizationsApi {
      * by whether or not they have {@code {@link com.dataloom.authorization.Permission#READ}} on the organization.
      *
      * @param organizationId The id of the organization.
-     * @param principals     A set of valid principals.
+     * @param principals     A set of valid principals.gs
+     *                       
      */
     @PUT( ORGANIZATIONS + ID_PATH + PRINCIPALS )
-    Void addPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
+    Void setPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
     /**
      * This is a convenience call that modifies that removes all {@code {@link com.dataloom.authorization.Permission}}s
