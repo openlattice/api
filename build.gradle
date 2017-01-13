@@ -7,7 +7,7 @@ apply plugin: "eclipse"
 apply plugin: "idea"
 apply plugin: "jacoco"
 
-apply from: "https://raw.githubusercontent.com/kryptnostic/gradles/master/kryptnostic.gradle", to: ext
+apply from: "https://raw.githubusercontent.com/kryptnostic/gradles/master/kryptnostic.gradle"
 
 sourceCompatibility=JavaVersion.VERSION_1_8
 ext.guava_version='19.0'
