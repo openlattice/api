@@ -11,6 +11,8 @@ public interface OrganizationsApi {
     String ORGANIZATIONS     = "organizations";
     String ID                = "id";
     String ID_PATH           = "/{" + ID + "}";
+    String DESCRIPTION       = "/description";
+    String TITLE             = "/title";
     String EMAIL_DOMAIN      = "email-domain";
     String EMAIL_DOMAINS     = "/email-domains";
     String EMAIL_DOMAIN_PATH = "/{" + EMAIL_DOMAIN + "}";
@@ -25,19 +27,19 @@ public interface OrganizationsApi {
     @GET( ORGANIZATIONS )
     Iterable<Organization> getOrganizations();
 
-    @GET( ORGANIZATIONS + ID_PATH )
-    Organization getOrganization( @Path( ID ) UUID organizationId );
-
     @POST( ORGANIZATIONS )
     UUID createOrganizationIfNotExists( @Body Organization organization );
+
+    @GET( ORGANIZATIONS + ID_PATH )
+    Organization getOrganization( @Path( ID ) UUID organizationId );
 
     @DELETE( ORGANIZATIONS + ID_PATH )
     Void destroyOrganization( @Path( ID ) UUID organizationId );
 
-    @PUT( ORGANIZATIONS + ID_PATH )
+    @PUT( ORGANIZATIONS + ID_PATH + TITLE )
     Void updateTitle( @Path( ID ) UUID organziationId, @Body String title );
 
-    @PUT( ORGANIZATIONS + ID_PATH )
+    @PUT( ORGANIZATIONS + ID_PATH + DESCRIPTION )
     Void updateDescription( @Path( ID ) UUID organizationId, @Body String description );
 
     @GET( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS )
@@ -78,11 +80,8 @@ public interface OrganizationsApi {
     @DELETE( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
     Void removeAutoApprovedEmailDomain( @Path( ID ) UUID organizationId, @Path( EMAIL_DOMAIN ) String emailDomain );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + ROLES )
-    Set<Principal> getRoles( @Path( ID ) UUID organizationId );
-
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + MEMBERS )
-    Set<Principal> getMembers( @Path( ID ) UUID organizationId );
+    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS )
+    Set<Principal> getPrincipals( @Path( ID ) UUID organizationId );
 
     /**
      * This is a convenience call that modifies that grants {@code {@link com.dataloom.authorization.Permission#READ}}
@@ -115,6 +114,12 @@ public interface OrganizationsApi {
      */
     @HTTP( method = "DELETE", hasBody = true, path = ORGANIZATIONS + ID_PATH + PRINCIPALS )
     Void removePrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
+
+    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + ROLES )
+    Set<Principal> getRoles( @Path( ID ) UUID organizationId );
+
+    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + MEMBERS )
+    Set<Principal> getMembers( @Path( ID ) UUID organizationId );
 
     /**
      * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}}
