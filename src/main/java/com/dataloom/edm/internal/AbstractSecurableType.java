@@ -12,12 +12,10 @@ import com.google.common.base.Optional;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public abstract class AbstractSecurableType extends AbstractSecurableObject {
-    private static final long         serialVersionUID = 7806377281682752296L;
+    private static final long serialVersionUID = 7806377281682752296L;
     protected final FullQualifiedName type;
-    private transient int             h                = 0;
 
     protected AbstractSecurableType(
             UUID id,
@@ -43,13 +41,10 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
 
     @Override
     public int hashCode() {
-        if ( h == 0 ) {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
-            h = result;
-        }
-        return h;
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
+        return result;
     }
 
     @Override

@@ -1,11 +1,15 @@
 description = "Loom REST APIs"
 group = "com.kryptnostic"
-ext.projectName = "loom-api"
 
 apply plugin: "java"
 apply plugin: "eclipse"
 apply plugin: "idea"
 apply plugin: "jacoco"
+
+ext.projectName = 'loom-api'
+ext.scmUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
+ext.connectionUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
+ext.developerConnectionUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
 
 apply from: "https://raw.githubusercontent.com/kryptnostic/gradles/master/kryptnostic.gradle"
 

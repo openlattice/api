@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -37,7 +38,7 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         super( id, type, title, description, schemas );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        this.properties = Sets.newHashSet( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
     }
 
     public EntityType(
