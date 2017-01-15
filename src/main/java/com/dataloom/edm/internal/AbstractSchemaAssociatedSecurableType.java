@@ -2,6 +2,8 @@ package com.dataloom.edm.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
@@ -10,6 +12,7 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.collect.Sets;
 
 /**
  * Internal abstract base class for categorical types in the entity data model.
@@ -30,12 +33,20 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
             Optional<String> description,
             Set<FullQualifiedName> schemas ) {
         super( id, type, title, description );
-        this.schemas = checkNotNull( schemas, "Schemas can be empty, but not null." );
+        this.schemas = Sets.newHashSet( checkNotNull( schemas, "Schemas can be empty, but not null." ) );
     }
 
     @JsonProperty( SerializationConstants.SCHEMAS )
     public Set<FullQualifiedName> getSchemas() {
-        return schemas;
+        return Collections.unmodifiableSet( schemas );
+    }
+
+    public void addToSchemas( Collection<FullQualifiedName> additionalSchemas ) {
+        schemas.addAll( additionalSchemas );
+    }
+
+    public void removeFromSchemas( Collection<FullQualifiedName> additionalSchemas ) {
+        schemas.removeAll( additionalSchemas );
     }
 
     @Override
