@@ -23,9 +23,9 @@ public interface SearchApi {
 	 * If entityType and propertyTypes are both specified, the propertyTypes param
 	 * will be ignored.
 	 * 
-	 * @param query optional keyword search term to match across entity set names, titles, and descriptions 
-	 * @param entityType optional entity type UUID that entity sets must match
-	 * @param propertyTypes optional set of property type UUIDs that entity sets must contain
+	 * @param query An optional parameter the specifies they keywords used to perform the search.
+	 * @param entityType An optional parameter specifying the entity type of the entity sets that will be returned.
+	 * @param propertyTypes An optional parameter specifying the property types of the entity sets that will be returned.
 	 * @return JSON string of matching entity set metadata
 	 */
 	@GET( SEARCH )
@@ -41,9 +41,9 @@ public interface SearchApi {
 	 * If entityType and propertyTypes are both specified, the propertyTypes param
 	 * will be ignored.
 	 * 
-	 * @param query optional keyword search term to match across entity set names, titles, and descriptions 
-	 * @param entityType optional entity type UUID that entity sets must match
-	 * @param propertyTypes optional set of property type UUIDs that entity sets must contain
+	 * @param query An optional parameter the specifies they keywords used to perform the search.
+	 * @param entityType An optional parameter specifying the entity type of the entity sets that will be returned.
+	 * @param propertyTypes An optional parameter specifying the property types of the entity sets that will be returned.
 	 * @return Iterable of {@code Map<String, Object>} where each map corresponds to matching entity set metadata
 	 */
 	@POST( SEARCH )
