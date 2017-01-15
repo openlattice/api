@@ -3,6 +3,7 @@ package com.dataloom.authorization;
 import java.util.List;
 
 import retrofit2.http.Body;
+import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
@@ -28,6 +29,6 @@ public interface PermissionsApi {
      * @param aclKey The acl key.
      * @return The aces for the requested acl key.
      */
-    @POST( PERMISSIONS )
+    @HTTP( method = "GET", hasBody = true, path = PERMISSIONS )
     Acl getAcl( @Body List<AclKeyPathFragment> aclKey );
 }
