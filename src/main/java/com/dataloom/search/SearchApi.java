@@ -44,7 +44,7 @@ public interface SearchApi {
 	 * @param query
 	 * @param entityType
 	 * @param propertyTypes
-	 * @return Iterable of Map<String, Object> where each map corresponds to matching entity set metadata
+	 * @return Iterable of {@code Map<String, Object>} where each map corresponds to matching entity set metadata
 	 */
 	@POST( SEARCH )
 	Iterable<Map<String, Object>> executeQuery(
