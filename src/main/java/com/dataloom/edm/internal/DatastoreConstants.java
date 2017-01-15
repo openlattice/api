@@ -7,7 +7,7 @@ public final class DatastoreConstants {
      * This property is deprecated and should be dynamically configured.
      */
     @Deprecated
-    public static final String KEYSPACE             = "sparks2";
+    public static final String KEYSPACE             = "sparks";
 
     // TABLES
     public static final String ENTITY_SETS_TABLE        = "entity_sets";
