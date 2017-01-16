@@ -32,7 +32,7 @@ public interface SearchApi {
     String executeQueryJson(
             @Query( KEYWORD ) String query,
             @Query( ENTITY_TYPE_ID ) UUID entityType,
-            @Query( PROPERTY_TYPE_ID ) Set<UUID> propertyTypes );
+            @Body Set<UUID> propertyTypes );
 
     /**
      * The query, entityType, and propertyTypes params are all optional,
