@@ -1,5 +1,6 @@
 package com.dataloom.client;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import com.dataloom.client.serialization.SerializableSupplier;
@@ -80,8 +81,8 @@ public final class RetrofitFactory {
         return new OkHttpClient.Builder()
                 .addInterceptor( chain -> chain
                         .proceed( chain.request().newBuilder().addHeader( "Authorization", "Bearer " + jwtToken.get() )
-                                .build() ) );
-
+                                .build() ) )
+                .readTimeout( 2, TimeUnit.MINUTES );
     }
 
 }
