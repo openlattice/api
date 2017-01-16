@@ -14,7 +14,6 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import com.dataloom.authorization.Ace;
 import com.dataloom.authorization.Acl;
 import com.dataloom.authorization.AclData;
-import com.dataloom.authorization.AclKeyPathFragment;
 import com.dataloom.authorization.Action;
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
@@ -91,10 +90,6 @@ public final class TestDataFactory {
         return securableObjectTypes[ r.nextInt( securableObjectTypes.length ) ];
     }
 
-    public static AclKeyPathFragment aclKeyPathFragment() {
-        return new AclKeyPathFragment( securableObjectType(), UUID.randomUUID() );
-    }
-
     public static Set<Permission> permissions() {
         return Arrays.asList( permissions )
                 .stream()
@@ -108,7 +103,7 @@ public final class TestDataFactory {
 
     public static Acl acl() {
         return new Acl(
-                ImmutableList.of( aclKeyPathFragment(), aclKeyPathFragment() ),
+                ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() ),
                 ImmutableList.of( ace(), ace(), ace(), ace() ) );
     }
 
