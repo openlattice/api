@@ -1,26 +1,27 @@
 package com.dataloom.authorization;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Acl {
-    protected final List<AclKeyPathFragment> aclKey;
+    protected final List<UUID> aclKey;
     protected final Iterable<Ace>            aces;
     private transient int                    h = 0;
 
     @JsonCreator
     public Acl(
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKeyPathFragment> aclKey,
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
             @JsonProperty( SerializationConstants.ACES ) Iterable<Ace> aces ) {
         this.aclKey = aclKey;
         this.aces = aces;
     }
 
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
-    public List<AclKeyPathFragment> getAclKey() {
+    public List<UUID> getAclKey() {
         return aclKey;
     }
 

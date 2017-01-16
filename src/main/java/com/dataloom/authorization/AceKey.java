@@ -14,12 +14,8 @@ import java.util.UUID;
  */
 public class AceKey implements Serializable {
     private static final long serialVersionUID = 7360380787390696122L;
-    private final List<AclKeyPathFragment> keys;
+    private final List<UUID> keys;
     private final Principal    principal;
-
-    public AceKey( UUID objectId, SecurableObjectType objectType, Principal principal ) {
-        this( principal, new AclKeyPathFragment( checkNotNull( objectType ), checkNotNull( objectId ) ) );
-    }
 
     /**
      * This is a special constructor that puts the keys from a set in an canonical order
@@ -27,17 +23,17 @@ public class AceKey implements Serializable {
      * @param key Set of object key to put in canonical order
      * @param principal The principal for this ACE
      */
-    public AceKey( List<AclKeyPathFragment> key, Principal principal ) {
+    public AceKey( List<UUID> key, Principal principal ) {
         this.keys = checkNotNull( key );
         this.principal = checkNotNull( principal );
         checkArgument( key.size() > 0, "At least one key must be provided." );
     }
 
-    public AceKey( Principal principal, AclKeyPathFragment... key ) {
+    public AceKey( Principal principal, UUID... key ) {
         this( Arrays.asList( key ), principal );
     }
 
-    public List<AclKeyPathFragment> getKey() {
+    public List<UUID> getKey() {
         return keys;
     }
 

@@ -1,15 +1,15 @@
 package com.dataloom.authorization;
 
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.http.Body;
 import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
-import retrofit2.http.POST;
 
 /**
  * @author Ho Chung Siu
- * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt; 
+ * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public interface PermissionsApi {
     String PERMISSIONS = "permissions";
@@ -29,6 +29,9 @@ public interface PermissionsApi {
      * @param aclKey The acl key.
      * @return The aces for the requested acl key.
      */
-    @HTTP( method = "GET", hasBody = true, path = PERMISSIONS )
-    Acl getAcl( @Body List<AclKeyPathFragment> aclKey );
+    @HTTP(
+        method = "GET",
+        hasBody = true,
+        path = PERMISSIONS )
+    Acl getAcl( @Body List<UUID> aclKey );
 }

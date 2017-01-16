@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.dataloom.authorization.AclKeyPathFragment;
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,13 +19,12 @@ import com.google.common.base.Optional;
  *
  */
 public abstract class AbstractSecurableObject implements Serializable {
-    private static final long          serialVersionUID = -2268620545866476451L;
-    protected final AclKeyPathFragment aclKey;
-    protected final String             title;
-    protected final String             description;
-    private final boolean              idPresent;
-    private transient int              h                = 0;
-
+    private static final long serialVersionUID = -2268620545866476451L;
+    protected final UUID      id;
+    protected final String    title;
+    protected final String    description;
+    private final boolean     idPresent;
+    private transient int     h                = 0;
 
     /**
      * @param id The UUID of the securable object. Must not be null.
@@ -63,21 +61,21 @@ public abstract class AbstractSecurableObject implements Serializable {
             String title,
             Optional<String> description,
             boolean idPresent ) {
-        
+
         /*
          * There is no logical requirement that the title not be blank, it would just be very confusing to have a bunch
          * of organizations with no title whatsoever. This can be relaxed in the future.
          */
         checkArgument( StringUtils.isNotBlank( title ), "Title cannot be blank." );
-        aclKey = new AclKeyPathFragment( this.getCategory(), checkNotNull( id ) );
+        this.id = checkNotNull( id );
         this.idPresent = idPresent;
         this.description = description.or( "" );
         this.title = title;
     }
-    
+
     @JsonProperty( SerializationConstants.ID_FIELD )
     public UUID getId() {
-        return aclKey.getId();
+        return id;
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -87,18 +85,13 @@ public abstract class AbstractSecurableObject implements Serializable {
 
     @Override
     public String toString() {
-        return "AbstractSecurableObject [aclKey=" + aclKey + ", title=" + title + ", description=" + description
+        return "AbstractSecurableObject [id=" + id + ", title=" + title + ", description=" + description
                 + ", idPresent=" + idPresent + "]";
     }
 
     @JsonProperty( SerializationConstants.DESCRIPTION_FIELD )
     public String getDescription() {
         return description;
-    }
-
-    @JsonIgnore
-    public AclKeyPathFragment getAclKeyPathFragment() {
-        return aclKey;
     }
 
     @JsonIgnore
@@ -114,7 +107,7 @@ public abstract class AbstractSecurableObject implements Serializable {
         if ( h == 0 ) {
             final int prime = 31;
             int result = 1;
-            result = prime * result + ( ( aclKey == null ) ? 0 : aclKey.hashCode() );
+            result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
             result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
             result = prime * result + ( idPresent ? 1231 : 1237 );
             result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
@@ -135,11 +128,11 @@ public abstract class AbstractSecurableObject implements Serializable {
             return false;
         }
         AbstractSecurableObject other = (AbstractSecurableObject) obj;
-        if ( aclKey == null ) {
-            if ( other.aclKey != null ) {
+        if ( id == null ) {
+            if ( other.id != null ) {
                 return false;
             }
-        } else if ( !aclKey.equals( other.aclKey ) ) {
+        } else if ( !id.equals( other.id ) ) {
             return false;
         }
         if ( description == null ) {
