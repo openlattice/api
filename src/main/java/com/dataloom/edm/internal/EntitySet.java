@@ -114,7 +114,8 @@ public class EntitySet extends AbstractSecurableType {
 
     @Override
     public String toString() {
-        return "EntitySet [name=" + name + ", title=" + title + ", type=" + type + ", aclKey=" + aclKey + "]";
+        return "EntitySet [entityTypeId=" + entityTypeId + ", name=" + name + ", type=" + type + ", id=" + id
+                + ", title=" + title + ", description=" + description + "]";
     }
 
     @Override
