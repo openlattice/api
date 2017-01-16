@@ -3,26 +3,26 @@ package com.dataloom.requests;
 import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.UUID;
 
-import com.dataloom.authorization.AclKeyPathFragment;
 import com.dataloom.authorization.Permission;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PermissionsRequestDetails implements Serializable {
-    private static final long                            serialVersionUID = -3977504707164513197L;
+    private static final long              serialVersionUID = -3977504707164513197L;
 
     @JsonProperty( SerializationConstants.PERMISSIONS )
-    private Map<AclKeyPathFragment, EnumSet<Permission>> permissions;
+    private Map<UUID, EnumSet<Permission>> permissions;
     @JsonProperty( SerializationConstants.STATUS )
-    private RequestStatus                                status;
+    private RequestStatus                  status;
 
-    public PermissionsRequestDetails( Map<AclKeyPathFragment, EnumSet<Permission>> permissions, RequestStatus status ) {
+    public PermissionsRequestDetails( Map<UUID, EnumSet<Permission>> permissions, RequestStatus status ) {
         this.permissions = permissions;
         this.status = status;
     }
 
-    public Map<AclKeyPathFragment, EnumSet<Permission>> getPermissions() {
+    public Map<UUID, EnumSet<Permission>> getPermissions() {
         return permissions;
     }
 

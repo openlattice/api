@@ -1,26 +1,30 @@
 package com.dataloom.requests;
 
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
-import com.dataloom.authorization.AclKeyPathFragment;
-import com.dataloom.authorization.Permission;
-import com.dataloom.authorization.Principal;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface PermissionsRequestApi {
     String PERMISSIONS = "requests";
+    String ADMIN       = "admin";
+    String UNRESOLVED  = "unresolved";
+    String RESOLVED    = "resolved";
 
-    Void upsertRequest( List<AclKeyPathFragment> aclRoot, Map<AclKeyPathFragment, EnumSet<Permission>> permissions );
-    
-    Void updateRequestStatus( List<AclKeyPathFragment> aclRoot, Principal principal, RequestStatus status );
+    @PUT( PERMISSIONS )
+    Void upsertRequest( AclRootRequestDetailsPair req );
 
-    PermissionsRequest getUnresolvedRequest( List<AclKeyPathFragment> aclRoot, Principal principal );
+    @POST( PERMISSIONS + "/" + UNRESOLVED )
+    PermissionsRequest getUnresolvedRequestOfUser( List<UUID> aclRoot );
 
-    Iterable<PermissionsRequest> getAllUnresolvedRequests( EnumSet<RequestStatus> status );
+    @POST( PERMISSIONS + "/" + RESOLVED )
+    Iterable<PermissionsRequest> getResolvedRequestsOfUser( List<UUID> aclRoot );
 
-    Iterable<PermissionsRequest> getAllUnresolvedRequests( List<AclKeyPathFragment> aclRoot, EnumSet<RequestStatus> status );
+    @POST( PERMISSIONS + "/" + ADMIN )
+    Void updateUnresolvedRequestStatus( PermissionsRequest req );
 
-    Iterable<PermissionsRequest> getResolvedRequests( Principal principal, List<AclKeyPathFragment> aclRoot );
+    @POST( PERMISSIONS + "/" + ADMIN + "/" + UNRESOLVED )
+    Iterable<PermissionsRequest> getAllUnresolvedRequestsOfAdmin( AclRootStatusPair req );
 
 }

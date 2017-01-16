@@ -1,34 +1,23 @@
 package com.dataloom.requests;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-import com.dataloom.data.SerializationConstants;
-import com.fasterxml.jackson.annotation.JsonProperty;
+public class AclRootRequestDetailsPair implements Serializable {
 
-public class PermissionsRequest {
-    @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
-    private List<UUID>                aclRoot;
-    @JsonProperty( SerializationConstants.REQUESTING_USER )
-    private String                    userId;
-    @JsonProperty( SerializationConstants.DETAILS_FIELD )
+    private static final long         serialVersionUID = -6090078743805144042L;
+
+    private List<UUID>  aclRoot;
     private PermissionsRequestDetails details;
 
-    public PermissionsRequest(
-            List<UUID> aclRoot,
-            String userId,
-            PermissionsRequestDetails details ) {
+    public AclRootRequestDetailsPair( List<UUID> aclRoot, PermissionsRequestDetails details ) {
         this.aclRoot = aclRoot;
-        this.userId = userId;
         this.details = details;
     }
 
     public List<UUID> getAclRoot() {
         return aclRoot;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public PermissionsRequestDetails getDetails() {
@@ -41,7 +30,6 @@ public class PermissionsRequest {
         int result = 1;
         result = prime * result + ( ( aclRoot == null ) ? 0 : aclRoot.hashCode() );
         result = prime * result + ( ( details == null ) ? 0 : details.hashCode() );
-        result = prime * result + ( ( userId == null ) ? 0 : userId.hashCode() );
         return result;
     }
 
@@ -50,22 +38,19 @@ public class PermissionsRequest {
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
-        PermissionsRequest other = (PermissionsRequest) obj;
+        AclRootRequestDetailsPair other = (AclRootRequestDetailsPair) obj;
         if ( aclRoot == null ) {
             if ( other.aclRoot != null ) return false;
         } else if ( !aclRoot.equals( other.aclRoot ) ) return false;
         if ( details == null ) {
             if ( other.details != null ) return false;
         } else if ( !details.equals( other.details ) ) return false;
-        if ( userId == null ) {
-            if ( other.userId != null ) return false;
-        } else if ( !userId.equals( other.userId ) ) return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "PermissionsRequest [aclRoot=" + aclRoot + ", userId=" + userId + ", details=" + details + "]";
+        return "AclRootRequestDetailsPair [aclRoot=" + aclRoot + ", details=" + details + "]";
     }
 
 }
