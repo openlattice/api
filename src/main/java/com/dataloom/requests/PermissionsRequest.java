@@ -3,6 +3,7 @@ package com.dataloom.requests;
 import java.util.List;
 import java.util.UUID;
 
+import com.dataloom.authorization.Principal;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,16 +11,16 @@ public class PermissionsRequest {
     @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
     private List<UUID>                aclRoot;
     @JsonProperty( SerializationConstants.REQUESTING_USER )
-    private String                    userId;
+    private Principal                    user;
     @JsonProperty( SerializationConstants.DETAILS_FIELD )
     private PermissionsRequestDetails details;
 
     public PermissionsRequest(
             List<UUID> aclRoot,
-            String userId,
+            Principal user,
             PermissionsRequestDetails details ) {
         this.aclRoot = aclRoot;
-        this.userId = userId;
+        this.user = user;
         this.details = details;
     }
 
@@ -27,8 +28,8 @@ public class PermissionsRequest {
         return aclRoot;
     }
 
-    public String getUserId() {
-        return userId;
+    public Principal getUser() {
+        return user;
     }
 
     public PermissionsRequestDetails getDetails() {
@@ -41,7 +42,7 @@ public class PermissionsRequest {
         int result = 1;
         result = prime * result + ( ( aclRoot == null ) ? 0 : aclRoot.hashCode() );
         result = prime * result + ( ( details == null ) ? 0 : details.hashCode() );
-        result = prime * result + ( ( userId == null ) ? 0 : userId.hashCode() );
+        result = prime * result + ( ( user == null ) ? 0 : user.hashCode() );
         return result;
     }
 
@@ -57,15 +58,15 @@ public class PermissionsRequest {
         if ( details == null ) {
             if ( other.details != null ) return false;
         } else if ( !details.equals( other.details ) ) return false;
-        if ( userId == null ) {
-            if ( other.userId != null ) return false;
-        } else if ( !userId.equals( other.userId ) ) return false;
+        if ( user == null ) {
+            if ( other.user != null ) return false;
+        } else if ( !user.equals( other.user ) ) return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "PermissionsRequest [aclRoot=" + aclRoot + ", userId=" + userId + ", details=" + details + "]";
+        return "PermissionsRequest [aclRoot=" + aclRoot + ", user=" + user + ", details=" + details + "]";
     }
 
 }
