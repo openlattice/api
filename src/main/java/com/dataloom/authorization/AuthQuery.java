@@ -2,6 +2,7 @@ package com.dataloom.authorization;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.UUID;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -9,19 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AuthQuery {
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
-    private List<AclKeyPathFragment> aclKey;
+    private List<UUID> aclKey;
     @JsonProperty( SerializationConstants.PERMISSIONS )
     private EnumSet<Permission>      permissions;
 
     @JsonCreator
     public AuthQuery(
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<AclKeyPathFragment> aclKey,
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
             @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions ) {
         this.aclKey = aclKey;
         this.permissions = permissions;
     }
 
-    public List<AclKeyPathFragment> getAclKey() {
+    public List<UUID> getAclKey() {
         return aclKey;
     }
 

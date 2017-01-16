@@ -2,22 +2,23 @@ package com.dataloom.authorization;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Auth {
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
-    private List<AclKeyPathFragment> aclKey;
+    private List<UUID>               aclKey;
     @JsonProperty( SerializationConstants.PERMISSIONS_MAP )
     private Map<Permission, Boolean> permissionsMap;
 
-    public Auth( List<AclKeyPathFragment> aclKey, Map<Permission, Boolean> permissionsMap ) {
+    public Auth( List<UUID> aclKey, Map<Permission, Boolean> permissionsMap ) {
         this.aclKey = aclKey;
         this.permissionsMap = permissionsMap;
     }
 
-    public List<AclKeyPathFragment> getAclKey() {
+    public List<UUID> getAclKey() {
         return aclKey;
     }
 
@@ -51,7 +52,7 @@ public class Auth {
 
     @Override
     public String toString() {
-        return "Auth [aclKey=" + aclKey + ", accessLevel=" + permissionsMap + "]";
+        return "Auth [aclKey=" + aclKey + ", permissionsMap=" + permissionsMap + "]";
     }
 
 }
