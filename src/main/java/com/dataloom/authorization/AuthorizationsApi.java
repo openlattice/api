@@ -8,5 +8,5 @@ public interface AuthorizationsApi {
     String AUTHORIZATIONS = "authorizations";
     
     @POST( AUTHORIZATIONS )
-    Iterable<Auth> checkAuthorizations( Set<AuthQuery> queries );
+    Iterable<Authorization> checkAuthorizations( Set<AccessCheck> queries );
 }

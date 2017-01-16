@@ -7,13 +7,13 @@ import java.util.UUID;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Auth {
+public class Authorization {
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     private List<UUID>               aclKey;
     @JsonProperty( SerializationConstants.PERMISSIONS_MAP )
     private Map<Permission, Boolean> permissionsMap;
 
-    public Auth( List<UUID> aclKey, Map<Permission, Boolean> permissionsMap ) {
+    public Authorization( List<UUID> aclKey, Map<Permission, Boolean> permissionsMap ) {
         this.aclKey = aclKey;
         this.permissionsMap = permissionsMap;
     }
@@ -40,7 +40,7 @@ public class Auth {
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
-        Auth other = (Auth) obj;
+        Authorization other = (Authorization) obj;
         if ( permissionsMap == null ) {
             if ( other.permissionsMap != null ) return false;
         } else if ( !permissionsMap.equals( other.permissionsMap ) ) return false;
@@ -52,7 +52,7 @@ public class Auth {
 
     @Override
     public String toString() {
-        return "Auth [aclKey=" + aclKey + ", permissionsMap=" + permissionsMap + "]";
+        return "Authorization [aclKey=" + aclKey + ", permissionsMap=" + permissionsMap + "]";
     }
 
 }

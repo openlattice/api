@@ -8,14 +8,14 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AuthQuery {
+public class AccessCheck {
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     private List<UUID> aclKey;
     @JsonProperty( SerializationConstants.PERMISSIONS )
     private EnumSet<Permission>      permissions;
 
     @JsonCreator
-    public AuthQuery(
+    public AccessCheck(
             @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
             @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions ) {
         this.aclKey = aclKey;
@@ -44,7 +44,7 @@ public class AuthQuery {
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
-        AuthQuery other = (AuthQuery) obj;
+        AccessCheck other = (AccessCheck) obj;
         if ( aclKey == null ) {
             if ( other.aclKey != null ) return false;
         } else if ( !aclKey.equals( other.aclKey ) ) return false;
@@ -56,7 +56,7 @@ public class AuthQuery {
 
     @Override
     public String toString() {
-        return "AuthQuery [aclKey=" + aclKey + ", permissions=" + permissions + "]";
+        return "AccessCheck [aclKey=" + aclKey + ", permissions=" + permissions + "]";
     }
 
 }
