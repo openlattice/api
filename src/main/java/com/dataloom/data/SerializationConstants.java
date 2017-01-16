@@ -18,6 +18,7 @@ public final class SerializationConstants {
     public static final String NAME_FIELD                  = "name";
     public static final String NAMESPACE_FIELD             = "namespace";
     public static final String PERMISSIONS                 = "permissions";
+    public static final String PERMISSIONS_MAP             = "permissionsMap";
     public static final String PRINCIPAL                   = "principal";
     public static final String PROPERTIES_FIELD            = "properties";
     public static final String PROPERTY_FIELD              = "property";
