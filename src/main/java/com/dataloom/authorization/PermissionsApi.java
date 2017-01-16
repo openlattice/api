@@ -12,7 +12,12 @@ import retrofit2.http.PATCH;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public interface PermissionsApi {
-    String PERMISSIONS = "permissions";
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE    = "/datastore";
+    String CONTROLLER = "/permissions";
+    String BASE       = SERVICE + CONTROLLER;
 
     /**
      * Add, removes, or sets the ace for a particular acl key. Successful only if user is the owner of acl key.
@@ -20,7 +25,7 @@ public interface PermissionsApi {
      * @param req The acl key, the principals, and the aces to set for that particular ace key.
      * @return The aces for the acl key, after applying the request changes.
      */
-    @PATCH( PERMISSIONS )
+    @PATCH( SERVICE + CONTROLLER )
     Void updateAcl( @Body AclData req );
 
     /**
@@ -32,6 +37,6 @@ public interface PermissionsApi {
     @HTTP(
         method = "GET",
         hasBody = true,
-        path = PERMISSIONS )
+        path = SERVICE + CONTROLLER )
     Acl getAcl( @Body List<UUID> aclKey );
 }
