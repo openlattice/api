@@ -40,13 +40,16 @@ public final class TestDataFactory {
         return new Principal( PrincipalType.ROLE, RandomStringUtils.randomAlphanumeric( 5 ) );
     }
 
-    public static EntityType entityType() {
+    public static EntityType entityType( PropertyType... keys ) {
+        Set<UUID> k = keys.length > 0
+                ? Arrays.asList( keys ).stream().map( PropertyType::getId ).collect( Collectors.toSet() )
+                : ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() );
         return new EntityType(
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
-                ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ),
+                k,
                 ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
     }
 
