@@ -23,14 +23,17 @@ public class EdmDetailsSelector {
         this.includedFields = includedFields;
     }
 
+    @JsonProperty( SerializationConstants.TYPE_FIELD )
     public SecurableObjectType getType() {
         return type;
     }
 
+    @JsonProperty( SerializationConstants.ID_FIELD )
     public UUID getId() {
         return id;
     }
-
+    
+    @JsonProperty( SerializationConstants.INCLUDE_FIELD )
     public Set<SecurableObjectType> getIncludedFields() {
         return includedFields;
     }

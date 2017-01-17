@@ -4,33 +4,35 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.dataloom.edm.EdmApi;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EdmDetails {
-    @JsonProperty( EdmApi.PROPERTY_TYPES )
     private final Map<UUID, PropertyType> propertyTypes;
-    @JsonProperty( EdmApi.ENTITY_TYPES )
     private final Map<UUID, EntityType>   entityTypes;
-    @JsonProperty( EdmApi.ENTITY_SETS )
     private final Map<UUID, EntitySet>    entitySets;
 
+    @JsonCreator
     public EdmDetails(
-            Map<UUID, PropertyType> propertyTypes,
-            Map<UUID, EntityType> entityTypes,
-            Map<UUID, EntitySet> entitySets ) {
+            @JsonProperty( EdmApi.PROPERTY_TYPES ) Map<UUID, PropertyType> propertyTypes,
+            @JsonProperty( EdmApi.ENTITY_TYPES ) Map<UUID, EntityType> entityTypes,
+            @JsonProperty( EdmApi.ENTITY_SETS ) Map<UUID, EntitySet> entitySets ) {
         this.propertyTypes = propertyTypes;
         this.entityTypes = entityTypes;
         this.entitySets = entitySets;
     }
 
+    @JsonProperty( EdmApi.PROPERTY_TYPES )
     public Map<UUID, PropertyType> getPropertyTypes() {
         return propertyTypes;
     }
 
+    @JsonProperty( EdmApi.ENTITY_TYPES )
     public Map<UUID, EntityType> getEntityTypes() {
         return entityTypes;
     }
 
+    @JsonProperty( EdmApi.ENTITY_SETS )
     public Map<UUID, EntitySet> getEntitySets() {
         return entitySets;
     }
