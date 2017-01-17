@@ -33,7 +33,6 @@ public interface EdmApi {
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
     String ID                      = "id";
-    String IDS                     = "ids";
     String NAME                    = "name";
     String NAMESPACE               = "namespace";
     String NAMESPACES              = "namespaces";
@@ -48,6 +47,7 @@ public interface EdmApi {
      * /entity/type/{namespace}/{name} /entity/set/{namespace}/{name} /schema/{namespace}/{name}
      * /property/{namespace}/{name}
      */
+    String IDS_PATH                = "/ids";
     String SCHEMA_PATH             = "/schema";
     String ENTITY_SETS_PATH        = "/entity/set";
     String ENTITY_TYPE_PATH        = "/entity/type";
@@ -71,7 +71,7 @@ public interface EdmApi {
     @GET( PROPERTY_TYPE_BASE_PATH + ID_PATH )
     PropertyType getPropertyType( @Path( ID ) UUID propertyTypeId );
 
-    @GET( NAMESPACE + NAMESPACE_PATH+  PROPERTY_TYPE_BASE_PATH)
+    @GET( NAMESPACE + NAMESPACE_PATH + PROPERTY_TYPE_BASE_PATH )
 
     Iterable<PropertyType> getPropertyTypesInNamespace( String namespace );
 
@@ -187,10 +187,10 @@ public interface EdmApi {
     @GET( BASE + ENTITY_SETS_PATH + NAME_PATH )
     UUID getEntitySetId( @Path( NAME ) String entitySetName );
 
-    @GET( BASE + IDS + PROPERTY_TYPE_PATH + NAMESPACE_PATH  +NAME_PATH )
+    @GET( BASE + IDS_PATH + PROPERTY_TYPE_PATH + NAMESPACE_PATH + NAME_PATH )
     UUID getPropertyTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
-    @GET( BASE + IDS + ENTITY_TYPE_PATH + NAMESPACE_PATH  +NAME_PATH )
+    @GET( BASE + IDS_PATH + ENTITY_TYPE_PATH + NAMESPACE_PATH + NAME_PATH )
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
 }
