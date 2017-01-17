@@ -19,6 +19,8 @@ import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.SecurableObjectType;
+import com.dataloom.edm.internal.AbstractSecurableType;
+import com.dataloom.edm.internal.EdmDetails;
 import com.dataloom.edm.internal.EntitySet;
 import com.dataloom.edm.internal.EntityType;
 import com.dataloom.edm.internal.PropertyType;
@@ -119,6 +121,16 @@ public final class TestDataFactory {
         return new AclData(
                 acl(),
                 actions[ r.nextInt( actions.length ) ] );
+    }
+
+    public static EdmDetails edmDetails() {
+        Set<PropertyType> pts = ImmutableSet.of( propertyType(), propertyType(), propertyType() );
+        Set<EntityType> ets = ImmutableSet.of( entityType(), entityType(), entityType() );
+        Set<EntitySet> ess = ImmutableSet.of( entitySet() );
+        return new EdmDetails(
+                pts.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
+                ets.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
+                ess.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ) );
     }
 
 }
