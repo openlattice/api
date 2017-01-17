@@ -1,34 +1,31 @@
 package com.dataloom.edm.internal;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.io.Serializable;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public abstract class AbstractSecurableObject implements Serializable {
     private static final long serialVersionUID = -2268620545866476451L;
-    protected final UUID      id;
-    protected final String    title;
-    protected final String    description;
-    private final boolean     idPresent;
-    private transient int     h                = 0;
+    protected final UUID    id;
+    protected final String  title;
+    protected final String  description;
+    private final   boolean idPresent;
 
     /**
-     * @param id The UUID of the securable object. Must not be null.
-     * @param title The title of the securable object. Must not be blank.
+     * @param id          The UUID of the securable object. Must not be null.
+     * @param title       The title of the securable object. Must not be blank.
      * @param description An optional description for the object. Can be blank or null.
      */
     protected AbstractSecurableObject(
@@ -39,8 +36,8 @@ public abstract class AbstractSecurableObject implements Serializable {
     }
 
     /**
-     * @param id An optional id for the securable object in the form a UUID.
-     * @param title The title of the securable object. Must not be blank.
+     * @param id          An optional id for the securable object in the form a UUID.
+     * @param title       The title of the securable object. Must not be blank.
      * @param description An optional description for the object. Can be blank or null.
      */
     protected AbstractSecurableObject(
@@ -51,10 +48,10 @@ public abstract class AbstractSecurableObject implements Serializable {
     }
 
     /**
-     * @param id The id of the securable object in the form of a UUID. Must not be null.
-     * @param title The title of the securable object. Must not be blank.
+     * @param id          The id of the securable object in the form of a UUID. Must not be null.
+     * @param title       The title of the securable object. Must not be blank.
      * @param description An optional description for the object. Can be blank or null.
-     * @param idPresent Whether the id was present at creation time or whether it was generate randomly.
+     * @param idPresent   Whether the id was present at creation time or whether it was generate randomly.
      */
     private AbstractSecurableObject(
             UUID id,
@@ -104,16 +101,13 @@ public abstract class AbstractSecurableObject implements Serializable {
 
     @Override
     public int hashCode() {
-        if ( h == 0 ) {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
-            result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
-            result = prime * result + ( idPresent ? 1231 : 1237 );
-            result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
-            h = result;
-        }
-        return h;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
+        result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
+        result = prime * result + ( idPresent ? 1231 : 1237 );
+        result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
+        return result;
     }
 
     @Override

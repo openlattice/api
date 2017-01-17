@@ -1,28 +1,26 @@
 package com.dataloom.edm.internal;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
+import com.google.common.collect.Sets;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
-import com.dataloom.data.SerializationConstants;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Optional;
-import com.google.common.collect.Sets;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Internal abstract base class for categorical types in the entity data model.
- * 
+ *
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecurableType {
-    private static final long              serialVersionUID = -154529013746983795L;
+    private static final long serialVersionUID = -154529013746983795L;
     protected final Set<FullQualifiedName> schemas;
-    private transient int                  h                = 0;
 
     // TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.
 
@@ -51,13 +49,10 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
 
     @Override
     public int hashCode() {
-        if ( h == 0 ) {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
-            h = result;
-        }
-        return h;
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
+        return result;
     }
 
     @Override
