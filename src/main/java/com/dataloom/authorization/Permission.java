@@ -6,10 +6,9 @@ package com.dataloom.authorization;
  */
 
 public enum Permission {
-    ALTER,
     DISCOVER,
     LINK,
-    OWNER,
     READ,
-    WRITE
+    WRITE,
+    OWNER
 }

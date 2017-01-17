@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import com.dataloom.authorization.Acl;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
-import com.dataloom.edm.internal.TestDataFactory;
+import com.dataloom.mapstores.TestDataFactory;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
 public class AclSerializerTest extends BaseJacksonSerializationTest<Acl> {

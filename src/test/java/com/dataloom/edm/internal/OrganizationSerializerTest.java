@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.mapstores.TestDataFactory;
 import com.dataloom.organization.Organization;
 import com.dataloom.serializer.BaseJacksonSerializationTest;
 
