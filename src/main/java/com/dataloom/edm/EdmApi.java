@@ -4,10 +4,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.edm.internal.EdmDetails;
 import com.dataloom.edm.internal.EntitySet;
 import com.dataloom.edm.internal.EntityType;
 import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.edm.internal.Schema;
+import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 
 import retrofit2.http.Body;
@@ -64,6 +66,9 @@ public interface EdmApi {
 
     @GET( BASE )
     EntityDataModel getEntityDataModel();
+
+    @POST( BASE )
+    EdmDetails getEdmDetails( @Body Set<EdmDetailsSelector> selectors );
 
     @GET( PROPERTY_TYPE_BASE_PATH )
     Iterable<PropertyType> getPropertyTypes();
