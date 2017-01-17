@@ -9,9 +9,17 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface SearchApi {
-
-    String SEARCH           = "search";
-    String SEARCH_JAVA      = "searchJava";
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE                 = "/datastore";
+    String CONTROLLER              = "/search";
+    String BASE                    = SERVICE + CONTROLLER;
+    
+    /*
+     * Normal params 
+     */
+    String SEARCH_JAVA      = "/java";
     String KEYWORD          = "kw";
     String ENTITY_TYPE_ID   = "eid";
     String PROPERTY_TYPE_ID = "pid";
@@ -28,7 +36,7 @@ public interface SearchApi {
      * @param propertyTypes An optional parameter specifying the property types of the entity sets that will be returned.
      * @return JSON string of matching entity set metadata
      */
-    @POST( SEARCH )
+    @POST( BASE )
     String executeQueryJson(
             @Query( KEYWORD ) String query,
             @Query( ENTITY_TYPE_ID ) UUID entityType,
@@ -46,7 +54,7 @@ public interface SearchApi {
      * @param propertyTypes An optional parameter specifying the property types of the entity sets that will be returned.
      * @return Iterable of {@code Map<String, Object>} where each map corresponds to matching entity set metadata
      */
-    @POST( SEARCH_JAVA )
+    @POST( BASE + SEARCH_JAVA )
     Iterable<Map<String, Object>> executeQuery(
             @Query( KEYWORD ) String query,
             @Query( ENTITY_TYPE_ID ) UUID entityType,
