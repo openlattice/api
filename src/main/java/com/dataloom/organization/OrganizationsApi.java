@@ -25,7 +25,6 @@ public interface OrganizationsApi {
     /*
      * Acutal path elements
      */
-    String ORGANIZATIONS     = "organizations";
     String ID                = "id";
     String ID_PATH           = "/{" + ID + "}";
     String DESCRIPTION       = "/description";
@@ -139,10 +138,10 @@ public interface OrganizationsApi {
         path = BASE + ID_PATH + PRINCIPALS )
     Void removePrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + ROLES )
+    @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
     Set<Principal> getRoles( @Path( ID ) UUID organizationId );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + MEMBERS )
+    @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
     Set<Principal> getMembers( @Path( ID ) UUID organizationId );
 
     /**
