@@ -25,7 +25,7 @@ public interface PermissionsApi {
      * @param req The acl key, the principals, and the aces to set for that particular ace key.
      * @return The aces for the acl key, after applying the request changes.
      */
-    @PATCH( SERVICE + CONTROLLER )
+    @PATCH( BASE )
     Void updateAcl( @Body AclData req );
 
     /**
@@ -37,6 +37,6 @@ public interface PermissionsApi {
     @HTTP(
         method = "GET",
         hasBody = true,
-        path = SERVICE + CONTROLLER )
+        path = BASE )
     Acl getAcl( @Body List<UUID> aclKey );
 }
