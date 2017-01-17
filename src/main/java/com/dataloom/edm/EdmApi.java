@@ -173,9 +173,9 @@ public interface EdmApi {
     UUID getEntitySetId( @Path( NAME ) String entitySetName );
 
     @GET( IDS + "/" + PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
-    UUID getPropertyTypeId( @Path( NAME ) String namespace, @Path( NAMESPACE ) String name );
-
+    UUID getPropertyTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
+ 
     @GET( IDS + "/" + ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
-    UUID getEntityTypeId( @Path( NAME ) String namespace, @Path( NAMESPACE ) String name );
+    UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
 }
