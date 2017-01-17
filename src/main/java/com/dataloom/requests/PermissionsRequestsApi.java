@@ -3,11 +3,12 @@ package com.dataloom.requests;
 import java.util.List;
 import java.util.UUID;
 
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface PermissionsRequestsApi {
-    String PERMISSIONS = "requests";
+    String PERMISSIONS_REQUESTS = "requests";
     String ADMIN       = "admin";
     String UNRESOLVED  = "unresolved";
     String RESOLVED    = "resolved";
@@ -31,39 +32,39 @@ public interface PermissionsRequestsApi {
      * </ul>
      * @return
      */
-    @PUT( PERMISSIONS )
-    Void upsertRequest( AclRootRequestDetailsPair req );
+    @PUT( PERMISSIONS_REQUESTS )
+    Void upsertRequest( @Body AclRootRequestDetailsPair req );
 
     /**
      * Get the unresolved request for the current user and the specified securable object. If no such request exist, a 404 should be returned.
      * @param aclRoot
      * @return
      */
-    @POST( PERMISSIONS + "/" + UNRESOLVED )
-    PermissionsRequest getUnresolvedRequestOfUser( List<UUID> aclRoot );
+    @POST( PERMISSIONS_REQUESTS + "/" + UNRESOLVED )
+    PermissionsRequest getUnresolvedRequestOfUser( @Body List<UUID> aclRoot );
 
     /**
      * Get all resolved requests for the current user and the specified securable object.
      * @param aclRoot
      * @return
      */
-    @POST( PERMISSIONS + "/" + RESOLVED )
-    Iterable<PermissionsRequest> getResolvedRequestsOfUser( List<UUID> aclRoot );
+    @POST( PERMISSIONS_REQUESTS + "/" + RESOLVED )
+    Iterable<PermissionsRequest> getResolvedRequestsOfUser( @Body List<UUID> aclRoot );
 
     /**
      * Allow owner of a securable object to change the status of an UNRESOLVED permissions request. This allows them to approve/decline a request.
      * @param req Only aclRoot, user, and status has to be passed in.
      * @return
      */
-    @POST( PERMISSIONS + "/" + ADMIN )
-    Void updateUnresolvedRequestStatus( PermissionsRequest req );
+    @POST( PERMISSIONS_REQUESTS + "/" + ADMIN )
+    Void updateUnresolvedRequestStatus( @Body PermissionsRequest req );
 
     /**
      * Allow owner of a securable object to retrieve all unresolved requests.
      * @param req Both aclRoot and status are optional. If aclRoot is missing, all authorized objects of user would be fetched. If status is missing, all RequestStatus would be fetched.
      * @return
      */
-    @POST( PERMISSIONS + "/" + ADMIN + "/" + UNRESOLVED )
-    Iterable<PermissionsRequest> getAllUnresolvedRequestsOfAdmin( AclRootStatusPair req );
+    @POST( PERMISSIONS_REQUESTS + "/" + ADMIN + "/" + UNRESOLVED )
+    Iterable<PermissionsRequest> getAllUnresolvedRequestsOfAdmin( @Body AclRootStatusPair req );
 
 }

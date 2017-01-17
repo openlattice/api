@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.dataloom.authorization.Permission;
 import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PermissionsRequestDetails implements Serializable {
@@ -17,7 +18,10 @@ public class PermissionsRequestDetails implements Serializable {
     @JsonProperty( SerializationConstants.STATUS )
     private RequestStatus                  status;
 
-    public PermissionsRequestDetails( Map<UUID, EnumSet<Permission>> permissions, RequestStatus status ) {
+    @JsonCreator
+    public PermissionsRequestDetails( 
+            @JsonProperty( SerializationConstants.PERMISSIONS ) Map<UUID, EnumSet<Permission>> permissions, 
+            @JsonProperty( SerializationConstants.STATUS ) RequestStatus status ) {
         this.permissions = permissions;
         this.status = status;
     }
