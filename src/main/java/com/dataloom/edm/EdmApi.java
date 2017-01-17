@@ -71,8 +71,7 @@ public interface EdmApi {
     @GET( PROPERTY_TYPE_BASE_PATH + ID_PATH )
     PropertyType getPropertyType( @Path( ID ) UUID propertyTypeId );
 
-    @GET( NAMESPACE + NAMESPACE_PATH + PROPERTY_TYPE_BASE_PATH )
-
+    @GET( PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE + NAMESPACE_PATH )
     Iterable<PropertyType> getPropertyTypesInNamespace( String namespace );
 
     /**
