@@ -22,6 +22,16 @@ import retrofit2.http.Path;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public interface EdmApi {
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE                 = "/datastore";
+    String CONTROLLER              = "/edm";
+    String BASE                    = SERVICE + CONTROLLER;
+
+    /*
+     * These are the actual components after {SERVICE}/{CONTROLLER}/
+     */
     String ID                      = "id";
     String IDS                     = "ids";
     String NAME                    = "name";
@@ -38,17 +48,21 @@ public interface EdmApi {
      * /entity/type/{namespace}/{name} /entity/set/{namespace}/{name} /schema/{namespace}/{name}
      * /property/{namespace}/{name}
      */
-    String SCHEMA_BASE_PATH        = "schema";
-    String ENTITY_SETS_BASE_PATH   = "entity/set";
-    String ENTITY_TYPE_BASE_PATH   = "entity/type";
-
-    String PROPERTY_TYPE_BASE_PATH = "property/type";
+    String SCHEMA_PATH             = "schema";
+    String ENTITY_SETS_PATH        = "entity/set";
+    String ENTITY_TYPE_PATH        = "entity/type";
+    String PROPERTY_TYPE_PATH      = "property/type";
     String NAMESPACE_PATH          = "{" + NAMESPACE + "}";
     String NAME_PATH               = "{" + NAME + "}";
     String ID_PATH                 = "{" + ID + "}";
     String DETAILS_PATH            = "details";
 
-    @GET( "/" )
+    String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
+    String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
+    String ENTITY_TYPE_BASE_PATH   = BASE + ENTITY_TYPE_PATH;
+    String PROPERTY_TYPE_BASE_PATH = BASE + PROPERTY_TYPE_PATH;
+
+    @GET( BASE )
     EntityDataModel getEntityDataModel();
 
     @GET( PROPERTY_TYPE_BASE_PATH )
@@ -174,7 +188,7 @@ public interface EdmApi {
 
     @GET( IDS + "/" + PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
     UUID getPropertyTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
- 
+    
     @GET( IDS + "/" + ENTITY_TYPE_BASE_PATH + "/" + NAMESPACE_PATH + "/" + NAME_PATH )
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 

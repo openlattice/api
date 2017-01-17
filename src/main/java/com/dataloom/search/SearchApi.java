@@ -8,9 +8,17 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 
 public interface SearchApi {
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE          = "/datastore";
+    String CONTROLLER       = "/search";
+    String BASE             = SERVICE + CONTROLLER;
 
-    String SEARCH           = "search";
-    String SEARCH_JAVA      = "searchJava";
+    /*
+     * Normal params
+     */
+    String SEARCH_JAVA      = "/java";
     String KEYWORD          = "kw";
     String ENTITY_TYPE_ID   = "eid";
     String PROPERTY_TYPE_ID = "pid";
@@ -27,7 +35,7 @@ public interface SearchApi {
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
      * @return JSON string of matching entity set metadata
      */
-    @GET( SEARCH )
+    @GET( BASE )
     String executeQueryJson( @Body SearchRequest request );
 
     /**
@@ -42,7 +50,6 @@ public interface SearchApi {
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
      * @return JSON string of matching entity set metadata
      */
-    @GET( SEARCH_JAVA )
+    @GET( BASE + SEARCH_JAVA )
     Iterable<Map<String, Object>> executeQuery( @Body SearchRequest request );
-
 }
