@@ -5,7 +5,7 @@ import java.util.Map;
 import com.dataloom.search.requests.SearchRequest;
 
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface SearchApi {
     /*
@@ -35,7 +35,7 @@ public interface SearchApi {
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
      * @return JSON string of matching entity set metadata
      */
-    @GET( BASE )
+    @POST( BASE )
     String executeQueryJson( @Body SearchRequest request );
 
     /**
@@ -50,6 +50,6 @@ public interface SearchApi {
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
      * @return JSON string of matching entity set metadata
      */
-    @GET( BASE + SEARCH_JAVA )
+    @POST( BASE + SEARCH_JAVA )
     Iterable<Map<String, Object>> executeQuery( @Body SearchRequest request );
 }
