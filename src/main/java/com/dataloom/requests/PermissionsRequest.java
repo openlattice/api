@@ -5,33 +5,35 @@ import java.util.UUID;
 
 import com.dataloom.authorization.Principal;
 import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PermissionsRequest {
-    @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
     private List<UUID>                aclRoot;
-    @JsonProperty( SerializationConstants.REQUESTING_USER )
-    private Principal                    user;
-    @JsonProperty( SerializationConstants.DETAILS_FIELD )
+    private Principal                 user;
     private PermissionsRequestDetails details;
 
+    @JsonCreator
     public PermissionsRequest(
-            List<UUID> aclRoot,
-            Principal user,
-            PermissionsRequestDetails details ) {
+            @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT ) List<UUID> aclRoot,
+            @JsonProperty( SerializationConstants.REQUESTING_USER ) Principal user,
+            @JsonProperty( SerializationConstants.DETAILS_FIELD ) PermissionsRequestDetails details ) {
         this.aclRoot = aclRoot;
         this.user = user;
         this.details = details;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
     public List<UUID> getAclRoot() {
         return aclRoot;
     }
 
+    @JsonProperty( SerializationConstants.REQUESTING_USER )
     public Principal getUser() {
         return user;
     }
 
+    @JsonProperty( SerializationConstants.DETAILS_FIELD )
     public PermissionsRequestDetails getDetails() {
         return details;
     }

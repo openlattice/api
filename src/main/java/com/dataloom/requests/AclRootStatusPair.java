@@ -4,19 +4,29 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
-public class AclRootStatusPair {
-    private List<UUID> aclRoot;
-    private EnumSet<RequestStatus>   status;
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Preconditions;
 
-    public AclRootStatusPair( List<UUID> aclRoot, EnumSet<RequestStatus> status ) {
-        this.aclRoot = aclRoot;
-        this.status = status;
+public class AclRootStatusPair {
+    private List<UUID>             aclRoot;
+    private EnumSet<RequestStatus> status;
+
+    @JsonCreator
+    public AclRootStatusPair(
+            @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT ) List<UUID> aclRoot,
+            @JsonProperty( SerializationConstants.REQUEST_STATUS ) EnumSet<RequestStatus> status ) {
+        this.aclRoot = Preconditions.checkNotNull( aclRoot );
+        this.status = Preconditions.checkNotNull( status );
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
     public List<UUID> getAclRoot() {
         return aclRoot;
     }
 
+    @JsonProperty( SerializationConstants.REQUEST_STATUS )
     public EnumSet<RequestStatus> getStatus() {
         return status;
     }

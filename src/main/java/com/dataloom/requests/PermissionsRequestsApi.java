@@ -8,7 +8,16 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface PermissionsRequestsApi {
-    String PERMISSIONS_REQUESTS = "requests";
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE    = "/datastore";
+    String CONTROLLER = "/requests";
+    String BASE       = SERVICE + CONTROLLER;
+
+    /*
+     * These are the actual components after {SERVICE}/{CONTROLLER}/
+     */
     String ADMIN       = "admin";
     String UNRESOLVED  = "unresolved";
     String RESOLVED    = "resolved";
@@ -26,13 +35,13 @@ public interface PermissionsRequestsApi {
      *   <li>permissions is a map that specifies the children that you are requesting access to, as well as the permissions you are requesting.
      *     <ul>
      *       <li>If you are requesting a nested object, a child is the last element in the full List &lt; UUID &gt;. The permissions field is then a Map<Child, Set<Permission>></li>
-     *       <li>If you are requesting a standalone object, pass in null or just ignore the permissions field. </li>
+     *       <li>If you are requesting a standalone object, a child is null. In this case, <b>one should put UUID of aclRoot as the key of the permissions map.</b> </li>
      *     </ul>
      *   </li>
      * </ul>
      * @return
      */
-    @PUT( PERMISSIONS_REQUESTS )
+    @PUT( BASE )
     Void upsertRequest( @Body AclRootRequestDetailsPair req );
 
     /**
@@ -40,7 +49,7 @@ public interface PermissionsRequestsApi {
      * @param aclRoot
      * @return
      */
-    @POST( PERMISSIONS_REQUESTS + "/" + UNRESOLVED )
+    @POST( BASE + "/" + UNRESOLVED )
     PermissionsRequest getUnresolvedRequestOfUser( @Body List<UUID> aclRoot );
 
     /**
@@ -48,7 +57,7 @@ public interface PermissionsRequestsApi {
      * @param aclRoot
      * @return
      */
-    @POST( PERMISSIONS_REQUESTS + "/" + RESOLVED )
+    @POST( BASE + "/" + RESOLVED )
     Iterable<PermissionsRequest> getResolvedRequestsOfUser( @Body List<UUID> aclRoot );
 
     /**
@@ -56,15 +65,15 @@ public interface PermissionsRequestsApi {
      * @param req Only aclRoot, user, and status has to be passed in.
      * @return
      */
-    @POST( PERMISSIONS_REQUESTS + "/" + ADMIN )
+    @POST( BASE + "/" + ADMIN )
     Void updateUnresolvedRequestStatus( @Body PermissionsRequest req );
 
     /**
      * Allow owner of a securable object to retrieve all unresolved requests.
-     * @param req Both aclRoot and status are optional. If aclRoot is missing, all authorized objects of user would be fetched. If status is missing, all RequestStatus would be fetched.
+     * @param req Both aclRoot and status can be empty. If aclRoot is empty, all authorized objects of user would be fetched. If status is empty, all RequestStatus would be fetched.
      * @return
      */
-    @POST( PERMISSIONS_REQUESTS + "/" + ADMIN + "/" + UNRESOLVED )
+    @POST( BASE + "/" + ADMIN + "/" + UNRESOLVED )
     Iterable<PermissionsRequest> getAllUnresolvedRequestsOfAdmin( @Body AclRootStatusPair req );
 
 }
