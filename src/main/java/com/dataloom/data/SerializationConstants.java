@@ -55,4 +55,10 @@ public final class SerializationConstants {
 
     public static final String STATUS                      = "status";
 
+    public static final String KEYWORD                     = "kw";
+    public static final String ENTITY_TYPE_ID              = "eid";
+    public static final String PROPERTY_TYPE_IDS           = "pid";
+
+    public static final String INCLUDE_FIELD               = "include";
+
 }

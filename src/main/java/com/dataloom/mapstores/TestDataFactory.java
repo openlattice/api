@@ -1,4 +1,4 @@
-package com.dataloom.edm.internal;
+package com.dataloom.mapstores;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -19,6 +19,11 @@ import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.SecurableObjectType;
+import com.dataloom.edm.internal.AbstractSecurableType;
+import com.dataloom.edm.internal.EdmDetails;
+import com.dataloom.edm.internal.EntitySet;
+import com.dataloom.edm.internal.EntityType;
+import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.organization.Organization;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -45,9 +50,10 @@ public final class TestDataFactory {
                 ? Arrays.asList( keys ).stream().map( PropertyType::getId ).collect( Collectors.toSet() )
                 : ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() );
         return new EntityType(
+                UUID.randomUUID(),
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
-                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
                 k,
                 ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
@@ -61,6 +67,7 @@ public final class TestDataFactory {
 
     public static EntitySet entitySet() {
         return new EntitySet(
+                UUID.randomUUID(),
                 fqn(),
                 UUID.randomUUID(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
@@ -70,7 +77,7 @@ public final class TestDataFactory {
 
     public static PropertyType propertyType() {
         return new PropertyType(
-                Optional.absent(),
+                UUID.randomUUID(),
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
@@ -80,10 +87,10 @@ public final class TestDataFactory {
 
     public static Organization organization() {
         return new Organization(
-                Optional.absent(),
+                Optional.of( UUID.randomUUID() ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
-                ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ),
+                Optional.of( ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( userPrincipal() ),
                 ImmutableSet.of( rolePrincipal() ) );
@@ -114,6 +121,16 @@ public final class TestDataFactory {
         return new AclData(
                 acl(),
                 actions[ r.nextInt( actions.length ) ] );
+    }
+
+    public static EdmDetails edmDetails() {
+        Set<PropertyType> pts = ImmutableSet.of( propertyType(), propertyType(), propertyType() );
+        Set<EntityType> ets = ImmutableSet.of( entityType(), entityType(), entityType() );
+        Set<EntitySet> ess = ImmutableSet.of( entitySet() );
+        return new EdmDetails(
+                pts.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
+                ets.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
+                ess.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ) );
     }
 
 }

@@ -1,14 +1,30 @@
 package com.dataloom.organization;
 
-import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.PrincipalType;
-import retrofit2.http.*;
-
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.authorization.Principal;
+import com.dataloom.authorization.PrincipalType;
+
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+
 public interface OrganizationsApi {
-    String ORGANIZATIONS     = "organizations";
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE           = "/datastore";
+    String CONTROLLER        = "/organizations";
+    String BASE              = SERVICE + CONTROLLER;
+
+    /*
+     * Acutal path elements
+     */
     String ID                = "id";
     String ID_PATH           = "/{" + ID + "}";
     String DESCRIPTION       = "/description";
@@ -24,40 +40,43 @@ public interface OrganizationsApi {
     String ROLES             = "/roles";
     String MEMBERS           = "/members";
 
-    @GET( ORGANIZATIONS )
+    @GET( BASE )
     Iterable<Organization> getOrganizations();
 
-    @POST( ORGANIZATIONS )
+    @POST( BASE )
     UUID createOrganizationIfNotExists( @Body Organization organization );
 
-    @GET( ORGANIZATIONS + ID_PATH )
+    @GET( BASE + ID_PATH )
     Organization getOrganization( @Path( ID ) UUID organizationId );
 
-    @DELETE( ORGANIZATIONS + ID_PATH )
+    @DELETE( BASE + ID_PATH )
     Void destroyOrganization( @Path( ID ) UUID organizationId );
 
-    @PUT( ORGANIZATIONS + ID_PATH + TITLE )
+    @PUT( BASE + ID_PATH + TITLE )
     Void updateTitle( @Path( ID ) UUID organziationId, @Body String title );
 
-    @PUT( ORGANIZATIONS + ID_PATH + DESCRIPTION )
+    @PUT( BASE + ID_PATH + DESCRIPTION )
     Void updateDescription( @Path( ID ) UUID organizationId, @Body String description );
 
-    @GET( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS )
+    @GET( BASE + ID_PATH + EMAIL_DOMAINS )
     Set<String> getAutoApprovedEmailDomains( @Path( ID ) UUID organizationId );
 
-    @PUT( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS )
+    @PUT( BASE + ID_PATH + EMAIL_DOMAINS )
     Void setAutoApprovedEmailDomain( @Path( ID ) UUID organizationId, @Body Set<String> emailDomain );
 
     /**
      * Add multiple e-mail domains to the auto-approval list.
      *
      * @param organizationId The id of the organization to modify.
-     * @param emailDomains   The e-mail domain to add to the auto-approval list.
+     * @param emailDomains The e-mail domain to add to the auto-approval list.
      */
-    @POST( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS )
+    @POST( BASE + ID_PATH + EMAIL_DOMAINS )
     Void addAutoApprovedEmailDomains( @Path( ID ) UUID organizationId, @Body Set<String> emailDomains );
 
-    @HTTP( method = "DELETE", hasBody = true, path = ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS )
+    @HTTP(
+        method = "DELETE",
+        hasBody = true,
+        path = BASE + ID_PATH + EMAIL_DOMAINS )
     Void removeAutoApprovedEmailDomains( @Path( ID ) UUID organizationId, @Body Set<String> emailDomain );
 
     /**
@@ -65,9 +84,9 @@ public interface OrganizationsApi {
      * organization.
      *
      * @param organizationId The id of the organization to modify.
-     * @param emailDomain    The e-mail domain to add to the auto-approval list.
+     * @param emailDomain The e-mail domain to add to the auto-approval list.
      */
-    @PUT( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
+    @PUT( BASE + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
     Void addAutoApprovedEmailDomain( @Path( ID ) UUID organizationId, @Path( EMAIL_DOMAIN ) String emailDomain );
 
     /**
@@ -75,12 +94,12 @@ public interface OrganizationsApi {
      * organization.
      *
      * @param organizationId The id of the organization to modify.
-     * @param emailDomain    The e-mail domain to add to the auto-approval list.
+     * @param emailDomain The e-mail domain to add to the auto-approval list.
      */
-    @DELETE( ORGANIZATIONS + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
+    @DELETE( BASE + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
     Void removeAutoApprovedEmailDomain( @Path( ID ) UUID organizationId, @Path( EMAIL_DOMAIN ) String emailDomain );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS )
+    @GET( BASE + ID_PATH + PRINCIPALS )
     Set<Principal> getPrincipals( @Path( ID ) UUID organizationId );
 
     /**
@@ -89,9 +108,9 @@ public interface OrganizationsApi {
      * by whether or not they have {@code {@link com.dataloom.authorization.Permission#READ}} on the organization.
      *
      * @param organizationId The id of the organization.
-     * @param principals     A set of valid principals.
+     * @param principals A set of valid principals.
      */
-    @POST( ORGANIZATIONS + ID_PATH + PRINCIPALS )
+    @POST( BASE + ID_PATH + PRINCIPALS )
     Void addPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
     /**
@@ -100,10 +119,10 @@ public interface OrganizationsApi {
      * by whether or not they have {@code {@link com.dataloom.authorization.Permission#READ}} on the organization.
      *
      * @param organizationId The id of the organization.
-     * @param principals     A set of valid principals.gs
-     *                       
+     * @param principals A set of valid principals.gs
+     * 
      */
-    @PUT( ORGANIZATIONS + ID_PATH + PRINCIPALS )
+    @PUT( BASE + ID_PATH + PRINCIPALS )
     Void setPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
     /**
@@ -111,40 +130,43 @@ public interface OrganizationsApi {
      * that a principal may have on an organization, including discover.
      *
      * @param organizationId The id of the organization.
-     * @param principals     A set of valid principals
+     * @param principals A set of valid principals
      */
-    @HTTP( method = "DELETE", hasBody = true, path = ORGANIZATIONS + ID_PATH + PRINCIPALS )
+    @HTTP(
+        method = "DELETE",
+        hasBody = true,
+        path = BASE + ID_PATH + PRINCIPALS )
     Void removePrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + ROLES )
+    @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
     Set<Principal> getRoles( @Path( ID ) UUID organizationId );
 
-    @GET( ORGANIZATIONS + ID_PATH + PRINCIPALS + MEMBERS )
+    @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
     Set<Principal> getMembers( @Path( ID ) UUID organizationId );
 
     /**
-     * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}}
-     * to a principal on an organization.
+     * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}} to a principal
+     * on an organization.
      *
      * @param organizationId The id of the organization.
-     * @param principalType  The principal type of the principal being added.
-     * @param principalId    The principalId of the principal being added.
+     * @param principalType The principal type of the principal being added.
+     * @param principalId The principalId of the principal being added.
      */
-    @PUT( ORGANIZATIONS + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
+    @PUT( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
     Void addPrincipal(
             @Path( ID ) UUID organizationId,
             @Path( TYPE ) PrincipalType principalType,
             @Path( PRINCIPAL_ID ) String principalId );
 
     /**
-     * This is a convenience call that removes all {@code {@link com.dataloom.authorization.Permission}}s
-     * that a principal may have on an organization, including discover.
+     * This is a convenience call that removes all {@code {@link com.dataloom.authorization.Permission}}s that a
+     * principal may have on an organization, including discover.
      *
      * @param organizationId The id of the organization.
-     * @param principalType  The principal type of the principal being added.
-     * @param principalId    The principalId of the principal being added.
+     * @param principalType The principal type of the principal being added.
+     * @param principalId The principalId of the principal being added.
      */
-    @DELETE( ORGANIZATIONS + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
+    @DELETE( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
     Void removePrincipal(
             @Path( ID ) UUID organizationId,
             @Path( TYPE ) PrincipalType principalType,

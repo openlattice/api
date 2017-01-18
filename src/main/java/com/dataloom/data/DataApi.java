@@ -15,7 +15,13 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface DataApi {
-
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE                 = "/datastore";
+    String CONTROLLER              = "/data";
+    String BASE                    = SERVICE + CONTROLLER;
+    
     public static enum FileType {
         json,
         csv;
@@ -25,7 +31,6 @@ public interface DataApi {
      * To discuss paths later; perhaps batch this with EdmApi paths
      */
 
-    String CONTROLLER    = "data";
     String HISTORICAL    = "historical";
     String ENTITY_DATA   = "entitydata";
 
@@ -36,18 +41,18 @@ public interface DataApi {
 
     String FILE_TYPE     = "fileType";
 
-    @GET( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType );
 
-    @GET( CONTROLLER + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    @GET( BASE + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
-    @POST( CONTROLLER + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     Void createEntityData(
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
