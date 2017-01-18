@@ -17,8 +17,8 @@ public class AclRootStatusPair {
     public AclRootStatusPair(
             @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT ) List<UUID> aclRoot,
             @JsonProperty( SerializationConstants.REQUEST_STATUS ) EnumSet<RequestStatus> status ) {
-        this.aclRoot = Preconditions.checkNotNull( aclRoot );
-        this.status = Preconditions.checkNotNull( status );
+        this.aclRoot = aclRoot;
+        this.status = status;
     }
 
     @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )

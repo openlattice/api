@@ -70,7 +70,7 @@ public interface PermissionsRequestsApi {
 
     /**
      * Allow owner of a securable object to retrieve all unresolved requests.
-     * @param req Both aclRoot and status can be empty. If aclRoot is empty, all authorized objects of user would be fetched. If status is empty, all RequestStatus would be fetched.
+     * @param req Both aclRoot and status can be missing. If aclRoot is missing, all authorized objects of user would be fetched. If status is missing, all RequestStatus would be fetched.
      * @return
      */
     @POST( BASE + "/" + ADMIN + "/" + UNRESOLVED )
