@@ -6,8 +6,13 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AuthorizationsApi {
-    String AUTHORIZATIONS = "authorizations";
+    /*
+     * These determine the service routing for the LB
+     */
+    String SERVICE                 = "/datastore";
+    String CONTROLLER              = "/authorizations";
+    String BASE                    = SERVICE + CONTROLLER;
     
-    @POST( AUTHORIZATIONS )
+    @POST( BASE )
     Iterable<Authorization> checkAuthorizations( @Body Set<AccessCheck> queries );
 }
