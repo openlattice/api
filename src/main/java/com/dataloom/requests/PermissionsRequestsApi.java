@@ -34,7 +34,7 @@ public interface PermissionsRequestsApi {
      *   </li>
      *   <li>permissions is a map that specifies the children that you are requesting access to, as well as the permissions you are requesting.
      *     <ul>
-     *       <li>If you are requesting a nested object, a child is the last element in the full List &lt; UUID &gt;. The permissions field is then a Map<Child, Set<Permission>></li>
+     *       <li>If you are requesting a nested object, a child is the last element in the full List &lt; UUID &gt;. The permissions field is then a Map &lt; Child, Set &lt; Permission &gt;&gt;</li>
      *       <li>If you are requesting a standalone object, a child is null. In this case, <b>one should put UUID of aclRoot as the key of the permissions map.</b> </li>
      *     </ul>
      *   </li>
