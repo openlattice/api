@@ -35,6 +35,8 @@ public interface EdmApi {
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
     String ID                      = "id";
+    String ENTITY_TYPE_ID = "entityTypeId";
+    String PROPERTY_TYPE_ID = "propertyTypeId";
     String NAME                    = "name";
     String NAMESPACE               = "namespace";
     String NAMESPACES              = "namespaces";
@@ -57,6 +59,8 @@ public interface EdmApi {
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
     String NAME_PATH               = "/{" + NAME + "}";
     String ID_PATH                 = "/{" + ID + "}";
+    String ENTITY_TYPE_ID_PATH                 = "/{" + ENTITY_TYPE_ID + "}";
+    String PROPERTY_TYPE_ID_PATH                 = "/{" + PROPERTY_TYPE_ID + "}";
     String DETAILS_PATH            = "/details";
 
     String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
@@ -107,10 +111,15 @@ public interface EdmApi {
     @DELETE( ENTITY_TYPE_BASE_PATH + ID_PATH )
     Void deleteEntityType( @Path( ID ) UUID entityTypeId );
 
-    @PUT( ENTITY_TYPE_BASE_PATH + ID_PATH )
-    Void updatePropertyTypesInEntityType(
-            @Path( ID ) UUID entityTypeId,
-            @Body EdmRequest request );
+    @PUT( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH )
+    Void addPropertyTypeToEntityType(
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
+
+    @DELETE( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH )
+    Void removePropertyTypeFromEntityType(
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
 
     /**
      * @return All entity sets available to the calling user.
