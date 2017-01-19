@@ -1,10 +1,7 @@
 package com.dataloom.directory;
 
 import com.dataloom.directory.pojo.Auth0UserBasic;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.PATCH;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 import java.util.List;
 import java.util.Map;
@@ -17,15 +14,25 @@ public interface PrincipalDirectoryApi {
     String CONTROLLER   = "/principals";
     String BASE         = SERVICE + CONTROLLER;
 
+    /*
+     * Path variables
+     */
     String USER_ID      = "userId";
     String ROLE         = "role";
 
-    String USERS        = "users";
-    String ROLES        = "roles";
-    String RESET        = "reset";
+    /*
+     * Fixed paths
+     */
+    String USERS        = "/users";
+    String ROLES        = "/roles";
+    String RESET        = "/reset";
 
-    String USER_ID_PATH = "{" + USER_ID + "}";
-    String ROLE_PATH    = "{" + ROLE + "}";
+    /*
+     * Variable paths
+     */
+    
+    String USER_ID_PATH = "/{" + USER_ID + "}";
+    String ROLE_PATH    = "/{" + ROLE + "}";
 
     @GET( BASE + USERS )
     Map<String, Auth0UserBasic> getAllUsers();
@@ -33,12 +40,19 @@ public interface PrincipalDirectoryApi {
     @GET( BASE + USERS + "／" + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
 
+    @PUT( BASE + USERS + USER_ID_PATH + ROLES + RESET + USER_ID_PATH )
+    Void setUserRoles( @Path( USER_ID ) String userId, @Body List<String> roles );
+
+    @PUT( BASE + USERS + USER_ID_PATH + ROLES + ROLE_PATH )
+    Void addRoleToUser( @Path( USER_ID ) String userId, @Path( ROLE ) String role );
+
+    @DELETE( BASE + USERS + USER_ID_PATH + ROLES + ROLE_PATH )
+    Void removeRoleFromUser( @Path( USER_ID ) String userId, @Path( ROLE ) String role );
+
     @GET( BASE + ROLES )
     Map<String, List<Auth0UserBasic>> getAllUsersGroupByRole();
 
-    @GET( BASE + ROLES + "／" + ROLE_PATH )
+    @GET( BASE + ROLES + ROLE_PATH )
     List<Auth0UserBasic> getAllUsersOfRole( @Path( ROLE ) String role );
 
-    @PATCH( BASE + ROLES + "／" + RESET + "／" + USER_ID_PATH )
-    Void resetRolesOfUser( @Path( USER_ID ) String userId, @Body List<String> roles );
 }
