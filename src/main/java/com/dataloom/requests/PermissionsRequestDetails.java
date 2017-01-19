@@ -13,9 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PermissionsRequestDetails implements Serializable {
     private static final long              serialVersionUID = -3977504707164513197L;
 
-    @JsonProperty( SerializationConstants.PERMISSIONS )
     private Map<UUID, EnumSet<Permission>> permissions;
-    @JsonProperty( SerializationConstants.STATUS )
     private RequestStatus                  status;
 
     @JsonCreator
@@ -25,11 +23,13 @@ public class PermissionsRequestDetails implements Serializable {
         this.permissions = permissions;
         this.status = status;
     }
-
+    
+    @JsonProperty( SerializationConstants.PERMISSIONS )
     public Map<UUID, EnumSet<Permission>> getPermissions() {
         return permissions;
     }
 
+    @JsonProperty( SerializationConstants.STATUS )
     public RequestStatus getStatus() {
         return status;
     }
