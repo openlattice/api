@@ -2,6 +2,9 @@ package com.dataloom.mapstores;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +28,8 @@ import com.dataloom.edm.internal.EntitySet;
 import com.dataloom.edm.internal.EntityType;
 import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.organization.Organization;
+import com.dataloom.requests.PermissionsRequestDetails;
+import com.dataloom.requests.RequestStatus;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -122,6 +127,10 @@ public final class TestDataFactory {
                 acl(),
                 actions[ r.nextInt( actions.length ) ] );
     }
+    
+    public static List<UUID> aclKey(){
+        return ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() );
+    }
 
     public static EdmDetails edmDetails() {
         Set<PropertyType> pts = ImmutableSet.of( propertyType(), propertyType(), propertyType() );
@@ -133,4 +142,19 @@ public final class TestDataFactory {
                 ess.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ) );
     }
 
+    public static Map<UUID, EnumSet<Permission>> aclChildPermissions(){
+        Map<UUID, EnumSet<Permission>> permissions = new HashMap<>();
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ ));
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.WRITE ));
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ, Permission.WRITE ));
+        return permissions;
+    }
+    
+    public static PermissionsRequestDetails unresolvedPRDetails(){
+        return new PermissionsRequestDetails( aclChildPermissions(), RequestStatus.SUBMITTED );
+    }
+
+    public static PermissionsRequestDetails resolvedPRDetails(){
+        return new PermissionsRequestDetails( aclChildPermissions(), RequestStatus.APPROVED );
+    }
 }
