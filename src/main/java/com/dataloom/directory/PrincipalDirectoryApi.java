@@ -37,7 +37,7 @@ public interface PrincipalDirectoryApi {
     @GET( BASE + USERS )
     Map<String, Auth0UserBasic> getAllUsers();
 
-    @GET( BASE + USERS + "／" + USER_ID_PATH )
+    @GET( BASE + USERS + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
 
     @PUT( BASE + USERS + USER_ID_PATH + ROLES + RESET + USER_ID_PATH )
