@@ -110,7 +110,7 @@ public interface EdmApi {
     @PUT( ENTITY_TYPE_BASE_PATH + ID_PATH )
     Void updatePropertyTypesInEntityType(
             @Path( ID ) UUID entityTypeId,
-            @Body Set<UUID> request );
+            @Body EdmRequest request );
 
     /**
      * @return All entity sets available to the calling user.
