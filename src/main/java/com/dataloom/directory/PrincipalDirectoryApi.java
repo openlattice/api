@@ -40,7 +40,7 @@ public interface PrincipalDirectoryApi {
     @GET( BASE + USERS + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
 
-    @PUT( BASE + USERS + USER_ID_PATH + ROLES + RESET + USER_ID_PATH )
+    @PUT( BASE + USERS + USER_ID_PATH + ROLES )
     Void setUserRoles( @Path( USER_ID ) String userId, @Body List<String> roles );
 
     @PUT( BASE + USERS + USER_ID_PATH + ROLES + ROLE_PATH )
