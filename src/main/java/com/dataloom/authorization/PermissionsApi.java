@@ -6,6 +6,7 @@ import java.util.UUID;
 import retrofit2.http.Body;
 import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 
 /**
  * @author Ho Chung Siu
@@ -34,9 +35,6 @@ public interface PermissionsApi {
      * @param aclKey The acl key.
      * @return The aces for the requested acl key.
      */
-    @HTTP(
-        method = "GET",
-        hasBody = true,
-        path = BASE )
+    @POST( BASE )
     Acl getAcl( @Body List<UUID> aclKey );
 }
