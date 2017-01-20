@@ -17,7 +17,6 @@ import com.google.common.base.Optional;
  *
  */
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
-    private static final long      serialVersionUID = -1215885855868336578L;
     protected EdmPrimitiveTypeKind datatype;
     private transient int          h                = 0;
 

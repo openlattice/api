@@ -1,6 +1,5 @@
 package com.dataloom.requests;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,10 +7,7 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AclRootRequestDetailsPair implements Serializable {
-
-    private static final long         serialVersionUID = -6090078743805144042L;
-
+public class AclRootRequestDetailsPair {
     private List<UUID>                aclRoot;
     private PermissionsRequestDetails details;
 

@@ -16,8 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
-public abstract class AbstractSecurableObject implements Serializable {
-    private static final long serialVersionUID = -2268620545866476451L;
+public abstract class AbstractSecurableObject {
     protected final UUID    id;
     protected final String  title;
     protected final String  description;

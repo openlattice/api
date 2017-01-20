@@ -1,6 +1,5 @@
 package com.dataloom.requests;
 
-import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.UUID;
@@ -10,9 +9,7 @@ import com.dataloom.data.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PermissionsRequestDetails implements Serializable {
-    private static final long              serialVersionUID = -3977504707164513197L;
-
+public class PermissionsRequestDetails {
     private Map<UUID, EnumSet<Permission>> permissions;
     private RequestStatus                  status;
 

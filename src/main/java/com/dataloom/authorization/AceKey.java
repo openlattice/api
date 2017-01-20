@@ -3,7 +3,6 @@ package com.dataloom.authorization;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -12,8 +11,7 @@ import java.util.UUID;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class AceKey implements Serializable {
-    private static final long serialVersionUID = 7360380787390696122L;
+public class AceKey {
     private final List<UUID> keys;
     private final Principal    principal;
 
