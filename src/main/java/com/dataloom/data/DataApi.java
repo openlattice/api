@@ -46,7 +46,7 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType );
 
-    @GET( BASE + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    @POST( BASE + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
