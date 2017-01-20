@@ -14,7 +14,6 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class AbstractSecurableType extends AbstractSecurableObject {
-    private static final long serialVersionUID = 7806377281682752296L;
     protected final FullQualifiedName type;
 
     protected AbstractSecurableType(

@@ -19,7 +19,6 @@ import com.google.common.base.Optional;
  *
  */
 public class EntitySet extends AbstractSecurableType {
-    private static final long serialVersionUID = 1643809693309599032L;
     private final UUID        entityTypeId;
     private final String      name;
 

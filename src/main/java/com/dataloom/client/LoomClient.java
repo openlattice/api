@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dataloom.authorization.PermissionsApi;
+import com.dataloom.client.RetrofitFactory.Environment;
 import com.dataloom.client.serialization.SerializableSupplier;
 import com.dataloom.data.DataApi;
 import com.dataloom.edm.EdmApi;
@@ -25,8 +26,15 @@ public class LoomClient implements ApiFactoryFactory {
     private transient ApiFactory                     restAdapter      = null;
     private transient LoadingCache<Class<?>, Object> apiCache         = null;
     private transient boolean                        initialized      = false;
-
     private final ApiFactoryFactory                  retrofitSupplier;
+
+    public LoomClient( Environment environment, SerializableSupplier<String> jwtToken ) {
+        this( () -> {
+            final Retrofit retrofit = RetrofitFactory.newClient( environment, jwtToken );
+            // ApiFactory f = (ApiFactory)retrofit::create;
+            return (ApiFactory) clazz -> retrofit.create( clazz );
+        } );
+    }
 
     public LoomClient( SerializableSupplier<String> jwtToken ) {
         this( () -> {
@@ -87,6 +95,12 @@ public class LoomClient implements ApiFactoryFactory {
 
     public static SerializableSupplier<LoomClient> getSerializableSupplier( SerializableSupplier<String> jwtToken ) {
         return () -> new LoomClient( jwtToken );
+    }
+
+    public static SerializableSupplier<LoomClient> getSerializableSupplier(
+            Environment environment,
+            SerializableSupplier<String> jwtToken ) {
+        return () -> new LoomClient( environment, jwtToken );
     }
 
     public ApiFactory get() {

@@ -19,7 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecurableType {
-    private static final long serialVersionUID = -154529013746983795L;
     protected final Set<FullQualifiedName> schemas;
 
     // TODO: Consider tracking delta since last write to avoid re-writing entire object on each change.

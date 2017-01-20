@@ -16,8 +16,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 
 public class Organization extends AbstractSecurableObject {
-
-    private static final long    serialVersionUID = -669072251620432197L;
     private final Set<UUID>      trustedOrganizations;
     private final Set<String>    autoApprovedEmails;
     private final Set<Principal> members;

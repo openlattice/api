@@ -21,7 +21,6 @@ import com.google.common.collect.Sets;
  *
  */
 public class EntityType extends AbstractSchemaAssociatedSecurableType {
-    private static final long serialVersionUID = -9006708363024044315L;
     private final Set<UUID>   key;
     private final Set<UUID>   properties;
     private transient int     h                = 0;
