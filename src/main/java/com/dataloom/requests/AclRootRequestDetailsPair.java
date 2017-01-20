@@ -12,21 +12,23 @@ public class AclRootRequestDetailsPair implements Serializable {
 
     private static final long         serialVersionUID = -6090078743805144042L;
 
-    private List<UUID>  aclRoot;
+    private List<UUID>                aclRoot;
     private PermissionsRequestDetails details;
 
     @JsonCreator
-    public AclRootRequestDetailsPair( 
-            @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT ) List<UUID> aclRoot, 
+    public AclRootRequestDetailsPair(
+            @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT ) List<UUID> aclRoot,
             @JsonProperty( SerializationConstants.DETAILS_FIELD ) PermissionsRequestDetails details ) {
         this.aclRoot = aclRoot;
         this.details = details;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_ROOT )
     public List<UUID> getAclRoot() {
         return aclRoot;
     }
 
+    @JsonProperty( SerializationConstants.DETAILS_FIELD )
     public PermissionsRequestDetails getDetails() {
         return details;
     }

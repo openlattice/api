@@ -154,15 +154,6 @@ public interface EdmApi {
     Void createSchemaIfNotExists( @Body Schema schema );
 
     /**
-     * Loads schemas from the server.
-     * 
-     * @param namespace A valid entity data model name space.
-     * @return All schemas in the name space specified {@code namespace} parameter.
-     */
-    @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH )
-    Iterable<Schema> getSchemas( @Path( NAMESPACE ) String namespace );
-
-    /**
      * Gets all schemas.
      *
      * @return An iterable containing all the schemas available to the calling user.
@@ -191,13 +182,13 @@ public interface EdmApi {
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name );
 
-    @PATCH( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + "/" )
+    @PATCH( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Void updateSchema(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Body EdmRequest request );
 
-    @GET( BASE + ENTITY_SETS_PATH + NAME_PATH )
+    @GET( BASE + IDS_PATH + ENTITY_SETS_PATH + NAME_PATH )
     UUID getEntitySetId( @Path( NAME ) String entitySetName );
 
     @GET( BASE + IDS_PATH + PROPERTY_TYPE_PATH + NAMESPACE_PATH + NAME_PATH )

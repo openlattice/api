@@ -1,14 +1,17 @@
 package com.dataloom.directory.pojo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 
 public class Auth0UserBasic {
     public static final String USER_ID_FIELD      = "user_id";
@@ -22,7 +25,8 @@ public class Auth0UserBasic {
     private final String       email;
     private final String       nickname;
     private final String       username;
-    private final List<String> roles;
+    private final Set<String>  roles;
+    private final Set<String>  organizations;
 
     @SuppressWarnings( "unchecked" )
     @JsonCreator
@@ -43,8 +47,13 @@ public class Auth0UserBasic {
         } else {
             this.username = this.userId;
         }
-        this.roles = ( (List<String>) MoreObjects.firstNonNull( appMetadata, ImmutableMap.of() ).getOrDefault( "roles",
-                new ArrayList<String>() ) );
+        this.roles = Sets.newHashSet(
+                ( (List<String>) MoreObjects.firstNonNull( appMetadata, new HashMap<>() ).getOrDefault( "roles",
+                        new ArrayList<String>() ) ) );
+        this.organizations = Sets
+                .newHashSet( ( (List<String>) MoreObjects.firstNonNull( appMetadata, new HashMap<>() ).getOrDefault(
+                        "roles",
+                        new ArrayList<String>() ) ) );
     }
 
     @JsonProperty( USER_ID_FIELD )
@@ -68,7 +77,12 @@ public class Auth0UserBasic {
     }
 
     @JsonProperty( ROLES_FIELD )
-    public List<String> getRoles() {
-        return roles;
+    public Set<String> getRoles() {
+        return Collections.unmodifiableSet( roles );
+    }
+
+    @JsonProperty( ROLES_FIELD )
+    public Set<String> getOrganizations() {
+        return Collections.unmodifiableSet( organizations );
     }
 }
