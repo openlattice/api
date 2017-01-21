@@ -6,7 +6,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.SecurableObjectType;
 import com.dataloom.data.SerializationConstants;
@@ -18,15 +17,14 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class EntitySet extends AbstractSecurableType {
-    private final UUID        entityTypeId;
-    private final String      name;
+public class EntitySet extends AbstractSecurableObject {
+    private final UUID   entityTypeId;
+    private final String name;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
      * 
      * @param id An optional UUID for the entity set.
-     * @param type The full qualified name of the entity type to be collected in this entity set.
      * @param name The name of the entity set.
      * @param title The friendly name for the entity set.
      * @param description A description of the entity set.
@@ -34,12 +32,11 @@ public class EntitySet extends AbstractSecurableType {
     @JsonCreator
     public EntitySet(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName type,
             @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD ) UUID entityTypeId,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
-        super( id, type, title, description );
+        super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
@@ -48,21 +45,19 @@ public class EntitySet extends AbstractSecurableType {
 
     public EntitySet(
             UUID id,
-            FullQualifiedName type,
             UUID entityTypeId,
             String name,
             String title,
             Optional<String> description ) {
-        this( Optional.of( id ), type, entityTypeId, name, title, description );
+        this( Optional.of( id ), entityTypeId, name, title, description );
     }
 
     public EntitySet(
-            FullQualifiedName type,
             UUID entityTypeId,
             String name,
             String title,
             Optional<String> description ) {
-        this( Optional.absent(), type, entityTypeId, name, title, description );
+        this( Optional.absent(), entityTypeId, name, title, description );
     }
 
     public UUID getEntityTypeId() {
@@ -113,7 +108,7 @@ public class EntitySet extends AbstractSecurableType {
 
     @Override
     public String toString() {
-        return "EntitySet [entityTypeId=" + entityTypeId + ", name=" + name + ", type=" + type + ", id=" + id
+        return "EntitySet [entityTypeId=" + entityTypeId + ", name=" + name + ", id=" + id
                 + ", title=" + title + ", description=" + description + "]";
     }
 
