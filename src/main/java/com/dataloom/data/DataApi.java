@@ -9,7 +9,9 @@ import com.dataloom.data.requests.EntitySetSelection;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -18,10 +20,10 @@ public interface DataApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE                 = "/datastore";
-    String CONTROLLER              = "/data";
-    String BASE                    = SERVICE + CONTROLLER;
-    
+    String SERVICE    = "/datastore";
+    String CONTROLLER = "/data";
+    String BASE       = SERVICE + CONTROLLER;
+
     public static enum FileType {
         json,
         csv;
@@ -31,15 +33,30 @@ public interface DataApi {
      * To discuss paths later; perhaps batch this with EdmApi paths
      */
 
-    String HISTORICAL    = "historical";
-    String ENTITY_DATA   = "entitydata";
+    String HISTORICAL   = "historical";
+    String ENTITY_DATA  = "entitydata";
 
-    String SET_ID        = "setId";
-    String SYNC_ID       = "syncId";
-    String SET_ID_PATH   = "{" + SET_ID + "}";
-    String SYNC_ID_PATH  = "{" + SYNC_ID + "}";
+    String TICKET       = "ticket";
+    String SET_ID       = "setId";
+    String SYNC_ID      = "syncId";
 
-    String FILE_TYPE     = "fileType";
+    String SET_ID_PATH  = "{" + SET_ID + "}";
+    String SYNC_ID_PATH = "{" + SYNC_ID + "}";
+    String TICKET_PATH  = "{" + TICKET + "}";
+
+    String FILE_TYPE    = "fileType";
+
+    @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
+
+    @DELETE( BASE + "/" + TICKET + "/" + TICKET_PATH )
+    Void releaseSyncTicket( @Path( TICKET ) UUID syncId );
+
+    @PATCH( BASE + "/" + ENTITY_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
+    Void storeEntityData(
+            @Path( TICKET ) UUID ticket,
+            @Path( SYNC_ID ) UUID syncId,
+            @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
@@ -57,4 +74,5 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
+
 }
