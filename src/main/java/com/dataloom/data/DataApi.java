@@ -58,6 +58,13 @@ public interface DataApi {
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
+    /**
+     * 
+     * @param entitySetId
+     * @param req If syncId is not specified in the request, will retrieve the data from the latest syncId's. If selectedProperties are not specified, all readable properties will be fetched.
+     * @param fileType
+     * @return
+     */
     @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
