@@ -59,7 +59,7 @@ public abstract class AbstractSchemaAssociatedSecurableType extends AbstractSecu
         if ( this == obj ) {
             return true;
         }
-        if ( obj == null ) {
+        if ( !super.equals( obj ) ) {
             return false;
         }
         if ( !( obj instanceof AbstractSchemaAssociatedSecurableType ) ) {
