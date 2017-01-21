@@ -10,9 +10,9 @@ import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -58,18 +58,20 @@ public interface DataApi {
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
-    @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
-            @Path( SET_ID ) UUID entitySetId,
-            @Query( FILE_TYPE ) FileType fileType );
-
-    @POST( BASE + "/" + HISTORICAL + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> getEntitySetData(
+    /**
+     * 
+     * @param entitySetId
+     * @param req If syncId is not specified in the request, will retrieve the data from the latest syncId's. If selectedProperties are not specified, all readable properties will be fetched.
+     * @param fileType
+     * @return
+     */
+    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
-    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     Void createEntityData(
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,

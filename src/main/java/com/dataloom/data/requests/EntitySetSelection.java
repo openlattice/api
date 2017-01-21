@@ -9,9 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
 public class EntitySetSelection {
-    @JsonProperty( SerializationConstants.SYNC_IDS )
     private Optional<Set<UUID>> syncIds;
-    @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     private Optional<Set<UUID>> selectedProperties;
 
     @JsonCreator
@@ -21,11 +19,13 @@ public class EntitySetSelection {
         this.syncIds = syncIds;
         this.selectedProperties = selectedProperties;
     }
-
+    
+    @JsonProperty( SerializationConstants.SYNC_IDS )
     public Optional<Set<UUID>> getSyncIds() {
         return syncIds;
     }
-
+    
+    @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     public Optional<Set<UUID>> getSelectedProperties() {
         return selectedProperties;
     }
