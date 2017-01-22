@@ -43,7 +43,8 @@ public final class TestDataFactory {
     private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
     private static final Random                r                    = new Random();
 
-    private TestDataFactory() {}
+    private TestDataFactory() {
+    }
 
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 5 ) );
@@ -174,6 +175,5 @@ public final class TestDataFactory {
                 TestDataFactory.userPrincipal(),
                 TestDataFactory.permissions(),
                 TestDataFactory.requestStatus() );
-
     }
 }
