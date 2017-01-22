@@ -31,6 +31,7 @@ import com.dataloom.edm.internal.PropertyType;
 import com.dataloom.organization.Organization;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
+import com.dataloom.requests.Status;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -39,6 +40,7 @@ public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
     private static final Permission[]          permissions          = Permission.values();
     private static final Action[]              actions              = Action.values();
+    private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
     private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
@@ -109,7 +111,7 @@ public final class TestDataFactory {
         return securableObjectTypes[ r.nextInt( securableObjectTypes.length ) ];
     }
 
-    public static Set<Permission> permissions() {
+    public static EnumSet<Permission> permissions() {
         return Arrays.asList( permissions )
                 .stream()
                 .filter( elem -> r.nextBoolean() )
@@ -131,8 +133,8 @@ public final class TestDataFactory {
                 acl(),
                 actions[ r.nextInt( actions.length ) ] );
     }
-    
-    public static List<UUID> aclKey(){
+
+    public static List<UUID> aclKey() {
         return ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() );
     }
 
@@ -146,19 +148,32 @@ public final class TestDataFactory {
                 ess.stream().collect( Collectors.toMap( AbstractSecurableObject::getId, v -> v ) ) );
     }
 
-    public static Map<UUID, EnumSet<Permission>> aclChildPermissions(){
+    public static Map<UUID, EnumSet<Permission>> aclChildPermissions() {
         Map<UUID, EnumSet<Permission>> permissions = new HashMap<>();
-        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ ));
-        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.WRITE ));
-        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ, Permission.WRITE ));
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ ) );
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.WRITE ) );
+        permissions.put( UUID.randomUUID(), EnumSet.of( Permission.READ, Permission.WRITE ) );
         return permissions;
     }
-    
-    public static PermissionsRequestDetails unresolvedPRDetails(){
+
+    public static PermissionsRequestDetails unresolvedPRDetails() {
         return new PermissionsRequestDetails( aclChildPermissions(), RequestStatus.SUBMITTED );
     }
 
-    public static PermissionsRequestDetails resolvedPRDetails(){
+    public static PermissionsRequestDetails resolvedPRDetails() {
         return new PermissionsRequestDetails( aclChildPermissions(), RequestStatus.APPROVED );
+    }
+
+    public static RequestStatus requestStatus() {
+        return requestStatuses[ r.nextInt( requestStatuses.length ) ];
+    }
+
+    public static Status status() {
+        return new Status(
+                TestDataFactory.aclKey(),
+                TestDataFactory.userPrincipal(),
+                TestDataFactory.permissions(),
+                TestDataFactory.requestStatus() );
+
     }
 }
