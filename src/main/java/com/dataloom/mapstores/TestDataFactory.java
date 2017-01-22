@@ -22,6 +22,7 @@ import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.SecurableObjectType;
+import com.dataloom.edm.internal.AbstractSecurableObject;
 import com.dataloom.edm.internal.AbstractSecurableType;
 import com.dataloom.edm.internal.EdmDetails;
 import com.dataloom.edm.internal.EntitySet;
@@ -70,10 +71,13 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ) );
     }
 
+    public static String name() {
+        return RandomStringUtils.randomAlphanumeric( 5 );
+    }
+
     public static EntitySet entitySet() {
         return new EntitySet(
                 UUID.randomUUID(),
-                fqn(),
                 UUID.randomUUID(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
@@ -139,7 +143,7 @@ public final class TestDataFactory {
         return new EdmDetails(
                 pts.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
                 ets.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ),
-                ess.stream().collect( Collectors.toMap( AbstractSecurableType::getId, v -> v ) ) );
+                ess.stream().collect( Collectors.toMap( AbstractSecurableObject::getId, v -> v ) ) );
     }
 
     public static Map<UUID, EnumSet<Permission>> aclChildPermissions(){
