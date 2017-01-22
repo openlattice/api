@@ -71,6 +71,10 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ) );
     }
 
+    public static String name() {
+        return RandomStringUtils.randomAlphanumeric( 5 );
+    }
+
     public static EntitySet entitySet() {
         return new EntitySet(
                 UUID.randomUUID(),
