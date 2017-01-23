@@ -10,6 +10,7 @@ import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -57,6 +58,11 @@ public interface DataApi {
             @Path( TICKET ) UUID ticket,
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
+
+    @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
+            @Path( SET_ID ) UUID entitySetId,
+            @Query( FILE_TYPE ) FileType fileType );
 
     /**
      * 
