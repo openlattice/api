@@ -22,7 +22,7 @@ public class Request {
     @JsonCreator
     public Request(
             @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
-            @JsonProperty( SerializationConstants.PERMISSIONS )EnumSet<Permission> permissions ) {
+            @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions ) {
         this.aclKey = checkNotNull( aclKey, "AclKey cannot be null." );
         checkState( aclKey.size() > 0, "AclKey must have at least one component." );
         this.permissions = permissions;
