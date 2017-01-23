@@ -2,6 +2,9 @@ package com.dataloom.requests;
 
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -14,20 +17,23 @@ public class Status extends Request {
     private final Principal     principal;
     private final RequestStatus status;
 
+    @JsonCreator
     public Status(
-            List<UUID> aclKey,
-            Principal principal,
-            EnumSet<Permission> permissions,
-            RequestStatus status ) {
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
+            @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
+            @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions,
+            @JsonProperty( SerializationConstants.STATUS ) RequestStatus status ) {
         super( aclKey, permissions );
         this.status = status;
         this.principal = principal;
     }
 
+    @JsonProperty( SerializationConstants.STATUS )
     public RequestStatus getStatus() {
         return status;
     }
 
+    @JsonProperty( SerializationConstants.PRINCIPAL )
     public Principal getPrincipal() {
         return principal;
     }
@@ -71,5 +77,5 @@ public class Status extends Request {
         return "Status [principal=" + principal + ", status=" + status + ", aclKey=" + aclKey + ", permissions="
                 + permissions + "]";
     }
-    
+
 }
