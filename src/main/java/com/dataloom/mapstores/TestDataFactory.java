@@ -1,33 +1,7 @@
 package com.dataloom.mapstores;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
-import com.dataloom.authorization.Ace;
-import com.dataloom.authorization.Acl;
-import com.dataloom.authorization.AclData;
-import com.dataloom.authorization.Action;
-import com.dataloom.authorization.Permission;
-import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.PrincipalType;
-import com.dataloom.authorization.SecurableObjectType;
-import com.dataloom.edm.internal.AbstractSecurableObject;
-import com.dataloom.edm.internal.AbstractSecurableType;
-import com.dataloom.edm.internal.EdmDetails;
-import com.dataloom.edm.internal.EntitySet;
-import com.dataloom.edm.internal.EntityType;
-import com.dataloom.edm.internal.PropertyType;
+import com.dataloom.authorization.*;
+import com.dataloom.edm.internal.*;
 import com.dataloom.organization.Organization;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
@@ -35,6 +9,12 @@ import com.dataloom.requests.Status;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
