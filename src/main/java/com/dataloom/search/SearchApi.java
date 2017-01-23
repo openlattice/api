@@ -1,11 +1,12 @@
 package com.dataloom.search;
 
-import java.util.Map;
-
+import com.dataloom.edm.internal.EntitySet;
 import com.dataloom.search.requests.SearchRequest;
-
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+
+import java.util.Map;
 
 public interface SearchApi {
     /*
@@ -15,10 +16,11 @@ public interface SearchApi {
     String CONTROLLER       = "/search";
     String BASE             = SERVICE + CONTROLLER;
 
+    String SEARCH_JAVA      = "/java";
     /*
      * Normal params
      */
-    String SEARCH_JAVA      = "/java";
+    String POPULAR          = "/popular";
     String KEYWORD          = "kw";
     String ENTITY_TYPE_ID   = "eid";
     String PROPERTY_TYPE_ID = "pid";
@@ -27,7 +29,7 @@ public interface SearchApi {
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
      * error will be thrown. All specified params are required to be present in each entity set returned. If entityType
      * and propertyTypes are both specified, the propertyTypes param will be ignored.
-     * 
+     *
      * @param request A JSON object that contains up to three parameters: "query" (specifies the keywords used to
      *            perform the search), "eid" (UUID of the entity type of the entity sets that will be returned), and
      *            "pid" (a set of UUIDs of property types belonging to the entity sets that will be returned). All three
@@ -42,7 +44,7 @@ public interface SearchApi {
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
      * error will be thrown. All specified params are required to be present in each entity set returned. If entityType
      * and propertyTypes are both specified, the propertyTypes param will be ignored.
-     * 
+     *
      * @param request A JSON object that contains up to three parameters: "query" (specifies the keywords used to
      *            perform the search), "eid" (UUID of the entity type of the entity sets that will be returned), and
      *            "pid" (a set of UUIDs of property types belonging to the entity sets that will be returned). All three
@@ -52,4 +54,7 @@ public interface SearchApi {
      */
     @POST( BASE + SEARCH_JAVA )
     Iterable<Map<String, Object>> executeQuery( @Body SearchRequest request );
+
+    @GET( BASE + POPULAR )
+    Iterable<EntitySet> getPopularEntitySet();
 }
