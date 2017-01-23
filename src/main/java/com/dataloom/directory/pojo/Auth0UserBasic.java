@@ -49,7 +49,7 @@ public class Auth0UserBasic {
                         new ArrayList<String>() ) ) );
         this.organizations = Sets
                 .newHashSet( ( (List<String>) MoreObjects.firstNonNull( appMetadata, new HashMap<>() ).getOrDefault(
-                        "roles",
+                        "organizations",
                         new ArrayList<String>() ) ) );
     }
 
@@ -81,5 +81,16 @@ public class Auth0UserBasic {
     @JsonProperty( ORGANIZATIONS_FIELD )
     public Set<String> getOrganizations() {
         return Collections.unmodifiableSet( organizations );
+    }
+
+    @Override public String toString() {
+        return "Auth0UserBasic{" +
+                "userId='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", username='" + username + '\'' +
+                ", roles=" + roles +
+                ", organizations=" + organizations +
+                '}';
     }
 }
