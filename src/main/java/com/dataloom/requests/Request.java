@@ -1,6 +1,9 @@
 package com.dataloom.requests;
 
 import com.dataloom.authorization.Permission;
+import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -16,16 +19,21 @@ public class Request {
     protected final List<UUID>          aclKey;
     protected final EnumSet<Permission> permissions;
 
-    public Request( List<UUID> aclKey, EnumSet<Permission> permissions ) {
+    @JsonCreator
+    public Request(
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
+            @JsonProperty( SerializationConstants.PERMISSIONS )EnumSet<Permission> permissions ) {
         this.aclKey = checkNotNull( aclKey, "AclKey cannot be null." );
         checkState( aclKey.size() > 0, "AclKey must have at least one component." );
         this.permissions = permissions;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     public List<UUID> getAclKey() {
         return aclKey;
     }
 
+    @JsonProperty( SerializationConstants.PERMISSIONS )
     public EnumSet<Permission> getPermissions() {
         return permissions;
     }
