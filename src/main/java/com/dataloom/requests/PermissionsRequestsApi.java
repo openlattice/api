@@ -12,7 +12,7 @@ public interface PermissionsRequestsApi {
      * These determine the service routing for the LB
      */
     String SERVICE    = "/datastore";
-    String CONTROLLER = "/requests";
+    String CONTROLLER = "/permissionsrequests";
     String BASE       = SERVICE + CONTROLLER;
 
     /*
