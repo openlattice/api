@@ -51,7 +51,7 @@ public interface DataApi {
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
 
     @DELETE( BASE + "/" + TICKET + "/" + TICKET_PATH )
-    Void releaseSyncTicket( @Path( TICKET ) UUID syncId );
+    Void releaseSyncTicket( @Path( TICKET ) UUID ticket );
 
     @PATCH( BASE + "/" + ENTITY_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
     Void storeEntityData(
