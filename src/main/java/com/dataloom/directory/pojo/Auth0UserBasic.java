@@ -1,37 +1,34 @@
 package com.dataloom.directory.pojo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;
 
-public class Auth0UserBasic {
-    public static final String USER_ID_FIELD      = "user_id";
-    public static final String EMAIL_FIELD        = "email";
-    public static final String NICKNAME_FIELD     = "nickname";
-    public static final String USERNAME_FIELD     = "username";
-    public static final String APP_METADATA_FIELD = "app_metadata";
-    public static final String ROLES_FIELD        = "roles";
+import java.util.*;
 
-    private final String       userId;
-    private final String       email;
-    private final String       nickname;
-    private final String       username;
-    private final Set<String>  roles;
-    private final Set<String>  organizations;
+@JsonIgnoreProperties( ignoreUnknown = true )
+public class Auth0UserBasic {
+    public static final String USER_ID_FIELD       = "user_id";
+    public static final String EMAIL_FIELD         = "email";
+    public static final String NICKNAME_FIELD      = "nickname";
+    public static final String USERNAME_FIELD      = "username";
+    public static final String APP_METADATA_FIELD  = "app_metadata";
+    public static final String ROLES_FIELD         = "roles";
+    public static final String ORGANIZATIONS_FIELD = "organization";
+
+    private final String      userId;
+    private final String      email;
+    private final String      nickname;
+    private final String      username;
+    private final Set<String> roles;
+    private final Set<String> organizations;
 
     @SuppressWarnings( "unchecked" )
     @JsonCreator
     @JsonIgnoreProperties(
-        ignoreUnknown = true )
+            ignoreUnknown = true )
     public Auth0UserBasic(
             @JsonProperty( USER_ID_FIELD ) String userId,
             @JsonProperty( EMAIL_FIELD ) String email,
@@ -81,7 +78,7 @@ public class Auth0UserBasic {
         return Collections.unmodifiableSet( roles );
     }
 
-    @JsonProperty( ROLES_FIELD )
+    @JsonProperty( ORGANIZATIONS_FIELD )
     public Set<String> getOrganizations() {
         return Collections.unmodifiableSet( organizations );
     }
