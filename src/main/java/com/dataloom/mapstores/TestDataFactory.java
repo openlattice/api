@@ -27,7 +27,7 @@ public final class TestDataFactory {
     }
 
     public static Principal userPrincipal() {
-        return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 5 ) );
+        return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
     }
 
     public static Principal rolePrincipal() {
