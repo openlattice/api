@@ -46,6 +46,7 @@ public interface DataApi {
     String TICKET_PATH  = "{" + TICKET + "}";
 
     String FILE_TYPE    = "fileType";
+    String TOKEN = "token";
 
     @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
@@ -62,7 +63,8 @@ public interface DataApi {
     @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
-            @Query( FILE_TYPE ) FileType fileType );
+            @Query( FILE_TYPE ) FileType fileType,
+            @Query( TOKEN ) String token );
 
     /**
      * 
