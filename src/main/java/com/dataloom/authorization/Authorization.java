@@ -5,23 +5,27 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.dataloom.data.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Authorization {
-    @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     private List<UUID>               aclKey;
-    @JsonProperty( SerializationConstants.PERMISSIONS )
     private Map<Permission, Boolean> permissions;
 
-    public Authorization( List<UUID> aclKey, Map<Permission, Boolean> permissionsMap ) {
+    @JsonCreator
+    public Authorization( 
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey, 
+            @JsonProperty( SerializationConstants.PERMISSIONS ) Map<Permission, Boolean> permissionsMap ) {
         this.aclKey = aclKey;
         this.permissions = permissionsMap;
     }
 
+    @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
     public List<UUID> getAclKey() {
         return aclKey;
     }
 
+    @JsonProperty( SerializationConstants.PERMISSIONS )
     public Map<Permission, Boolean> getPermissions() {
         return permissions;
     }
