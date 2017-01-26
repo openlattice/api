@@ -52,7 +52,7 @@ public class Status extends Request {
         if ( this == obj ) {
             return true;
         }
-        if ( obj == null ) {
+        if ( !super.equals( obj ) ) {
             return false;
         }
         if ( !( obj instanceof Status ) ) {
