@@ -7,8 +7,11 @@ import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
 import com.dataloom.requests.Status;
 import com.google.common.base.Optional;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.SetMultimap;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -155,5 +158,19 @@ public final class TestDataFactory {
                 TestDataFactory.userPrincipal(),
                 TestDataFactory.permissions(),
                 TestDataFactory.requestStatus() );
+    }
+    
+    public static Map<String, SetMultimap<UUID, Object>> randomStringEntityData( int numberOfEntries, Set<UUID> propertyIds){
+        Map<String, SetMultimap<UUID, Object>> data = new HashMap<>();
+        for(int i = 0; i < numberOfEntries; i++ ){
+            String entityId = UUID.randomUUID().toString();
+            SetMultimap<UUID, Object> entity = HashMultimap.create();
+            for( UUID propertyId : propertyIds ){
+                entity.put( propertyId, RandomStringUtils.randomAlphanumeric( 5 ) );
+            }
+            
+            data.put( entityId, entity );
+        }
+        return data;
     }
 }
