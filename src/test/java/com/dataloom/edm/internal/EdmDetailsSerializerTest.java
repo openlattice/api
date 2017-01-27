@@ -1,13 +1,13 @@
 package com.dataloom.edm.internal;
 
+import com.dataloom.serializer.AbstractJacksonSerializationTest;
 import org.junit.BeforeClass;
 
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
 import com.dataloom.mapstores.TestDataFactory;
-import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class EdmDetailsSerializerTest extends BaseJacksonSerializationTest<EdmDetails> {
+public class EdmDetailsSerializerTest extends AbstractJacksonSerializationTest<EdmDetails> {
 
     @BeforeClass
     public static void configureSerializer() {
