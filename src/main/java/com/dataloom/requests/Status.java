@@ -41,7 +41,7 @@ public class Status extends Request {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        int result = super.hashCode();
         result = prime * result + ( ( principal == null ) ? 0 : principal.hashCode() );
         result = prime * result + ( ( status == null ) ? 0 : status.hashCode() );
         return result;

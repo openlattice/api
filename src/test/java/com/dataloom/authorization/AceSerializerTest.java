@@ -1,14 +1,13 @@
 package com.dataloom.authorization;
 
+import com.dataloom.serializer.AbstractJacksonSerializationTest;
 import org.junit.BeforeClass;
 
-import com.dataloom.authorization.Ace;
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
 import com.dataloom.mapstores.TestDataFactory;
-import com.dataloom.serializer.BaseJacksonSerializationTest;
 
-public class AceSerializerTest extends BaseJacksonSerializationTest<Ace> {
+public class AceSerializerTest extends AbstractJacksonSerializationTest<Ace> {
 
     @BeforeClass
     public static void configureSerializer() {
