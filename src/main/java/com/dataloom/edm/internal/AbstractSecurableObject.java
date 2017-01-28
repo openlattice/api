@@ -31,7 +31,7 @@ public abstract class AbstractSecurableObject {
             UUID id,
             String title,
             Optional<String> description ) {
-        this( Optional.of( id ), title, description );
+        this( id, title, description, true );
     }
 
     /**
