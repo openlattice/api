@@ -35,7 +35,7 @@ public interface SearchApi {
      *            "pid" (a set of UUIDs of property types belonging to the entity sets that will be returned). All three
      *            of these parameters are optional, but at least one must be specified otherwise an error will be
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
-     * @return JSON string of matching entity set metadata
+     * @return JSON string of linking entity set metadata
      */
     @POST( BASE )
     String executeQueryJson( @Body SearchRequest request );
@@ -50,7 +50,7 @@ public interface SearchApi {
      *            "pid" (a set of UUIDs of property types belonging to the entity sets that will be returned). All three
      *            of these parameters are optional, but at least one must be specified otherwise an error will be
      *            thrown. If eid and pid are both specified, the pid param will be ignored.
-     * @return JSON string of matching entity set metadata
+     * @return JSON string of linking entity set metadata
      */
     @POST( BASE + SEARCH_JAVA )
     Iterable<Map<String, Object>> executeQuery( @Body SearchRequest request );
