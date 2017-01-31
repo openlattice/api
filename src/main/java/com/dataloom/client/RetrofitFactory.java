@@ -8,7 +8,6 @@ import com.dataloom.mappers.ObjectMappers;
 import com.dataloom.retrofit.LoomByteConverterFactory;
 import com.dataloom.retrofit.LoomCallAdapterFactory;
 import com.dataloom.retrofit.LoomJacksonConverterFactory;
-import com.dataloom.retrofit.LoomStringConverterFactory;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -74,7 +73,6 @@ public final class RetrofitFactory {
 
     public static final Retrofit.Builder decorateWithLoomFactories( Retrofit.Builder builder ) {
         return builder.addConverterFactory( new LoomByteConverterFactory() )
-                .addConverterFactory( new LoomStringConverterFactory() )
                 .addConverterFactory( new LoomJacksonConverterFactory( ObjectMappers.getJsonMapper() ) )
                 .addCallAdapterFactory( new LoomCallAdapterFactory() );
     }
