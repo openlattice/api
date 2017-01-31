@@ -15,8 +15,4 @@ public class UUIDs {
             return syncId;
         }
     }
-    
-    public static class ACLs {
-        public static final UUID EVERYONE_ACL = new UUID( 0,0 );
-    }
 }
