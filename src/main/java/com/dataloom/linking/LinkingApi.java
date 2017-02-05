@@ -8,7 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * This API is used for creating and managing synthetic datasets created by linking several datasets together.
+ * This API is used for creating and managing synthetic entity sets created by linking several entity sets together.
+ * The entity sets created by this invoking this API are not actually instantiated until they are accessed via the
+ * {@link com.dataloom.data.DataApi}, which dynamically weaves them together based on the matching information.
  *
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
