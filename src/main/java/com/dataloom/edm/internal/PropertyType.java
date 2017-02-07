@@ -18,9 +18,28 @@ import com.google.common.base.Optional;
  */
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     protected EdmPrimitiveTypeKind datatype;
-    private transient int          h                = 0;
+    protected boolean              piiField = false;
+    private transient int          h      = 0;
 
     @JsonCreator
+    public PropertyType(
+            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
+            @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
+            @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype,
+            @JsonProperty( SerializationConstants.PII_FIELD ) boolean piiField ) {
+        super(
+                id,
+                fqn,
+                title,
+                description,
+                schemas );
+        this.datatype = datatype;
+        this.piiField = piiField;
+    }
+
     public PropertyType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
@@ -46,7 +65,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             EdmPrimitiveTypeKind datatype ) {
         this( Optional.of( id ), fqn, title, description, schemas, datatype );
     }
-    
+
     public PropertyType(
             FullQualifiedName fqn,
             String title,
@@ -61,17 +80,23 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         return datatype;
     }
 
+    @JsonProperty( SerializationConstants.PII_FIELD )
+    public boolean isPIIfield() {
+        return piiField;
+    }
+
     @Override
     public int hashCode() {
         if ( h == 0 ) {
             final int prime = 31;
             int result = super.hashCode();
             result = prime * result + ( ( datatype == null ) ? 0 : datatype.hashCode() );
+            result = prime * result + ( piiField ? 1231 : 1237 );
             h = result;
         }
         return h;
     }
-
+    
     @Override
     public boolean equals( Object obj ) {
         if ( this == obj ) {
@@ -87,13 +112,16 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         if ( datatype != other.datatype ) {
             return false;
         }
+        if ( piiField != other.piiField ) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
         return "PropertyType [datatype=" + datatype + ", schemas=" + schemas + ", type=" + type + ", id=" + id
-                + ", title=" + title + ", description=" + description + "]";
+                + ", title=" + title + ", description=" + description + ", piiField=" + piiField + "]";
     }
 
     @Override
