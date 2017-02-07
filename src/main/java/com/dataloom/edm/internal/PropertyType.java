@@ -40,21 +40,6 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         this.piiField = piiField;
     }
 
-    public PropertyType(
-            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
-            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
-            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
-            @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype ) {
-        super(
-                id,
-                fqn,
-                title,
-                description,
-                schemas );
-        this.datatype = datatype;
-    }
 
     public PropertyType(
             UUID id,
@@ -62,8 +47,19 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             String title,
             Optional<String> description,
             Set<FullQualifiedName> schemas,
+            EdmPrimitiveTypeKind datatype,
+            boolean piiField ) {
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField );
+    }
+    
+    public PropertyType(
+            UUID id,
+            FullQualifiedName fqn,
+            String title,
+            Optional<String> description,
+            Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.of( id ), fqn, title, description, schemas, datatype );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, false );
     }
 
     public PropertyType(
@@ -72,7 +68,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.absent(), fqn, title, description, schemas, datatype );
+        this( Optional.absent(), fqn, title, description, schemas, datatype, false );
     }
 
     @JsonProperty( SerializationConstants.DATATYPE_FIELD )
