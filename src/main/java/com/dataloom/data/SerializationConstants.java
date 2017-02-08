@@ -9,10 +9,12 @@ public final class SerializationConstants {
     public static final String ACTION                      = "action";
 
     public static final String DATATYPE_FIELD              = "datatype";
+
     public static final String DETAILS_FIELD               = "details";
     public static final String DESCRIPTION_FIELD           = "description";
     public static final String ENTITY_DEFINITIONS_FIELD    = "entityDefinitions";
     public static final String ENTITY_FIELD                = "entity";
+    public static final String ENTITY_ID                   = "entityId";
     public static final String ENTITY_SET_NAME             = "entitySetName";
     public static final String ENTITY_SET_ID               = "entitySetId";
     public static final String ENTITY_TYPES                = "entityTypes";
