@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
 import com.dataloom.edm.internal.EdmDetails;
 import com.dataloom.edm.internal.EntitySet;
 import com.dataloom.edm.internal.EntityType;
@@ -35,8 +37,8 @@ public interface EdmApi {
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
     String ID                      = "id";
-    String ENTITY_TYPE_ID = "entityTypeId";
-    String PROPERTY_TYPE_ID = "propertyTypeId";
+    String ENTITY_TYPE_ID          = "entityTypeId";
+    String PROPERTY_TYPE_ID        = "propertyTypeId";
     String NAME                    = "name";
     String NAMESPACE               = "namespace";
     String NAMESPACES              = "namespaces";
@@ -59,8 +61,8 @@ public interface EdmApi {
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
     String NAME_PATH               = "/{" + NAME + "}";
     String ID_PATH                 = "/{" + ID + "}";
-    String ENTITY_TYPE_ID_PATH                 = "/{" + ENTITY_TYPE_ID + "}";
-    String PROPERTY_TYPE_ID_PATH                 = "/{" + PROPERTY_TYPE_ID + "}";
+    String ENTITY_TYPE_ID_PATH     = "/{" + ENTITY_TYPE_ID + "}";
+    String PROPERTY_TYPE_ID_PATH   = "/{" + PROPERTY_TYPE_ID + "}";
     String DETAILS_PATH            = "/details";
 
     String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
@@ -197,4 +199,12 @@ public interface EdmApi {
     @GET( BASE + IDS_PATH + ENTITY_TYPE_PATH + NAMESPACE_PATH + NAME_PATH )
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
+    @PATCH( PROPERTY_TYPE_BASE_PATH + ID_PATH )
+    Void renamePropertyType( @Path( ID ) UUID propertyTypeId, @Body FullQualifiedName newFqn );
+
+    @PATCH( ENTITY_TYPE_BASE_PATH + ID_PATH )
+    Void renameEntityType( @Path( ID ) UUID entityTypeId, @Body FullQualifiedName newFqn );
+
+    @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
+    Void renameEntitySet( @Path( ID ) UUID entitySetId, @Body String newName );
 }
