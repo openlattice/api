@@ -26,8 +26,7 @@ public final class TestDataFactory {
     private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
     private static final Random                r                    = new Random();
 
-    private TestDataFactory() {
-    }
+    private TestDataFactory() {}
 
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
@@ -77,7 +76,8 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of(),
-                EdmPrimitiveTypeKind.String );
+                EdmPrimitiveTypeKind.String,
+                Optional.of( r.nextBoolean() ) );
     }
 
     public static Organization organization() {
@@ -159,16 +159,18 @@ public final class TestDataFactory {
                 TestDataFactory.permissions(),
                 TestDataFactory.requestStatus() );
     }
-    
-    public static Map<String, SetMultimap<UUID, Object>> randomStringEntityData( int numberOfEntries, Set<UUID> propertyIds){
+
+    public static Map<String, SetMultimap<UUID, Object>> randomStringEntityData(
+            int numberOfEntries,
+            Set<UUID> propertyIds ) {
         Map<String, SetMultimap<UUID, Object>> data = new HashMap<>();
-        for(int i = 0; i < numberOfEntries; i++ ){
+        for ( int i = 0; i < numberOfEntries; i++ ) {
             String entityId = UUID.randomUUID().toString();
             SetMultimap<UUID, Object> entity = HashMultimap.create();
-            for( UUID propertyId : propertyIds ){
+            for ( UUID propertyId : propertyIds ) {
                 entity.put( propertyId, RandomStringUtils.randomAlphanumeric( 5 ) );
             }
-            
+
             data.put( entityId, entity );
         }
         return data;
