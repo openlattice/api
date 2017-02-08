@@ -21,6 +21,7 @@ public interface SearchApi {
      * Normal params
      */
     String POPULAR          = "/popular";
+    String ORGANIZATIONS    = "/organizations";
     String KEYWORD          = "kw";
     String ENTITY_TYPE_ID   = "eid";
     String PROPERTY_TYPE_ID = "pid";
@@ -57,4 +58,7 @@ public interface SearchApi {
 
     @GET( BASE + POPULAR )
     Iterable<EntitySet> getPopularEntitySet();
+    
+    @POST( BASE + ORGANIZATIONS )
+    String executeOrganizationSearch( @Body String searchTerm );
 }
