@@ -64,6 +64,7 @@ public interface EdmApi {
     String ENTITY_TYPE_ID_PATH     = "/{" + ENTITY_TYPE_ID + "}";
     String PROPERTY_TYPE_ID_PATH   = "/{" + PROPERTY_TYPE_ID + "}";
     String DETAILS_PATH            = "/details";
+    String YAML_PATH               = "/yaml";
 
     String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
     String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
@@ -181,6 +182,11 @@ public interface EdmApi {
      */
     @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Schema getSchemaContents(
+            @Path( NAMESPACE ) String namespace,
+            @Path( NAME ) String name );
+    
+    @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH + YAML_PATH )
+    String getSchemaContentsAsYaml(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name );
 
