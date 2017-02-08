@@ -5,8 +5,10 @@ import com.dataloom.search.requests.SearchRequest;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 import java.util.Map;
+import java.util.UUID;
 
 public interface SearchApi {
     /*
@@ -15,6 +17,8 @@ public interface SearchApi {
     String SERVICE          = "/datastore";
     String CONTROLLER       = "/search";
     String BASE             = SERVICE + CONTROLLER;
+    String ENTITY_SET_ID    = "entitySetId";
+    String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
 
     String SEARCH_JAVA      = "/java";
     /*
@@ -59,6 +63,12 @@ public interface SearchApi {
     @GET( BASE + POPULAR )
     Iterable<EntitySet> getPopularEntitySet();
     
+    @POST ( BASE + ENTITY_SET_ID_PATH )
+    String executeEntitySetDataQuery(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Body String searchTerm );
+
     @POST( BASE + ORGANIZATIONS )
     String executeOrganizationSearch( @Body String searchTerm );
+  
 }
