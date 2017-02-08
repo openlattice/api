@@ -18,8 +18,8 @@ import com.google.common.base.Optional;
  */
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     protected EdmPrimitiveTypeKind datatype;
-    protected boolean              piiField = false;
-    private transient int          h      = 0;
+    protected boolean              piiField;
+    private transient int          h = 0;
 
     @JsonCreator
     public PropertyType(
@@ -29,7 +29,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype,
-            @JsonProperty( SerializationConstants.PII_FIELD ) boolean piiField ) {
+            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> piiField ) {
         super(
                 id,
                 fqn,
@@ -37,9 +37,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
                 description,
                 schemas );
         this.datatype = datatype;
-        this.piiField = piiField;
+        this.piiField = piiField.or( false );
     }
-
 
     public PropertyType(
             UUID id,
@@ -48,10 +47,10 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype,
-            boolean piiField ) {
+            Optional<Boolean> piiField ) {
         this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField );
     }
-    
+
     public PropertyType(
             UUID id,
             FullQualifiedName fqn,
@@ -59,7 +58,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.of( id ), fqn, title, description, schemas, datatype, false );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, Optional.absent() );
     }
 
     public PropertyType(
@@ -68,7 +67,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.absent(), fqn, title, description, schemas, datatype, false );
+        this( Optional.absent(), fqn, title, description, schemas, datatype, Optional.absent() );
     }
 
     @JsonProperty( SerializationConstants.DATATYPE_FIELD )
@@ -92,7 +91,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         }
         return h;
     }
-    
+
     @Override
     public boolean equals( Object obj ) {
         if ( this == obj ) {
