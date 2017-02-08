@@ -68,5 +68,7 @@ public final class SerializationConstants {
     public static final String INCLUDE_FIELD               = "include";
 
     public static final String VALUE_MAPPER                = "valueMapper";
+    
+    public static final String PII_FIELD                = "piiField";
 
 }
