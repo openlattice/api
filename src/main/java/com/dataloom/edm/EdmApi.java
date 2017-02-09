@@ -192,7 +192,7 @@ public interface EdmApi {
             @Path( NAME ) String name );
     
     @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
-    String getSchemaContentsFormatted(
+    Schema getSchemaContentsFormatted(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
             @Query( FILE_TYPE ) FileType fileType );
