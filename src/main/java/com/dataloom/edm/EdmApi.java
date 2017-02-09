@@ -21,6 +21,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -32,6 +33,11 @@ public interface EdmApi {
     String SERVICE                 = "/datastore";
     String CONTROLLER              = "/edm";
     String BASE                    = SERVICE + CONTROLLER;
+    
+    public static enum FileType {
+        json,
+        yaml
+    }
 
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
@@ -47,6 +53,7 @@ public interface EdmApi {
     String PROPERTY_TYPES          = "propertyTypes";
     String SCHEMA                  = "schema";
     String SCHEMAS                 = "schemas";
+    String FILE_TYPE               = "fileType";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
@@ -183,6 +190,12 @@ public interface EdmApi {
     Schema getSchemaContents(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name );
+    
+    @GET( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
+    String getSchemaContentsFormatted(
+            @Path( NAMESPACE ) String namespace,
+            @Path( NAME ) String name,
+            @Query( FILE_TYPE ) FileType fileType );
 
     @PATCH( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Void updateSchema(
