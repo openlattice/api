@@ -31,7 +31,7 @@ public interface LinkingApi {
      * Performs linking operation on entity sets.
      *
      * @param linkingProperties A set of entity set associated properties to link on. Each map must be the same length,
-     *                          with entity set ids as a keys and entity ids as values. If no maps are provided, an
+     *                          with entity set ids as a keys and property type ids as values. If no maps are provided, an
      *                          empty linking entity set is created that can be populated by calling
      *                          {@link LinkingApi#linkEntities(UUID, UUID, UUID, Set)}.
      * @return The id of the new entity set constructed from linking the desired entity sets.
