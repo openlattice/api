@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -64,7 +65,7 @@ public interface SearchApi {
     Iterable<EntitySet> getPopularEntitySet();
     
     @POST ( BASE + ENTITY_SET_ID_PATH )
-    String executeEntitySetDataQuery(
+    List<Map<String, Object>> executeEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body String searchTerm );
 
