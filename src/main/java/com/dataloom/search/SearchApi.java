@@ -1,6 +1,6 @@
 package com.dataloom.search;
 
-import com.dataloom.edm.internal.EntitySet;
+import com.dataloom.edm.EntitySet;
 import com.dataloom.search.requests.SearchRequest;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

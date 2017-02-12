@@ -1,8 +1,8 @@
 package com.dataloom.datasource;
 
-import com.dataloom.authorization.SecurableObjectType;
-import com.dataloom.data.SerializationConstants;
-import com.dataloom.edm.internal.AbstractSecurableObject;
+import com.dataloom.authorization.securable.SecurableObjectType;
+import com.dataloom.client.serialization.SerializationConstants;
+import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

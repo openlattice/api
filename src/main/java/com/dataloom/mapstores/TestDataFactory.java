@@ -1,7 +1,13 @@
 package com.dataloom.mapstores;
 
 import com.dataloom.authorization.*;
-import com.dataloom.edm.internal.*;
+import com.dataloom.authorization.securable.AbstractSecurableObject;
+import com.dataloom.authorization.securable.AbstractSecurableType;
+import com.dataloom.authorization.securable.SecurableObjectType;
+import com.dataloom.edm.EdmDetails;
+import com.dataloom.edm.EntitySet;
+import com.dataloom.edm.EntityType;
+import com.dataloom.edm.PropertyType;
 import com.dataloom.organization.Organization;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
