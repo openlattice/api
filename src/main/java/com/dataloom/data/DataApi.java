@@ -79,6 +79,15 @@ public interface DataApi {
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
+    /**
+     * Creates a new set of entities.
+     * @param entitySetId The id of the entity set to write to.
+     * @param syncId A time-uuid retrieved from data source api.
+     * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
+     *                 and stable across repeated integrations of data. If either constraint is violated then data may
+     *                 be overwritten or duplicated.
+     * @return
+     */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     Void createEntityData(
             @Path( SET_ID ) UUID entitySetId,

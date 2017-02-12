@@ -10,16 +10,16 @@ import java.util.UUID;
  * Uniquely identifies a version of an entity
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
-public class EntityKey {
+public class EntityKey implements Comparable<EntityKey>{
     private final UUID syncId;
     private final UUID entitySetId;
-    private final UUID entityId;
+    private final String entityId;
 
     @JsonCreator
     public EntityKey(
             @JsonProperty( SerializationConstants.SYNC_ID ) UUID syncId,
             @JsonProperty( SerializationConstants.ENTITY_SET_ID ) UUID entitySetId,
-            @JsonProperty( SerializationConstants.ENTITY_ID ) UUID entityId ) {
+            @JsonProperty( SerializationConstants.ENTITY_ID ) String entityId ) {
         this.syncId = syncId;
         this.entitySetId = entitySetId;
         this.entityId = entityId;
@@ -36,7 +36,21 @@ public class EntityKey {
     }
 
     @JsonProperty( SerializationConstants.ENTITY_ID )
-    public UUID getEntityId() {
+    public String getEntityId() {
         return entityId;
+    }
+
+    @Override public int compareTo( EntityKey o ) {
+        int result =  syncId.compareTo( o.syncId );
+
+        if( result == 0 ) {
+            result = entitySetId.compareTo( o.entitySetId );
+        }
+
+        if( result == 0 ) {
+            result = entityId.compareTo( o.entityId );
+        }
+
+        return result;
     }
 }
