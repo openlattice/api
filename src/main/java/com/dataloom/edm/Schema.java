@@ -19,6 +19,8 @@ package com.dataloom.edm;
 
 import java.util.Collection;
 
+import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.PropertyType;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 

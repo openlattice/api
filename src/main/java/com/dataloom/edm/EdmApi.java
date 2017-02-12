@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.PropertyType;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.edm.requests.EdmDetailsSelector;

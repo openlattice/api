@@ -20,6 +20,8 @@ package com.dataloom.edm;
 import java.util.Map;
 import java.util.UUID;
 
+import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.PropertyType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package com.dataloom.edm;
+package com.dataloom.edm.type;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

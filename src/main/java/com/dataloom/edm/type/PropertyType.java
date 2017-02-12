@@ -15,7 +15,7 @@
  *
  */
 
-package com.dataloom.edm;
+package com.dataloom.edm.type;
 
 import java.util.Set;
 import java.util.UUID;
