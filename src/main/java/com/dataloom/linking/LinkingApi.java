@@ -18,6 +18,7 @@
 package com.dataloom.linking;
 
 import com.dataloom.data.EntityKey;
+import com.dataloom.edm.type.LinkingEntityType;
 import retrofit2.http.*;
 
 import java.util.Map;
@@ -42,10 +43,23 @@ public interface LinkingApi {
     String SET_ID           = "setId";
     String SYNC_ID          = "syncId";
     String ENTITY_ID        = "entityId";
+    String SET              = "set";
     String LINKED_ENTITY_ID = "linkedEntityId";
+    String TYPE             = "type";
 
     /**
-     * Performs linking operation on entity sets.
+     * Creates an entity type describing the result of linking several entity types together. This entity type will be
+     * be usable in entity set searches.
+     *
+     * @param linkingEntityType The linking entity type
+     * @return The {@link UUID} of the linked entity type.
+     */
+    @POST( BASE + "/" + TYPE )
+    UUID createLinkingEntityType( LinkingEntityType linkingEntityType );
+
+    /**
+     * Performs linking operation on entity sets. The entity type of the set must have already been defined by a call to
+     * {@link LinkingApi#createLinkingEntityType(LinkingEntityType)}.
      *
      * @param linkingProperties A set of entity set associated properties to link on. Each map must be the same length,
      *                          with entity set ids as a keys and property type ids as values. If no maps are provided, an
@@ -53,8 +67,8 @@ public interface LinkingApi {
      *                          {@link LinkingApi#linkEntities(UUID, UUID, UUID, Set)}.
      * @return The id of the new entity set constructed from linking the desired entity sets.
      */
-    @POST( BASE )
-    UUID linkEntitySets( @Body Set<Map<UUID, UUID>> linkingProperties );
+    @POST( BASE + "/" + SET )
+    UUID linkEntitySets( @Query( TYPE ) UUID linkingEntityType, @Body Set<Map<UUID, UUID>> linkingProperties );
 
     /**
      * Links a set of entities into a new linked entity.
@@ -65,35 +79,35 @@ public interface LinkingApi {
      * @param entities
      * @return The entity id of the new linked entity id
      */
-    @POST( BASE + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
+    @POST( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
     UUID linkEntities(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_ID ) UUID entityId,
             @Body Set<EntityKey> entities );
 
-    @PUT( BASE + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
+    @PUT( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
     Void setLinkedEntities(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_ID ) UUID entityId,
             @Body Set<EntityKey> entities );
 
-    @DELETE( BASE + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
+    @DELETE( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}" )
     Void deleteLinkedEntities(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_ID ) UUID entityId
     );
 
-    @PUT( BASE + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}/{" + LINKED_ENTITY_ID + "}" )
+    @PUT( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}/{" + LINKED_ENTITY_ID + "}" )
     Void addLinkedEntities(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_ID ) UUID entityId,
             @Path( LINKED_ENTITY_ID ) UUID linkedEntityId );
 
-    @DELETE( BASE + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}/{" + LINKED_ENTITY_ID + "}" )
+    @DELETE( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}/{" + LINKED_ENTITY_ID + "}" )
     Void removeLinkedEntity(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
