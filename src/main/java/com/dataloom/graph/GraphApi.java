@@ -34,6 +34,7 @@ public interface GraphApi {
     String BASE       = SERVICE + CONTROLLER;
 
     EntityKey getEdge( DirectedEdge edge );
+
     Void createOrUpdateEdge( DirectedEdge edge , EntityKey entityKey );
     Void deleteEdge( DirectedEdge edge );
 
