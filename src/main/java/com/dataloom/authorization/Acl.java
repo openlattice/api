@@ -3,7 +3,7 @@ package com.dataloom.authorization;
 import java.util.List;
 import java.util.UUID;
 
-import com.dataloom.data.SerializationConstants;
+import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

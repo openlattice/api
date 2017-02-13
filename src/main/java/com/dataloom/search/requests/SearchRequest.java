@@ -3,7 +3,7 @@ package com.dataloom.search.requests;
 import java.util.Set;
 import java.util.UUID;
 
-import com.dataloom.data.SerializationConstants;
+import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;

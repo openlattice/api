@@ -1,9 +1,7 @@
 package com.dataloom.edm;
 
-import com.dataloom.edm.internal.EntitySet;
-import com.dataloom.edm.internal.EntityType;
-import com.dataloom.edm.internal.PropertyType;
-import com.dataloom.edm.internal.Schema;
+import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.PropertyType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EntityDataModel {

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.data.SerializationConstants;
+import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;

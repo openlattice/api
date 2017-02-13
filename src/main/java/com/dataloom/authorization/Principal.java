@@ -2,7 +2,7 @@ package com.dataloom.authorization;
 
 import java.io.Serializable;
 
-import com.dataloom.data.SerializationConstants;
+import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

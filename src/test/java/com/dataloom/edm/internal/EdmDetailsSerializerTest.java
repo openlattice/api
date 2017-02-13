@@ -1,5 +1,6 @@
 package com.dataloom.edm.internal;
 
+import com.dataloom.edm.EdmDetails;
 import com.dataloom.serializer.AbstractJacksonSerializationTest;
 import org.junit.BeforeClass;
 

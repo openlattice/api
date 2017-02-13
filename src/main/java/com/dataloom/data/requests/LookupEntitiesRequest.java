@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.data.SerializationConstants;
+import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
