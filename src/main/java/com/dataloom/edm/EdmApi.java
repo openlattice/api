@@ -51,6 +51,7 @@ public interface EdmApi {
     String SCHEMA                  = "schema";
     String SCHEMAS                 = "schemas";
     String FILE_TYPE               = "fileType";
+    String TOKEN                   = "token";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
@@ -192,7 +193,8 @@ public interface EdmApi {
     Schema getSchemaContentsFormatted(
             @Path( NAMESPACE ) String namespace,
             @Path( NAME ) String name,
-            @Query( FILE_TYPE ) FileType fileType );
+            @Query( FILE_TYPE ) FileType fileType,
+            @Query( TOKEN ) String token );
 
     @PATCH( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Void updateSchema(
