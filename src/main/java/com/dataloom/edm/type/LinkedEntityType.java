@@ -79,4 +79,38 @@ public class LinkedEntityType extends EntityType {
             Set<Map<UUID, UUID>> linkingProperties ) {
         this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, linkingProperties );
     }
+
+    @Override public boolean equals( Object o ) {
+        if ( this == o )
+            return true;
+        if ( !( o instanceof LinkedEntityType ) )
+            return false;
+        if ( !super.equals( o ) )
+            return false;
+
+        LinkedEntityType that = (LinkedEntityType) o;
+
+        if ( linkedEntityTypes != null ?
+                !linkedEntityTypes.equals( that.linkedEntityTypes ) :
+                that.linkedEntityTypes != null )
+            return false;
+        return linkingProperties != null ?
+                linkingProperties.equals( that.linkingProperties ) :
+                that.linkingProperties == null;
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ( linkedEntityTypes != null ? linkedEntityTypes.hashCode() : 0 );
+        result = 31 * result + ( linkingProperties != null ? linkingProperties.hashCode() : 0 );
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LinkedEntityType [linkedEntityTypes=" + linkedEntityTypes + ", linkingProperties=" + linkingProperties
+                + ", schemas=" + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description="
+                + description + "]";
+    }
+
 }
