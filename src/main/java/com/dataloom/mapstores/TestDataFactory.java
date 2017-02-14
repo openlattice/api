@@ -4,6 +4,7 @@ import com.dataloom.authorization.*;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.AbstractSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
+import com.dataloom.data.EntityKey;
 import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.edm.type.EntityType;
@@ -180,5 +181,9 @@ public final class TestDataFactory {
             data.put( entityId, entity );
         }
         return data;
+    }
+
+    public static EntityKey entityKey() {
+        return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ) );
     }
 }

@@ -41,6 +41,7 @@ import com.google.common.collect.Sets;
 public class EntityType extends AbstractSchemaAssociatedSecurableType {
     private final Set<UUID>   key;
     private final Set<UUID>   properties;
+
     private transient int     h                = 0;
 
     @JsonCreator
