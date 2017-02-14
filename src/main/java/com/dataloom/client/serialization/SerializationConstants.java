@@ -34,7 +34,9 @@ public final class SerializationConstants {
     public static final String ENTITY_DEFINITIONS_FIELD    = "entityDefinitions";
 
     public static final String ENTITY_FIELD                = "entity";
+
     public static final String ENTITY_ID                   = "entityId";
+    public static final String ENTITY_SET                  = "entitySet";
     public static final String ENTITY_SET_NAME             = "entitySetName";
     public static final String ENTITY_SET_ID               = "entitySetId";
     public static final String ENTITY_SET_IDS              = "entitySetIds";

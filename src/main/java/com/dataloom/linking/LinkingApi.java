@@ -18,10 +18,10 @@
 package com.dataloom.linking;
 
 import com.dataloom.data.EntityKey;
+import com.dataloom.edm.set.LinkingEntitySet;
 import com.dataloom.edm.type.LinkingEntityType;
 import retrofit2.http.*;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -68,7 +68,7 @@ public interface LinkingApi {
      * @return The id of the new entity set constructed from linking the desired entity sets.
      */
     @POST( BASE + "/" + SET )
-    UUID linkEntitySets( @Query( TYPE ) UUID linkingEntityType, @Body Set<Map<UUID, UUID>> linkingProperties );
+    UUID linkEntitySets( @Body LinkingEntitySet linkingEntitySet );
 
     /**
      * Links a set of entities into a new linked entity.
