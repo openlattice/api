@@ -37,13 +37,13 @@ public class LinkingEntitySet {
 
     @JsonCreator
     public LinkingEntitySet(
-            @JsonProperty( SerializationConstants.LINKING_PROPERTIES_FIELD ) EntitySet entitySet,
+            @JsonProperty( SerializationConstants.ENTITY_SET_FIELD ) EntitySet entitySet,
             @JsonProperty( SerializationConstants.LINKING_PROPERTIES_FIELD ) Set<Map<UUID, UUID>> linkingProperties ) {
         this.entitySet = entitySet;
         this.linkingProperties = linkingProperties;
     }
 
-    @JsonProperty( SerializationConstants.LINKING_PROPERTIES_FIELD )
+    @JsonProperty( SerializationConstants.ENTITY_SET_FIELD )
     public EntitySet getEntitySet() {
         return entitySet;
     }

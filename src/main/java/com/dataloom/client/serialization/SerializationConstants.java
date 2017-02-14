@@ -35,15 +35,15 @@ public final class SerializationConstants {
 
     public static final String ENTITY_FIELD                = "entity";
 
-    public static final String ENTITY_ID                   = "entityId";
-    public static final String ENTITY_SET                  = "entitySet";
-    public static final String ENTITY_SET_NAME             = "entitySetName";
-    public static final String ENTITY_SET_ID               = "entitySetId";
-    public static final String ENTITY_SET_IDS              = "entitySetIds";
-    public static final String ENTITY_TYPE                 = "entityType";
-    public static final String ENTITY_TYPES                = "entityTypes";
-    public static final String ENTITY_TYPE_IDS_FIELD       = "entityTypeIds";
-    public static final String FQN                         = "fqn";
+    public static final String ENTITY_ID             = "entityId";
+    public static final String ENTITY_SET_FIELD      = "entitySet";
+    public static final String ENTITY_SET_NAME       = "entitySetName";
+    public static final String ENTITY_SET_ID         = "entitySetId";
+    public static final String ENTITY_SET_IDS        = "entitySetIds";
+    public static final String ENTITY_TYPE           = "entityType";
+    public static final String ENTITY_TYPES          = "entityTypes";
+    public static final String ENTITY_TYPE_IDS_FIELD = "entityTypeIds";
+    public static final String FQN                   = "fqn";
     public static final String KEY_FIELD                   = "key";
     public static final String ID_FIELD                    = "id";
     public static final String IS_OWNER                    = "isOwner";
