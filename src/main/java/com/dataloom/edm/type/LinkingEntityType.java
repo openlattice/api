@@ -40,6 +40,7 @@ public class LinkingEntityType {
             @JsonProperty( SerializationConstants.DEIDENTIFIED ) Optional<Boolean> deidentified ) {
         this.linkingEntityType = linkingEntityType;
         this.linkedEntityTypes = linkedEntityTypes;
+        this.deidentified = deidentified.or( true );
     }
 
     @JsonProperty( SerializationConstants.ENTITY_TYPE )
