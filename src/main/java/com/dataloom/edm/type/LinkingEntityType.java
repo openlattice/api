@@ -21,37 +21,41 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public class LinkingEntityType {
     private final EntityType linkingEntityType;
-    private final Set<UUID>            linkedEntityTypes;
+    private final Set<UUID>  linkedEntityTypes;
+    private final boolean    deidentified;
 
     @JsonCreator
     public LinkingEntityType(
-            @JsonProperty(SerializationConstants.ENTITY_TYPE) EntityType linkingEntityType,
-            @JsonProperty(SerializationConstants.ENTITY_TYPE_IDS_FIELD) Set<UUID> linkedEntityTypes ) {
+            @JsonProperty( SerializationConstants.ENTITY_TYPE ) EntityType linkingEntityType,
+            @JsonProperty( SerializationConstants.ENTITY_TYPE_IDS_FIELD ) Set<UUID> linkedEntityTypes,
+            @JsonProperty( SerializationConstants.DEIDENTIFIED ) Optional<Boolean> deidentified ) {
         this.linkingEntityType = linkingEntityType;
         this.linkedEntityTypes = linkedEntityTypes;
+        this.deidentified = deidentified.or( true );
     }
 
-    @JsonProperty(SerializationConstants.ENTITY_TYPE)
+    @JsonProperty( SerializationConstants.ENTITY_TYPE )
     public EntityType getLinkingEntityType() {
         return linkingEntityType;
     }
 
-    @JsonProperty(SerializationConstants.ENTITY_TYPE_IDS_FIELD)
+    @JsonProperty( SerializationConstants.ENTITY_TYPE_IDS_FIELD )
     public Set<UUID> getLinkedEntityTypes() {
         return linkedEntityTypes;
     }
+
+    @JsonProperty( SerializationConstants.DEIDENTIFIED )
+    public boolean isDeidentified() {
+        return deidentified;
+    }
+
 }
