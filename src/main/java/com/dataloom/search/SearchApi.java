@@ -1,7 +1,10 @@
 package com.dataloom.search;
 
 import com.dataloom.edm.EntitySet;
+import com.dataloom.search.requests.SearchDataRequest;
 import com.dataloom.search.requests.SearchRequest;
+import com.dataloom.search.requests.SearchResult;
+
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -65,9 +68,9 @@ public interface SearchApi {
     Iterable<EntitySet> getPopularEntitySet();
     
     @POST ( BASE + ENTITY_SET_ID_PATH )
-    List<Map<String, Object>> executeEntitySetDataQuery(
+    SearchResult executeEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
-            @Body String searchTerm );
+            @Body SearchDataRequest searchRequest );
 
     @POST( BASE + ORGANIZATIONS )
     String executeOrganizationSearch( @Body String searchTerm );
