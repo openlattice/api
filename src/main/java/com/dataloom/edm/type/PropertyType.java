@@ -37,7 +37,7 @@ import com.google.common.base.Optional;
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     protected EdmPrimitiveTypeKind datatype;
     protected boolean              piiField;
-    protected Analyzer analyzer;
+    protected Analyzer             analyzer;
     private transient int          h = 0;
 
     @JsonCreator
@@ -72,7 +72,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<Analyzer> analyzer ) {
         this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField, analyzer );
     }
-    
+
     public PropertyType(
             UUID id,
             FullQualifiedName fqn,
