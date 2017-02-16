@@ -37,6 +37,7 @@ import com.google.common.base.Optional;
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     protected EdmPrimitiveTypeKind datatype;
     protected boolean              piiField;
+    protected Analyzer analyzer;
     private transient int          h = 0;
 
     @JsonCreator
@@ -47,7 +48,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype,
-            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> piiField ) {
+            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> piiField,
+            @JsonProperty( SerializationConstants.ANALYZER ) Optional<Analyzer> analyzer ) {
         super(
                 id,
                 fqn,
@@ -56,6 +58,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
                 schemas );
         this.datatype = datatype;
         this.piiField = piiField.or( false );
+        this.analyzer = analyzer.or( Analyzer.DEFAULT );
     }
 
     public PropertyType(
@@ -65,8 +68,20 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype,
+            Optional<Boolean> piiField,
+            Optional<Analyzer> analyzer ) {
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField, analyzer );
+    }
+    
+    public PropertyType(
+            UUID id,
+            FullQualifiedName fqn,
+            String title,
+            Optional<String> description,
+            Set<FullQualifiedName> schemas,
+            EdmPrimitiveTypeKind datatype,
             Optional<Boolean> piiField ) {
-        this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, piiField, Optional.absent() );
     }
 
     public PropertyType(
@@ -76,7 +91,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.of( id ), fqn, title, description, schemas, datatype, Optional.absent() );
+        this( Optional.of( id ), fqn, title, description, schemas, datatype, Optional.absent(), Optional.absent() );
     }
 
     public PropertyType(
@@ -85,7 +100,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             EdmPrimitiveTypeKind datatype ) {
-        this( Optional.absent(), fqn, title, description, schemas, datatype, Optional.absent() );
+        this( Optional.absent(), fqn, title, description, schemas, datatype, Optional.absent(), Optional.absent() );
     }
 
     @JsonProperty( SerializationConstants.DATATYPE_FIELD )
@@ -96,6 +111,11 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     @JsonProperty( SerializationConstants.PII_FIELD )
     public boolean isPIIfield() {
         return piiField;
+    }
+
+    @JsonProperty( SerializationConstants.ANALYZER )
+    public Analyzer getAnalyzer() {
+        return analyzer;
     }
 
     @Override
@@ -133,8 +153,8 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public String toString() {
-        return "PropertyType [datatype=" + datatype + ", schemas=" + schemas + ", type=" + type + ", id=" + id
-                + ", title=" + title + ", description=" + description + ", piiField=" + piiField + "]";
+        return "PropertyType [datatype=" + datatype + ", piiField=" + piiField + ", analyzer=" + analyzer + ", schemas="
+                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description + "]";
     }
 
     @Override
