@@ -58,7 +58,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
                 schemas );
         this.datatype = datatype;
         this.piiField = piiField.or( false );
-        this.analyzer = analyzer.or( Analyzer.DEFAULT );
+        this.analyzer = analyzer.or( Analyzer.STANDARD );
     }
 
     public PropertyType(
