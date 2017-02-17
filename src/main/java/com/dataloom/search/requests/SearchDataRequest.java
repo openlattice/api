@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchDataRequest {
     
-    private String searchTerm;
-    private int start;
-    private int maxHits;
+    private final String searchTerm;
+    private final int start;
+    private final int maxHits;
     
     public SearchDataRequest(
             @JsonProperty( SerializationConstants.SEARCH_TERM ) String searchTerm,

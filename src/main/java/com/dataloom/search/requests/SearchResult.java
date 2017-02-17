@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class SearchResult {
     
-    private long numHits;
-    private List<Map<String, Object>> hits;
+    private final long numHits;
+    private final List<Map<String, Object>> hits;
     
     public SearchResult( long numHits, List<Map<String, Object>> hits ) {
         this.numHits = numHits;
@@ -19,6 +19,15 @@ public class SearchResult {
     
     public List<Map<String, Object>> getHits() {
         return hits;
+    }
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Long.valueOf( numHits ).hashCode();
+        result = prime * result + ( ( hits == null ) ? 0 : hits.hashCode() );
+        return result;
     }
     
     @Override
