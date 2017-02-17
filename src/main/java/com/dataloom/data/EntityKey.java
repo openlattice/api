@@ -63,4 +63,11 @@ public class EntityKey implements Comparable<EntityKey> {
 
         return result;
     }
+
+    @Override public String toString() {
+        return "EntityKey{" +
+                "entitySetId=" + entitySetId +
+                ", entityId='" + entityId + '\'' +
+                '}';
+    }
 }
