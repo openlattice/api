@@ -95,10 +95,13 @@ public final class SerializationConstants {
     public static final String PROPERTY_TYPE_IDS           = "pid";
     public static final String INCLUDE_FIELD               = "include";
 
+    public static final String SEARCH_TERM                 = "searchTerm";
+    public static final String MAX_HITS                    = "maxHits";
+    public static final String START                       = "start";
+
     public static final String VALUE_MAPPER                = "valueMapper";
 
     public static final String PII_FIELD                   = "piiField";
-
     public static final String ANALYZER                    = "analyzer";
 
 }
