@@ -27,6 +27,8 @@ public final class SerializationConstants {
 
     public static final String DATATYPE_FIELD              = "datatype";
 
+    public static final String DEIDENTIFIED                = "deidentified";
+
     public static final String DETAILS_FIELD               = "details";
 
     public static final String DESCRIPTION_FIELD           = "description";
@@ -100,5 +102,6 @@ public final class SerializationConstants {
     public static final String VALUE_MAPPER                = "valueMapper";
 
     public static final String PII_FIELD                   = "piiField";
+    public static final String ANALYZER                    = "analyzer";
 
 }

@@ -7,6 +7,7 @@ import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.data.EntityKey;
 import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
+import com.dataloom.edm.type.Analyzer;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
@@ -31,6 +32,7 @@ public final class TestDataFactory {
     private static final Permission[]          permissions          = Permission.values();
     private static final Action[]              actions              = Action.values();
     private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
+    private static final Analyzer[] analyzers = Analyzer.values();
     private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
@@ -84,7 +86,8 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of(),
                 EdmPrimitiveTypeKind.String,
-                Optional.of( r.nextBoolean() ) );
+                Optional.of( r.nextBoolean() ),
+                Optional.of(                 analyzers[ r.nextInt( analyzers.length ) ] ));
     }
 
     public static Organization organization() {
