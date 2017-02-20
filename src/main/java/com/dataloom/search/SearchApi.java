@@ -55,7 +55,7 @@ public interface SearchApi {
      * Executes a search over the data of a given entity set to find rows that match the search term
      * 
      * @param entitySetId The id of the entity set the search will be executed within
-     * @param request A JSON object that contains three parameters: "start", which specifies the hit number to start
+     * @param searchRequest A JSON object that contains three parameters: "start", which specifies the hit number to start
      *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
      *            "searchTerm", which is the search term results will match on.
      * @return A search result object, containing the total number of hits for the given query, and the hits themselves
@@ -68,7 +68,7 @@ public interface SearchApi {
     /**
      * Executes a search over all organizations to find ones that match the given search term
      * 
-     * @param request A JSON object that contains three parameters: "start", which specifies the hit number to start
+     * @param searchRequest A JSON object that contains three parameters: "start", which specifies the hit number to start
      *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
      *            "searchTerm", which is the search term results will match on.
      * @return A search result object, containing the total number of hits for the given query, and the hits themselves
