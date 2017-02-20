@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
-public class SearchRequest {
+public class Search {
 
     private final Optional<String>    optionalKeyword;
     private final Optional<UUID>      optionalEntityType;
@@ -17,7 +17,7 @@ public class SearchRequest {
     private final int                 maxHits;
 
     @JsonCreator
-    public SearchRequest(
+    public Search(
             @JsonProperty( SerializationConstants.KEYWORD ) Optional<String> keyword,
             @JsonProperty( SerializationConstants.ENTITY_TYPE_ID ) Optional<UUID> entityType,
             @JsonProperty( SerializationConstants.PROPERTY_TYPE_IDS ) Optional<Set<UUID>> propertyTypes,
