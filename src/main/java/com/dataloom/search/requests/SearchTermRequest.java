@@ -3,13 +3,13 @@ package com.dataloom.search.requests;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SearchDataRequest {
+public class SearchTermRequest {
     
     private final String searchTerm;
     private final int start;
     private final int maxHits;
     
-    public SearchDataRequest(
+    public SearchTermRequest(
             @JsonProperty( SerializationConstants.SEARCH_TERM ) String searchTerm,
             @JsonProperty( SerializationConstants.START ) int start,
             @JsonProperty( SerializationConstants.MAX_HITS ) int maxHits ) {
