@@ -67,6 +67,16 @@ public interface SearchApi {
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body SearchTerm searchTerm );
 
+    /**
+     * Executes a search over the data of a given entity set to find rows matching the specified property type values
+     * 
+     * @param entitySetId The id of the entity set the search will be executed within
+     * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
+     *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
+     *            "searchFields", which is a map from property type ids to search terms to match on those property
+     *            types.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     */
     @POST( BASE + ADVANCED + ENTITY_SET_ID_PATH )
     SearchResult executeAdvancedEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
