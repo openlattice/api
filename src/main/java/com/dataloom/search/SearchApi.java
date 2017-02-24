@@ -71,7 +71,7 @@ public interface SearchApi {
      * Executes a search over the data of a given entity set to find rows matching the specified property type values
      * 
      * @param entitySetId The id of the entity set the search will be executed within
-     * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
+     * @param search A JSON object that contains three parameters: "start", which specifies the hit number to start
      *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
      *            "searchFields", which is a map from property type ids to search terms to match on those property
      *            types.
