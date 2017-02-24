@@ -3,6 +3,7 @@ package com.dataloom.search;
 import java.util.UUID;
 
 import com.dataloom.edm.EntitySet;
+import com.dataloom.search.requests.AdvancedSearch;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
 import com.dataloom.search.requests.SearchTerm;
@@ -64,6 +65,11 @@ public interface SearchApi {
     SearchResult executeEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body SearchTerm searchTerm );
+    
+    @POST( BASE + "/advanced" + ENTITY_SET_ID_PATH )
+    SearchResult executeAdvancedEntitySetDataQuery(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Body AdvancedSearch search );
     
     /**
      * Executes a search over all organizations to find ones that match the given search term
