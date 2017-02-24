@@ -28,6 +28,7 @@ public interface SearchApi {
      */
     String POPULAR            = "/popular";
     String ORGANIZATIONS      = "/organizations";
+    String ADVANCED           = "/advanced";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -65,12 +66,12 @@ public interface SearchApi {
     SearchResult executeEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body SearchTerm searchTerm );
-    
-    @POST( BASE + "/advanced" + ENTITY_SET_ID_PATH )
+
+    @POST( BASE + ADVANCED + ENTITY_SET_ID_PATH )
     SearchResult executeAdvancedEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body AdvancedSearch search );
-    
+
     /**
      * Executes a search over all organizations to find ones that match the given search term
      * 
