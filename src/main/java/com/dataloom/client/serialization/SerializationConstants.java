@@ -96,6 +96,7 @@ public final class SerializationConstants {
     public static final String INCLUDE_FIELD               = "include";
 
     public static final String SEARCH_TERM                 = "searchTerm";
+    public static final String SEARCH_FIELDS               = "searchFields";
     public static final String MAX_HITS                    = "maxHits";
     public static final String START                       = "start";
 
