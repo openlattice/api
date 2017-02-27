@@ -32,7 +32,7 @@ public final class TestDataFactory {
     private static final Permission[]          permissions          = Permission.values();
     private static final Action[]              actions              = Action.values();
     private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
-    private static final Analyzer[] analyzers = Analyzer.values();
+    private static final Analyzer[]            analyzers            = Analyzer.values();
     private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
@@ -87,7 +87,7 @@ public final class TestDataFactory {
                 ImmutableSet.of(),
                 EdmPrimitiveTypeKind.String,
                 Optional.of( r.nextBoolean() ),
-                Optional.of(                 analyzers[ r.nextInt( analyzers.length ) ] ));
+                Optional.of( analyzers[ r.nextInt( analyzers.length ) ] ) );
     }
 
     public static Organization organization() {
@@ -165,8 +165,9 @@ public final class TestDataFactory {
     public static Status status() {
         return new Status(
                 TestDataFactory.aclKey(),
-                TestDataFactory.userPrincipal(),
                 TestDataFactory.permissions(),
+                Optional.of( "Requesting for this object because RandomStringUtils.randomAlphanumeric( 5 )" ),
+                TestDataFactory.userPrincipal(),
                 TestDataFactory.requestStatus() );
     }
 
