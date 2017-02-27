@@ -30,18 +30,22 @@ public interface PrincipalApi {
     /*
      * Fixed paths
      */
-    String USERS        = "/users";
-    String ROLES        = "/roles";
+    String EMAIL        = "/email";
     String RESET        = "/reset";
+    String ROLES        = "/roles";
     String SEARCH       = "/search";
+    String USERS        = "/users";
+
+    String SEARCH_EMAIL = SEARCH + EMAIL;
 
     /*
      * Variable paths
      */
 
-    String USER_ID_PATH      = "/{" + USER_ID + "}";
-    String ROLE_PATH         = "/{" + ROLE + "}";
-    String SEARCH_QUERY_PATH = "/{" + SEARCH_QUERY + "}";
+    String USER_ID_PATH            = "/{" + USER_ID + "}";
+    String ROLE_PATH               = "/{" + ROLE + "}";
+    String SEARCH_QUERY_PATH       = "/{" + SEARCH_QUERY + "}";
+    String EMAIL_SEARCH_QUERY_PATH = "/{" + SEARCH_QUERY + ":.+" + "}";
 
     @GET( BASE + USERS )
     Map<String, Auth0UserBasic> getAllUsers();
@@ -66,4 +70,7 @@ public interface PrincipalApi {
 
     @GET( BASE + USERS + SEARCH + SEARCH_QUERY_PATH )
     Map<String, Auth0UserBasic> searchAllUsers( @Path( SEARCH_QUERY ) String searchQuery );
+
+    @GET( BASE + USERS + SEARCH_EMAIL + EMAIL_SEARCH_QUERY_PATH )
+    Map<String, Auth0UserBasic> searchAllUsersByEmail( @Path( SEARCH_QUERY ) String emailSearchQuery );
 }
