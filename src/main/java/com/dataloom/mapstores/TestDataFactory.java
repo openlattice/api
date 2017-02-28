@@ -32,7 +32,7 @@ public final class TestDataFactory {
     private static final Permission[]          permissions          = Permission.values();
     private static final Action[]              actions              = Action.values();
     private static final RequestStatus[]       requestStatuses      = RequestStatus.values();
-    private static final Analyzer[] analyzers = Analyzer.values();
+    private static final Analyzer[]            analyzers            = Analyzer.values();
     private static final Random                r                    = new Random();
 
     private TestDataFactory() {}
@@ -65,6 +65,10 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ) );
     }
 
+    public static String email() {
+        return RandomStringUtils.randomAlphanumeric( 5 ) + "@" + RandomStringUtils.randomAlphanumeric( 5 ) + ".com";
+    }
+
     public static String name() {
         return RandomStringUtils.randomAlphanumeric( 5 );
     }
@@ -75,7 +79,8 @@ public final class TestDataFactory {
                 UUID.randomUUID(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
-                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
+                Optional.of( ImmutableSet.of( email(), email() ) ) );
     }
 
     public static PropertyType propertyType() {
@@ -87,7 +92,7 @@ public final class TestDataFactory {
                 ImmutableSet.of(),
                 EdmPrimitiveTypeKind.String,
                 Optional.of( r.nextBoolean() ),
-                Optional.of(                 analyzers[ r.nextInt( analyzers.length ) ] ));
+                Optional.of( analyzers[ r.nextInt( analyzers.length ) ] ) );
     }
 
     public static Organization organization() {

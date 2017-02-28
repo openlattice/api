@@ -20,6 +20,7 @@ package com.dataloom.edm;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.authorization.securable.AbstractSecurableObject;
@@ -30,6 +31,7 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -38,6 +40,7 @@ import com.google.common.base.Optional;
 public class EntitySet extends AbstractSecurableObject {
     private final UUID   entityTypeId;
     private final String name;
+    private final Set<String> contacts;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
@@ -53,12 +56,14 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD ) UUID entityTypeId,
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
-            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
+            @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
+        this.contacts = contacts.or( ImmutableSet.of() );
     }
 
     public EntitySet(
@@ -66,16 +71,18 @@ public class EntitySet extends AbstractSecurableObject {
             UUID entityTypeId,
             String name,
             String title,
-            Optional<String> description ) {
-        this( Optional.of( id ), entityTypeId, name, title, description );
+            Optional<String> description,
+            Optional<Set<String>> contacts ) {
+        this( Optional.of( id ), entityTypeId, name, title, description, contacts );
     }
 
     public EntitySet(
             UUID entityTypeId,
             String name,
             String title,
-            Optional<String> description ) {
-        this( Optional.absent(), entityTypeId, name, title, description );
+            Optional<String> description,
+            Optional<Set<String>> contacts ) {
+        this( Optional.absent(), entityTypeId, name, title, description, contacts );
     }
 
     public UUID getEntityTypeId() {
@@ -86,12 +93,17 @@ public class EntitySet extends AbstractSecurableObject {
         return name;
     }
 
+    public Set<String> getContacts() {
+        return contacts;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ( ( entityTypeId == null ) ? 0 : entityTypeId.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
+        result = prime * result + ( ( contacts == null ) ? 0 : contacts.hashCode() );
         return result;
     }
 
@@ -121,12 +133,19 @@ public class EntitySet extends AbstractSecurableObject {
         } else if ( !name.equals( other.name ) ) {
             return false;
         }
+        if ( contacts == null ) {
+            if ( other.contacts != null ) {
+                return false;
+            }
+        } else if ( !contacts.equals( other.contacts ) ) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "EntitySet [entityTypeId=" + entityTypeId + ", name=" + name + ", id=" + id
+        return "EntitySet [entityTypeId=" + entityTypeId + ", name=" + name + ", contacts=" + contacts + ", id=" + id
                 + ", title=" + title + ", description=" + description + "]";
     }
 
