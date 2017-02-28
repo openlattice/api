@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.authorization.paging.AuthorizedObjectsSearchResult;
 import com.dataloom.authorization.securable.SecurableObjectType;
 
 import retrofit2.http.Body;
@@ -21,14 +22,15 @@ public interface AuthorizationsApi {
 
     String OBJECT_TYPE  = "objectType";
     String PERMISSION   = "permission";
-    String PAGING_STATE = "next";
+    String PAGING_TOKEN = "pagingToken";
 
     @POST( BASE )
     Iterable<Authorization> checkAuthorizations( @Body Set<AccessCheck> queries );
 
     @GET( BASE )
-    Iterable<List<UUID>> getAccessibleObjects(
-            @Query( OBJECT_TYPE ) SecurableObjectType type,
-            @Query( PERMISSION ) Permission permission );
+    AuthorizedObjectsSearchResult getAccessibleObjects(
+            @Query( OBJECT_TYPE ) SecurableObjectType objectType,
+            @Query( PERMISSION ) Permission permission,
+            @Query( PAGING_TOKEN ) String pagingToken );
 
 }

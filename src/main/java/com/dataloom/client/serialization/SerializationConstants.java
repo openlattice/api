@@ -107,4 +107,7 @@ public final class SerializationConstants {
 
     public static final String CONTACTS                    = "contacts";
 
+    public static final String PAGING_TOKEN                = "pagingToken";
+    public static final String AUTHORIZED_OBJECTS          = "authorizedObjects";
+
 }
