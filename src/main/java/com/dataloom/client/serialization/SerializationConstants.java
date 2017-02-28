@@ -105,4 +105,6 @@ public final class SerializationConstants {
     public static final String PII_FIELD                   = "piiField";
     public static final String ANALYZER                    = "analyzer";
 
+    public static final String REASON                      = "reason";
+
 }
