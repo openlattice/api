@@ -170,8 +170,9 @@ public final class TestDataFactory {
     public static Status status() {
         return new Status(
                 TestDataFactory.aclKey(),
-                TestDataFactory.userPrincipal(),
                 TestDataFactory.permissions(),
+                Optional.of( "Requesting for this object because RandomStringUtils.randomAlphanumeric( 5 )" ),
+                TestDataFactory.userPrincipal(),
                 TestDataFactory.requestStatus() );
     }
 

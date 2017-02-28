@@ -5,6 +5,7 @@ import com.dataloom.authorization.Principal;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -20,12 +21,22 @@ public class Status extends Request {
     @JsonCreator
     public Status(
             @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
-            @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions,
+            @JsonProperty( SerializationConstants.REASON ) Optional<String> reason,
+            @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.STATUS ) RequestStatus status ) {
-        super( aclKey, permissions );
+        super( aclKey, permissions, reason );
         this.status = status;
         this.principal = principal;
+    }
+
+    public Status(
+            List<UUID> aclKey,
+            EnumSet<Permission> permissions,
+            String reason,
+            Principal principal,
+            RequestStatus status ) {
+        this( aclKey, permissions, Optional.of( reason ), principal, status );
     }
 
     @JsonProperty( SerializationConstants.STATUS )
@@ -75,7 +86,7 @@ public class Status extends Request {
     @Override
     public String toString() {
         return "Status [principal=" + principal + ", status=" + status + ", aclKey=" + aclKey + ", permissions="
-                + permissions + "]";
+                + permissions + ", reason=" + reason + "]";
     }
 
 }

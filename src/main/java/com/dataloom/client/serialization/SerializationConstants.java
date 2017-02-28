@@ -110,4 +110,6 @@ public final class SerializationConstants {
     public static final String PAGING_TOKEN                = "pagingToken";
     public static final String AUTHORIZED_OBJECTS          = "authorizedObjects";
 
+    public static final String REASON                      = "reason";
+
 }
