@@ -80,7 +80,7 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
-                Optional.of( ImmutableSet.of( email(), email() ) ) );
+                ImmutableSet.of( email(), email() ) );
     }
 
     public static PropertyType propertyType() {

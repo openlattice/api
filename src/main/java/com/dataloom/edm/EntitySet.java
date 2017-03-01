@@ -57,13 +57,14 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts) {
+            @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts ) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
+        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
-        this.contacts = contacts.or( ImmutableSet.of() );
+        this.contacts = contacts;
     }
 
     public EntitySet(
@@ -72,7 +73,7 @@ public class EntitySet extends AbstractSecurableObject {
             String name,
             String title,
             Optional<String> description,
-            Optional<Set<String>> contacts ) {
+            Set<String> contacts ) {
         this( Optional.of( id ), entityTypeId, name, title, description, contacts );
     }
 
@@ -81,7 +82,7 @@ public class EntitySet extends AbstractSecurableObject {
             String name,
             String title,
             Optional<String> description,
-            Optional<Set<String>> contacts ) {
+            Set<String> contacts ) {
         this( Optional.absent(), entityTypeId, name, title, description, contacts );
     }
 
