@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
@@ -56,7 +57,7 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         super( id, type, title, description, schemas );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = Sets.newHashSet( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
+        this.properties = new TreeSet<UUID>( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
     }
 
     public EntityType(
