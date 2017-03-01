@@ -6,7 +6,7 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Principal implements Serializable {
+public class Principal implements Comparable<Principal>, Serializable {
     private static final long   serialVersionUID = 3227310509765475747L;
 
     private final PrincipalType type;
@@ -56,6 +56,17 @@ public class Principal implements Serializable {
     @Override
     public String toString() {
         return "Principal [type=" + type + ", id=" + id + "]";
+    }
+
+    @Override
+    public int compareTo( Principal o ) {
+        int result = type.compareTo( o.getType() );
+        
+        if( result == 0){
+            result = id.compareTo( o.getId() );
+        }
+        
+        return result;
     }
 
 }

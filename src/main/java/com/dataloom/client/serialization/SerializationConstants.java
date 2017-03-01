@@ -105,6 +105,11 @@ public final class SerializationConstants {
     public static final String PII_FIELD                   = "piiField";
     public static final String ANALYZER                    = "analyzer";
 
+    public static final String CONTACTS                    = "contacts";
+
+    public static final String PAGING_TOKEN                = "pagingToken";
+    public static final String AUTHORIZED_OBJECTS          = "authorizedObjects";
+
     public static final String REASON                      = "reason";
 
 }

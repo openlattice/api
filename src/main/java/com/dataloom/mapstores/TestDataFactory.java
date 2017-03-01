@@ -65,6 +65,10 @@ public final class TestDataFactory {
                 RandomStringUtils.randomAlphanumeric( 5 ) );
     }
 
+    public static String email() {
+        return RandomStringUtils.randomAlphanumeric( 5 ) + "@" + RandomStringUtils.randomAlphanumeric( 5 ) + ".com";
+    }
+
     public static String name() {
         return RandomStringUtils.randomAlphanumeric( 5 );
     }
@@ -75,7 +79,8 @@ public final class TestDataFactory {
                 UUID.randomUUID(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
-                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
+                ImmutableSet.of( email(), email() ) );
     }
 
     public static PropertyType propertyType() {
