@@ -112,4 +112,5 @@ public final class SerializationConstants {
 
     public static final String REASON                      = "reason";
 
+    public static final String ORGANIZATION_ID                      = "organizationId";
 }
