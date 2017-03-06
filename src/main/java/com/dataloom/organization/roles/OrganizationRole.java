@@ -1,5 +1,6 @@
 package com.dataloom.organization.roles;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.dataloom.authorization.Principal;
@@ -14,6 +15,7 @@ import com.google.common.base.Optional;
 
 /**
  * A role in an organization. Use both organizationId and roleId to specify a role.
+ * 
  * @author Ho Chung Siu
  *
  */
@@ -21,21 +23,23 @@ public class OrganizationRole extends AbstractSecurableObject {
     private UUID      organizationId;
 
     private Principal principal;
+    private RoleKey   roleKey;
 
     @JsonCreator
-    public OrganizationRole( 
-            @JsonProperty( SerializationConstants.ORGANIZATION_ID ) UUID organizationId, 
-            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title, 
+    public OrganizationRole(
+            @JsonProperty( SerializationConstants.ORGANIZATION_ID ) UUID organizationId,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
         this( Optional.absent(), organizationId, title, description );
     }
 
-    public OrganizationRole( Optional<UUID> id, UUID organizationId, String title, Optional<String> description ){
+    public OrganizationRole( Optional<UUID> id, UUID organizationId, String title, Optional<String> description ) {
         super( id, title, description );
         this.organizationId = organizationId;
-        this.principal = new Principal( PrincipalType.ROLE, this.id.toString() );        
+        this.roleKey = new RoleKey( organizationId, this.id );
+        this.principal = new Principal( PrincipalType.ROLE, this.roleKey.toString() );
     }
-    
+
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
     public UUID getOrganizationId() {
         return organizationId;
@@ -44,6 +48,20 @@ public class OrganizationRole extends AbstractSecurableObject {
     @JsonIgnore
     public Principal getPrincipal() {
         return principal;
+    }
+
+    @JsonIgnore
+    public RoleKey getRoleKey() {
+        return roleKey;
+    }
+
+    /**
+     * Convenience method to retrieve acl key for this role
+     * @return
+     */
+    @JsonIgnore
+    public List<UUID> getAclKey() {
+        return roleKey.getAclKey();
     }
 
     @Override
