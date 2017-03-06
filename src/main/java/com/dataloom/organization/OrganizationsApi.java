@@ -1,10 +1,13 @@
 package com.dataloom.organization;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
+import com.dataloom.directory.pojo.Auth0UserBasic;
+import com.dataloom.organization.roles.OrganizationRole;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -39,6 +42,9 @@ public interface OrganizationsApi {
     String TYPE_PATH         = "/{" + TYPE + "}";
     String ROLES             = "/roles";
     String MEMBERS           = "/members";
+    
+    String ROLE_ID           = "roleId";
+    String ROLE_ID_PATH      = "/{" + ROLE_ID + "}";
 
     @GET( BASE )
     Iterable<Organization> getOrganizations();
@@ -138,9 +144,6 @@ public interface OrganizationsApi {
         path = BASE + ID_PATH + PRINCIPALS )
     Void removePrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
 
-    @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
-    Set<Principal> getRoles( @Path( ID ) UUID organizationId );
-
     @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
     Set<Principal> getMembers( @Path( ID ) UUID organizationId );
 
@@ -171,5 +174,33 @@ public interface OrganizationsApi {
             @Path( ID ) UUID organizationId,
             @Path( TYPE ) PrincipalType principalType,
             @Path( PRINCIPAL_ID ) String principalId );
+    
+    // Endpoints about roles
+    @POST( BASE + ROLES )
+    UUID createRole( @Body OrganizationRole role );
+
+    @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
+    Iterable<OrganizationRole> getRoles( @Path( ID ) UUID organizationId );
+
+    @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
+    OrganizationRole getRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
+
+    @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + TITLE )
+    Void updateTitle( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String title );
+
+    @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + DESCRIPTION )
+    Void updateDescription( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String description );
+
+    @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
+    Void deleteRole( @Path( ID )UUID organizationId, @Path( ROLE_ID ) UUID roleId );    
+
+    @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS )
+    Iterable<Auth0UserBasic> getAllUsersOfRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
+
+    @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + PRINCIPAL_ID_PATH )
+    Void addRoleToUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( PRINCIPAL_ID ) String userId );
+
+    @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + PRINCIPAL_ID_PATH )
+    Void removeRoleFromUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( PRINCIPAL_ID ) String userId );
 
 }
