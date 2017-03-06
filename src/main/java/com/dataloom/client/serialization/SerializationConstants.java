@@ -112,4 +112,6 @@ public final class SerializationConstants {
 
     public static final String REASON                      = "reason";
 
+    public static final String FLAGS_FIELD                 = "flags";
+
 }
