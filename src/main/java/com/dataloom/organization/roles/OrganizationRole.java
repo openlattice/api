@@ -12,8 +12,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
+/**
+ * A role in an organization. Use both organizationId and roleId to specify a role.
+ * @author Ho Chung Siu
+ *
+ */
 public class OrganizationRole extends AbstractSecurableObject {
     private UUID      organizationId;
+
     private Principal principal;
 
     @JsonCreator
@@ -43,15 +49,5 @@ public class OrganizationRole extends AbstractSecurableObject {
     @Override
     public SecurableObjectType getCategory() {
         return SecurableObjectType.OrganizationRole;
-    }
-
-    @JsonIgnore
-    public String getRoleIdAsString(){
-        return id.toString();
-    }
-
-    @JsonIgnore
-    public static UUID getRoleIdFromString( String str ){
-        return UUID.fromString( str );
     }
 }
