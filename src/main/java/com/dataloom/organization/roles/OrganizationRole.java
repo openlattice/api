@@ -27,17 +27,14 @@ public class OrganizationRole extends AbstractSecurableObject {
 
     @JsonCreator
     public OrganizationRole(
+            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.ORGANIZATION_ID ) UUID organizationId,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
-        this( Optional.absent(), organizationId, title, description );
-    }
-
-    public OrganizationRole( Optional<UUID> id, UUID organizationId, String title, Optional<String> description ) {
         super( id, title, description );
         this.organizationId = organizationId;
         this.roleKey = new RoleKey( organizationId, this.id );
-        this.principal = new Principal( PrincipalType.ROLE, this.roleKey.toString() );
+        this.principal = new Principal( PrincipalType.ROLE, getStringRepresentation( organizationId, title ) );
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
@@ -67,5 +64,14 @@ public class OrganizationRole extends AbstractSecurableObject {
     @Override
     public SecurableObjectType getCategory() {
         return SecurableObjectType.OrganizationRole;
+    }
+    
+    @Override
+    public String toString() {
+        return getStringRepresentation( organizationId, title );
+    }
+    
+    public static String getStringRepresentation( UUID organizationId, String title ){
+        return organizationId + "|" + title;
     }
 }

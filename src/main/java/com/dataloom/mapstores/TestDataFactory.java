@@ -11,6 +11,7 @@ import com.dataloom.edm.type.Analyzer;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
+import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
 import com.dataloom.requests.Status;
@@ -194,5 +195,9 @@ public final class TestDataFactory {
 
     public static EntityKey entityKey() {
         return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ) );
+    }
+    
+    public static RoleKey roleKey(){
+        return new RoleKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 }

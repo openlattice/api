@@ -180,16 +180,16 @@ public interface OrganizationsApi {
     UUID createRole( @Body OrganizationRole role );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
-    Iterable<OrganizationRole> getRoles( @Path( ID ) UUID organizationId );
+    Iterable<Principal> getRoles( @Path( ID ) UUID organizationId );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
     OrganizationRole getRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
 
     @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + TITLE )
-    Void updateTitle( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String title );
+    Void updateRoleTitle( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String title );
 
     @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + DESCRIPTION )
-    Void updateDescription( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String description );
+    Void updateRoleDescription( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String description );
 
     @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
     Void deleteRole( @Path( ID )UUID organizationId, @Path( ROLE_ID ) UUID roleId );    

@@ -27,9 +27,4 @@ public class RoleKey {
     public List<UUID> getAclKey() {
         return aclKey;
     }
-
-    @Override
-    public String toString() {
-        return organizationId + "|" + roleId;
-    }
 }
