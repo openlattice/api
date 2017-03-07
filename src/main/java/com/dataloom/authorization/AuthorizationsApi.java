@@ -27,6 +27,13 @@ public interface AuthorizationsApi {
     @POST( BASE )
     Iterable<Authorization> checkAuthorizations( @Body Set<AccessCheck> queries );
 
+    /**
+     * Returns paged results for all authorized objects of specified objectType, that the current user has specified permission for. 
+     * @param objectType Required field. Specifying the Securable Object Type that user wants to search for.
+     * @param permission Required field. Specifying the permission the user must have for the accessible objects.
+     * @param pagingToken Unrequired field. One may use the paging token from previous search result to get to the next page of results.
+     * @return
+     */
     @GET( BASE )
     AuthorizedObjectsSearchResult getAccessibleObjects(
             @Query( OBJECT_TYPE ) SecurableObjectType objectType,
