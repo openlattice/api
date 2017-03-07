@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
@@ -40,36 +41,39 @@ public interface EdmApi {
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
-    String ID               = "id";
-    String ENTITY_TYPE_ID   = "entityTypeId";
-    String PROPERTY_TYPE_ID = "propertyTypeId";
-    String NAME             = "name";
-    String NAMESPACE        = "namespace";
-    String NAMESPACES       = "namespaces";
-    String ENTITY_SETS      = "entitySets";
-    String ENTITY_TYPES     = "entityTypes";
-    String PROPERTY_TYPES   = "propertyTypes";
-    String SCHEMA           = "schema";
-    String SCHEMAS          = "schemas";
-    String FILE_TYPE        = "fileType";
-    String TOKEN            = "token";
+    String ID                      = "id";
+    String ENTITY_TYPE_ID          = "entityTypeId";
+    String PROPERTY_TYPE_ID        = "propertyTypeId";
+    String NAME                    = "name";
+    String NAMESPACE               = "namespace";
+    String NAMESPACES              = "namespaces";
+    String ENTITY_SETS             = "entitySets";
+    String ENTITY_TYPES            = "entityTypes";
+    String PROPERTY_TYPES          = "propertyTypes";
+    String SCHEMA                  = "schema";
+    String SCHEMAS                 = "schemas";
+    String FILE_TYPE               = "fileType";
+    String TOKEN                   = "token";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
      * /entity/type/{namespace}/{name} /entity/set/{namespace}/{name} /schema/{namespace}/{name}
      * /property/{namespace}/{name}
      */
-    String IDS_PATH              = "/ids";
-    String SCHEMA_PATH           = "/schema";
-    String ENTITY_SETS_PATH      = "/entity/set";
-    String ENTITY_TYPE_PATH      = "/entity/type";
-    String PROPERTY_TYPE_PATH    = "/property/type";
-    String COMPLEX_TYPE_PATH     = "/complex/type";
-    String NAMESPACE_PATH        = "/{" + NAMESPACE + "}";
-    String NAME_PATH             = "/{" + NAME + "}";
-    String ID_PATH               = "/{" + ID + "}";
-    String ENTITY_TYPE_ID_PATH   = "/{" + ENTITY_TYPE_ID + "}";
-    String PROPERTY_TYPE_ID_PATH = "/{" + PROPERTY_TYPE_ID + "}";
+
+    String IDS_PATH                = "/ids";
+    String SCHEMA_PATH             = "/schema";
+    String ENUM_TYPE_PATH          = "/enum/type";
+    String ENTITY_SETS_PATH        = "/entity/set";
+    String ENTITY_TYPE_PATH        = "/entity/type";
+    String PROPERTY_TYPE_PATH      = "/property/type";
+    String COMPLEX_TYPE_PATH       = "/complex/type";
+
+    String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
+    String NAME_PATH               = "/{" + NAME + "}";
+    String ID_PATH                 = "/{" + ID + "}";
+    String ENTITY_TYPE_ID_PATH     = "/{" + ENTITY_TYPE_ID + "}";
+    String PROPERTY_TYPE_ID_PATH   = "/{" + PROPERTY_TYPE_ID + "}";
 
     String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
     String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
@@ -102,16 +106,28 @@ public interface EdmApi {
     @DELETE( PROPERTY_TYPE_BASE_PATH + ID_PATH )
     Void deletePropertyType( @Path( ID ) UUID propertyTypeId );
 
-    @GET( ENTITY_TYPE_BASE_PATH + ID_PATH )
-    EntityType getEntityType( @Path( ID ) UUID entityTypeId );
+    @GET( BASE + ENUM_TYPE_PATH )
+    Iterable<EnumType> getEnumTypes();
 
-    @GET( ENTITY_TYPE_BASE_PATH )
+    @POST( BASE + ENUM_TYPE_PATH )
+    UUID createEnumType( @Body EnumType enumType );
+
+    @GET( BASE + ENUM_TYPE_PATH + ID_PATH )
+    EnumType getEnumType( @Path( ID ) UUID complexTypeId );
+
+    @DELETE( BASE + ENUM_TYPE_PATH + ID_PATH )
+    Void deleteEnumType( @Path( ID ) UUID enumTypeId );
+
+    @GET( BASE + COMPLEX_TYPE_PATH )
     Iterable<ComplexType> getComplexTypes();
 
     @POST( BASE + COMPLEX_TYPE_PATH )
     UUID createComplexType( @Body ComplexType complexType );
 
-    @DELETE( PROPERTY_TYPE_BASE_PATH + ID_PATH )
+    @GET( BASE + COMPLEX_TYPE_PATH + ID_PATH )
+    ComplexType getComplexType( @Path( ID ) UUID complexTypeId );
+
+    @DELETE( BASE + COMPLEX_TYPE_PATH + ID_PATH )
     Void deleteComplexType( @Path( ID ) UUID complexTypeId );
 
     @GET( ENTITY_TYPE_BASE_PATH )
@@ -124,6 +140,9 @@ public interface EdmApi {
      */
     @POST( ENTITY_TYPE_BASE_PATH )
     UUID createEntityType( @Body EntityType entityType );
+
+    @GET( ENTITY_TYPE_BASE_PATH + ID_PATH )
+    EntityType getEntityType( @Path( ID ) UUID entityTypeId );
 
     @DELETE( ENTITY_TYPE_BASE_PATH + ID_PATH )
     Void deleteEntityType( @Path( ID ) UUID entityTypeId );
@@ -162,7 +181,7 @@ public interface EdmApi {
      * Creates an empty schema, if it doesn't exist. If schema exists then no action is taken.
      *
      * @param namespace The namespace for the schema.
-     * @param name      The name for the schema.
+     * @param name The name for the schema.
      */
     @PUT( SCHEMA_BASE_PATH + NAMESPACE_PATH + NAME_PATH )
     Void createEmptySchema( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
