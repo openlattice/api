@@ -39,7 +39,7 @@ import com.google.common.collect.ImmutableSet;
  */
 public class EntitySet extends AbstractSecurableObject {
     private final UUID   entityTypeId;
-    private final String name;
+    private String name;
     private Set<String> contacts;
 
     /**
@@ -100,6 +100,10 @@ public class EntitySet extends AbstractSecurableObject {
     @JsonProperty( SerializationConstants.CONTACTS )
     public Set<String> getContacts() {
         return contacts;
+    }
+    
+    public void setName( String name ){
+        this.name = name;
     }
     
     public void setContacts( Set<String> contacts ){
