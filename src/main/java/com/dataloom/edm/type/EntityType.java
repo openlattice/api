@@ -20,8 +20,8 @@ package com.dataloom.edm.type;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -30,6 +30,7 @@ import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableTyp
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -39,10 +40,10 @@ import com.google.common.base.Preconditions;
  *
  */
 public class EntityType extends AbstractSchemaAssociatedSecurableType {
-    private final Set<UUID>   key;
-    private final Set<UUID>   properties;
-
-    private transient int     h                = 0;
+    private final LinkedHashSet<UUID> key;
+    private final LinkedHashSet<UUID> properties;
+    private final Optional<UUID>      baseType;
+    private transient int             h = 0;
 
     @JsonCreator
     public EntityType(
@@ -51,12 +52,14 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
-            @JsonProperty( SerializationConstants.KEY_FIELD ) Set<UUID> key,
-            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<UUID> properties ) {
+            @JsonProperty( SerializationConstants.KEY_FIELD ) LinkedHashSet<UUID> key,
+            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
+            @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType ) {
         super( id, type, title, description, schemas );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = new TreeSet<UUID>( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
+        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        this.baseType = baseType;
     }
 
     public EntityType(
@@ -65,9 +68,10 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             String title,
             Optional<String> description,
             Set<FullQualifiedName> schemas,
-            Set<UUID> key,
-            Set<UUID> properties ) {
-        this( Optional.of( id ), type, title, description, schemas, key, properties );
+            LinkedHashSet<UUID> key,
+            LinkedHashSet<UUID> properties,
+            Optional<UUID> baseType ) {
+        this( Optional.of( id ), type, title, description, schemas, key, properties, baseType );
     }
 
     public EntityType(
@@ -75,9 +79,10 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             String title,
             String description,
             Set<FullQualifiedName> schemas,
-            Set<UUID> key,
-            Set<UUID> properties ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties );
+            LinkedHashSet<UUID> key,
+            LinkedHashSet<UUID> properties,
+            Optional<UUID> baseType ) {
+        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, baseType );
     }
 
     // TODO: It seems the objects do not allow property types from the different schemas.
@@ -91,6 +96,12 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         return Collections.unmodifiableSet( properties );
     }
 
+    @JsonProperty( SerializationConstants.BASE_TYPE_FIELD )
+    public Optional<UUID> getBaseType() {
+        return baseType;
+    }
+
+    @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.EntityType;
     }
@@ -108,6 +119,7 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         if ( h == 0 ) {
             final int prime = 31;
             int result = super.hashCode();
+            result = prime * result + ( ( baseType == null ) ? 0 : baseType.hashCode() );
             result = prime * result + ( ( key == null ) ? 0 : key.hashCode() );
             result = prime * result + ( ( properties == null ) ? 0 : properties.hashCode() );
             h = result;
@@ -127,6 +139,13 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             return false;
         }
         EntityType other = (EntityType) obj;
+        if ( baseType == null ) {
+            if ( other.baseType != null ) {
+                return false;
+            }
+        } else if ( !baseType.equals( other.baseType ) ) {
+            return false;
+        }
         if ( key == null ) {
             if ( other.key != null ) {
                 return false;
@@ -142,5 +161,11 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "EntityType [key=" + key + ", properties=" + properties + ", baseType=" + baseType + ", schemas="
+                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description + "]";
     }
 }

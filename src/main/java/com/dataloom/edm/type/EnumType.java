@@ -1,6 +1,6 @@
 package com.dataloom.edm.type;
 
-import java.util.Base64;
+import java.util.EnumSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -19,10 +19,16 @@ import com.google.common.base.Preconditions;
  *
  */
 public class EnumType extends PropertyType {
+    private static final EnumSet<EdmPrimitiveTypeKind> ALLOWED_UNDERLYING_TYPES = EnumSet.of(
+            EdmPrimitiveTypeKind.Byte,
+            EdmPrimitiveTypeKind.SByte,
+            EdmPrimitiveTypeKind.Int16,
+            EdmPrimitiveTypeKind.Int32,
+            EdmPrimitiveTypeKind.Int64 );
 
-    private final LinkedHashSet<?> members;
-    private final boolean          flags;
-    
+    private final LinkedHashSet<String>                members;
+    private final boolean                              flags;
+
     @JsonCreator
     public EnumType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
@@ -30,8 +36,8 @@ public class EnumType extends PropertyType {
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
-            @JsonProperty( SerializationConstants.DATATYPE_FIELD ) EdmPrimitiveTypeKind datatype,
-            @JsonProperty( SerializationConstants.MEMBERS_FIELD ) LinkedHashSet<?> members,
+            @JsonProperty( SerializationConstants.DATATYPE_FIELD ) Optional<EdmPrimitiveTypeKind> datatype,
+            @JsonProperty( SerializationConstants.MEMBERS_FIELD ) LinkedHashSet<String> members,
             @JsonProperty( SerializationConstants.FLAGS_FIELD ) boolean flags,
             @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> piiField,
             @JsonProperty( SerializationConstants.ANALYZER ) Optional<Analyzer> analyzer ) {
@@ -41,19 +47,66 @@ public class EnumType extends PropertyType {
                 title,
                 description,
                 schemas,
-                datatype,
+                datatype.or( EdmPrimitiveTypeKind.Int32 ),
                 piiField,
                 analyzer );
+        Preconditions.checkState( ALLOWED_UNDERLYING_TYPES.contains( this.datatype ),
+                "%s is not one of %s",
+                this.datatype,
+                ALLOWED_UNDERLYING_TYPES );
         this.members = Preconditions.checkNotNull( members, "Members cannot be null" );
         this.flags = flags;
     }
 
-    public Set<?> getMembers() {
+    @JsonProperty( SerializationConstants.MEMBERS_FIELD )
+    public LinkedHashSet<String> getMembers() {
         return members;
     }
 
+    @JsonProperty( SerializationConstants.FLAGS_FIELD )
     public boolean isFlags() {
         return flags;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ( flags ? 1231 : 1237 );
+        result = prime * result + ( ( members == null ) ? 0 : members.hashCode() );
+        return result;
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        if ( this == obj ) {
+            return true;
+        }
+        if ( !super.equals( obj ) ) {
+            return false;
+        }
+        if ( !( obj instanceof EnumType ) ) {
+            return false;
+        }
+        EnumType other = (EnumType) obj;
+        if ( flags != other.flags ) {
+            return false;
+        }
+        if ( members == null ) {
+            if ( other.members != null ) {
+                return false;
+            }
+        } else if ( !members.equals( other.members ) ) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "EnumType [members=" + members + ", flags=" + flags + ", datatype=" + datatype + ", piiField=" + piiField
+                + ", analyzer=" + analyzer + ", schemas=" + schemas + ", type=" + type + ", id=" + id + ", title="
+                + title + ", description=" + description + "]";
     }
 
 }

@@ -19,6 +19,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
@@ -46,9 +47,10 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityType( PropertyType... keys ) {
-        Set<UUID> k = keys.length > 0
-                ? Arrays.asList( keys ).stream().map( PropertyType::getId ).collect( Collectors.toSet() )
-                : ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() );
+        LinkedHashSet<UUID> k = keys.length > 0
+                ? Arrays.asList( keys ).stream().map( PropertyType::getId )
+                        .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
+                : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
         return new EntityType(
                 UUID.randomUUID(),
                 fqn(),
@@ -56,7 +58,8 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
                 k,
-                ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
+                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                Optional.of( UUID.randomUUID() ) );
     }
 
     public static FullQualifiedName fqn() {
