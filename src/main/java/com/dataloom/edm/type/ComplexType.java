@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
@@ -15,8 +16,9 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
 public class ComplexType extends AbstractSchemaAssociatedSecurableType {
-    private final Set<UUID>   properties;
-    
+    private final Set<UUID> properties;
+    private final UUID      parentType;
+
     @JsonCreator
     public ComplexType(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
@@ -24,9 +26,11 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
-            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<UUID> properties ) {
+            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) TreeSet<UUID> properties,
+            @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD ) UUID parentType ) {
         super( id, type, title, description, schemas );
-        this.properties = new TreeSet<UUID>( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
+        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        this.parentType = parentType;
     }
 
     public ComplexType(
@@ -36,8 +40,9 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             Set<UUID> key,
-            Set<UUID> properties ) {
-        this( Optional.of( id ), type, title, description, schemas, properties );
+            Set<UUID> properties
+            UUID parentType) {
+        this( Optional.of( id ), type, title, description, schemas, properties , parentType );
     }
 
     public ComplexType(
@@ -46,18 +51,24 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             String description,
             Set<FullQualifiedName> schemas,
             Set<UUID> key,
-            Set<UUID> properties ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, properties );
+            Set<UUID> properties, ) {
+        this( Optional.absent(), type, title, Optional.of( description ), schemas, properties, parentType );
     }
-    
-    @Override
-    public SecurableObjectType getCategory() {
-        return SecurableObjectType.COMPLEX_TYPE;
+
+    @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD )
+    public UUID getParentType() {
+        return parentType;
     }
 
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     public Set<UUID> getProperties() {
         return properties;
+    }
+
+    @Override
+    @JsonIgnore
+    public SecurableObjectType getCategory() {
+        return SecurableObjectType.COMPLEX_TYPE;
     }
 
 }
