@@ -18,9 +18,11 @@
 package com.dataloom.authorization.securable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.client.serialization.SerializationConstants;
@@ -48,7 +50,10 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
             String title,
             Optional<String> description ) {
         super( id, title, description );
-        this.type = checkNotNull( type );
+        checkNotNull( type, "Type cannot be null." );
+        checkArgument( StringUtils.isNotBlank( type.getNamespace() ), "Namespace of type is missing." );
+        checkArgument( StringUtils.isNotBlank( type.getName() ), "Name of type is missing." );
+        this.type = type;
     }
 
     public void rename( FullQualifiedName newType ) {

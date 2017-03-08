@@ -55,9 +55,12 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.KEY_FIELD ) Set<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<UUID> properties ) {
         super( id, type, title, description, schemas );
+        Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
-        this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = new TreeSet<UUID>( Preconditions.checkNotNull( properties, "Entity set properties cannot be null" ) );
+        this.key = key;
+        Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        Preconditions.checkArgument( properties.containsAll( key ), "Properties must include all the key property types" );
+        this.properties = new TreeSet<UUID>( properties );
     }
 
     public EntityType(
