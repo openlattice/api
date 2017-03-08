@@ -68,6 +68,7 @@ public interface EdmApi {
     String ENTITY_TYPE_PATH        = "/entity/type";
     String PROPERTY_TYPE_PATH      = "/property/type";
     String COMPLEX_TYPE_PATH       = "/complex/type";
+    String HIERARCHY_PATH          = "/hierarchy";
 
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
     String NAME_PATH               = "/{" + NAME + "}";
@@ -113,7 +114,7 @@ public interface EdmApi {
     UUID createEnumType( @Body EnumType enumType );
 
     @GET( BASE + ENUM_TYPE_PATH + ID_PATH )
-    EnumType getEnumType( @Path( ID ) UUID complexTypeId );
+    EnumType getEnumType( @Path( ID ) UUID enumTypeId );
 
     @DELETE( BASE + ENUM_TYPE_PATH + ID_PATH )
     Void deleteEnumType( @Path( ID ) UUID enumTypeId );
@@ -126,6 +127,9 @@ public interface EdmApi {
 
     @GET( BASE + COMPLEX_TYPE_PATH + ID_PATH )
     ComplexType getComplexType( @Path( ID ) UUID complexTypeId );
+
+    @GET( BASE + COMPLEX_TYPE_PATH + ID_PATH + HIERARCHY_PATH )
+    Set<ComplexType> getComplexTypeHierarchy( @Path( ID ) UUID complexTypeId );
 
     @DELETE( BASE + COMPLEX_TYPE_PATH + ID_PATH )
     Void deleteComplexType( @Path( ID ) UUID complexTypeId );
@@ -143,6 +147,9 @@ public interface EdmApi {
 
     @GET( ENTITY_TYPE_BASE_PATH + ID_PATH )
     EntityType getEntityType( @Path( ID ) UUID entityTypeId );
+
+    @GET( ENTITY_TYPE_BASE_PATH + ID_PATH + HIERARCHY_PATH )
+    Set<EntityType> getEntityTypeHierarchy( @Path( ID ) UUID entityTypeId );
 
     @DELETE( ENTITY_TYPE_BASE_PATH + ID_PATH )
     Void deleteEntityType( @Path( ID ) UUID entityTypeId );
