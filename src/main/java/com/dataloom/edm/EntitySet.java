@@ -40,8 +40,8 @@ import com.google.common.collect.Sets;
  */
 public class EntitySet extends AbstractSecurableObject {
     private final UUID   entityTypeId;
-    private final String name;
-    private final Set<String> contacts;
+    private String name;
+    private Set<String> contacts;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
@@ -88,16 +88,27 @@ public class EntitySet extends AbstractSecurableObject {
         this( Optional.absent(), entityTypeId, name, title, description, contacts );
     }
 
+    @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD )
     public UUID getEntityTypeId() {
         return entityTypeId;
     }
 
+    @JsonProperty( SerializationConstants.NAME_FIELD )
     public String getName() {
         return name;
     }
 
+    @JsonProperty( SerializationConstants.CONTACTS )
     public Set<String> getContacts() {
         return contacts;
+    }
+    
+    public void setName( String name ){
+        this.name = name;
+    }
+    
+    public void setContacts( Set<String> contacts ){
+        this.contacts = contacts;
     }
     
     @Override
