@@ -39,9 +39,8 @@ import com.google.common.base.Preconditions;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class EntityType extends AbstractSchemaAssociatedSecurableType {
+public class EntityType extends ComplexType {
     private final LinkedHashSet<UUID> key;
-    private final LinkedHashSet<UUID> properties;
     private final Optional<UUID>      baseType;
     private transient int             h = 0;
 
@@ -55,10 +54,9 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.KEY_FIELD ) LinkedHashSet<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
             @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType ) {
-        super( id, type, title, description, schemas );
-        Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
+        super( id, type, title, description, schemas, properties, baseType );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        Preconditions.checkArgument( !this.key.isEmpty(), "Key properties cannot be empty" );
         this.baseType = baseType;
     }
 
@@ -91,11 +89,6 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         return Collections.unmodifiableSet( key );
     }
 
-    @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
-    public Set<UUID> getProperties() {
-        return Collections.unmodifiableSet( properties );
-    }
-
     @JsonProperty( SerializationConstants.BASE_TYPE_FIELD )
     public Optional<UUID> getBaseType() {
         return baseType;
@@ -106,66 +99,31 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         return SecurableObjectType.EntityType;
     }
 
-    public void addPropertyTypes( Set<UUID> propertyTypeIds ) {
-        properties.addAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
-    }
-
-    public void removePropertyTypes( Set<UUID> propertyTypeIds ) {
-        properties.removeAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
-    }
-
-    @Override
-    public int hashCode() {
-        if ( h == 0 ) {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ( ( baseType == null ) ? 0 : baseType.hashCode() );
-            result = prime * result + ( ( key == null ) ? 0 : key.hashCode() );
-            result = prime * result + ( ( properties == null ) ? 0 : properties.hashCode() );
-            h = result;
-        }
-        return h;
-    }
-
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
+    @Override public boolean equals( Object o ) {
+        if ( this == o )
             return true;
-        }
-        if ( !super.equals( obj ) ) {
+        if ( o == null || getClass() != o.getClass() )
             return false;
-        }
-        if ( !( obj instanceof EntityType ) ) {
+        if ( !super.equals( o ) )
             return false;
-        }
-        EntityType other = (EntityType) obj;
-        if ( baseType == null ) {
-            if ( other.baseType != null ) {
-                return false;
-            }
-        } else if ( !baseType.equals( other.baseType ) ) {
+
+        EntityType that = (EntityType) o;
+
+        if ( !key.equals( that.key ) )
             return false;
-        }
-        if ( key == null ) {
-            if ( other.key != null ) {
-                return false;
-            }
-        } else if ( !key.equals( other.key ) ) {
-            return false;
-        }
-        if ( properties == null ) {
-            if ( other.properties != null ) {
-                return false;
-            }
-        } else if ( !properties.equals( other.properties ) ) {
-            return false;
-        }
-        return true;
+        return baseType.equals( that.baseType );
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + key.hashCode();
+        result = 31 * result + baseType.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
-        return "EntityType [key=" + key + ", properties=" + properties + ", baseType=" + baseType + ", schemas="
+        return "EntityType [key=" + key + ", properties=" + getProperties() + ", baseType=" + baseType + ", schemas="
                 + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description + "]";
     }
 }

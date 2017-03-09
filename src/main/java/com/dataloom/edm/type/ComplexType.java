@@ -1,5 +1,6 @@
 package com.dataloom.edm.type;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -15,10 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class ComplexType extends AbstractSchemaAssociatedSecurableType {
-    private final Set<UUID>      properties;
-    private final Optional<UUID> baseType;
-    private transient int        h = 0;
+    private final LinkedHashSet<UUID> properties;
+    private final Optional<UUID>      baseType;
+    private transient int h = 0;
 
     @JsonCreator
     public ComplexType(
@@ -30,7 +33,7 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
             @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD ) Optional<UUID> baseType ) {
         super( id, type, title, description, schemas );
-        this.properties = Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        this.properties = checkNotNull( properties, "Entity set properties cannot be null" );
         this.baseType = baseType;
     }
 
@@ -62,7 +65,15 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
 
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
     public Set<UUID> getProperties() {
-        return properties;
+        return Collections.unmodifiableSet( properties );
+    }
+
+    public void addPropertyTypes( Set<UUID> propertyTypeIds ) {
+        properties.addAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
+    }
+
+    public void removePropertyTypes( Set<UUID> propertyTypeIds ) {
+        properties.removeAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
     }
 
     @Override

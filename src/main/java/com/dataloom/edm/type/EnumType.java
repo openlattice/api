@@ -1,9 +1,6 @@
 package com.dataloom.edm.type;
 
-import java.util.EnumSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -16,7 +13,6 @@ import com.google.common.base.Preconditions;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public class EnumType extends PropertyType {
     private static final EnumSet<EdmPrimitiveTypeKind> ALLOWED_UNDERLYING_TYPES = EnumSet.of(
@@ -26,8 +22,8 @@ public class EnumType extends PropertyType {
             EdmPrimitiveTypeKind.Int32,
             EdmPrimitiveTypeKind.Int64 );
 
-    private final LinkedHashSet<String>                members;
-    private final boolean                              flags;
+    private final LinkedHashSet<String> members;
+    private final boolean               flags;
 
     @JsonCreator
     public EnumType(
@@ -35,9 +31,9 @@ public class EnumType extends PropertyType {
             @JsonProperty( SerializationConstants.TYPE_FIELD ) FullQualifiedName fqn,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
+            @JsonProperty( SerializationConstants.MEMBERS_FIELD ) LinkedHashSet<String> members,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.DATATYPE_FIELD ) Optional<EdmPrimitiveTypeKind> datatype,
-            @JsonProperty( SerializationConstants.MEMBERS_FIELD ) LinkedHashSet<String> members,
             @JsonProperty( SerializationConstants.FLAGS_FIELD ) boolean flags,
             @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> piiField,
             @JsonProperty( SerializationConstants.ANALYZER ) Optional<Analyzer> analyzer ) {
@@ -59,8 +55,8 @@ public class EnumType extends PropertyType {
     }
 
     @JsonProperty( SerializationConstants.MEMBERS_FIELD )
-    public LinkedHashSet<String> getMembers() {
-        return members;
+    public Set<String> getMembers() {
+        return Collections.unmodifiableSet( members );
     }
 
     @JsonProperty( SerializationConstants.FLAGS_FIELD )
