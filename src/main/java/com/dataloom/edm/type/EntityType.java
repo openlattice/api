@@ -37,12 +37,11 @@ import com.google.common.base.Preconditions;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public class EntityType extends ComplexType {
     private final LinkedHashSet<UUID> key;
     private final Optional<UUID>      baseType;
-    private transient int             h = 0;
+    private transient int h = 0;
 
     @JsonCreator
     public EntityType(
@@ -115,10 +114,13 @@ public class EntityType extends ComplexType {
     }
 
     @Override public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + key.hashCode();
-        result = 31 * result + baseType.hashCode();
-        return result;
+        if ( h == 0 ) {
+            int result = super.hashCode();
+            result = 31 * result + key.hashCode();
+            result = 31 * result + baseType.hashCode();
+            h = result;
+        }
+        return h;
     }
 
     @Override
