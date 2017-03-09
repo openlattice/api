@@ -17,21 +17,26 @@ public interface SearchApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE            = "/datastore";
-    String CONTROLLER         = "/search";
-    String BASE               = SERVICE + CONTROLLER;
-    String ENTITY_SET_ID      = "entitySetId";
-    String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
+    String SERVICE               = "/datastore";
+    String CONTROLLER            = "/search";
+    String BASE                  = SERVICE + CONTROLLER;
+    String ENTITY_SET_ID         = "entitySetId";
+    String NUM_RESULTS           = "numResults";
+    String ENTITY_SET_ID_PATH    = "/{" + ENTITY_SET_ID + "}";
+    String NUM_RESULTS_PATH      = "/{" + NUM_RESULTS + "}";
 
     /*
      * Normal params
      */
-    String POPULAR            = "/popular";
-    String ORGANIZATIONS      = "/organizations";
-    String ADVANCED           = "/advanced";
-    String KEYWORD            = "kw";
-    String ENTITY_TYPE_ID     = "eid";
-    String PROPERTY_TYPE_ID   = "pid";
+    String POPULAR               = "/popular";
+    String ORGANIZATIONS         = "/organizations";
+    String ADVANCED              = "/advanced";
+    String ANALYSIS              = "/analysis";
+    String KEYWORD               = "kw";
+    String ENTITY_TYPE_ID        = "eid";
+    String PROPERTY_TYPE_ID      = "pid";
+
+    String PROPERTY_TYPE_ID_PATH = "/{" + PROPERTY_TYPE_ID + "}";
 
     /**
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
@@ -92,5 +97,11 @@ public interface SearchApi {
      */
     @POST( BASE + ORGANIZATIONS )
     SearchResult executeOrganizationSearch( @Body SearchTerm searchTerm );
+
+    @GET( BASE + ANALYSIS + ENTITY_SET_ID_PATH + PROPERTY_TYPE_ID_PATH + NUM_RESULTS_PATH )
+    void getTopUtilizers(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId,
+            @Path( NUM_RESULTS ) int numResults );
 
 }
