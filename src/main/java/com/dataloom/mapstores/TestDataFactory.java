@@ -57,7 +57,8 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
                 k,
-                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                Sets.newLinkedHashSet( Sets
+                        .union( k, ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ) ),
                 Optional.of( UUID.randomUUID() ) );
     }
 

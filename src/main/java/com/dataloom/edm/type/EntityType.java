@@ -55,7 +55,10 @@ public class EntityType extends ComplexType {
             @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType ) {
         super( id, type, title, description, schemas, properties, baseType );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        Preconditions.checkArgument( !this.key.isEmpty(), "Key properties cannot be empty" );
+        Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
+        Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
+        Preconditions
+                .checkArgument( properties.containsAll( key ), "Properties must include all the key property types" );
         this.baseType = baseType;
     }
 

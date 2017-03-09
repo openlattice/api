@@ -61,7 +61,6 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts ) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
-        checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         // Temporary
 //        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
