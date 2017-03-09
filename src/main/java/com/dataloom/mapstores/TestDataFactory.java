@@ -7,9 +7,7 @@ import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.data.EntityKey;
 import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
-import com.dataloom.edm.type.Analyzer;
-import com.dataloom.edm.type.EntityType;
-import com.dataloom.edm.type.PropertyType;
+import com.dataloom.edm.type.*;
 import com.dataloom.organization.Organization;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
@@ -36,7 +34,8 @@ public final class TestDataFactory {
     private static final Analyzer[]            analyzers            = Analyzer.values();
     private static final Random                r                    = new Random();
 
-    private TestDataFactory() {}
+    private TestDataFactory() {
+    }
 
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
@@ -47,9 +46,10 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityType( PropertyType... keys ) {
-        Set<UUID> k = keys.length > 0
-                ? Arrays.asList( keys ).stream().map( PropertyType::getId ).collect( Collectors.toSet() )
-                : ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() );
+        LinkedHashSet<UUID> k = keys.length > 0
+                ? Arrays.asList( keys ).stream().map( PropertyType::getId )
+                .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
+                : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
         return new EntityType(
                 UUID.randomUUID(),
                 fqn(),
@@ -57,7 +57,9 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
                 k,
-                ImmutableSet.copyOf( Sets.union( k, ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ) ) );
+                Sets.newLinkedHashSet( Sets
+                        .union( k, ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ) ),
+                Optional.of( UUID.randomUUID() ) );
     }
 
     public static FullQualifiedName fqn() {
@@ -195,5 +197,30 @@ public final class TestDataFactory {
 
     public static EntityKey entityKey() {
         return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ) );
+    }
+
+    public static ComplexType complexType() {
+        return new ComplexType( UUID.randomUUID(),
+                fqn(),
+                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( "test complex type" ),
+                ImmutableSet.of( fqn(), fqn() ),
+                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                Optional.absent() );
+    }
+
+    public static EnumType enumType() {
+        return new EnumType(
+                Optional.of( UUID.randomUUID() ),
+                fqn(),
+                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( "test enum type" ),
+                Sets.newLinkedHashSet( Arrays.asList( "Blue", "Red", "Green" ) ),
+                ImmutableSet.of( fqn(), fqn(), fqn() ),
+                Optional.of( EdmPrimitiveTypeKind.Int32 ),
+                false,
+                Optional.of( true ),
+                Optional.of( Analyzer.METAPHONE )
+        );
     }
 }

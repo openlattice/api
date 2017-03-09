@@ -33,7 +33,7 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class AbstractSecurableType extends AbstractSecurableObject {
-    // This is only a descriptive property so relax finality.
+    //This is only a descriptive property so relax finality.
     protected FullQualifiedName type;
 
     protected AbstractSecurableType(
@@ -59,7 +59,7 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
     public void rename( FullQualifiedName newType ) {
         type = newType;
     }
-        
+
     @JsonProperty( SerializationConstants.TYPE_FIELD )
     public FullQualifiedName getType() {
         return type;
