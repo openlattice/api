@@ -36,7 +36,7 @@ public class Status extends Request {
             String reason,
             Principal principal,
             RequestStatus status ) {
-        this( aclKey, permissions, Optional.of( reason ), principal, status );
+        this( aclKey, permissions, Optional.fromNullable( reason ), principal, status );
     }
 
     @JsonProperty( SerializationConstants.STATUS )

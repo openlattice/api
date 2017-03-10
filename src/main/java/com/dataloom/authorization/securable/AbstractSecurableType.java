@@ -18,9 +18,11 @@
 package com.dataloom.authorization.securable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.client.serialization.SerializationConstants;
@@ -31,7 +33,8 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public abstract class AbstractSecurableType extends AbstractSecurableObject {
-    protected final FullQualifiedName type;
+    //This is only a descriptive property so relax finality.
+    protected FullQualifiedName type;
 
     protected AbstractSecurableType(
             UUID id,
@@ -47,7 +50,14 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
             String title,
             Optional<String> description ) {
         super( id, title, description );
-        this.type = checkNotNull( type );
+        checkNotNull( type, "Type cannot be null." );
+        checkArgument( StringUtils.isNotBlank( type.getNamespace() ), "Namespace of type is missing." );
+        checkArgument( StringUtils.isNotBlank( type.getName() ), "Name of type is missing." );
+        this.type = type;
+    }
+
+    public void rename( FullQualifiedName newType ) {
+        type = newType;
     }
 
     @JsonProperty( SerializationConstants.TYPE_FIELD )

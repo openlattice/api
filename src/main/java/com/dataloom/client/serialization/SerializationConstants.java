@@ -112,5 +112,10 @@ public final class SerializationConstants {
 
     public static final String REASON                      = "reason";
 
-    public static final String ORGANIZATION_ID                      = "organizationId";
+    public static final String ORGANIZATION_ID             = "organizationId";
+
+    public static final String FLAGS_FIELD                 = "flags";
+    public static final String PARENT_TYPE_FIELD           = "parentType";
+
+    public static final String BASE_TYPE_FIELD             = "baseType";
 }

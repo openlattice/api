@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -39,8 +40,8 @@ import com.google.common.collect.ImmutableSet;
  */
 public class EntitySet extends AbstractSecurableObject {
     private final UUID   entityTypeId;
-    private final String name;
-    private final Set<String> contacts;
+    private String name;
+    private Set<String> contacts;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
@@ -60,12 +61,11 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts ) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
-        checkArgument( StringUtils.isNotBlank( title ), "Entity set title cannot be blank." );
         // Temporary
 //        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
-        this.contacts = contacts;
+        this.contacts = Sets.newHashSet( contacts );
     }
 
     public EntitySet(
@@ -87,16 +87,27 @@ public class EntitySet extends AbstractSecurableObject {
         this( Optional.absent(), entityTypeId, name, title, description, contacts );
     }
 
+    @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD )
     public UUID getEntityTypeId() {
         return entityTypeId;
     }
 
+    @JsonProperty( SerializationConstants.NAME_FIELD )
     public String getName() {
         return name;
     }
 
+    @JsonProperty( SerializationConstants.CONTACTS )
     public Set<String> getContacts() {
         return contacts;
+    }
+    
+    public void setName( String name ){
+        this.name = name;
+    }
+    
+    public void setContacts( Set<String> contacts ){
+        this.contacts = contacts;
     }
     
     @Override
