@@ -1,5 +1,6 @@
 package com.dataloom.search;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.dataloom.edm.EntitySet;
@@ -7,6 +8,7 @@ import com.dataloom.search.requests.AdvancedSearch;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
 import com.dataloom.search.requests.SearchTerm;
+import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -22,8 +24,10 @@ public interface SearchApi {
     String BASE                  = SERVICE + CONTROLLER;
     String ENTITY_SET_ID         = "entitySetId";
     String NUM_RESULTS           = "numResults";
+    String REQUEST_ID            = "requestId";
     String ENTITY_SET_ID_PATH    = "/{" + ENTITY_SET_ID + "}";
     String NUM_RESULTS_PATH      = "/{" + NUM_RESULTS + "}";
+    String REQUEST_ID_PATH       = "/{" + REQUEST_ID + "}";
 
     /*
      * Normal params
@@ -99,9 +103,14 @@ public interface SearchApi {
     SearchResult executeOrganizationSearch( @Body SearchTerm searchTerm );
 
     @GET( BASE + ANALYSIS + ENTITY_SET_ID_PATH + PROPERTY_TYPE_ID_PATH + NUM_RESULTS_PATH )
-    void getTopUtilizers(
+    List<SetMultimap<UUID, Object>> getTopUtilizers(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId,
+            @Path( NUM_RESULTS ) int numResults );
+    
+    @GET( BASE + ANALYSIS + REQUEST_ID_PATH + NUM_RESULTS_PATH )
+    List<SetMultimap<UUID, Object>> readTopUtilizers(
+            @Path( REQUEST_ID ) UUID requestId,
             @Path( NUM_RESULTS ) int numResults );
 
 }
