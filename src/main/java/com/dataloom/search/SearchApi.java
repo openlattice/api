@@ -1,5 +1,7 @@
 package com.dataloom.search;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.edm.EntitySet;
@@ -7,6 +9,7 @@ import com.dataloom.search.requests.AdvancedSearch;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
 import com.dataloom.search.requests.SearchTerm;
+import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,7 +24,9 @@ public interface SearchApi {
     String CONTROLLER         = "/search";
     String BASE               = SERVICE + CONTROLLER;
     String ENTITY_SET_ID      = "entitySetId";
+    String NUM_RESULTS        = "numResults";
     String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
+    String NUM_RESULTS_PATH   = "/{" + NUM_RESULTS + "}";
 
     /*
      * Normal params
@@ -29,6 +34,7 @@ public interface SearchApi {
     String POPULAR            = "/popular";
     String ORGANIZATIONS      = "/organizations";
     String ADVANCED           = "/advanced";
+    String ANALYSIS           = "/analysis";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -93,4 +99,20 @@ public interface SearchApi {
     @POST( BASE + ORGANIZATIONS )
     SearchResult executeOrganizationSearch( @Body SearchTerm searchTerm );
 
+    /**
+     * Returns the top rows in the entity set, ordered by the sum of the number of items in each of the property types
+     * provided
+     * 
+     * @param entitySetId The id of the entity set to sort and return results for
+     * @param numResults The number of results to return
+     * @param propertyTypeIds A set of property types which may have multiple values in an entity set. The results will
+     *            be ordered by the total number of values across all property types provided (i.e. the sum of all the
+     *            property types' value array size).
+     * @return
+     */
+    @POST( BASE + ANALYSIS + ENTITY_SET_ID_PATH + NUM_RESULTS_PATH )
+    List<SetMultimap<UUID, Object>> getTopUtilizers(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Path( NUM_RESULTS ) int numResults,
+            @Body Set<UUID> propertyTypeIds );
 }
