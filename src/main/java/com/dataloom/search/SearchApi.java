@@ -21,7 +21,9 @@ public interface SearchApi {
     String CONTROLLER         = "/search";
     String BASE               = SERVICE + CONTROLLER;
     String ENTITY_SET_ID      = "entitySetId";
+    String NUM_RESULTS        = "numResults";
     String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
+    String NUM_RESULTS_PATH   = "/{" + NUM_RESULTS + "}";
 
     /*
      * Normal params
@@ -29,6 +31,7 @@ public interface SearchApi {
     String POPULAR            = "/popular";
     String ORGANIZATIONS      = "/organizations";
     String ADVANCED           = "/advanced";
+    String ANALYSIS           = "/analysis";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -92,5 +95,4 @@ public interface SearchApi {
      */
     @POST( BASE + ORGANIZATIONS )
     SearchResult executeOrganizationSearch( @Body SearchTerm searchTerm );
-
 }
