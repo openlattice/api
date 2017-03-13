@@ -45,6 +45,8 @@ public interface OrganizationsApi {
     
     String ROLE_ID           = "roleId";
     String ROLE_ID_PATH      = "/{" + ROLE_ID + "}";
+    String USER_ID           = "userId";
+    String USER_ID_PATH      = "/{" + USER_ID + "}";
 
     @GET( BASE )
     Iterable<Organization> getOrganizations();
@@ -108,73 +110,16 @@ public interface OrganizationsApi {
     @GET( BASE + ID_PATH + PRINCIPALS )
     Set<Principal> getPrincipals( @Path( ID ) UUID organizationId );
 
-    /**
-     * This is a convenience call that modifies that grants {@code {@link com.dataloom.authorization.Permission#READ}}
-     * on the specified organization to the specified principals. A user's membership in an organization is determined
-     * by whether or not they have {@code {@link com.dataloom.authorization.Permission#READ}} on the organization.
-     *
-     * @param organizationId The id of the organization.
-     * @param principals A set of valid principals.
-     */
-    @POST( BASE + ID_PATH + PRINCIPALS )
-    Void addPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
-
-    /**
-     * This is a convenience call that modifies that grants {@code {@link com.dataloom.authorization.Permission#READ}}
-     * on the specified organization to the specified principals. A user's membership in an organization is determined
-     * by whether or not they have {@code {@link com.dataloom.authorization.Permission#READ}} on the organization.
-     *
-     * @param organizationId The id of the organization.
-     * @param principals A set of valid principals.gs
-     * 
-     */
-    @PUT( BASE + ID_PATH + PRINCIPALS )
-    Void setPrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
-
-    /**
-     * This is a convenience call that modifies that removes all {@code {@link com.dataloom.authorization.Permission}}s
-     * that a principal may have on an organization, including discover.
-     *
-     * @param organizationId The id of the organization.
-     * @param principals A set of valid principals
-     */
-    @HTTP(
-        method = "DELETE",
-        hasBody = true,
-        path = BASE + ID_PATH + PRINCIPALS )
-    Void removePrincipals( @Path( ID ) UUID organizationId, @Body Set<Principal> principals );
-
+    //Endpoints about members
     @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
     Set<Principal> getMembers( @Path( ID ) UUID organizationId );
 
-    /**
-     * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}} to a principal
-     * on an organization.
-     *
-     * @param organizationId The id of the organization.
-     * @param principalType The principal type of the principal being added.
-     * @param principalId The principalId of the principal being added.
-     */
-    @PUT( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
-    Void addPrincipal(
-            @Path( ID ) UUID organizationId,
-            @Path( TYPE ) PrincipalType principalType,
-            @Path( PRINCIPAL_ID ) String principalId );
+    @PUT( BASE + ID_PATH + PRINCIPALS + MEMBERS + USER_ID_PATH )
+    Void addMember( @Path( ID ) UUID organizationId, @Path( USER_ID ) String userId );
 
-    /**
-     * This is a convenience call that removes all {@code {@link com.dataloom.authorization.Permission}}s that a
-     * principal may have on an organization, including discover.
-     *
-     * @param organizationId The id of the organization.
-     * @param principalType The principal type of the principal being added.
-     * @param principalId The principalId of the principal being added.
-     */
-    @DELETE( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
-    Void removePrincipal(
-            @Path( ID ) UUID organizationId,
-            @Path( TYPE ) PrincipalType principalType,
-            @Path( PRINCIPAL_ID ) String principalId );
-    
+    @DELETE( BASE + ID_PATH + PRINCIPALS + MEMBERS + USER_ID_PATH )
+    Void removeMember( @Path( ID ) UUID organizationId, @Path( USER_ID ) String userId );
+
     // Endpoints about roles
     @POST( BASE + ROLES )
     UUID createRole( @Body OrganizationRole role );
@@ -197,10 +142,40 @@ public interface OrganizationsApi {
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS )
     Iterable<Auth0UserBasic> getAllUsersOfRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
 
-    @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + PRINCIPAL_ID_PATH )
-    Void addRoleToUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( PRINCIPAL_ID ) String userId );
+    @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + USER_ID_PATH )
+    Void addRoleToUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( USER_ID ) String userId );
 
-    @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + PRINCIPAL_ID_PATH )
-    Void removeRoleFromUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( PRINCIPAL_ID ) String userId );
+    @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + USER_ID_PATH )
+    Void removeRoleFromUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( USER_ID ) String userId );
+
+    /**
+     * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}} to a principal
+     * on an organization.
+     *
+     * @param organizationId The id of the organization.
+     * @param principalType The principal type of the principal being added.
+     * @param principalId The principalId of the principal being added.
+     */
+    @Deprecated
+    @PUT( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
+    Void addPrincipal(
+            @Path( ID ) UUID organizationId,
+            @Path( TYPE ) PrincipalType principalType,
+            @Path( PRINCIPAL_ID ) String principalId );
+
+    /**
+     * This is a convenience call that removes all {@code {@link com.dataloom.authorization.Permission}}s that a
+     * principal may have on an organization, including discover.
+     *
+     * @param organizationId The id of the organization.
+     * @param principalType The principal type of the principal being added.
+     * @param principalId The principalId of the principal being added.
+     */
+    @Deprecated
+    @DELETE( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
+    Void removePrincipal(
+            @Path( ID ) UUID organizationId,
+            @Path( TYPE ) PrincipalType principalType,
+            @Path( PRINCIPAL_ID ) String principalId );
 
 }
