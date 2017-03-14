@@ -34,6 +34,7 @@ public interface SearchApi {
     String ENTITY_TYPES       = "/entity_types";
     String PROPERTY_TYPES     = "/property_types";
     String ADVANCED           = "/advanced";
+    String FQN                = "/fqn";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -119,11 +120,11 @@ public interface SearchApi {
      */
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executePropertyTypeSearch( @Body SearchTerm searchTerm );
-    
-    @POST( BASE + ENTITY_TYPES )
+
+    @POST( BASE + ENTITY_TYPES + FQN )
     SearchResult executeFQNEntityTypeSearch( @Body FQNSearchTerm searchTerm );
-    
-    @POST( BASE + PROPERTY_TYPES )
+
+    @POST( BASE + PROPERTY_TYPES + FQN )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
 
 }
