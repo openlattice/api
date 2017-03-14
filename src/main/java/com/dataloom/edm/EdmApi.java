@@ -248,11 +248,11 @@ public interface EdmApi {
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     @PATCH( PROPERTY_TYPE_BASE_PATH + ID_PATH )
-    Void renamePropertyType( @Path( ID ) UUID propertyTypeId, @Body FullQualifiedName newFqn );
+    Void updatePropertyTypeMetadata( @Path( ID ) UUID propertyTypeId, @Body FullQualifiedName newFqn );
 
     @PATCH( ENTITY_TYPE_BASE_PATH + ID_PATH )
-    Void renameEntityType( @Path( ID ) UUID entityTypeId, @Body FullQualifiedName newFqn );
+    Void updateEntityTypeMetadata( @Path( ID ) UUID entityTypeId, @Body FullQualifiedName newFqn );
 
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
-    Void renameEntitySet( @Path( ID ) UUID entitySetId, @Body String newName );
+    Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body String newName );
 }
