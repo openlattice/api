@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.dataloom.edm.EntitySet;
 import com.dataloom.search.requests.AdvancedSearch;
+import com.dataloom.search.requests.FQNSearchTerm;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
 import com.dataloom.search.requests.SearchTerm;
@@ -118,5 +119,8 @@ public interface SearchApi {
      */
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executePropertyTypeSearch( @Body SearchTerm searchTerm );
+    
+    @POST( BASE + PROPERTY_TYPES )
+    SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
 
 }
