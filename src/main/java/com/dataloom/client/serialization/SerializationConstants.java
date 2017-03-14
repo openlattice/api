@@ -118,4 +118,9 @@ public final class SerializationConstants {
     public static final String PARENT_TYPE_FIELD           = "parentType";
 
     public static final String BASE_TYPE_FIELD             = "baseType";
+
+    public static final String ERROR                       = "error";
+    public static final String ERRORS                      = "errors";
+    public static final String MESSAGE                     = "message";
+    public static final String HTTP_STATUS_CODE            = "code";
 }
