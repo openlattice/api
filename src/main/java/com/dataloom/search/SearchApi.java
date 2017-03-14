@@ -120,6 +120,9 @@ public interface SearchApi {
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executePropertyTypeSearch( @Body SearchTerm searchTerm );
     
+    @POST( BASE + ENTITY_TYPES )
+    SearchResult executeFQNEntityTypeSearch( @Body FQNSearchTerm searchTerm );
+    
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
 
