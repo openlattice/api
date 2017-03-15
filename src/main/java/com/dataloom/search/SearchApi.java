@@ -121,9 +121,27 @@ public interface SearchApi {
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executePropertyTypeSearch( @Body SearchTerm searchTerm );
 
+    /**
+     * Executes a search over all entity types to find ones that match the given name and namespace, including partial
+     * matches
+     * 
+     * @param searchTerm A JSON object that contains four parameters: "start", which specifies the hit number to start
+     *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return,
+     *            "name", which is the partial name to match, and "namespace" which is the partial namespace to match
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     */
     @POST( BASE + ENTITY_TYPES + FQN )
     SearchResult executeFQNEntityTypeSearch( @Body FQNSearchTerm searchTerm );
 
+    /**
+     * Executes a search over all property types to find ones that match the given name and namespace, including partial
+     * matches
+     * 
+     * @param searchTerm A JSON object that contains four parameters: "start", which specifies the hit number to start
+     *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return,
+     *            "name", which is the partial name to match, and "namespace" which is the partial namespace to match
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     */
     @POST( BASE + PROPERTY_TYPES + FQN )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
 
