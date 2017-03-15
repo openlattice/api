@@ -246,12 +246,30 @@ public interface EdmApi {
     @GET( BASE + IDS_PATH + ENTITY_TYPE_PATH + NAMESPACE_PATH + NAME_PATH )
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
+    /**
+     * 
+     * @param propertyTypeId
+     * @param update Only title, description, and type fields are accepted. Other fields are ignored.
+     * @return
+     */
     @PATCH( PROPERTY_TYPE_BASE_PATH + ID_PATH )
     Void updatePropertyTypeMetadata( @Path( ID ) UUID propertyTypeId, @Body MetadataUpdate update );
 
+    /**
+     * 
+     * @param entityTypeId
+     * @param update Only title, description, and type fields are accepted. Other fields are ignored.
+     * @return
+     */
     @PATCH( ENTITY_TYPE_BASE_PATH + ID_PATH )
     Void updateEntityTypeMetadata( @Path( ID ) UUID entityTypeId, @Body MetadataUpdate update );
 
+    /**
+     * 
+     * @param entitySetId
+     * @param update Only title, description, contacts and name fields are accepted. Other fields are ignored.
+     * @return
+     */
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
 }
