@@ -2,12 +2,14 @@ package com.dataloom.edm.requests;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 /**
  * Used for updating metadata of property type, entity type, or entity set. Non-existent fields for the specific object
@@ -33,6 +35,17 @@ public class MetadataUpdate {
             @JsonProperty( SerializationConstants.NAME_FIELD ) Optional<String> name,
             @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type ) {
+        // WARNING These checks have to be consistent with the same check elsewhere.
+        Preconditions.checkArgument( !title.isPresent() || StringUtils.isNotBlank( title.get() ),
+                "Title cannot be blank." );
+        Preconditions.checkArgument( !name.isPresent() || StringUtils.isNotBlank( name.get() ),
+                "Entity set name cannot be blank." );
+        Preconditions.checkArgument( !contacts.isPresent() || !contacts.get().isEmpty(), "Contacts cannot be blank." );
+        Preconditions.checkArgument( !type.isPresent() || StringUtils.isNotBlank( type.get().getNamespace() ),
+                "Namespace of type is missing." );
+        Preconditions.checkArgument( !type.isPresent() || StringUtils.isNotBlank( type.get().getName() ),
+                "Name of type is missing." );
+
         this.title = title;
         this.description = description;
         this.name = name;
