@@ -4,14 +4,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.edm.requests.EdmDetailsSelector;
+import com.dataloom.edm.requests.EdmRequest;
+import com.dataloom.edm.requests.MetadataUpdate;
 import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
-import com.dataloom.edm.requests.EdmDetailsSelector;
-import com.dataloom.edm.requests.EdmRequest;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -248,11 +247,11 @@ public interface EdmApi {
     UUID getEntityTypeId( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     @PATCH( PROPERTY_TYPE_BASE_PATH + ID_PATH )
-    Void updatePropertyTypeMetadata( @Path( ID ) UUID propertyTypeId, @Body FullQualifiedName newFqn );
+    Void updatePropertyTypeMetadata( @Path( ID ) UUID propertyTypeId, @Body MetadataUpdate update );
 
     @PATCH( ENTITY_TYPE_BASE_PATH + ID_PATH )
-    Void updateEntityTypeMetadata( @Path( ID ) UUID entityTypeId, @Body FullQualifiedName newFqn );
+    Void updateEntityTypeMetadata( @Path( ID ) UUID entityTypeId, @Body MetadataUpdate update );
 
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
-    Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body String newName );
+    Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
 }

@@ -5,7 +5,6 @@ import java.util.Set;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.client.serialization.SerializationConstants;
-import com.dataloom.edm.type.Analyzer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
@@ -26,8 +25,6 @@ public class MetadataUpdate {
     private Optional<Set<String>>       contacts;
     // Specific to property type/entity type
     private Optional<FullQualifiedName> type;
-    // Specific to property type
-    private Optional<Analyzer>          analyzer;
 
     @JsonCreator
     public MetadataUpdate(
@@ -35,14 +32,12 @@ public class MetadataUpdate {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.NAME_FIELD ) Optional<String> name,
             @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type,
-            @JsonProperty( SerializationConstants.ANALYZER ) Optional<Analyzer> analyzer ) {
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type ) {
         this.title = title;
         this.description = description;
         this.name = name;
         this.contacts = contacts;
         this.type = type;
-        this.analyzer = analyzer;
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -70,9 +65,33 @@ public class MetadataUpdate {
         return type;
     }
 
-    @JsonProperty( SerializationConstants.ANALYZER )
-    public Optional<Analyzer> getAnalyzer() {
-        return analyzer;
+    // Trimming happens before initializing update processors so that irrelevant fields won't get ser/deserialized when
+    // processors are serialized.
+    public static MetadataUpdate trimToPropertyTypeUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                Optional.absent(),
+                Optional.absent(),
+                update.getType() );
+    }
+
+    public static MetadataUpdate trimToEntityTypeUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                Optional.absent(),
+                Optional.absent(),
+                update.getType() );
+    }
+
+    public static MetadataUpdate trimToEntitySetUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                update.getName(),
+                update.getContacts(),
+                Optional.absent() );
     }
 
 }
