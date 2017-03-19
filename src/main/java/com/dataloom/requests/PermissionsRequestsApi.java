@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
+@Deprecated
 public interface PermissionsRequestsApi {
     /*
      * These determine the service routing for the LB
