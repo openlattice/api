@@ -116,4 +116,7 @@ public final class SerializationConstants {
     public static final String PARENT_TYPE_FIELD           = "parentType";
 
     public static final String BASE_TYPE_FIELD             = "baseType";
+
+    public static final String NAMESPACE                   = "namespace";
+    public static final String NAME                        = "name";
 }
