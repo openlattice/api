@@ -33,8 +33,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class AbstractSecurableObject {
     protected final UUID    id;
-    protected final String  title;
-    protected final String  description;
+    //This is only a descriptive property so relax finality.
+    protected String  title;
+    protected String  description;
+    
     private final   boolean idPresent;
 
     /**
@@ -105,6 +107,16 @@ public abstract class AbstractSecurableObject {
         return description;
     }
 
+    @JsonIgnore
+    public void setTitle( String title ){
+        this.title = title;
+    }
+    
+    @JsonIgnore    
+    public void setDescription( String description ){
+        this.description = description;
+    }
+    
     @JsonIgnore
     public boolean wasIdPresent() {
         return idPresent;
