@@ -23,5 +23,6 @@ public enum SecurableObjectType {
     PropertyTypeInEntitySet,
     Datasource,
     Organization, 
-    COMPLEX_TYPE
+    COMPLEX_TYPE,
+    LinkingType
 }

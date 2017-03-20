@@ -10,6 +10,7 @@ import com.dataloom.edm.requests.MetadataUpdate;
 import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
+import com.dataloom.edm.type.LinkingType;
 import com.dataloom.edm.type.PropertyType;
 
 import retrofit2.http.Body;
@@ -67,6 +68,7 @@ public interface EdmApi {
     String ENTITY_TYPE_PATH        = "/entity/type";
     String PROPERTY_TYPE_PATH      = "/property/type";
     String COMPLEX_TYPE_PATH       = "/complex/type";
+    String LINKING_TYPE_PATH       = "/linking/type";
     String HIERARCHY_PATH          = "/hierarchy";
 
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
@@ -79,6 +81,7 @@ public interface EdmApi {
     String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
     String ENTITY_TYPE_BASE_PATH   = BASE + ENTITY_TYPE_PATH;
     String PROPERTY_TYPE_BASE_PATH = BASE + PROPERTY_TYPE_PATH;
+    String LINKING_TYPE_BASE_PATH  = BASE + LINKING_TYPE_PATH;
 
     @GET( BASE )
     EntityDataModel getEntityDataModel();
@@ -272,4 +275,17 @@ public interface EdmApi {
      */
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
+
+    @GET( LINKING_TYPE_BASE_PATH )
+    Iterable<LinkingType> getLinkingTypes();
+    
+    @POST( LINKING_TYPE_BASE_PATH )
+    UUID createLinkingType( @Body LinkingType linkingType );
+    
+    @DELETE( LINKING_TYPE_BASE_PATH + ID_PATH )
+    Void deleteLinkingType( @Path( ID ) UUID linkingTypeId );
+    
+    @GET( LINKING_TYPE_BASE_PATH + ID_PATH )
+    LinkingType getLinkingTypeById( @Path( ID ) UUID linkingTypeId );
+
 }
