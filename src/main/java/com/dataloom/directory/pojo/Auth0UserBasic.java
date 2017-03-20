@@ -22,7 +22,6 @@ public class Auth0UserBasic {
     private final String      email;
     private final String      nickname;
     private final String      username;
-    private final Set<String> roles;
     private final Set<String> organizations;
 
     @SuppressWarnings( "unchecked" )
@@ -44,9 +43,6 @@ public class Auth0UserBasic {
         } else {
             this.username = this.userId;
         }
-        this.roles = Sets.newHashSet(
-                ( (List<String>) MoreObjects.firstNonNull( appMetadata, new HashMap<>() ).getOrDefault( "roles",
-                        new ArrayList<String>() ) ) );
         this.organizations = Sets
                 .newHashSet( ( (List<String>) MoreObjects.firstNonNull( appMetadata, new HashMap<>() ).getOrDefault(
                         "organizations",
@@ -73,11 +69,6 @@ public class Auth0UserBasic {
         return username;
     }
 
-    @JsonProperty( ROLES_FIELD )
-    public Set<String> getRoles() {
-        return Collections.unmodifiableSet( roles );
-    }
-
     @JsonProperty( ORGANIZATIONS_FIELD )
     public Set<String> getOrganizations() {
         return Collections.unmodifiableSet( organizations );
@@ -89,7 +80,6 @@ public class Auth0UserBasic {
                 ", email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", username='" + username + '\'' +
-                ", roles=" + roles +
                 ", organizations=" + organizations +
                 '}';
     }
