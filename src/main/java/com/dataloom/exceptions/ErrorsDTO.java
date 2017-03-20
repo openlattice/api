@@ -33,12 +33,12 @@ public class ErrorsDTO {
         this.errors = new ArrayList<ErrorDTO>();
     }
 
-    public ErrorsDTO( LoomException error, String message ) {
+    public ErrorsDTO( LoomExceptions error, String message ) {
         this();
         this.addError( error, message );
     }
 
-    public void addError( LoomException error, String message ) {
+    public void addError( LoomExceptions error, String message ) {
         errors.add( new ErrorDTO( error, message ) );
     }
 

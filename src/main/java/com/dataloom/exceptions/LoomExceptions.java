@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonFormat(
     shape = JsonFormat.Shape.OBJECT )
-public enum LoomException {
+public enum LoomExceptions {
     RESOURCE_NOT_FOUND_EXCEPTION( "resourceNotFound", HttpURLConnection.HTTP_NOT_FOUND ),
     ILLEGAL_ARGUMENT_EXCEPTION( "illegalArgument", HttpURLConnection.HTTP_BAD_REQUEST ),
     ILLEGAL_STATE_EXCEPTION( "illegalState", HttpURLConnection.HTTP_INTERNAL_ERROR ),
@@ -21,7 +21,7 @@ public enum LoomException {
     private String type;
     private int    code;
 
-    private LoomException( String type, int code ) {
+    private LoomExceptions( String type, int code ) {
         this.type = type;
         this.code = code;
     }

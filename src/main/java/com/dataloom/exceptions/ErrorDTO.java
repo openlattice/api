@@ -23,16 +23,16 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorDTO {
-    private LoomException error;
+    private LoomExceptions error;
     private String        message;
 
-    public ErrorDTO( LoomException error, String message ) {
+    public ErrorDTO( LoomExceptions error, String message ) {
         this.error = error;
         this.message = message;
     }
 
     @JsonProperty( SerializationConstants.ERROR )
-    public LoomException getError() {
+    public LoomExceptions getError() {
         return error;
     }
 
