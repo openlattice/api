@@ -35,8 +35,7 @@ public final class TestDataFactory {
     private static final Analyzer[]            analyzers            = Analyzer.values();
     private static final Random                r                    = new Random();
 
-    private TestDataFactory() {
-    }
+    private TestDataFactory() {}
 
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
@@ -47,9 +46,22 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityType( PropertyType... keys ) {
+        return childEntityType( UUID.randomUUID(), keys );
+    }
+
+    public static EntityType childEntityType( UUID parentId, PropertyType... keys ) {
+        return childEntityTypeWithPropertyType( parentId,
+                ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ),
+                keys );
+    }
+
+    public static EntityType childEntityTypeWithPropertyType(
+            UUID parentId,
+            Set<UUID> propertyTypes,
+            PropertyType... keys ) {
         LinkedHashSet<UUID> k = keys.length > 0
                 ? Arrays.asList( keys ).stream().map( PropertyType::getId )
-                .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
+                        .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
                 : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
         return new EntityType(
                 UUID.randomUUID(),
@@ -59,8 +71,8 @@ public final class TestDataFactory {
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
                 k,
                 Sets.newLinkedHashSet( Sets
-                        .union( k, ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ) ),
-                Optional.of( UUID.randomUUID() ) );
+                        .union( k, propertyTypes ) ),
+                Optional.of( parentId ) );
     }
 
     public static FullQualifiedName fqn() {
@@ -205,7 +217,8 @@ public final class TestDataFactory {
     }
 
     public static ComplexType complexType() {
-        return new ComplexType( UUID.randomUUID(),
+        return new ComplexType(
+                UUID.randomUUID(),
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( "test complex type" ),
@@ -225,7 +238,6 @@ public final class TestDataFactory {
                 Optional.of( EdmPrimitiveTypeKind.Int32 ),
                 false,
                 Optional.of( true ),
-                Optional.of( Analyzer.METAPHONE )
-        );
+                Optional.of( Analyzer.METAPHONE ) );
     }
 }

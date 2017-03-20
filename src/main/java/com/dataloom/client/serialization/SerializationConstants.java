@@ -123,4 +123,7 @@ public final class SerializationConstants {
     public static final String ERRORS                      = "errors";
     public static final String MESSAGE                     = "message";
     public static final String HTTP_STATUS_CODE            = "code";
+
+    public static final String NAMESPACE                   = "namespace";
+    public static final String NAME                        = "name";
 }

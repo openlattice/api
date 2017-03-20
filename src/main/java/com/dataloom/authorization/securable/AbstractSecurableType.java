@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.client.serialization.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
@@ -56,8 +57,9 @@ public abstract class AbstractSecurableType extends AbstractSecurableObject {
         this.type = type;
     }
 
-    public void rename( FullQualifiedName newType ) {
-        type = newType;
+    @JsonIgnore
+    public void setType( FullQualifiedName type ) {
+        this.type = type;
     }
 
     @JsonProperty( SerializationConstants.TYPE_FIELD )
