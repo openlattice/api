@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import retrofit2.http.Body;
-import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
@@ -19,6 +18,8 @@ public interface PermissionsApi {
     String SERVICE    = "/datastore";
     String CONTROLLER = "/permissions";
     String BASE       = SERVICE + CONTROLLER;
+
+    String EXPLAIN    = "/explain";
 
     /**
      * Add, removes, or sets the ace for a particular acl key. Successful only if user is the owner of acl key.
@@ -37,4 +38,15 @@ public interface PermissionsApi {
      */
     @POST( BASE )
     Acl getAcl( @Body List<UUID> aclKey );
+
+    /**
+     * Retrieves the acl for a particular acl key, with explanation of where the permissions come from. Only return if
+     * user is the owner of acl key.
+     * 
+     * @param aclKey The acl key.
+     * @return The aces for the requested acl key, together with the explanation.
+     */
+    @POST( BASE + EXPLAIN )
+    AclExplanation getAclExplanation( @Body List<UUID> aclKey );
+
 }

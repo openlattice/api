@@ -3,6 +3,9 @@ package com.dataloom.organization.roles;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
@@ -20,6 +23,8 @@ import com.google.common.base.Optional;
  *
  */
 public class OrganizationRole extends AbstractSecurableObject {
+    private static final Logger logger = LoggerFactory.getLogger( OrganizationRole.class );
+
     private UUID      organizationId;
 
     private Principal principal;
@@ -73,5 +78,18 @@ public class OrganizationRole extends AbstractSecurableObject {
     
     public static String getStringRepresentation( UUID organizationId, String title ){
         return organizationId + "|" + title;
+    }
+    
+    /**
+     * This method must be consistent with {@link #getStringRepresentation(UUID, String)}
+     */
+    public static UUID getOrganizationId( String stringRep ){
+        try{
+            String[] splitted = stringRep.split( "|", 2);
+            return UUID.fromString( splitted[0] );
+        } catch ( Exception e ){
+            logger.error( "Error parsing organizationId from the string representation of role: " + stringRep );
+            throw new IllegalArgumentException( "Error parsing organizationId from the string representation of role: " + stringRep );
+        }
     }
 }
