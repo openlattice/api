@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.dataloom.client.serialization.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AclExplanation {
@@ -11,9 +12,10 @@ public class AclExplanation {
     protected final Iterable<AceExplanation> aces;
     private transient int                  h = 0;
 
+    @JsonCreator
     public AclExplanation(
-            List<UUID> aclKey,
-            Iterable<AceExplanation> aces ) {
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
+            @JsonProperty( SerializationConstants.ACES ) Iterable<AceExplanation> aces ) {
         this.aclKey = aclKey;
         this.aces = aces;
     }

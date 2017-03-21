@@ -3,15 +3,19 @@ package com.dataloom.authorization;
 import java.util.Set;
 
 import com.dataloom.client.serialization.SerializationConstants;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AceExplanation {
     private final Ace      ace;
-    // Explain where the ace comes from.
+    // Explains where the ace comes from.
     private final Set<Ace> explanation;
     private transient int  h = 0;
 
-    public AceExplanation( Ace ace, Set<Ace> explanation ) {
+    @JsonCreator
+    public AceExplanation( 
+            @JsonProperty( SerializationConstants.ACE ) Ace ace, 
+            @JsonProperty( SerializationConstants.EXPLANATION ) Set<Ace> explanation ) {
         this.ace = ace;
         this.explanation = explanation;
     }

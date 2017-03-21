@@ -85,7 +85,7 @@ public class OrganizationRole extends AbstractSecurableObject {
      */
     public static UUID getOrganizationId( String stringRep ){
         try{
-            String[] splitted = stringRep.split( "|", 2);
+            String[] splitted = stringRep.split( "\\|", 2);
             return UUID.fromString( splitted[0] );
         } catch ( Exception e ){
             logger.error( "Error parsing organizationId from the string representation of role: " + stringRep );
