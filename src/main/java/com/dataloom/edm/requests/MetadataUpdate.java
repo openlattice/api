@@ -1,6 +1,5 @@
 package com.dataloom.edm.requests;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,8 +18,7 @@ import com.google.common.base.Preconditions;
  * @author Ho Chung Siu
  *
  */
-public class MetadataUpdate implements Serializable {
-    private static final long serialVersionUID = 5732378212397360336L;
+public class MetadataUpdate {
     // Common across property type, entity type, entity set
     private Optional<String>            title;
     private Optional<String>            description;
