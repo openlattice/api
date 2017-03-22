@@ -17,8 +17,6 @@
 
 package com.dataloom.edm.type;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,11 +24,9 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -52,8 +48,9 @@ public class EntityType extends ComplexType {
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.KEY_FIELD ) LinkedHashSet<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
-            @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType ) {
-        super( id, type, title, description, schemas, properties, baseType );
+            @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType,
+            @JsonProperty( SerializationConstants.CATEGORY ) SecurableObjectType category ) {
+        super( id, type, title, description, schemas, properties, baseType, category );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
@@ -70,8 +67,9 @@ public class EntityType extends ComplexType {
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.of( id ), type, title, description, schemas, key, properties, baseType );
+            Optional<UUID> baseType,
+            SecurableObjectType category ) {
+        this( Optional.of( id ), type, title, description, schemas, key, properties, baseType, category );
     }
 
     public EntityType(
@@ -81,10 +79,11 @@ public class EntityType extends ComplexType {
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, baseType );
+            Optional<UUID> baseType,
+            SecurableObjectType category ) {
+        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, baseType, category );
     }
-
+    
     // TODO: It seems the objects do not allow property types from the different schemas.
     @JsonProperty( SerializationConstants.KEY_FIELD )
     public Set<UUID> getKey() {
@@ -94,11 +93,6 @@ public class EntityType extends ComplexType {
     @JsonProperty( SerializationConstants.BASE_TYPE_FIELD )
     public Optional<UUID> getBaseType() {
         return baseType;
-    }
-
-    @JsonIgnore
-    public SecurableObjectType getCategory() {
-        return SecurableObjectType.EntityType;
     }
 
     @Override public boolean equals( Object o ) {

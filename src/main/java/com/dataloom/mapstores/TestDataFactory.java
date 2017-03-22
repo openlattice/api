@@ -1,13 +1,39 @@
 package com.dataloom.mapstores;
 
-import com.dataloom.authorization.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
+import com.dataloom.authorization.Ace;
+import com.dataloom.authorization.Acl;
+import com.dataloom.authorization.AclData;
+import com.dataloom.authorization.Action;
+import com.dataloom.authorization.Permission;
+import com.dataloom.authorization.Principal;
+import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.AbstractSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.data.EntityKey;
 import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
-import com.dataloom.edm.type.*;
+import com.dataloom.edm.type.Analyzer;
+import com.dataloom.edm.type.ComplexType;
+import com.dataloom.edm.type.EdgeType;
+import com.dataloom.edm.type.EntityType;
+import com.dataloom.edm.type.EnumType;
+import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
@@ -18,13 +44,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
@@ -71,7 +90,20 @@ public final class TestDataFactory {
                 k,
                 Sets.newLinkedHashSet( Sets
                         .union( k, propertyTypes ) ),
-                Optional.of( parentId ) );
+                Optional.of( parentId ),
+                SecurableObjectType.EntityType );
+    }
+    
+    public static EdgeType edgeType( PropertyType... keys ) {
+        LinkedHashSet<UUID> k = keys.length > 0
+                ? Arrays.asList( keys ).stream().map( PropertyType::getId )
+                        .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
+                : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
+        return new EdgeType(
+                Optional.absent(),
+                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                false );
     }
 
     public static FullQualifiedName fqn() {
@@ -219,7 +251,8 @@ public final class TestDataFactory {
                 Optional.of( "test complex type" ),
                 ImmutableSet.of( fqn(), fqn() ),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
-                Optional.absent() );
+                Optional.absent(),
+                SecurableObjectType.ComplexType );
     }
 
     public static EnumType enumType() {

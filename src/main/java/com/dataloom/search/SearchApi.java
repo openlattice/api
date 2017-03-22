@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.search.requests.AdvancedSearch;
 import com.dataloom.search.requests.FQNSearchTerm;
-import com.dataloom.search.requests.LinkingTypeSearch;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
 import com.dataloom.search.requests.SearchTerm;
@@ -30,7 +29,6 @@ public interface SearchApi {
     String ORGANIZATIONS         = "/organizations";
     String ENTITY_TYPES          = "/entity_types";
     String PROPERTY_TYPES        = "/property_types";
-    String LINKING_TYPES         = "/linking_types";
     String ADVANCED              = "/advanced";
     String FQN                   = "/fqn";
     String KEYWORD               = "kw";
@@ -148,10 +146,5 @@ public interface SearchApi {
      */
     @POST( BASE + PROPERTY_TYPES + FQN )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
-
-    @POST( BASE + LINKING_TYPES )
-    SearchResult executeLinkingTypeSearch( @Body LinkingTypeSearch searchTerm );
-    
-    
 
 }
