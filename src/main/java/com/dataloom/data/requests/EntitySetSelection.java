@@ -9,20 +9,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
 public class EntitySetSelection {
-    private Optional<Set<UUID>> syncIds;
+    private Optional<UUID> syncId;
     private Optional<Set<UUID>> selectedProperties;
 
     @JsonCreator
     public EntitySetSelection(
-            @JsonProperty( SerializationConstants.SYNC_IDS ) Optional<Set<UUID>> syncIds,
+            @JsonProperty( SerializationConstants.SYNC_ID ) Optional<UUID> syncId,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Optional<Set<UUID>> selectedProperties ) {
-        this.syncIds = syncIds;
+        this.syncId = syncId;
         this.selectedProperties = selectedProperties;
     }
     
-    @JsonProperty( SerializationConstants.SYNC_IDS )
-    public Optional<Set<UUID>> getSyncIds() {
-        return syncIds;
+    @JsonProperty( SerializationConstants.SYNC_ID )
+    public Optional<UUID> getSyncId() {
+        return syncId;
     }
     
     @JsonProperty( SerializationConstants.PROPERTIES_FIELD )
@@ -35,7 +35,7 @@ public class EntitySetSelection {
         final int prime = 31;
         int result = 1;
         result = prime * result + ( ( selectedProperties == null ) ? 0 : selectedProperties.hashCode() );
-        result = prime * result + ( ( syncIds == null ) ? 0 : syncIds.hashCode() );
+        result = prime * result + ( ( syncId == null ) ? 0 : syncId.hashCode() );
         return result;
     }
 
@@ -48,15 +48,15 @@ public class EntitySetSelection {
         if ( selectedProperties == null ) {
             if ( other.selectedProperties != null ) return false;
         } else if ( !selectedProperties.equals( other.selectedProperties ) ) return false;
-        if ( syncIds == null ) {
-            if ( other.syncIds != null ) return false;
-        } else if ( !syncIds.equals( other.syncIds ) ) return false;
+        if ( syncId == null ) {
+            if ( other.syncId != null ) return false;
+        } else if ( !syncId.equals( other.syncId ) ) return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "EntitySetSelection [syncIds=" + syncIds + ", selectedProperties=" + selectedProperties + "]";
+        return "EntitySetSelection [syncId=" + syncId + ", selectedProperties=" + selectedProperties + "]";
     }
 
 }
