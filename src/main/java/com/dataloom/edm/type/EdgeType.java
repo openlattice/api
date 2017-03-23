@@ -48,4 +48,34 @@ public class EdgeType {
         return bidirectional;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ( bidirectional ? 1231 : 1237 );
+        result = prime * result + ( ( dest == null ) ? 0 : dest.hashCode() );
+        result = prime * result + ( ( edgeEntityType == null ) ? 0 : edgeEntityType.hashCode() );
+        result = prime * result + ( ( src == null ) ? 0 : src.hashCode() );
+        return result;
+    }
+
+    @Override
+    public boolean equals( Object obj ) {
+        if ( this == obj ) return true;
+        if ( obj == null ) return false;
+        if ( getClass() != obj.getClass() ) return false;
+        EdgeType other = (EdgeType) obj;
+        if ( bidirectional != other.bidirectional ) return false;
+        if ( dest == null ) {
+            if ( other.dest != null ) return false;
+        } else if ( !dest.equals( other.dest ) ) return false;
+        if ( edgeEntityType == null ) {
+            if ( other.edgeEntityType != null ) return false;
+        } else if ( !edgeEntityType.equals( other.edgeEntityType ) ) return false;
+        if ( src == null ) {
+            if ( other.src != null ) return false;
+        } else if ( !src.equals( other.src ) ) return false;
+        return true;
+    }
+
 }
