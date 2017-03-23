@@ -112,11 +112,20 @@ public final class SerializationConstants {
 
     public static final String REASON                      = "reason";
 
+    public static final String ORGANIZATION_ID             = "organizationId";
+
     public static final String FLAGS_FIELD                 = "flags";
     public static final String PARENT_TYPE_FIELD           = "parentType";
 
     public static final String BASE_TYPE_FIELD             = "baseType";
 
+    public static final String ERROR                       = "error";
+    public static final String ERRORS                      = "errors";
+    public static final String MESSAGE                     = "message";
+    public static final String HTTP_STATUS_CODE            = "code";
+
     public static final String NAMESPACE                   = "namespace";
     public static final String NAME                        = "name";
+
+    public static final String EXPLANATION                 = "explanation";
 }
