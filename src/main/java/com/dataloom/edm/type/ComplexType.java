@@ -1,5 +1,7 @@
 package com.dataloom.edm.type;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -11,17 +13,15 @@ import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableTyp
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ComplexType extends AbstractSchemaAssociatedSecurableType {
+
     private final LinkedHashSet<UUID> properties;
     private final Optional<UUID>      baseType;
-    private transient int h = 0;
+    private final SecurableObjectType category;
+    private transient int             h = 0;
 
     @JsonCreator
     public ComplexType(
@@ -31,10 +31,12 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
-            @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD ) Optional<UUID> baseType ) {
+            @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD ) Optional<UUID> baseType,
+            @JsonProperty( SerializationConstants.CATEGORY ) SecurableObjectType category ) {
         super( id, type, title, description, schemas );
         this.properties = checkNotNull( properties, "Entity set properties cannot be null" );
         this.baseType = baseType;
+        this.category = category;
     }
 
     public ComplexType(
@@ -44,8 +46,9 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             Optional<String> description,
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.of( id ), type, title, description, schemas, properties, baseType );
+            Optional<UUID> baseType,
+            SecurableObjectType category ) {
+        this( Optional.of( id ), type, title, description, schemas, properties, baseType, category );
     }
 
     public ComplexType(
@@ -54,8 +57,9 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             String description,
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, properties, baseType );
+            Optional<UUID> baseType,
+            SecurableObjectType category ) {
+        this( Optional.absent(), type, title, Optional.of( description ), schemas, properties, baseType, category );
     }
 
     @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD )
@@ -77,17 +81,18 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
     }
 
     @Override
-    @JsonIgnore
+    @JsonProperty( SerializationConstants.CATEGORY )
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.COMPLEX_TYPE;
+        return category;
     }
 
     @Override
     public int hashCode() {
+        final int prime = 31;
         if ( h == 0 ) {
-            final int prime = 31;
             int result = super.hashCode();
             result = prime * result + ( ( baseType == null ) ? 0 : baseType.hashCode() );
+            result = prime * result + ( ( category == null ) ? 0 : category.hashCode() );
             result = prime * result + ( ( properties == null ) ? 0 : properties.hashCode() );
             h = result;
         }
@@ -96,30 +101,17 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( !( obj instanceof ComplexType ) ) {
-            return false;
-        }
+        if ( this == obj ) return true;
+        if ( !super.equals( obj ) ) return false;
+        if ( getClass() != obj.getClass() ) return false;
         ComplexType other = (ComplexType) obj;
         if ( baseType == null ) {
-            if ( other.baseType != null ) {
-                return false;
-            }
-        } else if ( !baseType.equals( other.baseType ) ) {
-            return false;
-        }
+            if ( other.baseType != null ) return false;
+        } else if ( !baseType.equals( other.baseType ) ) return false;
+        if ( category != other.category ) return false;
         if ( properties == null ) {
-            if ( other.properties != null ) {
-                return false;
-            }
-        } else if ( !properties.equals( other.properties ) ) {
-            return false;
-        }
+            if ( other.properties != null ) return false;
+        } else if ( !properties.equals( other.properties ) ) return false;
         return true;
     }
 

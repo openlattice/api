@@ -8,6 +8,7 @@ import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
 import com.dataloom.edm.type.ComplexType;
+import com.dataloom.edm.type.EdgeType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
@@ -67,6 +68,7 @@ public interface EdmApi {
     String ENTITY_TYPE_PATH        = "/entity/type";
     String PROPERTY_TYPE_PATH      = "/property/type";
     String COMPLEX_TYPE_PATH       = "/complex/type";
+    String EDGE_TYPE_PATH          = "/edge/type";
     String HIERARCHY_PATH          = "/hierarchy";
 
     String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
@@ -79,6 +81,7 @@ public interface EdmApi {
     String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
     String ENTITY_TYPE_BASE_PATH   = BASE + ENTITY_TYPE_PATH;
     String PROPERTY_TYPE_BASE_PATH = BASE + PROPERTY_TYPE_PATH;
+    String EDGE_TYPE_BASE_PATH     = BASE + EDGE_TYPE_PATH;
 
     @GET( BASE )
     EntityDataModel getEntityDataModel();
@@ -272,4 +275,14 @@ public interface EdmApi {
      */
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
+
+    @POST( EDGE_TYPE_BASE_PATH )
+    UUID createEdgeType( @Body EdgeType linkingType );
+
+    @DELETE( EDGE_TYPE_BASE_PATH + ID_PATH )
+    Void deleteEdgeType( @Path( ID ) UUID linkingTypeId );
+
+    @GET( EDGE_TYPE_BASE_PATH + ID_PATH )
+    EdgeType getEdgeTypeById( @Path( ID ) UUID linkingTypeId );
+
 }

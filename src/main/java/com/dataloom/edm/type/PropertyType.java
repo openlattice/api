@@ -20,13 +20,14 @@ package com.dataloom.edm.type;
 import java.util.Set;
 import java.util.UUID;
 
-import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
@@ -158,6 +159,7 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
     }
 
     @Override
+    @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.PropertyTypeInEntitySet;
     }

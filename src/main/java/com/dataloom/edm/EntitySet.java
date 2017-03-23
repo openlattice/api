@@ -23,15 +23,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Set;
 import java.util.UUID;
 
-import com.dataloom.authorization.securable.AbstractSecurableObject;
 import org.apache.commons.lang3.StringUtils;
 
+import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 /**
@@ -163,6 +163,7 @@ public class EntitySet extends AbstractSecurableObject {
     }
 
     @Override
+    @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.EntitySet;
     }

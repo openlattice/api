@@ -22,7 +22,9 @@ public enum SecurableObjectType {
     EntitySet,
     PropertyTypeInEntitySet,
     Datasource,
+    ComplexType,
+    LinkingEntityType,
+    EdgeType,
     Organization,
-    OrganizationRole,
-    COMPLEX_TYPE
+    OrganizationRole
 }

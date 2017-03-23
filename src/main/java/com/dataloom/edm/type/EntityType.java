@@ -17,8 +17,6 @@
 
 package com.dataloom.edm.type;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,11 +24,9 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -41,7 +37,7 @@ import com.google.common.base.Preconditions;
 public class EntityType extends ComplexType {
     private final LinkedHashSet<UUID> key;
     private final Optional<UUID>      baseType;
-    private transient int h = 0;
+    private transient int             h = 0;
 
     @JsonCreator
     public EntityType(
@@ -52,8 +48,17 @@ public class EntityType extends ComplexType {
             @JsonProperty( SerializationConstants.SCHEMAS ) Set<FullQualifiedName> schemas,
             @JsonProperty( SerializationConstants.KEY_FIELD ) LinkedHashSet<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
-            @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType ) {
-        super( id, type, title, description, schemas, properties, baseType );
+            @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType,
+            @JsonProperty( SerializationConstants.CATEGORY ) Optional<SecurableObjectType> category ) {
+        super(
+                id,
+                type,
+                title,
+                description,
+                schemas,
+                properties,
+                baseType,
+                category.or( SecurableObjectType.EntityType ) );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
@@ -70,8 +75,9 @@ public class EntityType extends ComplexType {
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.of( id ), type, title, description, schemas, key, properties, baseType );
+            Optional<UUID> baseType,
+            Optional<SecurableObjectType> category ) {
+        this( Optional.of( id ), type, title, description, schemas, key, properties, baseType, category );
     }
 
     public EntityType(
@@ -81,8 +87,18 @@ public class EntityType extends ComplexType {
             Set<FullQualifiedName> schemas,
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
-            Optional<UUID> baseType ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, baseType );
+            Optional<UUID> baseType,
+            Optional<SecurableObjectType> category ) {
+        this(
+                Optional.absent(),
+                type,
+                title,
+                Optional.of( description ),
+                schemas,
+                key,
+                properties,
+                baseType,
+                category );
     }
 
     // TODO: It seems the objects do not allow property types from the different schemas.
@@ -96,12 +112,8 @@ public class EntityType extends ComplexType {
         return baseType;
     }
 
-    @JsonIgnore
-    public SecurableObjectType getCategory() {
-        return SecurableObjectType.EntityType;
-    }
-
-    @Override public boolean equals( Object o ) {
+    @Override
+    public boolean equals( Object o ) {
         if ( this == o )
             return true;
         if ( o == null || getClass() != o.getClass() )
@@ -116,7 +128,8 @@ public class EntityType extends ComplexType {
         return baseType.equals( that.baseType );
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         if ( h == 0 ) {
             int result = super.hashCode();
             result = 31 * result + key.hashCode();
@@ -129,6 +142,7 @@ public class EntityType extends ComplexType {
     @Override
     public String toString() {
         return "EntityType [key=" + key + ", properties=" + getProperties() + ", baseType=" + baseType + ", schemas="
-                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description + "]";
+                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description
+                + ", category=" + getCategory().toString() + "]";
     }
 }

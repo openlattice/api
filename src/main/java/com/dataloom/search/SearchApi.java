@@ -18,26 +18,28 @@ public interface SearchApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE            = "/datastore";
-    String CONTROLLER         = "/search";
-    String BASE               = SERVICE + CONTROLLER;
-    String ENTITY_SET_ID      = "entitySetId";
-    String NUM_RESULTS        = "numResults";
-    String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
-    String NUM_RESULTS_PATH   = "/{" + NUM_RESULTS + "}";
+    String SERVICE               = "/datastore";
+    String CONTROLLER            = "/search";
+    String BASE                  = SERVICE + CONTROLLER;
 
     /*
      * Normal params
      */
-    String POPULAR            = "/popular";
-    String ORGANIZATIONS      = "/organizations";
-    String ENTITY_TYPES       = "/entity_types";
-    String PROPERTY_TYPES     = "/property_types";
-    String ADVANCED           = "/advanced";
-    String FQN                = "/fqn";
-    String KEYWORD            = "kw";
-    String ENTITY_TYPE_ID     = "eid";
-    String PROPERTY_TYPE_ID   = "pid";
+    String POPULAR               = "/popular";
+    String ORGANIZATIONS         = "/organizations";
+    String ENTITY_TYPES          = "/entity_types";
+    String PROPERTY_TYPES        = "/property_types";
+    String ADVANCED              = "/advanced";
+    String FQN                   = "/fqn";
+    String KEYWORD               = "kw";
+    String ENTITY_TYPE_ID        = "eid";
+    String PROPERTY_TYPE_ID      = "pid";
+
+    String ENTITY_SET_ID         = "entitySetId";
+    String NUM_RESULTS           = "numResults";
+
+    String ENTITY_SET_ID_PATH    = "/{" + ENTITY_SET_ID + "}";
+    String NUM_RESULTS_PATH      = "/{" + NUM_RESULTS + "}";
 
     /**
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
