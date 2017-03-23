@@ -1,12 +1,16 @@
 package com.dataloom.edm.internal;
 
-import com.dataloom.edm.type.EntityType;
-import com.dataloom.serializer.AbstractJacksonSerializationTest;
+import java.io.IOException;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import com.dataloom.data.serializers.FullQualifedNameJacksonDeserializer;
 import com.dataloom.data.serializers.FullQualifedNameJacksonSerializer;
+import com.dataloom.edm.type.EntityType;
 import com.dataloom.mapstores.TestDataFactory;
+import com.dataloom.serializer.AbstractJacksonSerializationTest;
 
 public class EntityTypeSerializerTest extends AbstractJacksonSerializationTest<EntityType> {
 
@@ -26,5 +30,12 @@ public class EntityTypeSerializerTest extends AbstractJacksonSerializationTest<E
     @Override
     protected Class<EntityType> getClazz() {
         return EntityType.class;
+    }
+
+    @Test
+    public void testIncludesCategry() throws IOException {
+        String json = serialize( getSampleData() ).getJsonString();
+        logger.debug( json );
+        Assert.assertTrue( "Json must contain category property", json.contains( "category" ) );
     }
 }
