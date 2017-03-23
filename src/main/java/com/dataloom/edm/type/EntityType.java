@@ -37,7 +37,7 @@ import com.google.common.base.Preconditions;
 public class EntityType extends ComplexType {
     private final LinkedHashSet<UUID> key;
     private final Optional<UUID>      baseType;
-    private transient int h = 0;
+    private transient int             h = 0;
 
     @JsonCreator
     public EntityType(
@@ -49,8 +49,16 @@ public class EntityType extends ComplexType {
             @JsonProperty( SerializationConstants.KEY_FIELD ) LinkedHashSet<UUID> key,
             @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) LinkedHashSet<UUID> properties,
             @JsonProperty( SerializationConstants.BASE_TYPE_FIELD ) Optional<UUID> baseType,
-            @JsonProperty( SerializationConstants.CATEGORY ) SecurableObjectType category ) {
-        super( id, type, title, description, schemas, properties, baseType, category );
+            @JsonProperty( SerializationConstants.CATEGORY ) Optional<SecurableObjectType> category ) {
+        super(
+                id,
+                type,
+                title,
+                description,
+                schemas,
+                properties,
+                baseType,
+                category.or( SecurableObjectType.EntityType ) );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
         Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
         Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
@@ -68,7 +76,7 @@ public class EntityType extends ComplexType {
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
             Optional<UUID> baseType,
-            SecurableObjectType category ) {
+            Optional<SecurableObjectType> category ) {
         this( Optional.of( id ), type, title, description, schemas, key, properties, baseType, category );
     }
 
@@ -80,10 +88,19 @@ public class EntityType extends ComplexType {
             LinkedHashSet<UUID> key,
             LinkedHashSet<UUID> properties,
             Optional<UUID> baseType,
-            SecurableObjectType category ) {
-        this( Optional.absent(), type, title, Optional.of( description ), schemas, key, properties, baseType, category );
+            Optional<SecurableObjectType> category ) {
+        this(
+                Optional.absent(),
+                type,
+                title,
+                Optional.of( description ),
+                schemas,
+                key,
+                properties,
+                baseType,
+                category );
     }
-    
+
     // TODO: It seems the objects do not allow property types from the different schemas.
     @JsonProperty( SerializationConstants.KEY_FIELD )
     public Set<UUID> getKey() {
@@ -95,7 +112,8 @@ public class EntityType extends ComplexType {
         return baseType;
     }
 
-    @Override public boolean equals( Object o ) {
+    @Override
+    public boolean equals( Object o ) {
         if ( this == o )
             return true;
         if ( o == null || getClass() != o.getClass() )
@@ -110,7 +128,8 @@ public class EntityType extends ComplexType {
         return baseType.equals( that.baseType );
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         if ( h == 0 ) {
             int result = super.hashCode();
             result = 31 * result + key.hashCode();
@@ -123,6 +142,7 @@ public class EntityType extends ComplexType {
     @Override
     public String toString() {
         return "EntityType [key=" + key + ", properties=" + getProperties() + ", baseType=" + baseType + ", schemas="
-                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description + "]";
+                + schemas + ", type=" + type + ", id=" + id + ", title=" + title + ", description=" + description
+                + ", category=" + getCategory().toString() + "]";
     }
 }

@@ -92,14 +92,10 @@ public final class TestDataFactory {
                 Sets.newLinkedHashSet( Sets
                         .union( k, propertyTypes ) ),
                 Optional.of( parentId ),
-                SecurableObjectType.EntityType );
+                Optional.of( SecurableObjectType.EntityType ) );
     }
     
     public static EdgeType edgeType( PropertyType... keys ) {
-        LinkedHashSet<UUID> k = keys.length > 0
-                ? Arrays.asList( keys ).stream().map( PropertyType::getId )
-                        .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
-                : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
         return new EdgeType(
                 Optional.absent(),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),

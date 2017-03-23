@@ -21,7 +21,7 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
     private final LinkedHashSet<UUID> properties;
     private final Optional<UUID>      baseType;
     private final SecurableObjectType category;
-    private transient int h = 0;
+    private transient int             h = 0;
 
     @JsonCreator
     public ComplexType(
@@ -61,7 +61,7 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
             SecurableObjectType category ) {
         this( Optional.absent(), type, title, Optional.of( description ), schemas, properties, baseType, category );
     }
-    
+
     @JsonProperty( SerializationConstants.PARENT_TYPE_FIELD )
     public Optional<UUID> getBaseType() {
         return baseType;
@@ -85,15 +85,18 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
     public SecurableObjectType getCategory() {
         return category;
     }
-  
+
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ( ( baseType == null ) ? 0 : baseType.hashCode() );
-        result = prime * result + ( ( category == null ) ? 0 : category.hashCode() );
-        result = prime * result + ( ( properties == null ) ? 0 : properties.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            int result = super.hashCode();
+            result = prime * result + ( ( baseType == null ) ? 0 : baseType.hashCode() );
+            result = prime * result + ( ( category == null ) ? 0 : category.hashCode() );
+            result = prime * result + ( ( properties == null ) ? 0 : properties.hashCode() );
+            h = result;
+        }
+        return h;
     }
 
     @Override
