@@ -53,21 +53,6 @@ public interface PrincipalApi {
     @GET( BASE + USERS + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
 
-    @PUT( BASE + USERS + USER_ID_PATH + ROLES )
-    Void setUserRoles( @Path( USER_ID ) String userId, @Body Set<String> roles );
-
-    @PUT( BASE + USERS + USER_ID_PATH + ROLES + ROLE_PATH )
-    Void addRoleToUser( @Path( USER_ID ) String userId, @Path( ROLE ) String role );
-
-    @DELETE( BASE + USERS + USER_ID_PATH + ROLES + ROLE_PATH )
-    Void removeRoleFromUser( @Path( USER_ID ) String userId, @Path( ROLE ) String role );
-
-    @GET( BASE + ROLES )
-    Map<String, List<Auth0UserBasic>> getAllUsersGroupByRole();
-
-    @GET( BASE + ROLES + ROLE_PATH )
-    List<Auth0UserBasic> getAllUsersOfRole( @Path( ROLE ) String role );
-
     @GET( BASE + USERS + SEARCH + SEARCH_QUERY_PATH )
     Map<String, Auth0UserBasic> searchAllUsers( @Path( SEARCH_QUERY ) String searchQuery );
 
