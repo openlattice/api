@@ -33,7 +33,7 @@ public class EntityTypeSerializerTest extends AbstractJacksonSerializationTest<E
     }
 
     @Test
-    public void testIncludesCategry() throws IOException {
+    public void testIncludesCategory() throws IOException {
         String json = serialize( getSampleData() ).getJsonString();
         logger.debug( json );
         Assert.assertTrue( "Json must contain category property", json.contains( "category" ) );
