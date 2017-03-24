@@ -93,5 +93,18 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
+    
+    /**
+     * Creates a new set of entities for the latest syncId.
+     * @param entitySetId The id of the entity set to write to.
+     * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
+     *                 and stable across repeated integrations of data. If either constraint is violated then data may
+     *                 be overwritten or duplicated.
+     * @return
+     */
+    @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
+    Void createEntityData(
+            @Path( SET_ID ) UUID entitySetId,
+            @Body Map<String, SetMultimap<UUID, Object>> entities );
 
 }
