@@ -60,10 +60,10 @@ public class EntityType extends ComplexType {
                 baseType,
                 category.or( SecurableObjectType.EntityType ) );
         this.key = Preconditions.checkNotNull( key, "Entity set key properties cannot be null" );
-        Preconditions.checkArgument( !key.isEmpty(), "Key properties cannot be empty" );
+        Preconditions.checkArgument( !key.isEmpty() || baseType.isPresent(), "Key properties cannot be empty" );
         Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
         Preconditions
-                .checkArgument( properties.containsAll( key ), "Properties must include all the key property types" );
+                .checkArgument( properties.containsAll( key ) || baseType.isPresent(), "Properties must include all the key property types" );
         this.baseType = baseType;
     }
 
