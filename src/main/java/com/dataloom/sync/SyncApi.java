@@ -11,10 +11,8 @@ public interface SyncApi {
     String CONTROLLER         = "/sync";
     String BASE               = SERVICE + CONTROLLER;
 
-    String SYNC_ID            = "syncId";
     String ENTITY_SET_ID      = "entitySetId";
 
-    String SYNC_ID_PATH       = "{" + SYNC_ID + "}";
     String ENTITY_SET_ID_PATH = "{" + ENTITY_SET_ID + "}";
     String NEW                = "/new";
 
