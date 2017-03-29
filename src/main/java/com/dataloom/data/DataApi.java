@@ -110,14 +110,4 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
-    /**
-     * Generates a new sync id for an entity set.
-     * 
-     * @param entitySetId The id of the entity set to generate a new sync id for.
-     * @return A new time-uuid generated in data source api.
-     */
-    @GET( BASE + "/" + SET_ID_PATH + "/syncId" )
-    UUID getNewSyncId(
-            @Path( SET_ID ) UUID entitySetId );
-
 }
