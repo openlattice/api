@@ -103,11 +103,8 @@ public class Auth0UserBasic {
 
     @Override
     public int hashCode() {
-        // user id is a unique identifier.
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ( ( userId == null ) ? 0 : userId.hashCode() );
-        return result;
+        // user id is non-null and uniquely identifies the user.
+        return userId.hashCode();
     }
 
     @Override
