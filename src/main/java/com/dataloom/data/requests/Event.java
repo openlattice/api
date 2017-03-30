@@ -9,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
 
 public class Event {
-    // This is the entityId in the LinkSet table, which can be thought of as an "event id" uniquely identifying this
+    // This is the entityId in the LinkSet, which can be thought of as an "event id" uniquely identifying this
     // event within the LinkSet
     private String                    entityId;
 
     private EntityKey                 src;
     private EntityKey                 dst;
-    // This is the actual values of the LinkSet table, which can be thought of as "event details" of this event
+    // This is the actual values of the LinkSet, which can be thought of as "event details" of this event
     private SetMultimap<UUID, Object> details;
 
     @JsonCreator
