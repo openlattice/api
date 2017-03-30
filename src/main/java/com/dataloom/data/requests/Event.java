@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.data.EntityKey;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
 
@@ -17,7 +18,12 @@ public class Event {
     // This is the actual values of the LinkSet table, which can be thought of as "event details" of this event
     private SetMultimap<UUID, Object> details;
 
-    public Event( String entityId, EntityKey src, EntityKey dst, SetMultimap<UUID, Object> details ) {
+    @JsonCreator
+    public Event( 
+            @JsonProperty( SerializationConstants.ENTITY_ID ) String entityId, 
+            @JsonProperty( SerializationConstants.SRC ) EntityKey src, 
+            @JsonProperty( SerializationConstants.DEST ) EntityKey dst, 
+            @JsonProperty( SerializationConstants.DETAILS_FIELD ) SetMultimap<UUID, Object> details ) {
         this.entityId = entityId;
         this.src = src;
         this.dst = dst;
