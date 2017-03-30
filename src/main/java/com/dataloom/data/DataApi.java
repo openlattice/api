@@ -1,11 +1,13 @@
 package com.dataloom.data;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 import com.dataloom.data.requests.EntitySetSelection;
+import com.dataloom.data.requests.Event;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -36,6 +38,7 @@ public interface DataApi {
 
     String HISTORICAL   = "historical";
     String ENTITY_DATA  = "entitydata";
+    String EVENT_DATA   = "eventdata";
 
     String TICKET       = "ticket";
     String SET_ID       = "setId";
@@ -46,7 +49,7 @@ public interface DataApi {
     String TICKET_PATH  = "{" + TICKET + "}";
 
     String FILE_TYPE    = "fileType";
-    String TOKEN = "token";
+    String TOKEN        = "token";
 
     @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
@@ -69,7 +72,8 @@ public interface DataApi {
     /**
      * 
      * @param entitySetId
-     * @param req If syncId is not specified in the request, will retrieve the data from the latest syncId's. If selectedProperties are not specified, all readable properties will be fetched.
+     * @param req If syncId is not specified in the request, will retrieve the data from the latest syncId's. If
+     *            selectedProperties are not specified, all readable properties will be fetched.
      * @param fileType
      * @return
      */
@@ -81,11 +85,12 @@ public interface DataApi {
 
     /**
      * Creates a new set of entities.
+     * 
      * @param entitySetId The id of the entity set to write to.
      * @param syncId A time-uuid retrieved from data source api.
      * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
-     *                 and stable across repeated integrations of data. If either constraint is violated then data may
-     *                 be overwritten or duplicated.
+     *            and stable across repeated integrations of data. If either constraint is violated then data may be
+     *            overwritten or duplicated.
      * @return
      */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
@@ -93,18 +98,40 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
-    
+
     /**
      * Creates a new set of entities for the latest syncId.
+     * 
      * @param entitySetId The id of the entity set to write to.
      * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
-     *                 and stable across repeated integrations of data. If either constraint is violated then data may
-     *                 be overwritten or duplicated.
+     *            and stable across repeated integrations of data. If either constraint is violated then data may be
+     *            overwritten or duplicated.
      * @return
      */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Void createEntityData(
             @Path( SET_ID ) UUID entitySetId,
             @Body Map<String, SetMultimap<UUID, Object>> entities );
+
+    /**
+     * Create a new set of events
+     * 
+     * @param entitySetId The id of the edge entity set to write to
+     * @param syncId A time-uuid retrieved from data source api
+     * @param events Set of events to create. An event is the usual (String entityId, SetMultimap<UUID, Object> details of entity)
+     *            pairing enriched with source/destination Entity Key
+     * @return
+     */
+    @PUT( BASE + "/" + EVENT_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    Void createEventData(
+            @Path( SET_ID ) UUID entitySetId,
+            @Path( SYNC_ID ) UUID syncId,
+            @Body Set<Event> events );
+
+    @PATCH( BASE + "/" + EVENT_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
+    Void storeEventData(
+            @Path( TICKET ) UUID ticket,
+            @Path( SYNC_ID ) UUID syncId,
+            @Body Set<Event> events );
 
 }
