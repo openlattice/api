@@ -1,15 +1,20 @@
 package com.dataloom.directory.pojo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;
 
-import java.util.*;
-
-@JsonIgnoreProperties( ignoreUnknown = true )
+@JsonIgnoreProperties(
+    ignoreUnknown = true )
 public class Auth0UserBasic {
     public static final String USER_ID_FIELD       = "user_id";
     public static final String EMAIL_FIELD         = "email";
@@ -19,17 +24,17 @@ public class Auth0UserBasic {
     public static final String ROLES_FIELD         = "roles";
     public static final String ORGANIZATIONS_FIELD = "organization";
 
-    private final String      userId;
-    private final String      email;
-    private final String      nickname;
-    private final String      username;
-    private final Set<String> roles;
-    private final Set<String> organizations;
+    private final String       userId;
+    private final String       email;
+    private final String       nickname;
+    private final String       username;
+    private final Set<String>  roles;
+    private final Set<String>  organizations;
 
     @SuppressWarnings( "unchecked" )
     @JsonCreator
     @JsonIgnoreProperties(
-            ignoreUnknown = true )
+        ignoreUnknown = true )
     public Auth0UserBasic(
             @JsonProperty( USER_ID_FIELD ) String userId,
             @JsonProperty( EMAIL_FIELD ) String email,
@@ -74,7 +79,7 @@ public class Auth0UserBasic {
         return username;
     }
 
-    @JsonIgnore
+    @JsonProperty( ROLES_FIELD )
     public Set<String> getRoles() {
         return Collections.unmodifiableSet( roles );
     }
@@ -84,7 +89,8 @@ public class Auth0UserBasic {
         return Collections.unmodifiableSet( organizations );
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Auth0UserBasic{" +
                 "userId='" + userId + '\'' +
                 ", email='" + email + '\'' +
@@ -97,16 +103,13 @@ public class Auth0UserBasic {
 
     @Override
     public int hashCode() {
-        //user id is a unique identifier.
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ( ( userId == null ) ? 0 : userId.hashCode() );
-        return result;
+        // user id is non-null and uniquely identifies the user.
+        return userId.hashCode();
     }
 
     @Override
     public boolean equals( Object obj ) {
-        //user id is a unique identifier.
+        // user id is a unique identifier.
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
@@ -116,6 +119,5 @@ public class Auth0UserBasic {
         } else if ( !userId.equals( other.userId ) ) return false;
         return true;
     }
-    
-    
+
 }
