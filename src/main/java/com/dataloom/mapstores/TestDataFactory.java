@@ -144,7 +144,6 @@ public final class TestDataFactory {
                 Optional.of( UUID.randomUUID() ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
-                Optional.of( ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( userPrincipal() ),
                 ImmutableSet.of( rolePrincipal() ) );
