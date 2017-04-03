@@ -6,33 +6,29 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.authorization.Principal;
+import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
-import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
 
 public class Organization extends AbstractSecurableObject {
-    private final Set<UUID>      trustedOrganizations;
     private final Set<String>    autoApprovedEmails;
     private final Set<Principal> members;
     private final Set<Principal> roles;
-    private transient int        h                = 0;
+    private transient int        h = 0;
 
     @JsonCreator
     public Organization(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.TRUSTED_ORGANIZATIONS_FIELD ) Optional<Set<UUID>> trustedOrganizations,
             @JsonProperty( SerializationConstants.EMAILS_FIELD ) Set<String> autoApprovedEmails,
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Principal> roles ) {
         super( id, title, description );
-        this.trustedOrganizations = checkNotNull( trustedOrganizations ).or( ImmutableSet.of() );
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
@@ -46,11 +42,6 @@ public class Organization extends AbstractSecurableObject {
     @JsonProperty( SerializationConstants.DESCRIPTION_FIELD )
     public String getDescription() {
         return description;
-    }
-
-    @JsonProperty( SerializationConstants.TRUSTED_ORGANIZATIONS_FIELD )
-    public Set<UUID> getTrustedOrganizations() {
-        return trustedOrganizations;
     }
 
     @JsonProperty( SerializationConstants.EMAILS_FIELD )
@@ -82,7 +73,6 @@ public class Organization extends AbstractSecurableObject {
             result = prime * result + ( ( autoApprovedEmails == null ) ? 0 : autoApprovedEmails.hashCode() );
             result = prime * result + ( ( members == null ) ? 0 : members.hashCode() );
             result = prime * result + ( ( roles == null ) ? 0 : roles.hashCode() );
-            result = prime * result + ( ( trustedOrganizations == null ) ? 0 : trustedOrganizations.hashCode() );
             h = result;
         }
         return h;
@@ -121,19 +111,12 @@ public class Organization extends AbstractSecurableObject {
         } else if ( !roles.equals( other.roles ) ) {
             return false;
         }
-        if ( trustedOrganizations == null ) {
-            if ( other.trustedOrganizations != null ) {
-                return false;
-            }
-        } else if ( !trustedOrganizations.equals( other.trustedOrganizations ) ) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Organization [trustedOrganizations=" + trustedOrganizations + ", autoApprovedEmails="
+        return "Organization [autoApprovedEmails="
                 + autoApprovedEmails + ", members=" + members + ", roles=" + roles + "]";
     }
 
