@@ -67,6 +67,7 @@ public class OrganizationRole extends AbstractSecurableObject {
     }
 
     @Override
+    @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.OrganizationRole;
     }
