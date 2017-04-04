@@ -100,7 +100,7 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     /**
-     * Creates a new set of entities for the latest syncId.
+     * Creates a new set of entities for the specified entity set's latest sync id.
      * 
      * @param entitySetId The id of the entity set to write to.
      * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
