@@ -39,6 +39,7 @@ import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
 import com.dataloom.requests.Status;
+import com.datastax.driver.core.utils.UUIDs;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -144,7 +145,6 @@ public final class TestDataFactory {
                 Optional.of( UUID.randomUUID() ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
-                Optional.of( ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( userPrincipal() ),
                 ImmutableSet.of( rolePrincipal() ) );
@@ -237,7 +237,7 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey() {
-        return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ) );
+        return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ), UUIDs.timeBased() );
     }
     
     public static RoleKey roleKey(){
