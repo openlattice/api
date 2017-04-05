@@ -72,7 +72,7 @@ public interface DataApi {
     /**
      * 
      * @param entitySetId
-     * @param req If syncId is not specified in the request, will retrieve the data from the latest syncId's. If
+     * @param req If syncId is not specified in the request, will retrieve the data from the current syncId's. If
      *            selectedProperties are not specified, all readable properties will be fetched.
      * @param fileType
      * @return
@@ -100,7 +100,7 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     /**
-     * Creates a new set of entities for the specified entity set's latest sync id.
+     * Creates a new set of entities for the specified entity set's current sync id.
      * 
      * @param entitySetId The id of the entity set to write to.
      * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
