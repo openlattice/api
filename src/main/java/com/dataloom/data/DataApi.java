@@ -118,7 +118,7 @@ public interface DataApi {
      * 
      * @param entitySetId The id of the edge entity set to write to
      * @param syncId A time-uuid retrieved from data source api
-     * @param events Set of events to create. An event is the usual (String entityId, SetMultimap<UUID, Object> details of entity)
+     * @param events Set of events to create. An event is the usual (String entityId, SetMultimap &lt; UUID, Object &gt; details of entity)
      *            pairing enriched with source/destination Entity Key
      * @return
      */
