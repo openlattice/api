@@ -20,7 +20,7 @@ public class BulkDataCreation {
     }
 
     @JsonProperty( SerializationConstants.ENTITIES )
-    public Map<UUID, Entity> getEntites() {
+    public Map<UUID, Entity> getEntities() {
         return entities;
     }
 
