@@ -81,6 +81,7 @@ public final class SerializationConstants {
     public static final String ACL_OBJECT_ROOT             = "aclRoot";
     public static final String ACL_OBJECT_CHILD            = "aclChild";
     public static final String ENTITIES                    = "entities";
+    public static final String CONNECTIONS                 = "connections";
 
     public static final String MEMBERS_FIELD               = "members";
     public static final String ROLES                       = "roles";

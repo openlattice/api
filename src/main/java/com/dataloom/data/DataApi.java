@@ -6,8 +6,9 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import com.dataloom.data.requests.BulkDataCreation;
 import com.dataloom.data.requests.EntitySetSelection;
-import com.dataloom.data.requests.Event;
+import com.dataloom.data.requests.Connection;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -36,20 +37,20 @@ public interface DataApi {
      * To discuss paths later; perhaps batch this with EdmApi paths
      */
 
-    String HISTORICAL   = "historical";
-    String ENTITY_DATA  = "entitydata";
-    String EVENT_DATA   = "eventdata";
+    String HISTORICAL      = "historical";
+    String ENTITY_DATA     = "entitydata";
+    String CONNECTION_DATA = "connectiondata";
 
-    String TICKET       = "ticket";
-    String SET_ID       = "setId";
-    String SYNC_ID      = "syncId";
+    String TICKET          = "ticket";
+    String SET_ID          = "setId";
+    String SYNC_ID         = "syncId";
 
-    String SET_ID_PATH  = "{" + SET_ID + "}";
-    String SYNC_ID_PATH = "{" + SYNC_ID + "}";
-    String TICKET_PATH  = "{" + TICKET + "}";
+    String SET_ID_PATH     = "{" + SET_ID + "}";
+    String SYNC_ID_PATH    = "{" + SYNC_ID + "}";
+    String TICKET_PATH     = "{" + TICKET + "}";
 
-    String FILE_TYPE    = "fileType";
-    String TOKEN        = "token";
+    String FILE_TYPE       = "fileType";
+    String TOKEN           = "token";
 
     @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
@@ -114,24 +115,27 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     /**
-     * Create a new set of events
+     * Create a new set of connections
      * 
      * @param entitySetId The id of the edge entity set to write to
      * @param syncId A time-uuid retrieved from data source api
-     * @param events Set of events to create. An event is the usual (String entityId, SetMultimap &lt; UUID, Object &gt; details of entity)
-     *            pairing enriched with source/destination Entity Key
+     * @param connections Set of connections to create. A connection is the usual (String entityId, SetMultimap &lt;
+     *            UUID, Object &gt; details of entity) pairing enriched with source/destination Entity Key
      * @return
      */
-    @PUT( BASE + "/" + EVENT_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
-    Void createEventData(
+    @PUT( BASE + "/" + CONNECTION_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    Void createConnectionData(
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
-            @Body Set<Event> events );
+            @Body Set<Connection> connections );
 
-    @PATCH( BASE + "/" + EVENT_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
-    Void storeEventData(
+    @PATCH( BASE + "/" + CONNECTION_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
+    Void storeConnectionData(
             @Path( TICKET ) UUID ticket,
             @Path( SYNC_ID ) UUID syncId,
-            @Body Set<Event> events );
+            @Body Set<Connection> connections );
+
+    @PATCH( BASE + "/" + ENTITY_DATA )
+    Void createEntityAndConnectionData( @Body BulkDataCreation data );
 
 }
