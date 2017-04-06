@@ -17,16 +17,17 @@ public interface SyncApi {
 
     String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
     String SYNC_ID_PATH       = "/{" + SYNC_ID + "}";
-    String NEW                = "/new";
+    String CURRENT            = "/current";
     String LATEST             = "/latest";
 
     /**
-     * Generates a new sync id for an entity set. If the entity set has no current sync id, the new one is set as current.
+     * Generates a new sync id for an entity set. If the entity set has no current sync id, the new one is set as
+     * current.
      * 
      * @param entitySetId The id of the entity set to generate a new sync id for.
      * @return A new time-uuid generated in data source api.
      */
-    @GET( BASE + "/" + ENTITY_SET_ID_PATH + NEW )
+    @GET( BASE + ENTITY_SET_ID_PATH )
     UUID acquireSyncId(
             @Path( ENTITY_SET_ID ) UUID entitySetId );
 
@@ -36,7 +37,7 @@ public interface SyncApi {
      * @param entitySetId The id of the entity set to load the current sync id for.
      * @return The current time-uuid for the entity set.
      */
-    @GET( BASE + "/" + ENTITY_SET_ID_PATH )
+    @GET( BASE + ENTITY_SET_ID_PATH + CURRENT )
     UUID getCurrentSyncId( @Path( ENTITY_SET_ID ) UUID entitySetId );
 
     /**
@@ -48,14 +49,14 @@ public interface SyncApi {
      */
     @POST( BASE + ENTITY_SET_ID_PATH + SYNC_ID_PATH )
     Void setCurrentSyncId( @Path( ENTITY_SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
-    
+
     /**
      * Retrieves the most recently created sync id for the given entity set
      * 
      * @param entitySetId The id of the entity set to load the latest sync id for.
      * @return The latest time-uuid for the entity set.
      */
-    @GET( BASE + LATEST + "/" + ENTITY_SET_ID_PATH )
+    @GET( BASE + ENTITY_SET_ID_PATH + LATEST )
     UUID getLatestSyncId( @Path( ENTITY_SET_ID ) UUID entitySetId );
 
 }
