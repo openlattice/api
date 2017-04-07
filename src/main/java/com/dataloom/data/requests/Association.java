@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
 
-public class Connection {
+public class Association {
     private EntityKey                 key;
     private EntityKey                 src;
     private EntityKey                 dst;
-    // This is the actual values of the LinkSet, which can be thought of as "connection details" of this connection
+    // This is the actual values of the LinkSet, which can be thought of as "association details" of this association
     private SetMultimap<UUID, Object> details;
 
     @JsonCreator
-    public Connection(
+    public Association(
             @JsonProperty( SerializationConstants.KEY_FIELD ) EntityKey key,
             @JsonProperty( SerializationConstants.SRC ) EntityKey src,
             @JsonProperty( SerializationConstants.DEST ) EntityKey dst,
