@@ -6,8 +6,9 @@ import java.util.UUID;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
+import com.dataloom.data.requests.Association;
+import com.dataloom.data.requests.BulkDataCreation;
 import com.dataloom.data.requests.EntitySetSelection;
-import com.dataloom.data.requests.Event;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -36,20 +37,20 @@ public interface DataApi {
      * To discuss paths later; perhaps batch this with EdmApi paths
      */
 
-    String HISTORICAL   = "historical";
-    String ENTITY_DATA  = "entitydata";
-    String EVENT_DATA   = "eventdata";
+    String HISTORICAL       = "historical";
+    String ENTITY_DATA      = "entitydata";
+    String ASSOCIATION_DATA = "associationndata";
 
-    String TICKET       = "ticket";
-    String SET_ID       = "setId";
-    String SYNC_ID      = "syncId";
+    String TICKET           = "ticket";
+    String SET_ID           = "setId";
+    String SYNC_ID          = "syncId";
 
-    String SET_ID_PATH  = "{" + SET_ID + "}";
-    String SYNC_ID_PATH = "{" + SYNC_ID + "}";
-    String TICKET_PATH  = "{" + TICKET + "}";
+    String SET_ID_PATH      = "{" + SET_ID + "}";
+    String SYNC_ID_PATH     = "{" + SYNC_ID + "}";
+    String TICKET_PATH      = "{" + TICKET + "}";
 
-    String FILE_TYPE    = "fileType";
-    String TOKEN        = "token";
+    String FILE_TYPE        = "fileType";
+    String TOKEN            = "token";
 
     @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
@@ -114,24 +115,27 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     /**
-     * Create a new set of events
+     * Create a new set of associations
      * 
      * @param entitySetId The id of the edge entity set to write to
      * @param syncId A time-uuid retrieved from data source api
-     * @param events Set of events to create. An event is the usual (String entityId, SetMultimap &lt; UUID, Object &gt; details of entity)
-     *            pairing enriched with source/destination Entity Key
+     * @param associations Set of associations to create. An association is the usual (String entityId, SetMultimap &lt;
+     *            UUID, Object &gt; details of entity) pairing enriched with source/destination Entity Key
      * @return
      */
-    @PUT( BASE + "/" + EVENT_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
-    Void createEventData(
+    @PUT( BASE + "/" + ASSOCIATION_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
+    Void createAssociationData(
             @Path( SET_ID ) UUID entitySetId,
             @Path( SYNC_ID ) UUID syncId,
-            @Body Set<Event> events );
+            @Body Set<Association> associations );
 
-    @PATCH( BASE + "/" + EVENT_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
-    Void storeEventData(
+    @PATCH( BASE + "/" + ASSOCIATION_DATA + "/" + TICKET_PATH + "/" + SYNC_ID_PATH )
+    Void storeAssociationData(
             @Path( TICKET ) UUID ticket,
             @Path( SYNC_ID ) UUID syncId,
-            @Body Set<Event> events );
+            @Body Set<Association> associations );
+
+    @PATCH( BASE + "/" + ENTITY_DATA )
+    Void createEntityAndAssociationData( @Body BulkDataCreation data );
 
 }

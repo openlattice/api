@@ -61,6 +61,7 @@ public final class SerializationConstants {
     public static final String PROPERTY_TYPES              = "propertyTypes";
     public static final String SYNC_ID                     = "syncId";
     public static final String SYNC_IDS                    = "syncIds";
+    public static final String SYNC_TICKETS                = "syncTickets";
     public static final String REQUEST                     = "request";
     public static final String REQUEST_ID                  = "requestId";
     public static final String REQUESTING_USER             = "requestingUser";
@@ -81,6 +82,7 @@ public final class SerializationConstants {
     public static final String ACL_OBJECT_ROOT             = "aclRoot";
     public static final String ACL_OBJECT_CHILD            = "aclChild";
     public static final String ENTITIES                    = "entities";
+    public static final String ASSOCIATIONS                = "associations";
 
     public static final String MEMBERS_FIELD               = "members";
     public static final String ROLES                       = "roles";

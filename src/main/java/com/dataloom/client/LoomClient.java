@@ -5,6 +5,7 @@ import com.dataloom.client.RetrofitFactory.Environment;
 import com.dataloom.client.serialization.SerializableSupplier;
 import com.dataloom.data.DataApi;
 import com.dataloom.edm.EdmApi;
+import com.dataloom.sync.SyncApi;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.cache.CacheBuilder;
@@ -65,6 +66,10 @@ public class LoomClient implements ApiFactoryFactory {
 
     public EdmApi getEdmApi() throws ExecutionException {
         return (EdmApi) get().create( EdmApi.class );
+    }
+    
+    public SyncApi getSyncApi() throws ExecutionException {
+        return (SyncApi) get().create( SyncApi.class );
     }
 
     public ApiFactory get() {
