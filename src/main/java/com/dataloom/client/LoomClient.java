@@ -30,14 +30,14 @@ public class LoomClient implements ApiFactoryFactory {
     public LoomClient( Environment environment, SerializableSupplier<String> jwtToken ) {
         this( () -> {
             final Retrofit retrofit = RetrofitFactory.newClient( environment, jwtToken );
-            return (ApiFactory) clazz -> retrofit.create( clazz );
+            return (ApiFactory) retrofit::create;
         } );
     }
 
     public LoomClient( SerializableSupplier<String> jwtToken ) {
         this( () -> {
             final Retrofit retrofit = RetrofitFactory.newClient( jwtToken );
-            return (ApiFactory) clazz -> retrofit.create( clazz );
+            return (ApiFactory) retrofit::create;
         } );
     }
 
