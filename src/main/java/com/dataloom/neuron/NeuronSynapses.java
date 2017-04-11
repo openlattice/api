@@ -21,5 +21,5 @@ package com.dataloom.neuron;
 
 public enum NeuronSynapses {
 
-    NOTIFICATIONS
+    ACL_KEY
 }
