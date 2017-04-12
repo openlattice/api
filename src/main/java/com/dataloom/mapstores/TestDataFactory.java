@@ -66,7 +66,7 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityType( PropertyType... keys ) {
-        return childEntityType( UUID.randomUUID(), keys );
+        return childEntityType( null, keys );
     }
 
     public static EntityType childEntityType( UUID parentId, PropertyType... keys ) {
@@ -92,7 +92,7 @@ public final class TestDataFactory {
                 k,
                 Sets.newLinkedHashSet( Sets
                         .union( k, propertyTypes ) ),
-                Optional.of( parentId ),
+                Optional.fromNullable( parentId ),
                 Optional.of( SecurableObjectType.EntityType ) );
     }
     
