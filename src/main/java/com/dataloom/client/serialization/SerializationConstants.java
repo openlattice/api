@@ -132,4 +132,6 @@ public final class SerializationConstants {
     public static final String CATEGORY                    = "category";
 
     public static final String EXPLANATION                 = "explanation";
+
+    public static final String PAYLOAD_FIELD               = "payload";
 }
