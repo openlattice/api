@@ -21,33 +21,40 @@ package com.dataloom.neuron.signals;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import com.dataloom.client.serialization.SerializationConstants;
+import com.dataloom.neuron.NeuronSignal;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Signal implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger( Signal.class );
 
-    private String type;
-    private Object payload;
+    private NeuronSignal     type;
+    private Optional<Object> payload;
 
-    public Signal( String type, Object payload ) {
+    @JsonCreator
+    public Signal(
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) NeuronSignal type,
+            @JsonProperty( SerializationConstants.PAYLOAD_FIELD ) Optional<Object> payload ) {
 
-        checkArgument( StringUtils.isNotBlank( type ) );
-
-        this.type = type;
-        this.payload = checkNotNull( payload );
+        this.type = checkNotNull( type );
+        this.payload = payload;
     }
 
-    public String getType() {
+    @JsonProperty( SerializationConstants.TYPE_FIELD )
+    public NeuronSignal getType() {
         return type;
     }
 
-    public Object getPayload() {
+    @JsonProperty( SerializationConstants.PAYLOAD_FIELD )
+    public Optional<Object> getPayload() {
         return payload;
     }
 }

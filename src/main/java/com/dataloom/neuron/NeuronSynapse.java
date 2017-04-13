@@ -19,7 +19,17 @@
 
 package com.dataloom.neuron;
 
-public enum NeuronSynapses {
+public enum NeuronSynapse {
 
-    ACL_KEY
+    ACL_KEY();
+
+    private final String name;
+
+    NeuronSynapse() {
+        this.name = "NEURON_SYNAPSE_" + this.name();
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }
