@@ -237,7 +237,11 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey() {
-        return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ), UUIDs.timeBased() );
+        return entityKey( UUID.randomUUID() );
+    }
+    
+    public static EntityKey entityKey( UUID entitySetId ) {
+        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), UUIDs.timeBased() );
     }
     
     public static RoleKey roleKey(){
