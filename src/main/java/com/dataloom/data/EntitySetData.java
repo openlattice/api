@@ -3,18 +3,21 @@ package com.dataloom.data;
 import java.util.Set;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.collect.SetMultimap;
 
 public class EntitySetData {
-    private Set<FullQualifiedName>                           authorizedPropertyFqns;
 
-    @JsonUnwrapped
+    private static final Logger                              logger = LoggerFactory
+            .getLogger( EntitySetData.class );
+
+    private Set<FullQualifiedName>                           authorizedPropertyFqns;
     private Iterable<SetMultimap<FullQualifiedName, Object>> entities;
 
     @JsonCreator
@@ -25,14 +28,13 @@ public class EntitySetData {
         this.entities = entities;
     }
 
-    @JsonIgnore
     public Set<FullQualifiedName> getAuthorizedPropertyFqns() {
         return authorizedPropertyFqns;
     }
 
-    @JsonProperty( SerializationConstants.ENTITIES )
+    @JsonValue
     public Iterable<SetMultimap<FullQualifiedName, Object>> getEntities() {
-        return entities;
+        return entities::iterator;
     }
 
 }
