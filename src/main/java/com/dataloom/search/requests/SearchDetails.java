@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Preconditions;
 
 public class SearchDetails implements Serializable {
     private static final long serialVersionUID = -6691065251875288358L;
@@ -19,6 +20,9 @@ public class SearchDetails implements Serializable {
             @JsonProperty( SerializationConstants.SEARCH_TERM ) String searchTerm,
             @JsonProperty( SerializationConstants.PROPERTY_FIELD ) UUID propertyType,
             @JsonProperty( SerializationConstants.EXACT ) boolean exactMatch ) {
+        Preconditions.checkNotNull( searchTerm );
+        Preconditions.checkNotNull( propertyType );
+
         this.searchTerm = searchTerm;
         this.propertyType = propertyType;
         this.exactMatch = exactMatch;
