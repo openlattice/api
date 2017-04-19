@@ -1,7 +1,9 @@
 package com.dataloom.search;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.dataloom.data.requests.NeighborEntityDetails;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.search.requests.AdvancedSearch;
 import com.dataloom.search.requests.FQNSearchTerm;
@@ -18,28 +20,30 @@ public interface SearchApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE               = "/datastore";
-    String CONTROLLER            = "/search";
-    String BASE                  = SERVICE + CONTROLLER;
+    String SERVICE            = "/datastore";
+    String CONTROLLER         = "/search";
+    String BASE               = SERVICE + CONTROLLER;
 
     /*
      * Normal params
      */
-    String POPULAR               = "/popular";
-    String ORGANIZATIONS         = "/organizations";
-    String ENTITY_TYPES          = "/entity_types";
-    String PROPERTY_TYPES        = "/property_types";
-    String ADVANCED              = "/advanced";
-    String FQN                   = "/fqn";
-    String KEYWORD               = "kw";
-    String ENTITY_TYPE_ID        = "eid";
-    String PROPERTY_TYPE_ID      = "pid";
+    String POPULAR            = "/popular";
+    String ORGANIZATIONS      = "/organizations";
+    String ENTITY_TYPES       = "/entity_types";
+    String PROPERTY_TYPES     = "/property_types";
+    String ADVANCED           = "/advanced";
+    String FQN                = "/fqn";
+    String KEYWORD            = "kw";
+    String ENTITY_TYPE_ID     = "eid";
+    String PROPERTY_TYPE_ID   = "pid";
 
-    String ENTITY_SET_ID         = "entitySetId";
-    String NUM_RESULTS           = "numResults";
+    String ENTITY_SET_ID      = "entitySetId";
+    String NUM_RESULTS        = "numResults";
+    String ENTITY_ID          = "entityId";
 
-    String ENTITY_SET_ID_PATH    = "/{" + ENTITY_SET_ID + "}";
-    String NUM_RESULTS_PATH      = "/{" + NUM_RESULTS + "}";
+    String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
+    String NUM_RESULTS_PATH   = "/{" + NUM_RESULTS + "}";
+    String ENTITY_ID_PATH     = "/{" + ENTITY_ID + "}";
 
     /**
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
@@ -146,5 +150,17 @@ public interface SearchApi {
      */
     @POST( BASE + PROPERTY_TYPES + FQN )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
+
+    /**
+     * Executes a search for all neighbors of an entity that are connected by an association
+     * 
+     * @param entitySetId the entity set id of the entity
+     * @param entityId the entity key id of the entity
+     * @return A list of objects containing information about the neighbor and association
+     */
+    @GET( BASE + ENTITY_SET_ID_PATH + ENTITY_ID_PATH )
+    List<NeighborEntityDetails> executeEntityNeighborSearch(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Path( ENTITY_ID ) UUID entityId );
 
 }
