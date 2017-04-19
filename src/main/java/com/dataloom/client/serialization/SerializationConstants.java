@@ -70,14 +70,16 @@ public final class SerializationConstants {
     public static final String SCHEMA                        = "schema";
     public static final String SCHEMAS                       = "schemas";
     public static final String TIMESTAMP                     = "timestamp";
-    public static final String TITLE_FIELD                   = "title";                 // for EntitySet
+    public static final String TITLE_FIELD                   = "title";                   // for EntitySet
     public static final String TYPE_FIELD                    = "type";
     public static final String USER_ID                       = "userId";
     public static final String ACL                           = "acl";
 
     public static final String ACE                           = "ace";
     public static final String ACES                          = "aces";
-    public static final String ACL_OBJECT_PATH               = "aclKey";                // Correspond to List<AclKey>, a
+    public static final String ACL_OBJECT_PATH               = "aclKey";                  // Correspond to List<AclKey>,
+                                                                                          // a
+
     // single hierarchy of
     // securable objects.
     public static final String ACL_OBJECT_ROOT               = "aclRoot";
@@ -139,9 +141,12 @@ public final class SerializationConstants {
 
     public static final String EXPLANATION                   = "explanation";
 
-    public static final String ASSOCIATION_ENTITY_SET_ID     = "associationEntitySetId";
+    public static final String ASSOCIATION_ENTITY_SET        = "associationEntitySet";
     public static final String ASSOCIATION_DETAILS           = "associationDetails";
-    public static final String NEIGHBOR_ENTITY_SET_ID        = "neighborEntitySetId";
+    public static final String ASSOCIATION_PROPERTY_TYPES    = "associationPropertyTypes";
+    public static final String NEIGHBOR_ENTITY_SET           = "neighborEntitySet";
     public static final String NEIGHBOR_ID                   = "neighborId";
     public static final String NEIGHBOR_DETAILS              = "neighborDetails";
+    public static final String NEIGHBOR_PROPERTY_TYPES       = "neighborPropertyTypes";
+
 }
