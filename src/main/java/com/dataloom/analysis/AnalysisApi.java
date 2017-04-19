@@ -1,9 +1,10 @@
 package com.dataloom.analysis;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.analysis.requests.TopUtilizerDetails;
+import com.dataloom.data.EntitySetData;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -26,15 +27,16 @@ public interface AnalysisApi {
      * 
      * @param entitySetId The id of the entity set to sort and return results for
      * @param numResults The number of results to return
-     * @param propertyTypeIds A set of property types which may have multiple values in an entity set. The results will
+     * @param topUtilizerDetails A list of objects each specifying an association type and at least one neighbor types
+     *            to include in a top utilizers search, as well as an indication of the directionality. The results will
      *            be ordered by the total number of values across all property types provided (i.e. the sum of all the
      *            property types' value array size).
      * @return
      */
     @POST( BASE + ENTITY_SET_ID_PATH + NUM_RESULTS_PATH )
-    List<SetMultimap<UUID, Object>> getTopUtilizers(
+    EntitySetData getTopUtilizers(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( NUM_RESULTS ) int numResults,
-            @Body Set<UUID> propertyTypeIds );
+            @Body List<TopUtilizerDetails> topUtilizerDetails );
 
 }
