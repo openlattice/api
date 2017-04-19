@@ -41,19 +41,19 @@ public interface EdmApi {
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
-    String ID                      = "id";
-    String ENTITY_TYPE_ID          = "entityTypeId";
-    String PROPERTY_TYPE_ID        = "propertyTypeId";
-    String NAME                    = "name";
-    String NAMESPACE               = "namespace";
-    String NAMESPACES              = "namespaces";
-    String ENTITY_SETS             = "entitySets";
-    String ENTITY_TYPES            = "entityTypes";
-    String PROPERTY_TYPES          = "propertyTypes";
-    String SCHEMA                  = "schema";
-    String SCHEMAS                 = "schemas";
-    String FILE_TYPE               = "fileType";
-    String TOKEN                   = "token";
+    String ID                         = "id";
+    String ENTITY_TYPE_ID             = "entityTypeId";
+    String PROPERTY_TYPE_ID           = "propertyTypeId";
+    String NAME                       = "name";
+    String NAMESPACE                  = "namespace";
+    String NAMESPACES                 = "namespaces";
+    String ENTITY_SETS                = "entitySets";
+    String ENTITY_TYPES               = "entityTypes";
+    String PROPERTY_TYPES             = "propertyTypes";
+    String SCHEMA                     = "schema";
+    String SCHEMAS                    = "schemas";
+    String FILE_TYPE                  = "fileType";
+    String TOKEN                      = "token";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
@@ -61,27 +61,27 @@ public interface EdmApi {
      * /property/{namespace}/{name}
      */
 
-    String IDS_PATH                = "/ids";
-    String SCHEMA_PATH             = "/schema";
-    String ENUM_TYPE_PATH          = "/enum/type";
-    String ENTITY_SETS_PATH        = "/entity/set";
-    String ENTITY_TYPE_PATH        = "/entity/type";
-    String PROPERTY_TYPE_PATH      = "/property/type";
-    String COMPLEX_TYPE_PATH       = "/complex/type";
-    String EDGE_TYPE_PATH          = "/edge/type";
-    String HIERARCHY_PATH          = "/hierarchy";
+    String IDS_PATH                   = "/ids";
+    String SCHEMA_PATH                = "/schema";
+    String ENUM_TYPE_PATH             = "/enum/type";
+    String ENTITY_SETS_PATH           = "/entity/set";
+    String ENTITY_TYPE_PATH           = "/entity/type";
+    String PROPERTY_TYPE_PATH         = "/property/type";
+    String COMPLEX_TYPE_PATH          = "/complex/type";
+    String ASSOCIATION_TYPE_PATH      = "/association/type";
+    String HIERARCHY_PATH             = "/hierarchy";
 
-    String NAMESPACE_PATH          = "/{" + NAMESPACE + "}";
-    String NAME_PATH               = "/{" + NAME + "}";
-    String ID_PATH                 = "/{" + ID + "}";
-    String ENTITY_TYPE_ID_PATH     = "/{" + ENTITY_TYPE_ID + "}";
-    String PROPERTY_TYPE_ID_PATH   = "/{" + PROPERTY_TYPE_ID + "}";
+    String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
+    String NAME_PATH                  = "/{" + NAME + "}";
+    String ID_PATH                    = "/{" + ID + "}";
+    String ENTITY_TYPE_ID_PATH        = "/{" + ENTITY_TYPE_ID + "}";
+    String PROPERTY_TYPE_ID_PATH      = "/{" + PROPERTY_TYPE_ID + "}";
 
-    String SCHEMA_BASE_PATH        = BASE + SCHEMA_PATH;
-    String ENTITY_SETS_BASE_PATH   = BASE + ENTITY_SETS_PATH;
-    String ENTITY_TYPE_BASE_PATH   = BASE + ENTITY_TYPE_PATH;
-    String PROPERTY_TYPE_BASE_PATH = BASE + PROPERTY_TYPE_PATH;
-    String EDGE_TYPE_BASE_PATH     = BASE + EDGE_TYPE_PATH;
+    String SCHEMA_BASE_PATH           = BASE + SCHEMA_PATH;
+    String ENTITY_SETS_BASE_PATH      = BASE + ENTITY_SETS_PATH;
+    String ENTITY_TYPE_BASE_PATH      = BASE + ENTITY_TYPE_PATH;
+    String PROPERTY_TYPE_BASE_PATH    = BASE + PROPERTY_TYPE_PATH;
+    String ASSOCIATION_TYPE_BASE_PATH = BASE + ASSOCIATION_TYPE_PATH;
 
     @GET( BASE )
     EntityDataModel getEntityDataModel();
@@ -138,6 +138,9 @@ public interface EdmApi {
 
     @GET( ENTITY_TYPE_BASE_PATH )
     Iterable<EntityType> getEntityTypes();
+
+    @GET( ASSOCIATION_TYPE_BASE_PATH )
+    Iterable<EntityType> getAssociationEntityTypes();
 
     /**
      * Creates an entity type if it doesn't already exist.
@@ -276,13 +279,13 @@ public interface EdmApi {
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
 
-    @POST( EDGE_TYPE_BASE_PATH )
+    @POST( ASSOCIATION_TYPE_BASE_PATH )
     UUID createEdgeType( @Body EdgeType linkingType );
 
-    @DELETE( EDGE_TYPE_BASE_PATH + ID_PATH )
+    @DELETE( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     Void deleteEdgeType( @Path( ID ) UUID linkingTypeId );
 
-    @GET( EDGE_TYPE_BASE_PATH + ID_PATH )
+    @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     EdgeType getEdgeTypeById( @Path( ID ) UUID linkingTypeId );
 
 }
