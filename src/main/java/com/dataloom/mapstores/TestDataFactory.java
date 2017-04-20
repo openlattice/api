@@ -39,6 +39,7 @@ import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.RequestStatus;
 import com.dataloom.requests.Status;
+import com.datastax.driver.core.utils.UUIDs;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -65,7 +66,7 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityType( PropertyType... keys ) {
-        return childEntityType( UUID.randomUUID(), keys );
+        return childEntityType( null, keys );
     }
 
     public static EntityType childEntityType( UUID parentId, PropertyType... keys ) {
@@ -91,7 +92,7 @@ public final class TestDataFactory {
                 k,
                 Sets.newLinkedHashSet( Sets
                         .union( k, propertyTypes ) ),
-                Optional.of( parentId ),
+                Optional.fromNullable( parentId ),
                 Optional.of( SecurableObjectType.EntityType ) );
     }
     
@@ -236,7 +237,11 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey() {
-        return new EntityKey( UUID.randomUUID(), RandomStringUtils.random( 10 ) );
+        return entityKey( UUID.randomUUID() );
+    }
+    
+    public static EntityKey entityKey( UUID entitySetId ) {
+        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), UUIDs.timeBased() );
     }
     
     public static RoleKey roleKey(){
