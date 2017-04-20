@@ -25,7 +25,6 @@ import com.google.common.base.Optional;
  */
 public class OrganizationRole extends AbstractSecurableObject {
     private static final Logger logger                  = LoggerFactory.getLogger( OrganizationRole.class );
-    public static final UUID    DEFAULT_ORGANIZATION_ID = new UUID( 0, 0 );
 
     private UUID                organizationId;
 
