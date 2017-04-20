@@ -10,6 +10,7 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 
 public class EntitySetData {
@@ -20,12 +21,20 @@ public class EntitySetData {
     private Set<FullQualifiedName>                           authorizedPropertyFqns;
     private Iterable<SetMultimap<FullQualifiedName, Object>> entities;
 
-    @JsonCreator
     public EntitySetData(
-            @JsonProperty( SerializationConstants.PROPERTIES_FIELD ) Set<FullQualifiedName> authorizedPropertyFqns,
-            @JsonProperty( SerializationConstants.ENTITIES ) Iterable<SetMultimap<FullQualifiedName, Object>> entities ) {
+            Set<FullQualifiedName> authorizedPropertyFqns,
+            Iterable<SetMultimap<FullQualifiedName, Object>> entities ) {
         this.authorizedPropertyFqns = authorizedPropertyFqns;
         this.entities = entities;
+    }
+
+    /*
+     * Warning: this class is not expected to be deserialized except for test purpose.
+     */
+    @JsonCreator
+    public EntitySetData(
+            Iterable<SetMultimap<FullQualifiedName, Object>> entities ) {
+        this( ImmutableSet.of(), entities );
     }
 
     public Set<FullQualifiedName> getAuthorizedPropertyFqns() {
