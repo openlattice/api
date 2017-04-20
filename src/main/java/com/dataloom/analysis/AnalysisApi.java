@@ -34,7 +34,7 @@ public interface AnalysisApi {
      * @return
      */
     @POST( BASE + ENTITY_SET_ID_PATH + NUM_RESULTS_PATH )
-    EntitySetData getTopUtilizers(
+    Iterable<SetMultimap<Object, Object>> getTopUtilizers(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( NUM_RESULTS ) int numResults,
             @Body List<TopUtilizerDetails> topUtilizerDetails );
