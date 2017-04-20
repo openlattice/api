@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
+import com.dataloom.authorization.SystemRole;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -23,12 +24,12 @@ import com.google.common.base.Optional;
  *
  */
 public class OrganizationRole extends AbstractSecurableObject {
-    private static final Logger logger = LoggerFactory.getLogger( OrganizationRole.class );
+    private static final Logger logger                  = LoggerFactory.getLogger( OrganizationRole.class );
+    public static final UUID    DEFAULT_ORGANIZATION_ID = new UUID( 0, 0 );
 
-    private UUID      organizationId;
+    private UUID                organizationId;
 
-    private Principal principal;
-    private RoleKey   roleKey;
+    private RoleKey             roleKey;
 
     @JsonCreator
     public OrganizationRole(
@@ -39,17 +40,11 @@ public class OrganizationRole extends AbstractSecurableObject {
         super( id, title, description );
         this.organizationId = organizationId;
         this.roleKey = new RoleKey( organizationId, this.id );
-        this.principal = new Principal( PrincipalType.ROLE, getStringRepresentation( organizationId, title ) );
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
     public UUID getOrganizationId() {
         return organizationId;
-    }
-
-    @JsonIgnore
-    public Principal getPrincipal() {
-        return principal;
     }
 
     @JsonIgnore
@@ -59,6 +54,7 @@ public class OrganizationRole extends AbstractSecurableObject {
 
     /**
      * Convenience method to retrieve acl key for this role
+     * 
      * @return
      */
     @JsonIgnore
@@ -71,26 +67,10 @@ public class OrganizationRole extends AbstractSecurableObject {
     public SecurableObjectType getCategory() {
         return SecurableObjectType.OrganizationRole;
     }
-    
+
     @Override
     public String toString() {
-        return getStringRepresentation( organizationId, title );
+        return "OrganizationRole [organizationId=" + organizationId + ", roleKey=" + roleKey + "]";
     }
-    
-    public static String getStringRepresentation( UUID organizationId, String title ){
-        return organizationId + "|" + title;
-    }
-    
-    /**
-     * This method must be consistent with {@link #getStringRepresentation(UUID, String)}
-     */
-    public static UUID getOrganizationId( String stringRep ){
-        try{
-            String[] splitted = stringRep.split( "\\|", 2);
-            return UUID.fromString( splitted[0] );
-        } catch ( Exception e ){
-            logger.error( "Error parsing organizationId from the string representation of role: " + stringRep );
-            throw new IllegalArgumentException( "Error parsing organizationId from the string representation of role: " + stringRep );
-        }
-    }
+
 }
