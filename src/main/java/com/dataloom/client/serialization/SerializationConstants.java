@@ -152,5 +152,4 @@ public final class SerializationConstants {
     public static final String ASSOCIATION_TYPE_ID           = "associationTypeId";
     public static final String NEIGHBOR_TYPE_IDS             = "neighborTypeIds";
     public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
-
 }
