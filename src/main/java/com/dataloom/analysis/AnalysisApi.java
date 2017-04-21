@@ -1,15 +1,13 @@
 package com.dataloom.analysis;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.dataloom.analysis.requests.TopUtilizerDetails;
-import com.dataloom.data.EntitySetData;
 import com.google.common.collect.SetMultimap;
-
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface AnalysisApi {
 
