@@ -65,7 +65,7 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     @GET( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    EntitySetData loadEntitySetData(
+    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType,
             @Query( TOKEN ) String token );
