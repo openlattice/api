@@ -79,7 +79,7 @@ public interface DataApi {
      * @return
      */
     @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
-    EntitySetData loadEntitySetData(
+    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
