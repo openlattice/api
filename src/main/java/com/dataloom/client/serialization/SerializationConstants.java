@@ -82,11 +82,14 @@ public final class SerializationConstants {
     public static final String ACES                          = "aces";
     public static final String ACL_OBJECT_PATH               = "aclKey";                  // Correspond to List<AclKey>,
                                                                                           // a
+
     // single hierarchy of
     // securable objects.
     public static final String ACL_OBJECT_ROOT               = "aclRoot";
     public static final String ACL_OBJECT_CHILD              = "aclChild";
     public static final String ENTITIES                      = "entities";
+    public static final String ASSOCIATIONS                  = "associations";
+    public static final String ENTITY_ID_GENERATOR           = "entityIdGenerator";
 
     public static final String MEMBERS_FIELD                 = "members";
     public static final String ROLES                         = "roles";
@@ -103,6 +106,7 @@ public final class SerializationConstants {
 
     public static final String SEARCH_TERM                   = "searchTerm";
     public static final String SEARCH_FIELDS                 = "searchFields";
+    public static final String EXACT_SEARCH_FIELDS           = "exactSearchFields";
     public static final String MAX_HITS                      = "maxHits";
     public static final String START                         = "start";
     public static final String EXACT                         = "exact";
@@ -139,4 +143,16 @@ public final class SerializationConstants {
     public static final String CATEGORY                      = "category";
 
     public static final String EXPLANATION                   = "explanation";
+
+    public static final String ASSOCIATION_ENTITY_SET        = "associationEntitySet";
+    public static final String ASSOCIATION_DETAILS           = "associationDetails";
+    public static final String ASSOCIATION_PROPERTY_TYPES    = "associationPropertyTypes";
+    public static final String NEIGHBOR_ENTITY_SET           = "neighborEntitySet";
+    public static final String NEIGHBOR_ID                   = "neighborId";
+    public static final String NEIGHBOR_DETAILS              = "neighborDetails";
+    public static final String NEIGHBOR_PROPERTY_TYPES       = "neighborPropertyTypes";
+
+    public static final String ASSOCIATION_TYPE_ID           = "associationTypeId";
+    public static final String NEIGHBOR_TYPE_IDS             = "neighborTypeIds";
+    public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
 }
