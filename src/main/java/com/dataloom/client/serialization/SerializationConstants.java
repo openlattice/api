@@ -36,8 +36,10 @@ public final class SerializationConstants {
     public static final String ENTITY_DEFINITIONS_FIELD      = "entityDefinitions";
     public static final String ASSOCIATION_DEFINITIONS_FIELD = "associationDefinitions";
 
+    public static final String ACL_KEY                       = "aclKey";
+    public static final String AUDIT_ID                      = "auditId";
+    public static final String BLOCK_ID                      = "blockId";
     public static final String ENTITY_FIELD                  = "entity";
-
     public static final String ENTITY_ID                     = "entityId";
     public static final String ENTITY_SET_FIELD              = "entitySet";
     public static final String ENTITY_SET_NAME               = "entitySetName";
@@ -69,6 +71,7 @@ public final class SerializationConstants {
     public static final String REQUEST_STATUS                = "status";
     public static final String SCHEMA                        = "schema";
     public static final String SCHEMAS                       = "schemas";
+    public static final String TIME_ID                       = "timeId";
     public static final String TIMESTAMP                     = "timestamp";
     public static final String TITLE_FIELD                   = "title";                   // for EntitySet
     public static final String TYPE_FIELD                    = "type";
