@@ -12,7 +12,7 @@ public class AssociationDetails {
 
     public AssociationDetails(
             @JsonProperty( SerializationConstants.SRC ) LinkedHashSet<EntityType> srcEntityTypes,
-            @JsonProperty( SerializationConstants.DEST ) LinkedHashSet<EntityType> dstEntityTypes,
+            @JsonProperty( SerializationConstants.DST ) LinkedHashSet<EntityType> dstEntityTypes,
             @JsonProperty( SerializationConstants.BIDIRECTIONAL ) boolean bidirectional ) {
         this.srcEntityTypes = srcEntityTypes;
         this.dstEntityTypes = dstEntityTypes;
@@ -24,7 +24,7 @@ public class AssociationDetails {
         return srcEntityTypes;
     }
 
-    @JsonProperty( SerializationConstants.DEST )
+    @JsonProperty( SerializationConstants.DST )
     public LinkedHashSet<EntityType> getDstEntityTypes() {
         return dstEntityTypes;
     }

@@ -138,7 +138,7 @@ public final class SerializationConstants {
     public static final String NAMESPACE                     = "namespace";
     public static final String NAME                          = "name";
     public static final String SRC                           = "src";
-    public static final String DEST                          = "dest";
+    public static final String DST                           = "dst";
     public static final String BIDIRECTIONAL                 = "bidirectional";
     public static final String CATEGORY                      = "category";
 

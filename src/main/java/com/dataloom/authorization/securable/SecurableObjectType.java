@@ -24,7 +24,7 @@ public enum SecurableObjectType {
     Datasource,
     ComplexType,
     LinkingEntityType,
-    EdgeType,
+    AssociationType,
     Organization,
     OrganizationRole
 }

@@ -30,7 +30,7 @@ import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.edm.type.Analyzer;
 import com.dataloom.edm.type.ComplexType;
-import com.dataloom.edm.type.EdgeType;
+import com.dataloom.edm.type.AssociationType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
@@ -96,8 +96,8 @@ public final class TestDataFactory {
                 Optional.of( SecurableObjectType.EntityType ) );
     }
     
-    public static EdgeType edgeType( PropertyType... keys ) {
-        return new EdgeType(
+    public static AssociationType associationType( PropertyType... keys ) {
+        return new AssociationType(
                 Optional.absent(),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),

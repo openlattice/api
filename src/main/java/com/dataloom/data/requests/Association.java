@@ -19,7 +19,7 @@ public class Association {
     public Association(
             @JsonProperty( SerializationConstants.KEY_FIELD ) EntityKey key,
             @JsonProperty( SerializationConstants.SRC ) EntityKey src,
-            @JsonProperty( SerializationConstants.DEST ) EntityKey dst,
+            @JsonProperty( SerializationConstants.DST ) EntityKey dst,
             @JsonProperty( SerializationConstants.DETAILS_FIELD ) SetMultimap<UUID, Object> details ) {
         this.key = key;
         this.src = src;
@@ -37,7 +37,7 @@ public class Association {
         return src;
     }
 
-    @JsonProperty( SerializationConstants.DEST )
+    @JsonProperty( SerializationConstants.DST )
     public EntityKey getDst() {
         return dst;
     }
