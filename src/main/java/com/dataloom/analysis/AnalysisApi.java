@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.dataloom.analysis.requests.TopUtilizerDetails;
+import com.dataloom.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -16,11 +17,6 @@ public interface AnalysisApi {
     String SERVICE    = "/datastore";
     String CONTROLLER = "/analysis";
     String BASE       = SERVICE + CONTROLLER;
-
-    public static enum FileType {
-        json,
-        csv;
-    }
 
     String FILE_TYPE          = "fileType";
 
