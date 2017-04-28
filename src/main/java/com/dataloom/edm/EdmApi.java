@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
+import com.dataloom.edm.type.AssociationDetails;
 import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EdgeType;
 import com.dataloom.edm.type.EntityType;
@@ -70,6 +71,7 @@ public interface EdmApi {
     String COMPLEX_TYPE_PATH          = "/complex/type";
     String ASSOCIATION_TYPE_PATH      = "/association/type";
     String HIERARCHY_PATH             = "/hierarchy";
+    String DETAILED_PATH = "/detailed";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -287,5 +289,8 @@ public interface EdmApi {
 
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     EdgeType getEdgeTypeById( @Path( ID ) UUID linkingTypeId );
+    
+    @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + DETAILED_PATH )
+    AssociationDetails getAssociationDetailsForType( @Path( ID ) UUID associationTypeId );
 
 }
