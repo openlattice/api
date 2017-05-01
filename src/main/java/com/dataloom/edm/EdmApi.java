@@ -96,7 +96,7 @@ public interface EdmApi {
     PropertyType getPropertyType( @Path( ID ) UUID propertyTypeId );
 
     @GET( PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE + NAMESPACE_PATH )
-    Iterable<PropertyType> getPropertyTypesInNamespace( String namespace );
+    Iterable<PropertyType> getPropertyTypesInNamespace( @Path( NAMESPACE ) String namespace );
 
     /**
      * Creates a property type if it doesn't exist. If property type already exists, then no action is taken.
