@@ -39,6 +39,7 @@ public final class SerializationConstants {
     public static final String ACL_KEY                       = "aclKey";
     public static final String AUDIT_ID                      = "auditId";
     public static final String BLOCK_ID                      = "blockId";
+    public static final String DATA_ID                      = "dataId";
     public static final String ENTITY_FIELD                  = "entity";
     public static final String ENTITY_ID                     = "entityId";
     public static final String ENTITY_SET_FIELD              = "entitySet";

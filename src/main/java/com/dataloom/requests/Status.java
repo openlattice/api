@@ -1,5 +1,9 @@
 package com.dataloom.requests;
 
+import java.util.EnumSet;
+import java.util.List;
+import java.util.UUID;
+
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.Principal;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -7,27 +11,22 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.UUID;
-
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
-public class Status extends Request {
+public class Status {
+    private final Request       request;
     private final Principal     principal;
     private final RequestStatus status;
 
     @JsonCreator
     public Status(
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
-            @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions,
-            @JsonProperty( SerializationConstants.REASON ) Optional<String> reason,
+            @JsonProperty( SerializationConstants.REQUEST ) Request request,
             @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.STATUS ) RequestStatus status ) {
-        super( aclKey, permissions, reason );
-        this.status = status;
+        this.request = request;
         this.principal = principal;
+        this.status = status;
     }
 
     public Status(
@@ -36,7 +35,12 @@ public class Status extends Request {
             String reason,
             Principal principal,
             RequestStatus status ) {
-        this( aclKey, permissions, Optional.fromNullable( reason ), principal, status );
+        this( new Request( aclKey, permissions, Optional.fromNullable( reason ) ), principal, status );
+    }
+
+    @JsonProperty( SerializationConstants.REQUEST )
+    public Request getRequest() {
+        return request;
     }
 
     @JsonProperty( SerializationConstants.STATUS )
@@ -52,41 +56,32 @@ public class Status extends Request {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = super.hashCode();
+        int result = 1;
         result = prime * result + ( ( principal == null ) ? 0 : principal.hashCode() );
+        result = prime * result + ( ( request == null ) ? 0 : request.hashCode() );
         result = prime * result + ( ( status == null ) ? 0 : status.hashCode() );
         return result;
     }
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( !( obj instanceof Status ) ) {
-            return false;
-        }
+        if ( this == obj ) return true;
+        if ( obj == null ) return false;
+        if ( getClass() != obj.getClass() ) return false;
         Status other = (Status) obj;
         if ( principal == null ) {
-            if ( other.principal != null ) {
-                return false;
-            }
-        } else if ( !principal.equals( other.principal ) ) {
-            return false;
-        }
-        if ( status != other.status ) {
-            return false;
-        }
+            if ( other.principal != null ) return false;
+        } else if ( !principal.equals( other.principal ) ) return false;
+        if ( request == null ) {
+            if ( other.request != null ) return false;
+        } else if ( !request.equals( other.request ) ) return false;
+        if ( status != other.status ) return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Status [principal=" + principal + ", status=" + status + ", aclKey=" + aclKey + ", permissions="
-                + permissions + ", reason=" + reason + "]";
+        return "Status [request=" + request + ", principal=" + principal + ", status=" + status + "]";
     }
 
 }

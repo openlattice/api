@@ -37,6 +37,7 @@ import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
 import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
+import com.dataloom.requests.Request;
 import com.dataloom.requests.RequestStatus;
 import com.dataloom.requests.Status;
 import com.datastax.driver.core.utils.UUIDs;
@@ -211,11 +212,16 @@ public final class TestDataFactory {
         return requestStatuses[ r.nextInt( requestStatuses.length ) ];
     }
 
-    public static Status status() {
-        return new Status(
+    public static Request request() {
+        return new Request(
                 TestDataFactory.aclKey(),
                 TestDataFactory.permissions(),
-                Optional.of( "Requesting for this object because RandomStringUtils.randomAlphanumeric( 5 )" ),
+                Optional.of( "Requesting for this object because RandomStringUtils.randomAlphanumeric( 5 )" ) );
+    }
+
+    public static Status status() {
+        return new Status(
+                request(),
                 TestDataFactory.userPrincipal(),
                 TestDataFactory.requestStatus() );
     }
@@ -239,12 +245,12 @@ public final class TestDataFactory {
     public static EntityKey entityKey() {
         return entityKey( UUID.randomUUID() );
     }
-    
+
     public static EntityKey entityKey( UUID entitySetId ) {
         return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), UUIDs.timeBased() );
     }
-    
-    public static RoleKey roleKey(){
+
+    public static RoleKey roleKey() {
         return new RoleKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
