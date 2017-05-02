@@ -1,19 +1,25 @@
 package com.dataloom.analysis;
 
-import com.dataloom.analysis.requests.TopUtilizerDetails;
-import com.google.common.collect.SetMultimap;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-
 import java.util.List;
 import java.util.UUID;
 
+import com.dataloom.analysis.requests.TopUtilizerDetails;
+import com.dataloom.data.requests.FileType;
+import com.google.common.collect.SetMultimap;
+
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+
 public interface AnalysisApi {
 
-    String SERVICE            = "/datastore";
-    String CONTROLLER         = "/analysis";
-    String BASE               = SERVICE + CONTROLLER;
+    String SERVICE    = "/datastore";
+    String CONTROLLER = "/analysis";
+    String BASE       = SERVICE + CONTROLLER;
+
+    String FILE_TYPE          = "fileType";
+
     String ENTITY_SET_ID      = "entitySetId";
     String NUM_RESULTS        = "numResults";
     String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
@@ -21,7 +27,7 @@ public interface AnalysisApi {
 
     /**
      * Returns the top rows in the entity set, ordered by the sum of the number of items in each of the property types
-     * provided
+     * provided Entity ids and count are included for each row.
      * 
      * @param entitySetId The id of the entity set to sort and return results for
      * @param numResults The number of results to return
@@ -35,6 +41,7 @@ public interface AnalysisApi {
     Iterable<SetMultimap<Object, Object>> getTopUtilizers(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( NUM_RESULTS ) int numResults,
-            @Body List<TopUtilizerDetails> topUtilizerDetails );
+            @Body List<TopUtilizerDetails> topUtilizerDetails,
+            @Query( FILE_TYPE ) FileType fileType );
 
 }

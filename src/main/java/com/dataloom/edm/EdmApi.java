@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.data.requests.FileType;
 import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
@@ -32,11 +33,6 @@ public interface EdmApi {
     String SERVICE    = "/datastore";
     String CONTROLLER = "/edm";
     String BASE       = SERVICE + CONTROLLER;
-
-    public static enum FileType {
-        json,
-        yaml
-    }
 
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/

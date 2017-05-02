@@ -9,6 +9,7 @@ import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import com.dataloom.data.requests.Association;
 import com.dataloom.data.requests.BulkDataCreation;
 import com.dataloom.data.requests.EntitySetSelection;
+import com.dataloom.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
 
 import retrofit2.http.Body;
@@ -27,11 +28,6 @@ public interface DataApi {
     String SERVICE    = "/datastore";
     String CONTROLLER = "/data";
     String BASE       = SERVICE + CONTROLLER;
-
-    public static enum FileType {
-        json,
-        csv;
-    }
 
     /**
      * To discuss paths later; perhaps batch this with EdmApi paths
