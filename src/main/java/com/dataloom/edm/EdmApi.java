@@ -127,7 +127,7 @@ public interface EdmApi {
      * @return An iterable containing property types in the given namespace.
      */
     @GET( PROPERTY_TYPE_BASE_PATH + "/" + NAMESPACE + NAMESPACE_PATH )
-    Iterable<PropertyType> getPropertyTypesInNamespace( String namespace );
+    Iterable<PropertyType> getPropertyTypesInNamespace( @Path( NAMESPACE ) String namespace );
 
     /**
      * Creates a property type if it doesn't exist. If property type already exists, then no action is taken.
