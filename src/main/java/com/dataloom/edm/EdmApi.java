@@ -8,8 +8,9 @@ import com.dataloom.data.requests.FileType;
 import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
+import com.dataloom.edm.type.AssociationDetails;
 import com.dataloom.edm.type.ComplexType;
-import com.dataloom.edm.type.EdgeType;
+import com.dataloom.edm.type.AssociationType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
@@ -66,6 +67,7 @@ public interface EdmApi {
     String COMPLEX_TYPE_PATH          = "/complex/type";
     String ASSOCIATION_TYPE_PATH      = "/association/type";
     String HIERARCHY_PATH             = "/hierarchy";
+    String DETAILED_PATH = "/detailed";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -396,29 +398,32 @@ public interface EdmApi {
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
 
     /**
-     * Create edge type if it doesn't exist.
+     * Create association type if it doesn't exist.
      *
-     * @param linkingType
-     * @return ID for the edge type.
+     * @param associationType
+     * @return ID for the association type.
      */
     @POST( ASSOCIATION_TYPE_BASE_PATH )
-    UUID createEdgeType( @Body EdgeType linkingType );
+    UUID createAssociationType( @Body AssociationType associationType );
 
     /**
-     * Delete edge type with a given ID.
+     * Delete association type with a given ID.
      *
-     * @param linkingTypeId
+     * @param associationTypeId
      */
     @DELETE( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
-    Void deleteEdgeType( @Path( ID ) UUID linkingTypeId );
+    Void deleteAssociationType( @Path( ID ) UUID associationTypeId );
 
     /**
-     * Get edge type by given ID.
+     * Get association type by given ID.
      *
-     * @param linkingTypeId
-     * @return EdgeType
+     * @param associationTypeId
+     * @return AssociationType
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
-    EdgeType getEdgeTypeById( @Path( ID ) UUID linkingTypeId );
+    AssociationType getAssociationTypeById( @Path( ID ) UUID associationTypeId );
+    
+    @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + DETAILED_PATH )
+    AssociationDetails getAssociationDetailsForType( @Path( ID ) UUID associationTypeId );
 
 }

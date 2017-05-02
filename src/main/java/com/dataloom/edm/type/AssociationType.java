@@ -9,28 +9,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
-public class EdgeType {
+public class AssociationType {
 
-    private Optional<EntityType>          edgeEntityType;
-    private LinkedHashSet<UUID> src;
-    private LinkedHashSet<UUID> dest;
-    private boolean             bidirectional;
+    private Optional<EntityType> associationEntityType;
+    private LinkedHashSet<UUID>  src;
+    private LinkedHashSet<UUID>  dst;
+    private boolean              bidirectional;
 
     @JsonCreator
-    public EdgeType(
-            @JsonProperty( SerializationConstants.ENTITY_TYPE ) Optional<EntityType> edgeEntityType,
+    public AssociationType(
+            @JsonProperty( SerializationConstants.ENTITY_TYPE ) Optional<EntityType> associationEntityType,
             @JsonProperty( SerializationConstants.SRC ) LinkedHashSet<UUID> src,
-            @JsonProperty( SerializationConstants.DEST ) LinkedHashSet<UUID> dest,
+            @JsonProperty( SerializationConstants.DST ) LinkedHashSet<UUID> dst,
             @JsonProperty( SerializationConstants.BIDIRECTIONAL ) boolean bidirectional ) {
-        this.edgeEntityType = edgeEntityType;
+        this.associationEntityType = associationEntityType;
         this.src = src;
-        this.dest = dest;
+        this.dst = dst;
         this.bidirectional = bidirectional;
     }
 
     @JsonProperty( SerializationConstants.ENTITY_TYPE )
-    public EntityType getEdgeEntityType() {
-        return edgeEntityType.orNull();
+    public EntityType getAssociationEntityType() {
+        return associationEntityType.orNull();
     }
 
     @JsonProperty( SerializationConstants.SRC )
@@ -38,9 +38,9 @@ public class EdgeType {
         return src;
     }
 
-    @JsonProperty( SerializationConstants.DEST )
-    public Set<UUID> getDest() {
-        return dest;
+    @JsonProperty( SerializationConstants.DST )
+    public Set<UUID> getDst() {
+        return dst;
     }
 
     @JsonProperty( SerializationConstants.BIDIRECTIONAL )
@@ -53,8 +53,8 @@ public class EdgeType {
         final int prime = 31;
         int result = 1;
         result = prime * result + ( bidirectional ? 1231 : 1237 );
-        result = prime * result + ( ( dest == null ) ? 0 : dest.hashCode() );
-        result = prime * result + ( ( edgeEntityType == null ) ? 0 : edgeEntityType.hashCode() );
+        result = prime * result + ( ( dst == null ) ? 0 : dst.hashCode() );
+        result = prime * result + ( ( associationEntityType == null ) ? 0 : associationEntityType.hashCode() );
         result = prime * result + ( ( src == null ) ? 0 : src.hashCode() );
         return result;
     }
@@ -64,14 +64,14 @@ public class EdgeType {
         if ( this == obj ) return true;
         if ( obj == null ) return false;
         if ( getClass() != obj.getClass() ) return false;
-        EdgeType other = (EdgeType) obj;
+        AssociationType other = (AssociationType) obj;
         if ( bidirectional != other.bidirectional ) return false;
-        if ( dest == null ) {
-            if ( other.dest != null ) return false;
-        } else if ( !dest.equals( other.dest ) ) return false;
-        if ( edgeEntityType == null ) {
-            if ( other.edgeEntityType != null ) return false;
-        } else if ( !edgeEntityType.equals( other.edgeEntityType ) ) return false;
+        if ( dst == null ) {
+            if ( other.dst != null ) return false;
+        } else if ( !dst.equals( other.dst ) ) return false;
+        if ( associationEntityType == null ) {
+            if ( other.associationEntityType != null ) return false;
+        } else if ( !associationEntityType.equals( other.associationEntityType ) ) return false;
         if ( src == null ) {
             if ( other.src != null ) return false;
         } else if ( !src.equals( other.src ) ) return false;
