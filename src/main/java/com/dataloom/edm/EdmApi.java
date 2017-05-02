@@ -398,27 +398,27 @@ public interface EdmApi {
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
 
     /**
-     * Create edge type if it doesn't exist.
+     * Create association type if it doesn't exist.
      *
-     * @param linkingType
-     * @return ID for the edge type.
+     * @param associationType
+     * @return ID for the association type.
      */
     @POST( ASSOCIATION_TYPE_BASE_PATH )
     UUID createAssociationType( @Body AssociationType associationType );
 
     /**
-     * Delete edge type with a given ID.
+     * Delete association type with a given ID.
      *
-     * @param linkingTypeId
+     * @param associationTypeId
      */
     @DELETE( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     Void deleteAssociationType( @Path( ID ) UUID associationTypeId );
 
     /**
-     * Get edge type by given ID.
+     * Get association type by given ID.
      *
-     * @param linkingTypeId
-     * @return EdgeType
+     * @param associationTypeId
+     * @return AssociationType
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     AssociationType getAssociationTypeById( @Path( ID ) UUID associationTypeId );
