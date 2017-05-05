@@ -39,7 +39,7 @@ public final class SerializationConstants {
     public static final String ACL_KEY                       = "aclKey";
     public static final String AUDIT_ID                      = "auditId";
     public static final String BLOCK_ID                      = "blockId";
-    public static final String DATA_ID                      = "dataId";
+    public static final String DATA_ID                       = "dataId";
     public static final String ENTITY_FIELD                  = "entity";
     public static final String ENTITY_ID                     = "entityId";
     public static final String ENTITY_SET_FIELD              = "entitySet";
@@ -156,4 +156,6 @@ public final class SerializationConstants {
     public static final String ASSOCIATION_TYPE_ID           = "associationTypeId";
     public static final String NEIGHBOR_TYPE_IDS             = "neighborTypeIds";
     public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
+
+    public static final String CURRENT_SYNC                  = "currentSync";
 }
