@@ -8,6 +8,7 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 public class AssociationType {
 
@@ -22,6 +23,9 @@ public class AssociationType {
             @JsonProperty( SerializationConstants.SRC ) LinkedHashSet<UUID> src,
             @JsonProperty( SerializationConstants.DST ) LinkedHashSet<UUID> dst,
             @JsonProperty( SerializationConstants.BIDIRECTIONAL ) boolean bidirectional ) {
+        Preconditions.checkArgument( src.size() > 0, "An association type must have at least one src entity type." );
+        Preconditions.checkArgument( dst.size() > 0, "An association type must have at least one dst entity type." );
+
         this.associationEntityType = associationEntityType;
         this.src = src;
         this.dst = dst;

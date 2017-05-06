@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.dataloom.data.requests.NeighborEntityDetails;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.search.requests.AdvancedSearch;
+import com.dataloom.search.requests.DataSearchResult;
 import com.dataloom.search.requests.FQNSearchTerm;
 import com.dataloom.search.requests.Search;
 import com.dataloom.search.requests.SearchResult;
@@ -72,10 +73,10 @@ public interface SearchApi {
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
      *            "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     * @return A data search result object, containing the total number of hits for the given query, and the hits themselves
      */
     @POST( BASE + ENTITY_SET_ID_PATH )
-    SearchResult executeEntitySetDataQuery(
+    DataSearchResult executeEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body SearchTerm searchTerm );
 
@@ -90,7 +91,7 @@ public interface SearchApi {
      * @return A search result object, containing the total number of hits for the given query, and the hits themselves
      */
     @POST( BASE + ADVANCED + ENTITY_SET_ID_PATH )
-    SearchResult executeAdvancedEntitySetDataQuery(
+    DataSearchResult executeAdvancedEntitySetDataQuery(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body AdvancedSearch search );
 

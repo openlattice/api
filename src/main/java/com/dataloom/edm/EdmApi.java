@@ -31,9 +31,9 @@ public interface EdmApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE    = "/datastore";
-    String CONTROLLER = "/edm";
-    String BASE       = SERVICE + CONTROLLER;
+    String SERVICE                    = "/datastore";
+    String CONTROLLER                 = "/edm";
+    String BASE                       = SERVICE + CONTROLLER;
 
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
@@ -67,7 +67,7 @@ public interface EdmApi {
     String COMPLEX_TYPE_PATH          = "/complex/type";
     String ASSOCIATION_TYPE_PATH      = "/association/type";
     String HIERARCHY_PATH             = "/hierarchy";
-    String DETAILED_PATH = "/detailed";
+    String DETAILED_PATH              = "/detailed";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -85,8 +85,8 @@ public interface EdmApi {
      * Gets the entity data model, including namespaces, schemas, entity types, and property types. Also returns entity
      * set details for any entity sets the user has permissions for.
      *
-     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity and property types, and any entity
-     * sets the caller has permissions to.
+     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity and property types,
+     *         and any entity sets the caller has permissions to.
      */
     @GET( BASE )
     EntityDataModel getEntityDataModel();
@@ -94,8 +94,8 @@ public interface EdmApi {
     /**
      * Gets information for any SecurableObjectType given its type and ID.
      *
-     * @param selectors A set containing a given SecurableObjectType, ID, and a set of fields (SecurableObjectType)
-     *                  to include in the response.
+     * @param selectors A set containing a given SecurableObjectType, ID, and a set of fields (SecurableObjectType) to
+     *            include in the response.
      * @return EdmDetails - The SecurableObjectType details requested.
      */
     @POST( BASE )
@@ -246,6 +246,7 @@ public interface EdmApi {
 
     /**
      * Gets all entity sets available to the calling user.
+     * 
      * @return Iterable containing entity sets available to the calling user.
      */
     @GET( ENTITY_SETS_BASE_PATH )
@@ -422,7 +423,13 @@ public interface EdmApi {
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     AssociationType getAssociationTypeById( @Path( ID ) UUID associationTypeId );
-    
+
+    /**
+     * Returns the src and dst entity types for a given association type ID, as well as whether it is bidirectional.
+     * 
+     * @param associationTypeId
+     * @return AssociationDetails
+     */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + DETAILED_PATH )
     AssociationDetails getAssociationDetailsForType( @Path( ID ) UUID associationTypeId );
 
