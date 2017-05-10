@@ -68,6 +68,7 @@ public interface EdmApi {
     String ASSOCIATION_TYPE_PATH      = "/association/type";
     String HIERARCHY_PATH             = "/hierarchy";
     String DETAILED_PATH              = "/detailed";
+    String AVAILABLE_PATH             = "/available";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -432,5 +433,14 @@ public interface EdmApi {
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + DETAILED_PATH )
     AssociationDetails getAssociationDetailsForType( @Path( ID ) UUID associationTypeId );
+
+    /**
+     * Get all available association entity types for a particular entity type.
+     *
+     * @return Iterable containing all association entity types that includes the specified entity type id in its src or
+     *         dst types.
+     */
+    @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + AVAILABLE_PATH )
+    Iterable<EntityType> getAvailableAssociationTypesForEntityType( @Path( ID ) UUID entityTypeId );
 
 }
