@@ -1,12 +1,12 @@
 package com.dataloom.analysis.requests;
 
-import java.util.Set;
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
+
+import java.util.Set;
+import java.util.UUID;
 
 public class TopUtilizerDetails {
     private final UUID      associationTypeId;
@@ -42,4 +42,25 @@ public class TopUtilizerDetails {
         return utilizerIsSrc;
     }
 
+    @Override public boolean equals( Object o ) {
+        if ( this == o )
+            return true;
+        if ( !( o instanceof TopUtilizerDetails ) )
+            return false;
+
+        TopUtilizerDetails that = (TopUtilizerDetails) o;
+
+        if ( utilizerIsSrc != that.utilizerIsSrc )
+            return false;
+        if ( !associationTypeId.equals( that.associationTypeId ) )
+            return false;
+        return neighborTypeIds.equals( that.neighborTypeIds );
+    }
+
+    @Override public int hashCode() {
+        int result = associationTypeId.hashCode();
+        result = 31 * result + neighborTypeIds.hashCode();
+        result = 31 * result + ( utilizerIsSrc ? 1 : 0 );
+        return result;
+    }
 }
