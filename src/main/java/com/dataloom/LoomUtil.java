@@ -1,5 +1,6 @@
 package com.dataloom;
 
+import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.List;
@@ -41,9 +42,10 @@ public class LoomUtil {
 
     private static String joinObjectsAsString( Set<Object> s ) {
         return s.stream()
-                .map( Object::toString )
-                .sorted()
                 .map( LoomUtil::toBytes )
+                .map( ByteBuffer::wrap )
+                .sorted()
+                .map( ByteBuffer::array )
                 .map( encoder::encodeToString )
                 .collect( Collectors.joining( "," ) );
     }
