@@ -33,6 +33,7 @@ public interface SearchApi {
     String ENTITY_TYPES       = "/entity_types";
     String PROPERTY_TYPES     = "/property_types";
     String ADVANCED           = "/advanced";
+    String HOME               = "/home";
     String FQN                = "/fqn";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
@@ -41,10 +42,12 @@ public interface SearchApi {
     String ENTITY_SET_ID      = "entitySetId";
     String NUM_RESULTS        = "numResults";
     String ENTITY_ID          = "entityId";
+    String START              = "start";
 
     String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
     String NUM_RESULTS_PATH   = "/{" + NUM_RESULTS + "}";
     String ENTITY_ID_PATH     = "/{" + ENTITY_ID + "}";
+    String START_PATH         = "/{" + START + "}";
 
     /**
      * The query, entityType, and propertyTypes params are all optional, but at least one must be specified otherwise an
@@ -67,13 +70,27 @@ public interface SearchApi {
     Iterable<EntitySet> getPopularEntitySet();
 
     /**
+     * Executes a search over all existing entity sets to populate the home page. The path parameters instruct which
+     * page to return and how large the page should be.
+     * 
+     * @param start The first result number to return
+     * @param maxHits The total number of results to return
+     * @return
+     */
+    @GET( BASE + HOME + START_PATH + NUM_RESULTS_PATH )
+    SearchResult getHomePageEntitySets(
+            @Path( START ) int start,
+            @Path( NUM_RESULTS ) int maxHits );
+
+    /**
      * Executes a search over the data of a given entity set to find rows that match the search term
      * 
      * @param entitySetId The id of the entity set the search will be executed within
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
      *            "searchTerm", which is the search term results will match on.
-     * @return A data search result object, containing the total number of hits for the given query, and the hits themselves
+     * @return A data search result object, containing the total number of hits for the given query, and the hits
+     *         themselves
      */
     @POST( BASE + ENTITY_SET_ID_PATH )
     DataSearchResult executeEntitySetDataQuery(
