@@ -38,12 +38,12 @@ public class AssociationType {
     }
 
     @JsonProperty( SerializationConstants.SRC )
-    public Set<UUID> getSrc() {
+    public LinkedHashSet<UUID> getSrc() {
         return src;
     }
 
     @JsonProperty( SerializationConstants.DST )
-    public Set<UUID> getDst() {
+    public LinkedHashSet<UUID> getDst() {
         return dst;
     }
 
