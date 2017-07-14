@@ -31,6 +31,7 @@ public interface SearchApi {
     String POPULAR            = "/popular";
     String ORGANIZATIONS      = "/organizations";
     String ENTITY_TYPES       = "/entity_types";
+    String ASSOCIATION_TYPES  = "/association_types";
     String PROPERTY_TYPES     = "/property_types";
     String ADVANCED           = "/advanced";
     String FQN                = "/fqn";
@@ -116,6 +117,17 @@ public interface SearchApi {
      */
     @POST( BASE + ENTITY_TYPES )
     SearchResult executeEntityTypeSearch( @Body SearchTerm searchTerm );
+    
+    /**
+     * Executes a search over all association types to find ones that match the given search term
+     * 
+     * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
+     *            returning results on for paging, "maxHits", which specifies the maximum number of hits to return, and
+     *            "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     */
+    @POST( BASE + ASSOCIATION_TYPES )
+    SearchResult executeAssociationTypeSearch( @Body SearchTerm searchTerm );
 
     /**
      * Executes a search over all property types to find ones that match the given search term
