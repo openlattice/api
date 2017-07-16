@@ -25,8 +25,6 @@ public class AssociationType {
             @JsonProperty( SerializationConstants.SRC ) LinkedHashSet<UUID> src,
             @JsonProperty( SerializationConstants.DST ) LinkedHashSet<UUID> dst,
             @JsonProperty( SerializationConstants.BIDIRECTIONAL ) boolean bidirectional ) {
-        Preconditions.checkArgument( src.size() > 0, "An association type must have at least one src entity type." );
-        Preconditions.checkArgument( dst.size() > 0, "An association type must have at least one dst entity type." );
 
         this.associationEntityType = associationEntityType;
         this.src = src;
