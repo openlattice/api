@@ -1,14 +1,12 @@
 package com.dataloom.edm.type;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import java.util.LinkedHashSet;
+import java.util.UUID;
 
 public class AssociationType {
 
@@ -38,12 +36,12 @@ public class AssociationType {
     }
 
     @JsonProperty( SerializationConstants.SRC )
-    public Set<UUID> getSrc() {
+    public LinkedHashSet<UUID> getSrc() {
         return src;
     }
 
     @JsonProperty( SerializationConstants.DST )
-    public Set<UUID> getDst() {
+    public LinkedHashSet<UUID> getDst() {
         return dst;
     }
 
@@ -65,20 +63,20 @@ public class AssociationType {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) return true;
-        if ( obj == null ) return false;
-        if ( getClass() != obj.getClass() ) return false;
+        if ( this == obj ) { return true; }
+        if ( obj == null ) { return false; }
+        if ( getClass() != obj.getClass() ) { return false; }
         AssociationType other = (AssociationType) obj;
-        if ( bidirectional != other.bidirectional ) return false;
+        if ( bidirectional != other.bidirectional ) { return false; }
         if ( dst == null ) {
-            if ( other.dst != null ) return false;
-        } else if ( !dst.equals( other.dst ) ) return false;
+            if ( other.dst != null ) { return false; }
+        } else if ( !dst.equals( other.dst ) ) { return false; }
         if ( associationEntityType == null ) {
-            if ( other.associationEntityType != null ) return false;
-        } else if ( !associationEntityType.equals( other.associationEntityType ) ) return false;
+            if ( other.associationEntityType != null ) { return false; }
+        } else if ( !associationEntityType.equals( other.associationEntityType ) ) { return false; }
         if ( src == null ) {
-            if ( other.src != null ) return false;
-        } else if ( !src.equals( other.src ) ) return false;
+            if ( other.src != null ) { return false; }
+        } else if ( !src.equals( other.src ) ) { return false; }
         return true;
     }
 
