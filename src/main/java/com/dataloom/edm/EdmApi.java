@@ -9,8 +9,8 @@ import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
 import com.dataloom.edm.type.AssociationDetails;
-import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.AssociationType;
+import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
@@ -40,6 +40,7 @@ public interface EdmApi {
      */
     String ID                         = "id";
     String ENTITY_TYPE_ID             = "entityTypeId";
+    String ASSOCIATION_TYPE_ID        = "associationTypeId";
     String PROPERTY_TYPE_ID           = "propertyTypeId";
     String NAME                       = "name";
     String NAMESPACE                  = "namespace";
@@ -69,11 +70,14 @@ public interface EdmApi {
     String HIERARCHY_PATH             = "/hierarchy";
     String DETAILED_PATH              = "/detailed";
     String AVAILABLE_PATH             = "/available";
+    String SRC_PATH                   = "/src";
+    String DST_PATH                   = "/dst";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
     String ID_PATH                    = "/{" + ID + "}";
     String ENTITY_TYPE_ID_PATH        = "/{" + ENTITY_TYPE_ID + "}";
+    String ASSOCIATION_TYPE_ID_PATH   = "/{" + ASSOCIATION_TYPE_ID + "}";
     String PROPERTY_TYPE_ID_PATH      = "/{" + PROPERTY_TYPE_ID + "}";
 
     String SCHEMA_BASE_PATH           = BASE + SCHEMA_PATH;
@@ -226,8 +230,8 @@ public interface EdmApi {
     /**
      * Adds a property type with a given ID to an entity type with a given ID.
      *
-     * @param entityTypeId The entity ID for the entity set that will have a property added to it.
-     * @param propertyTypeId The property ID for the property that will be added to the entity type.
+     * @param entityTypeId The ID for the entity type that will have a property added to it.
+     * @param propertyTypeId The ID for the property type that will be added to the entity type.
      */
     @PUT( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH )
     Void addPropertyTypeToEntityType(
@@ -237,8 +241,8 @@ public interface EdmApi {
     /**
      * Removes a property type with a given ID from an entity type with a given ID.
      *
-     * @param entityTypeId The entity ID for the entity set that will have a property removed from it.
-     * @param propertyTypeId The property ID for the property that will be removed from the entity type.
+     * @param entityTypeId The ID for the entity type that will have a property removed from it.
+     * @param propertyTypeId The ID for the property type that will be removed from the entity type.
      */
     @DELETE( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH )
     Void removePropertyTypeFromEntityType(
@@ -415,6 +419,52 @@ public interface EdmApi {
      */
     @DELETE( ASSOCIATION_TYPE_BASE_PATH + ID_PATH )
     Void deleteAssociationType( @Path( ID ) UUID associationTypeId );
+
+    /**
+     * Adds an entity type with a given ID to the src field of an association type with a given ID.
+     *
+     * @param associationTypeId The ID for the association type that will have an entity type id added to its src types.
+     * @param entityTypeId The ID for the entity type that will be added to the association type's src field.
+     */
+    @PUT( ASSOCIATION_TYPE_BASE_PATH + ASSOCIATION_TYPE_ID_PATH + SRC_PATH + ENTITY_TYPE_ID_PATH )
+    Void addSrcEntityTypeToAssociationType(
+            @Path( ASSOCIATION_TYPE_ID ) UUID associationTypeId,
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId );
+
+    /**
+     * Adds an entity type with a given ID to the dst field of an association type with a given ID.
+     *
+     * @param associationTypeId The ID for the association type that will have an entity type id added to its dst types.
+     * @param entityTypeId The ID for the entity type that will be added to the association type's dst field.
+     */
+    @PUT( ASSOCIATION_TYPE_BASE_PATH + ASSOCIATION_TYPE_ID_PATH + DST_PATH + ENTITY_TYPE_ID_PATH )
+    Void addDstEntityTypeToAssociationType(
+            @Path( ASSOCIATION_TYPE_ID ) UUID associationTypeId,
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId );
+
+    /**
+     * Removes an entity type with a given ID from the src field of an association type with a given ID.
+     *
+     * @param associationTypeId The ID for the association type that will have an entity type id removed from its src
+     *            types.
+     * @param entityTypeId The ID for the entity type that will be removed from the association type's src field.
+     */
+    @DELETE( ASSOCIATION_TYPE_BASE_PATH + ASSOCIATION_TYPE_ID_PATH + SRC_PATH + ENTITY_TYPE_ID_PATH )
+    Void removeSrcEntityTypeFromAssociationType(
+            @Path( ASSOCIATION_TYPE_ID ) UUID associationTypeId,
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId );
+
+    /**
+     * Removes an entity type with a given ID from the dst field of an association type with a given ID.
+     *
+     * @param associationTypeId The ID for the association type that will have an entity type id removed from its dst
+     *            types.
+     * @param entityTypeId The ID for the entity type that will be removed from the association type's dst field.
+     */
+    @DELETE( ASSOCIATION_TYPE_BASE_PATH + ASSOCIATION_TYPE_ID_PATH + DST_PATH + ENTITY_TYPE_ID_PATH )
+    Void removeDstEntityTypeFromAssociationType(
+            @Path( ASSOCIATION_TYPE_ID ) UUID associationTypeId,
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId );
 
     /**
      * Get association type by given ID.
