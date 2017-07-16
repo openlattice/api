@@ -1,12 +1,16 @@
 package com.dataloom.edm.type;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
+
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import java.util.LinkedHashSet;
-import java.util.UUID;
 
 public class AssociationType {
 
@@ -50,6 +54,22 @@ public class AssociationType {
         return bidirectional;
     }
 
+    public void addSrcEntityTypes( Set<UUID> entityTypeIds ) {
+        src.addAll( checkNotNull( entityTypeIds, "Src entity types cannot be null." ) );
+    }
+
+    public void addDstEntityTypes( Set<UUID> entityTypeIds ) {
+        dst.addAll( checkNotNull( entityTypeIds, "Dst entity types cannot be null." ) );
+    }
+
+    public void removeSrcEntityTypes( Set<UUID> entityTypeIds ) {
+        src.removeAll( checkNotNull( entityTypeIds, "Src entity types cannot be null." ) );
+    }
+
+    public void removeDstEntityTypes( Set<UUID> entityTypeIds ) {
+        dst.removeAll( checkNotNull( entityTypeIds, "Dst entity types cannot be null." ) );
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -63,20 +83,40 @@ public class AssociationType {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) { return true; }
-        if ( obj == null ) { return false; }
-        if ( getClass() != obj.getClass() ) { return false; }
+        if ( this == obj ) {
+            return true;
+        }
+        if ( obj == null ) {
+            return false;
+        }
+        if ( getClass() != obj.getClass() ) {
+            return false;
+        }
         AssociationType other = (AssociationType) obj;
-        if ( bidirectional != other.bidirectional ) { return false; }
+        if ( bidirectional != other.bidirectional ) {
+            return false;
+        }
         if ( dst == null ) {
-            if ( other.dst != null ) { return false; }
-        } else if ( !dst.equals( other.dst ) ) { return false; }
+            if ( other.dst != null ) {
+                return false;
+            }
+        } else if ( !dst.equals( other.dst ) ) {
+            return false;
+        }
         if ( associationEntityType == null ) {
-            if ( other.associationEntityType != null ) { return false; }
-        } else if ( !associationEntityType.equals( other.associationEntityType ) ) { return false; }
+            if ( other.associationEntityType != null ) {
+                return false;
+            }
+        } else if ( !associationEntityType.equals( other.associationEntityType ) ) {
+            return false;
+        }
         if ( src == null ) {
-            if ( other.src != null ) { return false; }
-        } else if ( !src.equals( other.src ) ) { return false; }
+            if ( other.src != null ) {
+                return false;
+            }
+        } else if ( !src.equals( other.src ) ) {
+            return false;
+        }
         return true;
     }
 
