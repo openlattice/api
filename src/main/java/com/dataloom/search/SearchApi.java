@@ -30,6 +30,7 @@ public interface SearchApi {
      */
     String POPULAR            = "/popular";
     String ORGANIZATIONS      = "/organizations";
+    String ENTITY_SETS        = "/entity_sets";
     String ENTITY_TYPES       = "/entity_types";
     String ASSOCIATION_TYPES  = "/association_types";
     String PROPERTY_TYPES     = "/property_types";
@@ -78,8 +79,8 @@ public interface SearchApi {
      * @param maxHits The total number of results to return
      * @return
      */
-    @GET( BASE + HOME + START_PATH + NUM_RESULTS_PATH )
-    SearchResult getHomePageEntitySets(
+    @GET( BASE + ENTITY_SETS + START_PATH + NUM_RESULTS_PATH )
+    SearchResult getEntitySets(
             @Path( START ) int start,
             @Path( NUM_RESULTS ) int maxHits );
 
@@ -134,7 +135,7 @@ public interface SearchApi {
      */
     @POST( BASE + ENTITY_TYPES )
     SearchResult executeEntityTypeSearch( @Body SearchTerm searchTerm );
-    
+
     /**
      * Executes a search over all association types to find ones that match the given search term
      * 
