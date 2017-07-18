@@ -19,6 +19,7 @@ import com.google.common.base.Preconditions;
  *
  */
 public class MetadataUpdate {
+
     // Common across property type, entity type, entity set
     private Optional<String>            title;
     private Optional<String>            description;
@@ -27,6 +28,8 @@ public class MetadataUpdate {
     private Optional<Set<String>>       contacts;
     // Specific to property type/entity type
     private Optional<FullQualifiedName> type;
+    // Specific to property type
+    private Optional<Boolean>           pii;
 
     @JsonCreator
     public MetadataUpdate(
@@ -34,7 +37,8 @@ public class MetadataUpdate {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.NAME_FIELD ) Optional<String> name,
             @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type ) {
+            @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type,
+            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> pii ) {
         // WARNING These checks have to be consistent with the same check elsewhere.
         Preconditions.checkArgument( !title.isPresent() || StringUtils.isNotBlank( title.get() ),
                 "Title cannot be blank." );
@@ -51,6 +55,7 @@ public class MetadataUpdate {
         this.name = name;
         this.contacts = contacts;
         this.type = type;
+        this.pii = pii;
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -77,7 +82,12 @@ public class MetadataUpdate {
     public Optional<FullQualifiedName> getType() {
         return type;
     }
-
+    
+    @JsonProperty( SerializationConstants.PII_FIELD )
+    public Optional<Boolean> getPii() {
+        return pii;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -85,6 +95,7 @@ public class MetadataUpdate {
         result = prime * result + ( ( contacts == null ) ? 0 : contacts.hashCode() );
         result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
+        result = prime * result + ( ( pii == null ) ? 0 : pii.hashCode() );
         result = prime * result + ( ( title == null ) ? 0 : title.hashCode() );
         result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
         return result;
@@ -105,6 +116,9 @@ public class MetadataUpdate {
         if ( name == null ) {
             if ( other.name != null ) return false;
         } else if ( !name.equals( other.name ) ) return false;
+        if ( pii == null ) {
+            if ( other.pii != null ) return false;
+        } else if ( !pii.equals( other.pii ) ) return false;
         if ( title == null ) {
             if ( other.title != null ) return false;
         } else if ( !title.equals( other.title ) ) return false;
@@ -114,6 +128,7 @@ public class MetadataUpdate {
         return true;
     }
 
+
     // Trimming happens before initializing update processors so that irrelevant fields won't get ser/deserialized when
     // processors are serialized.
     public static MetadataUpdate trimToPropertyTypeUpdate( MetadataUpdate update ) {
@@ -122,7 +137,8 @@ public class MetadataUpdate {
                 update.getDescription(),
                 Optional.absent(),
                 Optional.absent(),
-                update.getType() );
+                update.getType(),
+                update.getPii() );
     }
 
     public static MetadataUpdate trimToEntityTypeUpdate( MetadataUpdate update ) {
@@ -131,7 +147,8 @@ public class MetadataUpdate {
                 update.getDescription(),
                 Optional.absent(),
                 Optional.absent(),
-                update.getType() );
+                update.getType(),
+                Optional.absent() );
     }
 
     public static MetadataUpdate trimToEntitySetUpdate( MetadataUpdate update ) {
@@ -140,6 +157,7 @@ public class MetadataUpdate {
                 update.getDescription(),
                 update.getName(),
                 update.getContacts(),
-                Optional.absent() );
+                Optional.absent(),
+                Optional.absent()  );
     }
 }
