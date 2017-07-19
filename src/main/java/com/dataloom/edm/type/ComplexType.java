@@ -1,5 +1,6 @@
 package com.dataloom.edm.type;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collections;
@@ -15,10 +16,11 @@ import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.collect.Sets;
 
 public class ComplexType extends AbstractSchemaAssociatedSecurableType {
 
-    private final LinkedHashSet<UUID> properties;
+    private LinkedHashSet<UUID> properties;
     private final Optional<UUID>      baseType;
     private final SecurableObjectType category;
     private transient int             h = 0;
@@ -78,6 +80,12 @@ public class ComplexType extends AbstractSchemaAssociatedSecurableType {
 
     public void removePropertyTypes( Set<UUID> propertyTypeIds ) {
         properties.removeAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
+    }
+
+    public void reorderPropertyTypes( LinkedHashSet<UUID> propertyTypeIds ) {
+        checkArgument( Sets.newHashSet( properties ).equals( Sets.newHashSet( propertyTypeIds ) ),
+                "The property types in the reordered list do not match the entity type's property types." );
+        properties = propertyTypeIds;
     }
 
     @Override

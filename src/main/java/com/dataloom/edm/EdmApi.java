@@ -1,5 +1,6 @@
 package com.dataloom.edm;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -248,6 +249,15 @@ public interface EdmApi {
     Void removePropertyTypeFromEntityType(
             @Path( ENTITY_TYPE_ID ) UUID entityTypeId,
             @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
+
+    /**
+     * Reorders the specified entity type's properties;
+     *
+     * @param entityTypeId ID for entity type.
+     * @param propertyTypeIds The new ordering of the entity type's properties.
+     */
+    @PATCH( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_PATH )
+    Void reorderPropertyTypesInEntityType( @Path( ID ) UUID entityTypeId, @Body LinkedHashSet<UUID> propertyTypeIds );
 
     /**
      * Gets all entity sets available to the calling user.
