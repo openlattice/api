@@ -119,6 +119,11 @@ public class PropertyType extends AbstractSchemaAssociatedSecurableType {
         return analyzer;
     }
 
+    @JsonIgnore
+    public void setPii( boolean pii ) {
+        this.piiField = pii;
+    }
+
     @Override
     public int hashCode() {
         if ( h == 0 ) {
