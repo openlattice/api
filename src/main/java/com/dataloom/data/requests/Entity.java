@@ -1,12 +1,12 @@
 package com.dataloom.data.requests;
 
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.data.EntityKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
+import java.util.UUID;
 
 public class Entity {
     private EntityKey                 key;
@@ -29,7 +29,22 @@ public class Entity {
     public SetMultimap<UUID, Object> getDetails() {
         return details;
     }
-    
+
+    @JsonIgnore
+    public UUID getEntitySetId() {
+        return key.getEntitySetId();
+    }
+
+    @JsonIgnore
+    public String getEntityId() {
+        return key.getEntityId();
+    }
+
+    @JsonIgnore
+    public UUID getSyncId() {
+        return key.getSyncId();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -41,16 +56,16 @@ public class Entity {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) return true;
-        if ( obj == null ) return false;
-        if ( getClass() != obj.getClass() ) return false;
+        if ( this == obj ) { return true; }
+        if ( obj == null ) { return false; }
+        if ( getClass() != obj.getClass() ) { return false; }
         Entity other = (Entity) obj;
         if ( details == null ) {
-            if ( other.details != null ) return false;
-        } else if ( !details.equals( other.details ) ) return false;
+            if ( other.details != null ) { return false; }
+        } else if ( !details.equals( other.details ) ) { return false; }
         if ( key == null ) {
-            if ( other.key != null ) return false;
-        } else if ( !key.equals( other.key ) ) return false;
+            if ( other.key != null ) { return false; }
+        } else if ( !key.equals( other.key ) ) { return false; }
         return true;
     }
 
