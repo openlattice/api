@@ -91,20 +91,20 @@ public interface EdmApi {
     /**
      * Gets the entity data model, including namespaces, schemas, entity types, association types, and property types.
      *
-     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity types, association types,
-     *         and property types.
+     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity types, association
+     *         types, and property types.
      */
     @GET( BASE )
     EntityDataModel getEntityDataModel();
 
     /**
-     * Sets the entity data model, including schemas, entity types, association types, and property types. 
+     * Sets the entity data model, including schemas, entity types, association types, and property types.
      *
      * @param edm - The relevant elements of the entity data model to create or update, including schemas, entity types,
-     * association types, and property types
+     *            association types, and property types
      */
     @PATCH( BASE )
-    void importEntityDataModel( EntityDataModel edm );
+    void setEntityDataModel( EntityDataModel edm );
 
     /**
      * Gets the changes between the existing entity data model and the entity data model passed in, including schemas,
