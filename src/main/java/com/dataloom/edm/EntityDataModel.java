@@ -1,29 +1,30 @@
 package com.dataloom.edm;
 
+import com.dataloom.edm.type.AssociationType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.PropertyType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EntityDataModel {
-    private final Iterable<String>       namespaces;
-    private final Iterable<Schema>       schemas;
-    private final Iterable<EntityType>   entityTypes;
-    private final Iterable<PropertyType> propertyTypes;
-    private final Iterable<EntitySet>    entitySets;
+    private final Iterable<String>          namespaces;
+    private final Iterable<Schema>          schemas;
+    private final Iterable<EntityType>      entityTypes;
+    private final Iterable<AssociationType> associationTypes;
+    private final Iterable<PropertyType>    propertyTypes;
 
     @JsonCreator
     public EntityDataModel(
             @JsonProperty( EdmApi.NAMESPACES ) Iterable<String> namespaces,
             @JsonProperty( EdmApi.SCHEMAS ) Iterable<Schema> schemas,
             @JsonProperty( EdmApi.ENTITY_TYPES ) Iterable<EntityType> entityTypes,
-            @JsonProperty( EdmApi.PROPERTY_TYPES ) Iterable<PropertyType> propertyTypes,
-            @JsonProperty( EdmApi.ENTITY_SETS ) Iterable<EntitySet> entitySets ) {
+            @JsonProperty( EdmApi.ASSOCIATION_TYPES ) Iterable<AssociationType> associationTypes,
+            @JsonProperty( EdmApi.PROPERTY_TYPES ) Iterable<PropertyType> propertyTypes ) {
         this.namespaces = namespaces;
         this.schemas = schemas;
         this.entityTypes = entityTypes;
+        this.associationTypes = associationTypes;
         this.propertyTypes = propertyTypes;
-        this.entitySets = entitySets;
     }
 
     @JsonProperty( EdmApi.NAMESPACES )
@@ -41,54 +42,56 @@ public class EntityDataModel {
         return entityTypes;
     }
 
+    @JsonProperty( EdmApi.ASSOCIATION_TYPES )
+    public Iterable<AssociationType> getAssociationTypes() {
+        return associationTypes;
+    }
+
     @JsonProperty( EdmApi.PROPERTY_TYPES )
     public Iterable<PropertyType> getPropertyTypes() {
         return propertyTypes;
     }
 
-    @JsonProperty( EdmApi.ENTITY_SETS )
-    public Iterable<EntitySet> getEntitySets() {
-        return entitySets;
-    }
-
-    //TODO: Null check at creation to avoid doing it on every equals
     @Override
-    public boolean equals( Object o ) {
-        if ( this == o )
-            return true;
-        if ( !( o instanceof EntityDataModel ) )
-            return false;
-
-        EntityDataModel that = (EntityDataModel) o;
-
-        if ( namespaces != null ? !namespaces.equals( that.namespaces ) : that.namespaces != null )
-            return false;
-        if ( schemas != null ? !schemas.equals( that.schemas ) : that.schemas != null )
-            return false;
-        if ( entityTypes != null ? !entityTypes.equals( that.entityTypes ) : that.entityTypes != null )
-            return false;
-        if ( propertyTypes != null ? !propertyTypes.equals( that.propertyTypes ) : that.propertyTypes != null )
-            return false;
-        return entitySets != null ? entitySets.equals( that.entitySets ) : that.entitySets == null;
+    public String toString() {
+        return "EntityDataModel [namespaces=" + namespaces + ", schemas=" + schemas + ", entityTypes=" + entityTypes
+                + ", associationTypes=" + associationTypes + ", propertyTypes=" + propertyTypes + "]";
     }
 
     @Override
     public int hashCode() {
-        int result = namespaces != null ? namespaces.hashCode() : 0;
-        result = 31 * result + ( schemas != null ? schemas.hashCode() : 0 );
-        result = 31 * result + ( entityTypes != null ? entityTypes.hashCode() : 0 );
-        result = 31 * result + ( propertyTypes != null ? propertyTypes.hashCode() : 0 );
-        result = 31 * result + ( entitySets != null ? entitySets.hashCode() : 0 );
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ( ( associationTypes == null ) ? 0 : associationTypes.hashCode() );
+        result = prime * result + ( ( entityTypes == null ) ? 0 : entityTypes.hashCode() );
+        result = prime * result + ( ( namespaces == null ) ? 0 : namespaces.hashCode() );
+        result = prime * result + ( ( propertyTypes == null ) ? 0 : propertyTypes.hashCode() );
+        result = prime * result + ( ( schemas == null ) ? 0 : schemas.hashCode() );
         return result;
     }
 
-    @Override public String toString() {
-        return "EntityDataModel{" +
-                "namespaces=" + namespaces +
-                ", schemas=" + schemas +
-                ", entityTypes=" + entityTypes +
-                ", propertyTypes=" + propertyTypes +
-                ", entitySets=" + entitySets +
-                '}';
+    @Override
+    public boolean equals( Object obj ) {
+        if ( this == obj ) return true;
+        if ( obj == null ) return false;
+        if ( getClass() != obj.getClass() ) return false;
+        EntityDataModel other = (EntityDataModel) obj;
+        if ( associationTypes == null ) {
+            if ( other.associationTypes != null ) return false;
+        } else if ( !associationTypes.equals( other.associationTypes ) ) return false;
+        if ( entityTypes == null ) {
+            if ( other.entityTypes != null ) return false;
+        } else if ( !entityTypes.equals( other.entityTypes ) ) return false;
+        if ( namespaces == null ) {
+            if ( other.namespaces != null ) return false;
+        } else if ( !namespaces.equals( other.namespaces ) ) return false;
+        if ( propertyTypes == null ) {
+            if ( other.propertyTypes != null ) return false;
+        } else if ( !propertyTypes.equals( other.propertyTypes ) ) return false;
+        if ( schemas == null ) {
+            if ( other.schemas != null ) return false;
+        } else if ( !schemas.equals( other.schemas ) ) return false;
+        return true;
     }
+
 }
