@@ -47,6 +47,7 @@ public interface EdmApi {
     String NAMESPACES                 = "namespaces";
     String ENTITY_SETS                = "entitySets";
     String ENTITY_TYPES               = "entityTypes";
+    String ASSOCIATION_TYPES          = "associationTypes";
     String PROPERTY_TYPES             = "propertyTypes";
     String SCHEMA                     = "schema";
     String SCHEMAS                    = "schemas";
@@ -189,7 +190,7 @@ public interface EdmApi {
      *
      * @return Iterable containing all association entity types.
      */
-    @GET( ASSOCIATION_TYPE_BASE_PATH )
+    @GET( ASSOCIATION_TYPE_BASE_PATH  + ENTITY_TYPE_PATH )
     Iterable<EntityType> getAssociationEntityTypes();
 
     /**
@@ -402,6 +403,14 @@ public interface EdmApi {
      */
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
+    
+    /**
+     * Get all association entity types.
+     *
+     * @return Iterable containing all association types.
+     */
+    @GET( ASSOCIATION_TYPE_BASE_PATH )
+    Iterable<AssociationType> getAssociationTypes();
 
     /**
      * Create association type if it doesn't exist.
@@ -492,5 +501,5 @@ public interface EdmApi {
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + AVAILABLE_PATH )
     Iterable<EntityType> getAvailableAssociationTypesForEntityType( @Path( ID ) UUID entityTypeId );
-
+    
 }
