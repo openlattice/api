@@ -74,6 +74,7 @@ public interface EdmApi {
     String AVAILABLE_PATH             = "/available";
     String SRC_PATH                   = "/src";
     String DST_PATH                   = "/dst";
+    String DIFF_PATH                  = "/diff";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -89,14 +90,31 @@ public interface EdmApi {
     String ASSOCIATION_TYPE_BASE_PATH = BASE + ASSOCIATION_TYPE_PATH;
 
     /**
-     * Gets the entity data model, including namespaces, schemas, entity types, and property types. Also returns entity
-     * set details for any entity sets the user has permissions for.
+     * Gets the entity data model, including namespaces, schemas, entity types, association types, and property types.
      *
-     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity and property types,
-     *         and any entity sets the caller has permissions to.
+     * @return EntityDataModel - The entire entity data model, including namespaces, schemas, entity types, association
+     *         types, and property types.
      */
     @GET( BASE )
     EntityDataModel getEntityDataModel();
+
+    /**
+     * Sets the entity data model, including schemas, entity types, association types, and property types.
+     *
+     * @param edm - The relevant elements of the entity data model to create or update, including schemas, entity types,
+     *            association types, and property types
+     */
+    @PATCH( BASE )
+    void setEntityDataModel( EntityDataModel edm );
+
+    /**
+     * Gets the changes between the existing entity data model and the entity data model passed in, including schemas,
+     * association types, entity types, and property types.
+     *
+     * @param edm - The entire entity data model, including schemas, entity types, association types, and property types
+     */
+    @POST( BASE + DIFF_PATH )
+    EntityDataModel getEntityDataModelDiff( EntityDataModel edm );
 
     /**
      * Gets information for any SecurableObjectType given its type and ID.
@@ -191,7 +209,7 @@ public interface EdmApi {
      *
      * @return Iterable containing all association entity types.
      */
-    @GET( ASSOCIATION_TYPE_BASE_PATH  + ENTITY_TYPE_PATH )
+    @GET( ASSOCIATION_TYPE_BASE_PATH + ENTITY_TYPE_PATH )
     Iterable<EntityType> getAssociationEntityTypes();
 
     /**
@@ -413,7 +431,7 @@ public interface EdmApi {
      */
     @PATCH( ENTITY_SETS_BASE_PATH + ID_PATH )
     Void updateEntitySetMetadata( @Path( ID ) UUID entitySetId, @Body MetadataUpdate update );
-    
+
     /**
      * Get all association entity types.
      *
@@ -511,5 +529,5 @@ public interface EdmApi {
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + AVAILABLE_PATH )
     Iterable<EntityType> getAvailableAssociationTypesForEntityType( @Path( ID ) UUID entityTypeId );
-    
+
 }
