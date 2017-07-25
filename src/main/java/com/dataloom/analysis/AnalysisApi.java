@@ -14,9 +14,9 @@ import retrofit2.http.Query;
 
 public interface AnalysisApi {
 
-    String SERVICE    = "/datastore";
-    String CONTROLLER = "/analysis";
-    String BASE       = SERVICE + CONTROLLER;
+    String SERVICE            = "/datastore";
+    String CONTROLLER         = "/analysis";
+    String BASE               = SERVICE + CONTROLLER;
 
     String FILE_TYPE          = "fileType";
 
@@ -43,5 +43,4 @@ public interface AnalysisApi {
             @Path( NUM_RESULTS ) int numResults,
             @Body List<TopUtilizerDetails> topUtilizerDetails,
             @Query( FILE_TYPE ) FileType fileType );
-
 }
