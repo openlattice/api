@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.dataloom.analysis.requests.TopUtilizerDetails;
+import com.dataloom.analysis.requests.TopUtilizersHistogramRequest;
+import com.dataloom.analysis.requests.TopUtilizersHistogramResult;
 import com.dataloom.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
 
@@ -17,6 +19,8 @@ public interface AnalysisApi {
     String SERVICE    = "/datastore";
     String CONTROLLER = "/analysis";
     String BASE       = SERVICE + CONTROLLER;
+    
+    String HISTOGRAM_PATH = "/histogram";
 
     String FILE_TYPE          = "fileType";
 
@@ -43,5 +47,10 @@ public interface AnalysisApi {
             @Path( NUM_RESULTS ) int numResults,
             @Body List<TopUtilizerDetails> topUtilizerDetails,
             @Query( FILE_TYPE ) FileType fileType );
+    
+    @POST( BASE + ENTITY_SET_ID_PATH + NUM_RESULTS_PATH + HISTOGRAM_PATH )
+    TopUtilizersHistogramResult getTopUtilizersHistogram( @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Path( NUM_RESULTS ) int numResults,
+            @Body TopUtilizersHistogramRequest histogramDetails );
 
 }
