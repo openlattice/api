@@ -1,6 +1,7 @@
 package com.dataloom.search;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.dataloom.data.requests.NeighborEntityDetails;
@@ -37,6 +38,7 @@ public interface SearchApi {
     String ADVANCED           = "/advanced";
     String HOME               = "/home";
     String FQN                = "/fqn";
+    String NEIGHBORS          = "/neighbors";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -193,5 +195,19 @@ public interface SearchApi {
     List<NeighborEntityDetails> executeEntityNeighborSearch(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_ID ) UUID entityId );
+
+    /**
+     * Executes a search for all neighbors of multiple entities of the same entity set that are connected by an
+     * association
+     * 
+     * @param entitySetId the entity set id of the entities
+     * @param entityIds the entity key ids of the entities
+     * @return A map from each entity id to a list of objects containing information about the neighbors and
+     *         associations of that entity
+     */
+    @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS )
+    Map<UUID, List<NeighborEntityDetails>> executeEntityNeighborSearchBulk(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Body List<UUID> entityIds );
 
 }
