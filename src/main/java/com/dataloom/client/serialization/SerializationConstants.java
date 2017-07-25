@@ -66,7 +66,6 @@ public final class SerializationConstants {
     public static final String PROPERTY_FIELD                = "property";
     public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";
     public static final String PROPERTY_TYPES                = "propertyTypes";
-    public static final String PROPERTY_TYPE_ID              = "propertyTypeId";
     public static final String SYNC_ID                       = "syncId";
     public static final String SYNC_IDS                      = "syncIds";
     public static final String SYNC_TICKETS                  = "syncTickets";
@@ -161,10 +160,6 @@ public final class SerializationConstants {
     public static final String ASSOCIATION_TYPE_ID           = "associationTypeId";
     public static final String NEIGHBOR_TYPE_IDS             = "neighborTypeIds";
     public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
-    public static final String DRILL_DOWN_ENTITY_TYPE_ID     = "drillDownEntityTypeId";
-    public static final String DRILL_DOWN_PROPERTY_TYPE_ID   = "drillDownPropertyTypeId";
-    public static final String FIELDS                        = "fields";
-    public static final String COUNTS                        = "counts";
 
     public static final String CURRENT_SYNC                  = "currentSync";
 }
