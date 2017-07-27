@@ -2,6 +2,7 @@ package com.dataloom.search;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.data.requests.NeighborEntityDetails;
@@ -208,6 +209,6 @@ public interface SearchApi {
     @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS )
     Map<UUID, List<NeighborEntityDetails>> executeEntityNeighborSearchBulk(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
-            @Body List<UUID> entityIds );
+            @Body Set<UUID> entityIds );
 
 }
