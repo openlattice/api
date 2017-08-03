@@ -34,7 +34,7 @@ public interface OrganizationsApi {
     String TITLE             = "/title";
     String EMAIL_DOMAIN      = "email-domain";
     String EMAIL_DOMAINS     = "/email-domains";
-    String EMAIL_DOMAIN_PATH = "/{" + EMAIL_DOMAIN + "}";
+    String EMAIL_DOMAIN_PATH = "/{" + EMAIL_DOMAIN + ":.+}";
     String PRINCIPALS        = "/principals";
     String PRINCIPAL_ID      = "pid";
     String PRINCIPAL_ID_PATH = "/{" + PRINCIPAL_ID + "}";
@@ -42,7 +42,7 @@ public interface OrganizationsApi {
     String TYPE_PATH         = "/{" + TYPE + "}";
     String ROLES             = "/roles";
     String MEMBERS           = "/members";
-    
+
     String ROLE_ID           = "roleId";
     String ROLE_ID_PATH      = "/{" + ROLE_ID + "}";
     String USER_ID           = "userId";
@@ -125,7 +125,7 @@ public interface OrganizationsApi {
     UUID createRole( @Body OrganizationRole role );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
-    Iterable<Principal> getRoles( @Path( ID ) UUID organizationId );
+    Set<OrganizationRole> getRoles( @Path( ID ) UUID organizationId );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
     OrganizationRole getRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
@@ -137,7 +137,7 @@ public interface OrganizationsApi {
     Void updateRoleDescription( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String description );
 
     @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
-    Void deleteRole( @Path( ID )UUID organizationId, @Path( ROLE_ID ) UUID roleId );    
+    Void deleteRole( @Path( ID )UUID organizationId, @Path( ROLE_ID ) UUID roleId );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS )
     Iterable<Auth0UserBasic> getAllUsersOfRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );

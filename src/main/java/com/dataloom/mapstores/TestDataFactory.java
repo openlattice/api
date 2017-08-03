@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.dataloom.organization.roles.OrganizationRole;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -96,7 +97,7 @@ public final class TestDataFactory {
                 Optional.fromNullable( parentId ),
                 Optional.of( SecurableObjectType.EntityType ) );
     }
-    
+
     public static AssociationType associationType( PropertyType... keys ) {
         return new AssociationType(
                 Optional.absent(),
@@ -148,7 +149,16 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( userPrincipal() ),
-                ImmutableSet.of( rolePrincipal() ) );
+                ImmutableSet.of( organizationRole() ) );
+    }
+
+    public static OrganizationRole organizationRole() {
+        return new OrganizationRole(
+            Optional.of(UUID.randomUUID()),
+            UUID.randomUUID(),
+            RandomStringUtils.randomAlphanumeric(5),
+            Optional.of(RandomStringUtils.randomAlphanumeric(5))
+        );
     }
 
     public static SecurableObjectType securableObjectType() {
