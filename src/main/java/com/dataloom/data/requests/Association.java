@@ -1,19 +1,18 @@
 package com.dataloom.data.requests;
 
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.data.EntityKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.SetMultimap;
+import java.util.UUID;
 
 public class Association {
-    private EntityKey                 key;
-    private EntityKey                 src;
-    private EntityKey                 dst;
+    private final EntityKey                 key;
+    private final EntityKey                 src;
+    private final EntityKey                 dst;
     // This is the actual values of the LinkSet, which can be thought of as "association details" of this association
-    private SetMultimap<UUID, Object> details;
+    private final SetMultimap<UUID, Object> details;
 
     @JsonCreator
     public Association(
@@ -46,7 +45,7 @@ public class Association {
     public SetMultimap<UUID, Object> getDetails() {
         return details;
     }
-    
+
     @Override
     public String toString() {
         return "Association [key=" + key + ", src=" + src + ", dst=" + dst + ", details=" + details + "]";
@@ -65,22 +64,22 @@ public class Association {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) return true;
-        if ( obj == null ) return false;
-        if ( getClass() != obj.getClass() ) return false;
+        if ( this == obj ) { return true; }
+        if ( obj == null ) { return false; }
+        if ( getClass() != obj.getClass() ) { return false; }
         Association other = (Association) obj;
         if ( details == null ) {
-            if ( other.details != null ) return false;
-        } else if ( !details.equals( other.details ) ) return false;
+            if ( other.details != null ) { return false; }
+        } else if ( !details.equals( other.details ) ) { return false; }
         if ( dst == null ) {
-            if ( other.dst != null ) return false;
-        } else if ( !dst.equals( other.dst ) ) return false;
+            if ( other.dst != null ) { return false; }
+        } else if ( !dst.equals( other.dst ) ) { return false; }
         if ( key == null ) {
-            if ( other.key != null ) return false;
-        } else if ( !key.equals( other.key ) ) return false;
+            if ( other.key != null ) { return false; }
+        } else if ( !key.equals( other.key ) ) { return false; }
         if ( src == null ) {
-            if ( other.src != null ) return false;
-        } else if ( !src.equals( other.src ) ) return false;
+            if ( other.src != null ) { return false; }
+        } else if ( !src.equals( other.src ) ) { return false; }
         return true;
     }
 }
