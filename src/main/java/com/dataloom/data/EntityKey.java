@@ -2,11 +2,10 @@ package com.dataloom.data;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.UUID;
 
 /**
  * Uniquely identifies a version of an entity in an entity set.
@@ -45,20 +44,16 @@ public class EntityKey implements Comparable<EntityKey> {
 
     @Override
     public boolean equals( Object o ) {
-        if ( this == o )
-            return true;
-        if ( !( o instanceof EntityKey ) )
-            return false;
+        if ( this == o ) { return true; }
+        if ( !( o instanceof EntityKey ) ) { return false; }
 
         EntityKey entityKey = (EntityKey) o;
 
-        if ( !entitySetId.equals( entityKey.entitySetId ) )
-            return false;
-        if ( !entityId.equals( entityKey.entityId ) )
-            return false;
+        if ( !entitySetId.equals( entityKey.entitySetId ) ) { return false; }
+        if ( !entityId.equals( entityKey.entityId ) ) { return false; }
         if ( syncId == null ) {
-            if ( entityKey.syncId != null ) return false;
-        } else if ( !syncId.equals( entityKey.syncId ) ) return false;
+            if ( entityKey.syncId != null ) { return false; }
+        } else if ( !syncId.equals( entityKey.syncId ) ) { return false; }
         return true;
     }
 

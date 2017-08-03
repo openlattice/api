@@ -5,12 +5,13 @@ import com.dataloom.data.EntityKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import java.util.UUID;
 
 public class Entity {
-    private EntityKey                 key;
-    private SetMultimap<UUID, Object> details;
+    private final EntityKey                 key;
+    private final SetMultimap<UUID, Object> details;
 
     @JsonCreator
     public Entity(
@@ -62,7 +63,8 @@ public class Entity {
         Entity other = (Entity) obj;
         if ( details == null ) {
             if ( other.details != null ) { return false; }
-        } else if ( !details.equals( other.details ) ) { return false; }
+        } else if ( !details.equals( other.details ) ) {
+            return false; }
         if ( key == null ) {
             if ( other.key != null ) { return false; }
         } else if ( !key.equals( other.key ) ) { return false; }
