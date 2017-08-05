@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.UUID;
 
+// TODO - this class seems completely unnecessary
+@Deprecated
 public class RoleKey {
 
     private final List<UUID> aclKey;

@@ -3,8 +3,8 @@ package com.dataloom.organization.roles;
 import java.util.List;
 import java.util.UUID;
 
-import com.dataloom.edm.internal.DatastoreConstants;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,15 +16,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 
-/**
- * A role in an organization. Use both organizationId and roleId to specify a role.
- */
 public class Role extends AbstractSecurableObject {
 
     private static final Logger logger = LoggerFactory.getLogger( Role.class );
 
     private final String  reservationName;
     private final RoleKey roleKey;
+
+    public static String generateReservationName( UUID organizationId, String title ) {
+
+        Preconditions.checkNotNull( organizationId );
+        Preconditions.checkArgument( StringUtils.isNotBlank( title ) );
+
+        return organizationId + "|" + title;
+    }
 
     @JsonCreator
     public Role(
@@ -39,9 +44,10 @@ public class Role extends AbstractSecurableObject {
         /*
          * a Role is uniquely identified by both organizationId and roleId, but AclKey reservation only works with a
          * single UUID. since we can't use both organizationId and roleId for AclKey reservation, we need a unique
-         * String to identify a Role for the UUID <-> String mapping
+         * String to identify a Role for the UUID <-> String mapping. this should be thought of as a hack since we
+         * really need a List<UUID> <-> String mapping.
          */
-        this.reservationName = organizationId + "|" + title;
+        this.reservationName = Role.generateReservationName( organizationId, title );
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
