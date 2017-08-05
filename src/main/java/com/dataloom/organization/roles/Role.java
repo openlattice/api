@@ -3,12 +3,11 @@ package com.dataloom.organization.roles;
 import java.util.List;
 import java.util.UUID;
 
+import com.dataloom.edm.internal.DatastoreConstants;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.PrincipalType;
-import com.dataloom.authorization.SystemRole;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -19,31 +18,30 @@ import com.google.common.base.Optional;
 
 /**
  * A role in an organization. Use both organizationId and roleId to specify a role.
- * 
- * @author Ho Chung Siu
- *
  */
-public class OrganizationRole extends AbstractSecurableObject {
-    private static final Logger logger                  = LoggerFactory.getLogger( OrganizationRole.class );
+public class Role extends AbstractSecurableObject {
 
-    private UUID                organizationId;
+    private static final Logger logger = LoggerFactory.getLogger( Role.class );
 
-    private RoleKey             roleKey;
+    private final String  reservationName;
+    private final RoleKey roleKey;
 
     @JsonCreator
-    public OrganizationRole(
+    public Role(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
             @JsonProperty( SerializationConstants.ORGANIZATION_ID ) UUID organizationId,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
+
         super( id, title, description );
-        this.organizationId = organizationId;
+
         this.roleKey = new RoleKey( organizationId, this.id );
+        this.reservationName = organizationId + "|" + title;
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
     public UUID getOrganizationId() {
-        return organizationId;
+        return roleKey.getOrganizationId();
     }
 
     @JsonIgnore
@@ -51,25 +49,27 @@ public class OrganizationRole extends AbstractSecurableObject {
         return roleKey;
     }
 
-    /**
-     * Convenience method to retrieve acl key for this role
-     * 
-     * @return
-     */
     @JsonIgnore
     public List<UUID> getAclKey() {
         return roleKey.getAclKey();
     }
 
+    @JsonIgnore
+    public String getReservationName() {
+        return reservationName;
+    }
+
     @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.OrganizationRole;
+        return SecurableObjectType.Role;
     }
 
-    @Override
-    public String toString() {
-        return "OrganizationRole [organizationId=" + organizationId + ", roleKey=" + roleKey + "]";
+    @Override public String toString() {
+        return "RoleKey { " +
+                "organizationId=" + roleKey.getOrganizationId() +
+                ", roleId=" + roleKey.getRoleId() +
+                ", title=" + title +
+                " }";
     }
-
 }

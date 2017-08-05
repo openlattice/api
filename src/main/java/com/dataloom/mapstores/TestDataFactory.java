@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.dataloom.organization.roles.OrganizationRole;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -36,6 +35,7 @@ import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
+import com.dataloom.organization.roles.Role;
 import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.Request;
@@ -149,15 +149,15 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( userPrincipal() ),
-                ImmutableSet.of( organizationRole() ) );
+                ImmutableSet.of( role() ) );
     }
 
-    public static OrganizationRole organizationRole() {
-        return new OrganizationRole(
-            Optional.of(UUID.randomUUID()),
-            UUID.randomUUID(),
-            RandomStringUtils.randomAlphanumeric(5),
-            Optional.of(RandomStringUtils.randomAlphanumeric(5))
+    public static Role role() {
+        return new Role(
+                Optional.of( UUID.randomUUID() ),
+                UUID.randomUUID(),
+                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) )
         );
     }
 
