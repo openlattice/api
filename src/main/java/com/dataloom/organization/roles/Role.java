@@ -34,8 +34,13 @@ public class Role extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
 
         super( id, title, description );
-
         this.roleKey = new RoleKey( organizationId, this.id );
+
+        /*
+         * a Role is uniquely identified by both organizationId and roleId, but AclKey reservation only works with a
+         * single UUID. since we can't use both organizationId and roleId for AclKey reservation, we need a unique
+         * String to identify a Role for the UUID <-> String mapping
+         */
         this.reservationName = organizationId + "|" + title;
     }
 
