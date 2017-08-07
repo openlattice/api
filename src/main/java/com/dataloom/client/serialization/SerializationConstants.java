@@ -164,4 +164,33 @@ public final class SerializationConstants {
     public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
 
     public static final String CURRENT_SYNC                  = "currentSync";
+
+    public static final String WEIGHTS                       = "weights";
+    public static final String BIAS                          = "bias";
+    public static final String FIRST_NAME_STRING             = "firstNameString";
+    public static final String FIRST_NAME_METAPHONE          = "firstNameMetaphone";
+    public static final String FIRST_NAME_PRESENCE           = "firstNamePresence";
+    public static final String MIDDLE_NAME_STRING            = "middleNameString";
+    public static final String MIDDLE_NAME_METAPHONE         = "middleNameMetaphone";
+    public static final String MIDDLE_NAME_PRESENCE          = "middleNamePresence";
+    public static final String LAST_NAME_STRING              = "lastNameString";
+    public static final String LAST_NAME_METAPHONE           = "lastNameMetaphone";
+    public static final String LAST_NAME_PRESENCE            = "lastNamePresence";
+    public static final String SEX_STRING                    = "sexString";
+    public static final String SEX_PRESENCE                  = "sexPresence";
+    public static final String RACE_STRING                   = "raceString";
+    public static final String RACE_PRESENCE                 = "racePresence";
+    public static final String ETHNICITY_STRING              = "ethnicityString";
+    public static final String ETHNICITY_PRESENCE            = "ethnicityPresence";
+    public static final String DOB_STRING                    = "dobString";
+    public static final String DOB_PRESENCE                  = "dobPresence";
+    public static final String IDENTIFICATION_STRING         = "identificationString";
+    public static final String IDENTIFICATION_PRESENCE       = "identificationPresence";
+    public static final String SSN_STRING                    = "ssnString";
+    public static final String SSN_PRESENCE                  = "ssnPresence";
+    public static final String AGE_STRING                    = "ageString";
+    public static final String AGE_PRESENCE                  = "agePresence";
+    public static final String XREF_STRING                   = "xrefString";
+    public static final String XREF_PRESENCE                 = "xrefPresence";
+
 }
