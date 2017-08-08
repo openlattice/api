@@ -9,7 +9,7 @@ import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
-import com.dataloom.organization.roles.OrganizationRole;
+import com.dataloom.organization.roles.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +18,7 @@ import com.google.common.base.Optional;
 public class Organization extends AbstractSecurableObject {
     private final Set<String>    autoApprovedEmails;
     private final Set<Principal> members;
-    private final Set<OrganizationRole> roles;
+    private final Set<Role>      roles;
     private transient int        h = 0;
 
     @JsonCreator
@@ -28,7 +28,7 @@ public class Organization extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.EMAILS_FIELD ) Set<String> autoApprovedEmails,
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
-            @JsonProperty( SerializationConstants.ROLES ) Set<OrganizationRole> roles ) {
+            @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles ) {
         super( id, title, description );
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
@@ -56,7 +56,7 @@ public class Organization extends AbstractSecurableObject {
     }
 
     @JsonProperty( SerializationConstants.ROLES )
-    public Set<OrganizationRole> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
