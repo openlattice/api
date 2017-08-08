@@ -26,5 +26,5 @@ public enum SecurableObjectType {
     LinkingEntityType,
     AssociationType,
     Organization,
-    OrganizationRole
+    Role
 }

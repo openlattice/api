@@ -29,7 +29,6 @@ public class OrganizationRole extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
         super( id, title, description );
-        this.organizationId = organizationId;
         this.roleKey = new RoleKey( organizationId, this.id );
     }
 
@@ -60,7 +59,7 @@ public class OrganizationRole extends AbstractSecurableObject {
     @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.OrganizationRole;
+        return SecurableObjectType.Role;
     }
 
 }

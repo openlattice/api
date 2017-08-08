@@ -1,9 +1,11 @@
 package com.dataloom.organization.roles;
 
-import java.util.Arrays;
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.UUID;
 
+// TODO - this class seems completely unnecessary
+@Deprecated
 public class RoleKey {
     private final UUID organizationId;
     private final UUID roleId;
@@ -11,9 +13,10 @@ public class RoleKey {
     private final List<UUID> aclKey;
 
     public RoleKey( UUID organizationId, UUID roleId ) {
+
         this.organizationId = organizationId;
         this.roleId = roleId;
-        aclKey = Arrays.asList( organizationId, roleId );
+        this.aclKey = ImmutableList.of( organizationId, roleId );
     }
 
     public UUID getOrganizationId() {

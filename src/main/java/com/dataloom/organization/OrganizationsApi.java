@@ -1,13 +1,11 @@
 package com.dataloom.organization;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.PrincipalType;
 import com.dataloom.directory.pojo.Auth0UserBasic;
-import com.dataloom.organization.roles.OrganizationRole;
+import com.dataloom.organization.roles.Role;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -107,9 +105,6 @@ public interface OrganizationsApi {
     @DELETE( BASE + ID_PATH + EMAIL_DOMAINS + EMAIL_DOMAIN_PATH )
     Void removeAutoApprovedEmailDomain( @Path( ID ) UUID organizationId, @Path( EMAIL_DOMAIN ) String emailDomain );
 
-    @GET( BASE + ID_PATH + PRINCIPALS )
-    Set<Principal> getPrincipals( @Path( ID ) UUID organizationId );
-
     //Endpoints about members
     @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
     Set<Principal> getMembers( @Path( ID ) UUID organizationId );
@@ -122,13 +117,13 @@ public interface OrganizationsApi {
 
     // Endpoints about roles
     @POST( BASE + ROLES )
-    UUID createRole( @Body OrganizationRole role );
+    UUID createRole( @Body Role role );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES )
-    Set<OrganizationRole> getRoles( @Path( ID ) UUID organizationId );
+    Set<Role> getRoles( @Path( ID ) UUID organizationId );
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH )
-    OrganizationRole getRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
+    Role getRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
 
     @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + TITLE )
     Void updateRoleTitle( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Body String title );
@@ -147,35 +142,5 @@ public interface OrganizationsApi {
 
     @DELETE( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + USER_ID_PATH )
     Void removeRoleFromUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( USER_ID ) String userId );
-
-    /**
-     * This is a convenience call that grants {@code {@link com.dataloom.authorization.Permission#READ}} to a principal
-     * on an organization.
-     *
-     * @param organizationId The id of the organization.
-     * @param principalType The principal type of the principal being added.
-     * @param principalId The principalId of the principal being added.
-     */
-    @Deprecated
-    @PUT( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
-    Void addPrincipal(
-            @Path( ID ) UUID organizationId,
-            @Path( TYPE ) PrincipalType principalType,
-            @Path( PRINCIPAL_ID ) String principalId );
-
-    /**
-     * This is a convenience call that removes all {@code {@link com.dataloom.authorization.Permission}}s that a
-     * principal may have on an organization, including discover.
-     *
-     * @param organizationId The id of the organization.
-     * @param principalType The principal type of the principal being added.
-     * @param principalId The principalId of the principal being added.
-     */
-    @Deprecated
-    @DELETE( BASE + ID_PATH + PRINCIPALS + TYPE_PATH + PRINCIPAL_ID_PATH )
-    Void removePrincipal(
-            @Path( ID ) UUID organizationId,
-            @Path( TYPE ) PrincipalType principalType,
-            @Path( PRINCIPAL_ID ) String principalId );
 
 }
