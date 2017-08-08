@@ -82,7 +82,7 @@ public final class RetrofitFactory {
                 .addInterceptor( chain -> chain
                         .proceed( chain.request().newBuilder().addHeader( "Authorization", "Bearer " + jwtToken.get() )
                                 .build() ) )
-                .readTimeout( 2, TimeUnit.MINUTES );
+                .readTimeout( 0, TimeUnit.MILLISECONDS );
     }
 
 }

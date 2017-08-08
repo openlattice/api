@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class RoleKey {
-    private UUID       organizationId;
-    private UUID       roleId;
+    private final UUID organizationId;
+    private final UUID roleId;
 
-    private List<UUID> aclKey;
+    private final List<UUID> aclKey;
 
     public RoleKey( UUID organizationId, UUID roleId ) {
         this.organizationId = organizationId;
@@ -26,5 +26,13 @@ public class RoleKey {
 
     public List<UUID> getAclKey() {
         return aclKey;
+    }
+
+    @Override public String toString() {
+        return "RoleKey{" +
+                "organizationId=" + organizationId +
+                ", roleId=" + roleId +
+                ", aclKey=" + aclKey +
+                '}';
     }
 }

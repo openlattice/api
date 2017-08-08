@@ -1,14 +1,5 @@
 package com.dataloom.organization.roles;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.PrincipalType;
-import com.dataloom.authorization.SystemRole;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -16,19 +7,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import java.util.List;
+import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A role in an organization. Use both organizationId and roleId to specify a role.
- * 
- * @author Ho Chung Siu
  *
+ * @author Ho Chung Siu
  */
 public class OrganizationRole extends AbstractSecurableObject {
-    private static final Logger logger                  = LoggerFactory.getLogger( OrganizationRole.class );
+    private static final Logger logger = LoggerFactory.getLogger( OrganizationRole.class );
 
-    private UUID                organizationId;
-
-    private RoleKey             roleKey;
+    private RoleKey roleKey;
 
     @JsonCreator
     public OrganizationRole(
@@ -41,9 +33,15 @@ public class OrganizationRole extends AbstractSecurableObject {
         this.roleKey = new RoleKey( organizationId, this.id );
     }
 
+    @Override public String toString() {
+        return "OrganizationRole{" +
+                "roleKey=" + roleKey +
+                '}';
+    }
+
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )
     public UUID getOrganizationId() {
-        return organizationId;
+        return roleKey.getOrganizationId();
     }
 
     @JsonIgnore
@@ -53,8 +51,6 @@ public class OrganizationRole extends AbstractSecurableObject {
 
     /**
      * Convenience method to retrieve acl key for this role
-     * 
-     * @return
      */
     @JsonIgnore
     public List<UUID> getAclKey() {
@@ -65,11 +61,6 @@ public class OrganizationRole extends AbstractSecurableObject {
     @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.OrganizationRole;
-    }
-
-    @Override
-    public String toString() {
-        return "OrganizationRole [organizationId=" + organizationId + ", roleKey=" + roleKey + "]";
     }
 
 }
