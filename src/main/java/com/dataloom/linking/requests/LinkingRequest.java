@@ -15,7 +15,7 @@ public class LinkingRequest {
     @JsonCreator
     public LinkingRequest(
             @JsonProperty( SerializationConstants.LINKING_ENTITY_SET_FIELD ) LinkingEntitySet linkingEntitySet,
-            @JsonProperty( SerializationConstants.PROPERTY_TYPES ) Set<UUID> resultPropertyTypeIds ) {
+            @JsonProperty( SerializationConstants.PROPERTY_TYPE_ID_LIST ) Set<UUID> resultPropertyTypeIds ) {
         this.linkingEntitySet = linkingEntitySet;
         this.resultPropertyTypeIds = resultPropertyTypeIds;
     }
@@ -25,7 +25,7 @@ public class LinkingRequest {
         return linkingEntitySet;
     }
 
-    @JsonProperty( SerializationConstants.PROPERTY_TYPES )
+    @JsonProperty( SerializationConstants.PROPERTY_TYPE_ID_LIST )
     public Set<UUID> getResultPropertyTypeIds() {
         return resultPropertyTypeIds;
     }
