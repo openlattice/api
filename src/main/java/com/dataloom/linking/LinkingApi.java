@@ -17,17 +17,22 @@
 
 package com.dataloom.linking;
 
-import com.dataloom.data.EntityKey;
-import com.dataloom.edm.set.LinkingEntitySet;
-import com.dataloom.edm.type.LinkingEntityType;
-import retrofit2.http.*;
-
 import java.util.Set;
 import java.util.UUID;
 
+import com.dataloom.data.EntityKey;
+import com.dataloom.edm.type.LinkingEntityType;
+import com.dataloom.linking.requests.LinkingRequest;
+
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+
 /**
- * This API is used for creating and managing synthetic entity sets created by linking several entity sets together.
- * The entity sets created by this invoking this API are not actually instantiated until they are accessed via the
+ * This API is used for creating and managing synthetic entity sets created by linking several entity sets together. The
+ * entity sets created by this invoking this API are not actually instantiated until they are accessed via the
  * {@link com.dataloom.data.DataApi}, which dynamically weaves them together based on the matching information.
  *
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
@@ -36,9 +41,9 @@ public interface LinkingApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE    = "/datastore";
-    String CONTROLLER = "/linking";
-    String BASE       = SERVICE + CONTROLLER;
+    String SERVICE          = "/datastore";
+    String CONTROLLER       = "/linking";
+    String BASE             = SERVICE + CONTROLLER;
 
     String SET_ID           = "setId";
     String SYNC_ID          = "syncId";
@@ -58,18 +63,17 @@ public interface LinkingApi {
     UUID createLinkingEntityType( LinkingEntityType linkingEntityType );
 
     /**
-     * Performs linking operation on entity sets. The entity type of the set must have already been defined by a call to
-     * {@link LinkingApi#createLinkingEntityType(LinkingEntityType)}.
+     * Performs linking operation on entity sets.
      *
-     * @param linkingEntitySet An entity set definition consisting of an entity set and associated properties to link on.
-     *                         Each map in linking propertiesmust be the same length, with entity set ids as a keys and
-     *                         property type ids as values. If no maps are provided, an empty linking entity set is
-     *                         created that can be populated by calling
-     *                         {@link LinkingApi#linkEntities(UUID, UUID, UUID, Set)}.
+     * @param linkingRequest A request including a set of property type ids to populate in the linking result, and a
+     *            linking entity set definition consisting of an entity set and associated properties to link on. Each
+     *            map in linking properties must be the same length, with entity set ids as a keys and property type ids
+     *            as values. If no maps are provided, an empty linking entity set is created that can be populated by
+     *            calling {@link LinkingApi#linkEntities(UUID, UUID, UUID, Set)}.
      * @return The id of the new entity set constructed from linking the desired entity sets.
      */
-    @POST( BASE + "/" + SET )
-    UUID linkEntitySets( @Body LinkingEntitySet linkingEntitySet );
+    @POST( BASE )
+    UUID linkEntitySets( @Body LinkingRequest linkingRequest );
 
     /**
      * Links a set of entities into a new linked entity.
@@ -98,8 +102,7 @@ public interface LinkingApi {
     Void deleteLinkedEntities(
             @Path( SYNC_ID ) UUID syncId,
             @Path( SET_ID ) UUID entitySetId,
-            @Path( ENTITY_ID ) UUID entityId
-    );
+            @Path( ENTITY_ID ) UUID entityId );
 
     @PUT( BASE + "/" + SET + "/{" + SYNC_ID + "}/{" + SET_ID + "}/{" + ENTITY_ID + "}/{" + LINKED_ENTITY_ID + "}" )
     Void addLinkedEntities(
