@@ -66,6 +66,7 @@ public final class SerializationConstants {
     public static final String PROPERTY_FIELD                = "property";
     public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";
     public static final String PROPERTY_TYPES                = "propertyTypes";
+    public static final String PROPERTY_TYPE_ID_LIST         = "propertyTypeIds";
     public static final String SYNC_ID                       = "syncId";
     public static final String SYNC_IDS                      = "syncIds";
     public static final String SYNC_TICKETS                  = "syncTickets";
