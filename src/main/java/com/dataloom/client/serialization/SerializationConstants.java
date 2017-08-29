@@ -56,6 +56,7 @@ public final class SerializationConstants {
     public static final String KEY_FIELD                     = "key";
     public static final String ID_FIELD                      = "id";
     public static final String IS_OWNER                      = "isOwner";
+    public static final String LINKING_ENTITY_SET_FIELD      = "linkingEntitySet";
     public static final String LINKING_PROPERTIES_FIELD      = "linkingProperties";
     public static final String NAME_FIELD                    = "name";
     public static final String NAMESPACE_FIELD               = "namespace";
@@ -66,6 +67,7 @@ public final class SerializationConstants {
     public static final String PROPERTY_FIELD                = "property";
     public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";
     public static final String PROPERTY_TYPES                = "propertyTypes";
+    public static final String PROPERTY_TYPE_ID_LIST         = "propertyTypeIds";
     public static final String SYNC_ID                       = "syncId";
     public static final String SYNC_IDS                      = "syncIds";
     public static final String SYNC_TICKETS                  = "syncTickets";
