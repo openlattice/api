@@ -54,6 +54,7 @@ public interface EdmApi {
     String SCHEMAS                    = "schemas";
     String FILE_TYPE                  = "fileType";
     String TOKEN                      = "token";
+    String VERSION                    = "version";
 
     // {namespace}/{schema_name}/{class}/{FQN}/{FQN}
     /*
@@ -75,6 +76,8 @@ public interface EdmApi {
     String SRC_PATH                   = "/src";
     String DST_PATH                   = "/dst";
     String DIFF_PATH                  = "/diff";
+    String VERSION_PATH               = "/version";
+    String NEW_PATH                   = "/new";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -99,13 +102,13 @@ public interface EdmApi {
     EntityDataModel getEntityDataModel();
 
     /**
-     * Sets the entity data model, including schemas, entity types, association types, and property types.
+     * Updates the entity data model, including schemas, entity types, association types, and property types.
      *
      * @param edm - The relevant elements of the entity data model to create or update, including schemas, entity types,
      *            association types, and property types
      */
     @PATCH( BASE )
-    void setEntityDataModel( EntityDataModel edm );
+    void updateEntityDataModel( EntityDataModel edm );
 
     /**
      * Gets the changes between the existing entity data model and the entity data model passed in, including schemas,
@@ -114,7 +117,13 @@ public interface EdmApi {
      * @param edm - The entire entity data model, including schemas, entity types, association types, and property types
      */
     @POST( BASE + DIFF_PATH )
-    EntityDataModel getEntityDataModelDiff( EntityDataModel edm );
+    EntityDataModelDiff getEntityDataModelDiff( EntityDataModel edm );
+
+    @GET( BASE + VERSION_PATH )
+    UUID getEntityDataModelVersion();
+
+    @GET( BASE + VERSION_PATH + NEW_PATH )
+    UUID generateNewEntityDataModelVersion();
 
     /**
      * Gets information for any SecurableObjectType given its type and ID.

@@ -162,4 +162,7 @@ public final class SerializationConstants {
     public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
 
     public static final String CURRENT_SYNC                  = "currentSync";
+
+    public static final String CONFLICTS                     = "conflicts";
+    public static final String DIFF                          = "diff";
 }
