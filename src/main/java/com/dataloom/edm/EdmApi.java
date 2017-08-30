@@ -118,10 +118,16 @@ public interface EdmApi {
      */
     @POST( BASE + DIFF_PATH )
     EntityDataModelDiff getEntityDataModelDiff( EntityDataModel edm );
-
+ 
+    /** 
+     * Returns the current entity data model version
+     */
     @GET( BASE + VERSION_PATH )
     UUID getEntityDataModelVersion();
 
+    /** 
+     * Generates and returns a new entity data model version
+     */
     @GET( BASE + VERSION_PATH + NEW_PATH )
     UUID generateNewEntityDataModelVersion();
 
