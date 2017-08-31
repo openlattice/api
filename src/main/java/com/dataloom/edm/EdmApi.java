@@ -78,6 +78,7 @@ public interface EdmApi {
     String DIFF_PATH                  = "/diff";
     String VERSION_PATH               = "/version";
     String NEW_PATH                   = "/new";
+    String CLEAR_PATH                 = "/clear";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -91,6 +92,9 @@ public interface EdmApi {
     String ENTITY_TYPE_BASE_PATH      = BASE + ENTITY_TYPE_PATH;
     String PROPERTY_TYPE_BASE_PATH    = BASE + PROPERTY_TYPE_PATH;
     String ASSOCIATION_TYPE_BASE_PATH = BASE + ASSOCIATION_TYPE_PATH;
+
+    @DELETE( BASE + CLEAR_PATH )
+    void clearAllData();
 
     /**
      * Gets the entity data model, including namespaces, schemas, entity types, association types, and property types.
@@ -118,14 +122,14 @@ public interface EdmApi {
      */
     @POST( BASE + DIFF_PATH )
     EntityDataModelDiff getEntityDataModelDiff( EntityDataModel edm );
- 
-    /** 
+
+    /**
      * Returns the current entity data model version
      */
     @GET( BASE + VERSION_PATH )
     UUID getEntityDataModelVersion();
 
-    /** 
+    /**
      * Generates and returns a new entity data model version
      */
     @GET( BASE + VERSION_PATH + NEW_PATH )
