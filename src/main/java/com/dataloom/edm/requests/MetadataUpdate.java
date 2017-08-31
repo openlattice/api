@@ -30,6 +30,8 @@ public class MetadataUpdate {
     private Optional<FullQualifiedName> type;
     // Specific to property type
     private Optional<Boolean>           pii;
+    // Specific to entity set property type metadata
+    private Optional<Boolean>           defaultShow;
 
     @JsonCreator
     public MetadataUpdate(
@@ -38,7 +40,8 @@ public class MetadataUpdate {
             @JsonProperty( SerializationConstants.NAME_FIELD ) Optional<String> name,
             @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type,
-            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> pii ) {
+            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> pii,
+            @JsonProperty( SerializationConstants.DEFAULT_SHOW ) Optional<Boolean> defaultShow ) {
         // WARNING These checks have to be consistent with the same check elsewhere.
         Preconditions.checkArgument( !title.isPresent() || StringUtils.isNotBlank( title.get() ),
                 "Title cannot be blank." );
@@ -56,6 +59,7 @@ public class MetadataUpdate {
         this.contacts = contacts;
         this.type = type;
         this.pii = pii;
+        this.defaultShow = defaultShow;
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -82,17 +86,23 @@ public class MetadataUpdate {
     public Optional<FullQualifiedName> getType() {
         return type;
     }
-    
+
     @JsonProperty( SerializationConstants.PII_FIELD )
     public Optional<Boolean> getPii() {
         return pii;
     }
-    
+
+    @JsonProperty( SerializationConstants.DEFAULT_SHOW )
+    public Optional<Boolean> getDefaultShow() {
+        return defaultShow;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ( ( contacts == null ) ? 0 : contacts.hashCode() );
+        result = prime * result + ( ( defaultShow == null ) ? 0 : defaultShow.hashCode() );
         result = prime * result + ( ( description == null ) ? 0 : description.hashCode() );
         result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
         result = prime * result + ( ( pii == null ) ? 0 : pii.hashCode() );
@@ -110,6 +120,9 @@ public class MetadataUpdate {
         if ( contacts == null ) {
             if ( other.contacts != null ) return false;
         } else if ( !contacts.equals( other.contacts ) ) return false;
+        if ( defaultShow == null ) {
+            if ( other.defaultShow != null ) return false;
+        } else if ( !defaultShow.equals( other.defaultShow ) ) return false;
         if ( description == null ) {
             if ( other.description != null ) return false;
         } else if ( !description.equals( other.description ) ) return false;
@@ -128,7 +141,6 @@ public class MetadataUpdate {
         return true;
     }
 
-
     // Trimming happens before initializing update processors so that irrelevant fields won't get ser/deserialized when
     // processors are serialized.
     public static MetadataUpdate trimToPropertyTypeUpdate( MetadataUpdate update ) {
@@ -138,7 +150,8 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 update.getType(),
-                update.getPii() );
+                update.getPii(),
+                Optional.absent() );
     }
 
     public static MetadataUpdate trimToEntityTypeUpdate( MetadataUpdate update ) {
@@ -148,6 +161,7 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 update.getType(),
+                Optional.absent(),
                 Optional.absent() );
     }
 
@@ -158,6 +172,18 @@ public class MetadataUpdate {
                 update.getName(),
                 update.getContacts(),
                 Optional.absent(),
-                Optional.absent()  );
+                Optional.absent(),
+                Optional.absent() );
+    }
+
+    public static MetadataUpdate trimToEntitySetPropertyMetadataUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                Optional.absent(),
+                Optional.absent(),
+                Optional.absent(),
+                Optional.absent(),
+                update.getDefaultShow() );
     }
 }
