@@ -9,6 +9,7 @@ import com.dataloom.data.requests.FileType;
 import com.dataloom.edm.requests.EdmDetailsSelector;
 import com.dataloom.edm.requests.EdmRequest;
 import com.dataloom.edm.requests.MetadataUpdate;
+import com.dataloom.edm.set.EntitySetPropertyMetadata;
 import com.dataloom.edm.type.AssociationDetails;
 import com.dataloom.edm.type.AssociationType;
 import com.dataloom.edm.type.ComplexType;
@@ -548,5 +549,19 @@ public interface EdmApi {
      */
     @GET( ASSOCIATION_TYPE_BASE_PATH + ID_PATH + AVAILABLE_PATH )
     Iterable<EntityType> getAvailableAssociationTypesForEntityType( @Path( ID ) UUID entityTypeId );
+
+    @GET( ENTITY_SETS_PATH + ID_PATH + PROPERTY_TYPE_PATH )
+    Map<UUID, EntitySetPropertyMetadata> getAllEntitySetPropertyMetadata( @Path( ID ) UUID entitySetId );
+
+    @GET( ENTITY_SETS_PATH + ID_PATH + PROPERTY_TYPE_PATH + PROPERTY_TYPE_ID_PATH )
+    EntitySetPropertyMetadata getEntitySetPropertyMetadata(
+            @Path( ID ) UUID entitySetId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
+
+    @POST( ENTITY_SETS_PATH + ID_PATH + PROPERTY_TYPE_PATH + PROPERTY_TYPE_ID_PATH )
+    Void updateEntitySetPropertyMetadata(
+            @Path( ID ) UUID entitySetId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId,
+            @Body MetadataUpdate update );
 
 }

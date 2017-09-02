@@ -42,6 +42,7 @@ public final class SerializationConstants {
     public static final String AUDIT_ID                      = "auditId";
     public static final String BLOCK_ID                      = "blockId";
     public static final String DATA_ID                       = "dataId";
+    public static final String DEFAULT_SHOW                  = "defaultShow";
     public static final String ENTITY_FIELD                  = "entity";
     public static final String ENTITY_ID                     = "entityId";
     public static final String ENTITY_SET_FIELD              = "entitySet";
@@ -68,6 +69,7 @@ public final class SerializationConstants {
     public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";
     public static final String PROPERTY_TYPES                = "propertyTypes";
     public static final String PROPERTY_TYPE_ID_LIST         = "propertyTypeIds";
+    public static final String PROPERTY_TYPE_ID              = "propertyTypeId";
     public static final String SYNC_ID                       = "syncId";
     public static final String SYNC_IDS                      = "syncIds";
     public static final String SYNC_TICKETS                  = "syncTickets";
