@@ -80,6 +80,7 @@ public interface EdmApi {
     String VERSION_PATH               = "/version";
     String NEW_PATH                   = "/new";
     String CLEAR_PATH                 = "/clear";
+    String FORCE_PATH                 = "/force";
 
     String NAMESPACE_PATH             = "/{" + NAMESPACE + "}";
     String NAME_PATH                  = "/{" + NAME + "}";
@@ -189,6 +190,14 @@ public interface EdmApi {
     @DELETE( PROPERTY_TYPE_BASE_PATH + ID_PATH )
     Void deletePropertyType( @Path( ID ) UUID propertyTypeId );
 
+    /**
+     * Deletes a property with a given IDl, regardless of whether or not it is associated with an entity set.
+     *
+     * @param propertyTypeId The property ID for the property to delete.
+     */
+    @DELETE( PROPERTY_TYPE_BASE_PATH + ID_PATH + FORCE_PATH )
+    Void forceDeletePropertyType( @Path( ID ) UUID propertyTypeId );
+
     @GET( BASE + ENUM_TYPE_PATH )
     Iterable<EnumType> getEnumTypes();
 
@@ -286,6 +295,18 @@ public interface EdmApi {
      */
     @DELETE( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH )
     Void removePropertyTypeFromEntityType(
+            @Path( ENTITY_TYPE_ID ) UUID entityTypeId,
+            @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
+
+    /**
+     * Removes a property type with a given ID from an entity type with a given ID regardless of whether there is data
+     * associated with the property type.
+     *
+     * @param entityTypeId The ID for the entity type that will have a property removed from it.
+     * @param propertyTypeId The ID for the property type that will be removed from the entity type.
+     */
+    @DELETE( ENTITY_TYPE_BASE_PATH + ENTITY_TYPE_ID_PATH + PROPERTY_TYPE_ID_PATH + FORCE_PATH )
+    Void forceRemovePropertyTypeFromEntityType(
             @Path( ENTITY_TYPE_ID ) UUID entityTypeId,
             @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
 
