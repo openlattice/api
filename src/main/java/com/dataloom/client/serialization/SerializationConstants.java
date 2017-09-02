@@ -167,6 +167,9 @@ public final class SerializationConstants {
 
     public static final String CURRENT_SYNC                  = "currentSync";
 
+    public static final String CONFLICTS                     = "conflicts";
+    public static final String DIFF                          = "diff";
+
     public static final String WEIGHTS                       = "weights";
     public static final String BIAS                          = "bias";
     public static final String FIRST_NAME_STRING             = "firstNameString";
@@ -194,5 +197,4 @@ public final class SerializationConstants {
     public static final String AGE_PRESENCE                  = "agePresence";
     public static final String XREF_STRING                   = "xrefString";
     public static final String XREF_PRESENCE                 = "xrefPresence";
-
 }
