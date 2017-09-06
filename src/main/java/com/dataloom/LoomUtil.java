@@ -33,11 +33,12 @@ public class LoomUtil {
     }
 
     public static String generateDefaultEntityId( Stream<UUID> keys, SetMultimap<UUID, Object> entityDetails ) {
-        return keys.map( entityDetails::get )
+        String entityId = keys.map( entityDetails::get )
                 .map( LoomUtil::joinObjectsAsString )
                 .map( LoomUtil::toUtf8Bytes )
                 .map( encoder::encodeToString )
                 .collect( Collectors.joining( "," ) );
+        return ( entityId.length() == 0 ) ? UUID.randomUUID().toString() : entityId;
     }
 
     private static String joinObjectsAsString( Set<Object> s ) {

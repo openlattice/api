@@ -99,10 +99,22 @@ public final class TestDataFactory {
     }
 
     public static AssociationType associationType( PropertyType... keys ) {
+        EntityType et = entityType( keys );
         return new AssociationType(
-                Optional.absent(),
+                Optional.of( et ),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                false );
+    }
+
+    public static AssociationType associationTypeWithProperties( Set<UUID> propertyTypes, PropertyType... keys ) {
+        if ( propertyTypes.size() == 0 ) return associationType( keys );
+        EntityType et = childEntityTypeWithPropertyType( null, propertyTypes, keys );
+        UUID ptId = propertyTypes.iterator().next();
+        return new AssociationType(
+                Optional.of( et ),
+                Sets.newLinkedHashSet( Arrays.asList( ptId ) ),
+                Sets.newLinkedHashSet( Arrays.asList( ptId ) ),
                 false );
     }
 
@@ -121,9 +133,13 @@ public final class TestDataFactory {
     }
 
     public static EntitySet entitySet() {
+        return entitySetWithType( UUID.randomUUID() );
+    }
+
+    public static EntitySet entitySetWithType( UUID entityTypeId ) {
         return new EntitySet(
                 UUID.randomUUID(),
-                UUID.randomUUID(),
+                entityTypeId,
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
@@ -157,8 +173,7 @@ public final class TestDataFactory {
                 Optional.of( UUID.randomUUID() ),
                 UUID.randomUUID(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
-                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) )
-        );
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
     }
 
     public static SecurableObjectType securableObjectType() {
