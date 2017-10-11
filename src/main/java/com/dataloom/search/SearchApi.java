@@ -40,6 +40,8 @@ public interface SearchApi {
     String HOME               = "/home";
     String FQN                = "/fqn";
     String NEIGHBORS          = "/neighbors";
+    String EDM                = "/edm";
+    String INDEX              = "/index";
     String KEYWORD            = "kw";
     String ENTITY_TYPE_ID     = "eid";
     String PROPERTY_TYPE_ID   = "pid";
@@ -210,5 +212,8 @@ public interface SearchApi {
     Map<UUID, List<NeighborEntityDetails>> executeEntityNeighborSearchBulk(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Set<UUID> entityIds );
+
+    @GET( BASE + EDM + INDEX )
+    Void triggerEdmIndex();
 
 }
