@@ -8,14 +8,14 @@ plugins {
 }
 
 description = "Loom REST APIs"
-group = "com.kryptnostic"
+group = "com.openlattice"
 
 ext.projectName = 'loom-api'
 ext.scmUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
 ext.connectionUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
 ext.developerConnectionUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
 
-apply from: "https://raw.githubusercontent.com/kryptnostic/gradles/master/kryptnostic.gradle"
+apply from: "https://raw.githubusercontent.com/openlattice/gradles/master/openlattice.gradle"
 
 sourceCompatibility=JavaVersion.VERSION_1_8
 
@@ -105,9 +105,9 @@ dependencies {
         testCompile( project(path: ":rhizome", configuration: "tests"))
     } else {
         logger.quiet(project.name + " using jar dependencies.")
-        compile "com.kryptnostic:rhizome-client:${rhizome_client_version}"
-        testCompile "com.kryptnostic:rhizome:${rhizome_version}:tests"
-        testCompile "com.kryptnostic:rhizome-client:${rhizome_client_version}:tests"
+        compile "com.openlattice:rhizome-client:${rhizome_client_version}"
+        testCompile "com.openlattice:rhizome:${rhizome_version}:tests"
+        testCompile "com.openlattice:rhizome-client:${rhizome_client_version}:tests"
     }
 
     /*
