@@ -1,20 +1,5 @@
 package com.dataloom.mapstores;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import com.dataloom.authorization.Ace;
 import com.dataloom.authorization.Acl;
 import com.dataloom.authorization.AclData;
@@ -29,8 +14,8 @@ import com.dataloom.data.EntityKey;
 import com.dataloom.edm.EdmDetails;
 import com.dataloom.edm.EntitySet;
 import com.dataloom.edm.type.Analyzer;
-import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.AssociationType;
+import com.dataloom.edm.type.ComplexType;
 import com.dataloom.edm.type.EntityType;
 import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
@@ -48,6 +33,19 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
@@ -57,7 +55,8 @@ public final class TestDataFactory {
     private static final Analyzer[]            analyzers            = Analyzer.values();
     private static final Random                r                    = new Random();
 
-    private TestDataFactory() {}
+    private TestDataFactory() {
+    }
 
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
@@ -83,7 +82,7 @@ public final class TestDataFactory {
             PropertyType... keys ) {
         LinkedHashSet<UUID> k = keys.length > 0
                 ? Arrays.asList( keys ).stream().map( PropertyType::getId )
-                        .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
+                .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
                 : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
         return new EntityType(
                 UUID.randomUUID(),
@@ -108,7 +107,7 @@ public final class TestDataFactory {
     }
 
     public static AssociationType associationTypeWithProperties( Set<UUID> propertyTypes, PropertyType... keys ) {
-        if ( propertyTypes.size() == 0 ) return associationType( keys );
+        if ( propertyTypes.size() == 0 ) { return associationType( keys ); }
         EntityType et = childEntityTypeWithPropertyType( null, propertyTypes, keys );
         UUID ptId = propertyTypes.iterator().next();
         return new AssociationType(
@@ -272,7 +271,11 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey( UUID entitySetId ) {
-        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), UUIDs.timeBased() );
+        return entityKey( entitySetId, UUIDs.timeBased() );
+    }
+
+    public static EntityKey entityKey( UUID entitySetId, UUID syncId ) {
+        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), syncId );
     }
 
     public static RoleKey roleKey() {
