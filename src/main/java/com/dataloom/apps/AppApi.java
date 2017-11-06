@@ -1,6 +1,5 @@
 package com.dataloom.apps;
 
-import com.dataloom.organization.Organization;
 import retrofit2.http.*;
 
 import java.util.List;
@@ -18,16 +17,19 @@ public interface AppApi {
     String TYPE_PATH    = "/type";
     String CONFIG_PATH  = "/config";
     String BULK_PATH    = "/bulk";
+    String LOOKUP_PATH  = "/lookup";
 
     String ID              = "id";
     String ORGANIZATION_ID = "organizationId";
     String PREFIX          = "prefix";
     String NAME            = "name";
+    String NAMESPACE       = "namespace";
 
     String ID_PATH              = "/{" + ID + "}";
     String ORGANIZATION_ID_PATH = "/{" + ORGANIZATION_ID + "}";
     String PREFIX_PATH          = "/{" + PREFIX + "}";
     String NAME_PATH            = "/{" + NAME + "}";
+    String NAMESPACE_PATH       = "/{" + NAMESPACE + "}";
 
     @GET( BASE )
     Iterable<App> getApps();
@@ -41,8 +43,14 @@ public interface AppApi {
     @GET( BASE + ID_PATH )
     App getApp( @Path( ID ) UUID id );
 
+    @GET( BASE + LOOKUP_PATH + NAME_PATH )
+    App getApp( @Path( NAME ) String name );
+
     @GET( BASE + TYPE_PATH + ID_PATH )
     AppType getAppType( @Path( ID ) UUID id );
+
+    @GET( BASE + TYPE_PATH + LOOKUP_PATH + NAMESPACE_PATH + NAME_PATH )
+    AppType getAppType( @Path( NAMESPACE ) String namespace, @Path( NAME ) String name );
 
     @POST( BASE + TYPE_PATH + BULK_PATH )
     Map<UUID, AppType> getAppTypes( @Body Set<UUID> appTypeIds );
