@@ -1,35 +1,50 @@
 package com.dataloom.organization;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Set;
-import java.util.UUID;
-
 import com.dataloom.authorization.Principal;
-import com.dataloom.authorization.securable.AbstractSecurableObject;
-import com.dataloom.authorization.securable.SecurableObjectType;
+import com.dataloom.authorization.PrincipalType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.organization.roles.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.openlattice.authorization.SecurablePrincipal;
+import java.util.Set;
+import java.util.UUID;
 
-public class Organization extends AbstractSecurableObject {
-    private final Set<String>    autoApprovedEmails;
-    private final Set<Principal> members;
-    private final Set<Role>      roles;
-    private transient int        h = 0;
+public class Organization {
+    private final SecurablePrincipal principal;
+    private final Set<String>        autoApprovedEmails;
+    private final Set<Principal>     members;
+    private final Set<Role>          roles;
+    private transient int h = 0;
 
     @JsonCreator
     public Organization(
             @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
+            @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.EMAILS_FIELD ) Set<String> autoApprovedEmails,
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles ) {
-        super( id, title, description );
+        this( new SecurablePrincipal( id, principal, title, description ), autoApprovedEmails, members, roles );
+        //        checkArgument( principal.getType().equals( PrincipalType.ORGANIZATION ) );
+        //        this.principal = new SecurablePrincipal( id, principal, title, description );
+        //        this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
+        //        this.members = checkNotNull( members );
+        //        this.roles = checkNotNull( roles );
+    }
+
+    public Organization(
+            SecurablePrincipal principal,
+            Set<String> autoApprovedEmails,
+            Set<Principal> members,
+            Set<Role> roles ) {
+        checkArgument( principal.getPrincipalType().equals( PrincipalType.ORGANIZATION ) );
+        this.principal = principal;
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
@@ -37,12 +52,12 @@ public class Organization extends AbstractSecurableObject {
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
     public String getTitle() {
-        return title;
+        return principal.getTitle();
     }
 
     @JsonProperty( SerializationConstants.DESCRIPTION_FIELD )
     public String getDescription() {
-        return description;
+        return principal.getDescription();
     }
 
     @JsonProperty( SerializationConstants.EMAILS_FIELD )
@@ -58,12 +73,6 @@ public class Organization extends AbstractSecurableObject {
     @JsonProperty( SerializationConstants.ROLES )
     public Set<Role> getRoles() {
         return roles;
-    }
-
-    @Override
-    @JsonIgnore
-    public SecurableObjectType getCategory() {
-        return SecurableObjectType.Organization;
     }
 
     @Override
@@ -121,4 +130,7 @@ public class Organization extends AbstractSecurableObject {
                 + autoApprovedEmails + ", members=" + members + ", roles=" + roles + "]";
     }
 
+    public SecurablePrincipal getPrincipal() {
+        return principal;
+    }
 }

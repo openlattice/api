@@ -160,6 +160,7 @@ public final class TestDataFactory {
     public static Organization organization() {
         return new Organization(
                 Optional.of( UUID.randomUUID() ),
+                organizationPrincipal(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
@@ -167,11 +168,15 @@ public final class TestDataFactory {
                 ImmutableSet.of( role() ) );
     }
 
+    public static Principal organizationPrincipal() {
+        return new Principal( PrincipalType.ORGANIZATION, RandomStringUtils.randomAlphanumeric( 10 ) );
+    }
+
     public static Role role() {
         return new Role(
                 Optional.of( UUID.randomUUID() ),
                 UUID.randomUUID(),
-                RandomStringUtils.randomAlphanumeric( 5 ),
+                rolePrincipal(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
     }
