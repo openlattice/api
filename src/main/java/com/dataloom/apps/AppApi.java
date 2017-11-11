@@ -1,6 +1,7 @@
 package com.dataloom.apps;
 
 import com.dataloom.authorization.Permission;
+import com.dataloom.edm.requests.MetadataUpdate;
 import retrofit2.http.*;
 
 import java.util.List;
@@ -97,5 +98,11 @@ public interface AppApi {
             @Path( APP_ID ) UUID appId,
             @Path( APP_TYPE_ID ) UUID appTypeId,
             @Body Set<Permission> permissions );
+
+    @POST( BASE + UPDATE_PATH + ID_PATH )
+    void updateAppMetadata( @Path( ID ) UUID appId, @Body MetadataUpdate metadataUpdate );
+
+    @POST( BASE + TYPE_PATH + UPDATE_PATH + ID_PATH )
+    void updateAppTypeMetadata( @Path( ID ) UUID appTypeId, @Body MetadataUpdate metadataUpdate );
 
 }

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class App extends AbstractSecurableObject {
 
-    private final String              name;
+    private String              name;
     private final LinkedHashSet<UUID> appTypeIds;
 
     @JsonCreator
@@ -52,6 +52,10 @@ public class App extends AbstractSecurableObject {
     @JsonProperty( SerializationConstants.APP_TYPE_IDS_FIELD )
     public LinkedHashSet<UUID> getAppTypeIds() {
         return appTypeIds;
+    }
+
+    public void setName( String name ) {
+        this.name = name;
     }
 
     public void addAppTypeIds( Set<UUID> appTypeIds ) {
