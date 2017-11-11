@@ -107,6 +107,7 @@ public final class SerializationConstants {
     public static final String EMAILS_FIELD                = "emails";
     public static final String ENTITY_TYPE_ID_FIELD        = "entityTypeId";
     public static final String STATUS                      = "status";
+    public static final String APPS                        = "apps";
 
     public static final String KEYWORD = "kw";
 

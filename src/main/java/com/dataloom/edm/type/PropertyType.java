@@ -17,6 +17,7 @@
 
 package com.dataloom.edm.type;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,7 +36,9 @@ import com.google.common.base.Optional;
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
-public class PropertyType extends AbstractSchemaAssociatedSecurableType {
+public class PropertyType extends AbstractSchemaAssociatedSecurableType implements Serializable {
+    private static final long serialVersionUID = 5732637373410719172L;
+
     protected EdmPrimitiveTypeKind datatype;
     protected boolean              piiField;
     protected Analyzer             analyzer;

@@ -1,24 +1,57 @@
 package com.dataloom.apps;
 
+import com.dataloom.authorization.Principal;
+import com.dataloom.authorization.PrincipalType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.organization.Organization;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Optional;
+import com.openlattice.authorization.SecurablePrincipal;
 
 import java.util.Map;
 import java.util.UUID;
 
-public class AppConfig {
+public class AppConfig extends SecurablePrincipal {
 
-    private final Organization    organization;
-    private final Map<String, UUID> config;
+    private final UUID                        appId;
+    private final Organization                organization;
+    private final Map<String, AppTypeSetting> config;
 
     @JsonCreator
     public AppConfig(
+            @JsonProperty( SerializationConstants.ID_FIELD ) Optional<UUID> id,
+            @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
+            @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
+            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
+            @JsonProperty( SerializationConstants.APP_ID ) UUID appId,
             @JsonProperty( SerializationConstants.ORGANIZATION ) Organization organization,
-            @JsonProperty( SerializationConstants.CONFIG ) Map<String, UUID> config ) {
+            @JsonProperty( SerializationConstants.CONFIG ) Map<String, AppTypeSetting> config ) {
+        super( id, principal, title, description );
+        this.appId = appId;
         this.organization = organization;
         this.config = config;
+    }
+
+    public AppConfig(
+            Optional<UUID> id,
+            String title,
+            Optional<String> description,
+            UUID appId,
+            Organization organization,
+            Map<String, AppTypeSetting> config ) {
+        this( id,
+                new Principal( PrincipalType.APP, getAppPrincipalId( appId, organization.getId() ) ),
+                title,
+                description,
+                appId,
+                organization,
+                config );
+    }
+
+    @JsonProperty( SerializationConstants.APP_ID )
+    public UUID getAppId() {
+        return appId;
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION )
@@ -27,7 +60,7 @@ public class AppConfig {
     }
 
     @JsonProperty( SerializationConstants.CONFIG )
-    public Map<String, UUID> getConfig() {
+    public Map<String, AppTypeSetting> getConfig() {
         return config;
     }
 
@@ -48,5 +81,9 @@ public class AppConfig {
         int result = organization.hashCode();
         result = 31 * result + config.hashCode();
         return result;
+    }
+
+    public static String getAppPrincipalId( UUID appId, UUID organizationId ) {
+        return appId.toString().concat( "|" ).concat( organizationId.toString() );
     }
 }

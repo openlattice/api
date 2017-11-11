@@ -1,5 +1,6 @@
 package com.dataloom.apps;
 
+import com.dataloom.authorization.Permission;
 import retrofit2.http.*;
 
 import java.util.List;
@@ -18,18 +19,25 @@ public interface AppApi {
     String CONFIG_PATH  = "/config";
     String BULK_PATH    = "/bulk";
     String LOOKUP_PATH  = "/lookup";
+    String UPDATE_PATH  = "/update";
 
     String ID              = "id";
     String ORGANIZATION_ID = "organizationId";
     String PREFIX          = "prefix";
     String NAME            = "name";
     String NAMESPACE       = "namespace";
+    String APP_ID          = "appId";
+    String APP_TYPE_ID     = "appTypeId";
+    String ENTITY_SET_ID   = "entitySetId";
 
     String ID_PATH              = "/{" + ID + "}";
     String ORGANIZATION_ID_PATH = "/{" + ORGANIZATION_ID + "}";
     String PREFIX_PATH          = "/{" + PREFIX + "}";
     String NAME_PATH            = "/{" + NAME + "}";
     String NAMESPACE_PATH       = "/{" + NAMESPACE + "}";
+    String APP_ID_PATH          = "/{" + APP_ID + "}";
+    String APP_TYPE_ID_PATH     = "/{" + APP_TYPE_ID + "}";
+    String ENTITY_SET_ID_PATH   = "/{" + ENTITY_SET_ID + "}";
 
     @GET( BASE )
     Iterable<App> getApps();
@@ -69,5 +77,25 @@ public interface AppApi {
 
     @GET( BASE + CONFIG_PATH + ID_PATH )
     List<AppConfig> getAvailableAppConfigs( @Path( ID ) UUID appId );
+
+    @GET( BASE + UPDATE_PATH + ID_PATH + APP_TYPE_ID_PATH )
+    void addAppTypeToApp( @Path( ID ) UUID appId, @Path( APP_TYPE_ID ) UUID appTypeId );
+
+    @DELETE( BASE + UPDATE_PATH + ID_PATH + APP_TYPE_ID_PATH )
+    void removeAppTypeFromApp( @Path( ID ) UUID appId, @Path( APP_TYPE_ID ) UUID appTypeId );
+
+    @GET( BASE + UPDATE_PATH + ID_PATH + APP_ID_PATH + APP_TYPE_ID_PATH + ENTITY_SET_ID_PATH )
+    void updateAppEntitySetConfig(
+            @Path( ID ) UUID organizationId,
+            @Path( APP_ID ) UUID appId,
+            @Path( APP_TYPE_ID ) UUID appTypeId,
+            @Path( ENTITY_SET_ID ) UUID entitySetId );
+
+    @POST( BASE + UPDATE_PATH + ID_PATH + APP_ID_PATH + APP_TYPE_ID_PATH )
+    void updateAppEntitySetPermissionsConfig(
+            @Path( ID ) UUID organizationId,
+            @Path( APP_ID ) UUID appId,
+            @Path( APP_TYPE_ID ) UUID appTypeId,
+            @Body Set<Permission> permissions );
 
 }

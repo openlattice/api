@@ -1,10 +1,5 @@
 package com.dataloom.organization;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.Set;
-import java.util.UUID;
-
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
@@ -14,12 +9,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
+
+import java.util.Set;
+import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Organization extends AbstractSecurableObject {
-    private final Set<String>    autoApprovedEmails;
+    private final Set<String> autoApprovedEmails;
     private final Set<Principal> members;
-    private final Set<Role>      roles;
-    private transient int        h = 0;
+    private final Set<Role> roles;
+    private final Set<UUID> apps;
+    private transient int h = 0;
 
     @JsonCreator
     public Organization(
@@ -28,11 +30,23 @@ public class Organization extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.EMAILS_FIELD ) Set<String> autoApprovedEmails,
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
-            @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles ) {
+            @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles,
+            @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps ) {
         super( id, title, description );
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
+        this.apps = checkNotNull( apps );
+    }
+
+    public Organization(
+            Optional<UUID> id,
+            String title,
+            Optional<String> description,
+            Set<String> autoApprovedEmails,
+            Set<Principal> members,
+            Set<Role> roles ) {
+        this( id, title, description, autoApprovedEmails, members, roles, ImmutableSet.of() );
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -60,65 +74,59 @@ public class Organization extends AbstractSecurableObject {
         return roles;
     }
 
+    @Override public String toString() {
+        return "Organization{" +
+                "autoApprovedEmails=" + autoApprovedEmails +
+                ", members=" + members +
+                ", roles=" + roles +
+                ", apps=" + apps +
+                ", h=" + h +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override public boolean equals( Object o ) {
+        if ( this == o )
+            return true;
+        if ( o == null || getClass() != o.getClass() )
+            return false;
+        if ( !super.equals( o ) )
+            return false;
+
+        Organization that = (Organization) o;
+
+        if ( h != that.h )
+            return false;
+        if ( !autoApprovedEmails.equals( that.autoApprovedEmails ) )
+            return false;
+        if ( !members.equals( that.members ) )
+            return false;
+        if ( !roles.equals( that.roles ) )
+            return false;
+        return apps.equals( that.apps );
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + autoApprovedEmails.hashCode();
+        result = 31 * result + members.hashCode();
+        result = 31 * result + roles.hashCode();
+        result = 31 * result + apps.hashCode();
+        result = 31 * result + h;
+        return result;
+    }
+
+    @JsonProperty( SerializationConstants.APPS )
+    public Set<UUID> getApps() {
+        return apps;
+    }
+
     @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
         return SecurableObjectType.Organization;
-    }
-
-    @Override
-    public int hashCode() {
-        if ( h == 0 ) {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ( ( autoApprovedEmails == null ) ? 0 : autoApprovedEmails.hashCode() );
-            result = prime * result + ( ( members == null ) ? 0 : members.hashCode() );
-            result = prime * result + ( ( roles == null ) ? 0 : roles.hashCode() );
-            h = result;
-        }
-        return h;
-    }
-
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( !( obj instanceof Organization ) ) {
-            return false;
-        }
-        Organization other = (Organization) obj;
-        if ( autoApprovedEmails == null ) {
-            if ( other.autoApprovedEmails != null ) {
-                return false;
-            }
-        } else if ( !autoApprovedEmails.equals( other.autoApprovedEmails ) ) {
-            return false;
-        }
-        if ( members == null ) {
-            if ( other.members != null ) {
-                return false;
-            }
-        } else if ( !members.equals( other.members ) ) {
-            return false;
-        }
-        if ( roles == null ) {
-            if ( other.roles != null ) {
-                return false;
-            }
-        } else if ( !roles.equals( other.roles ) ) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Organization [autoApprovedEmails="
-                + autoApprovedEmails + ", members=" + members + ", roles=" + roles + "]";
     }
 
 }

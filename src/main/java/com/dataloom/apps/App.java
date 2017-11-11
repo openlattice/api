@@ -9,6 +9,7 @@ import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -51,6 +52,14 @@ public class App extends AbstractSecurableObject {
     @JsonProperty( SerializationConstants.APP_TYPE_IDS_FIELD )
     public LinkedHashSet<UUID> getAppTypeIds() {
         return appTypeIds;
+    }
+
+    public void addAppTypeIds( Set<UUID> appTypeIds ) {
+        appTypeIds.addAll( appTypeIds );
+    }
+
+    public void removeAppTypeIds( Set<UUID> appTypeIds ) {
+        appTypeIds.removeAll( appTypeIds );
     }
 
     @Override public boolean equals( Object o ) {
