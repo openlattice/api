@@ -1,6 +1,7 @@
 package com.dataloom.organization.roles;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
@@ -33,7 +34,7 @@ public class Role extends SecurablePrincipal {
 
         super( id, principal, title, description );
         checkArgument( principal.getType().equals( PrincipalType.ROLE ) );
-        this.organizationId = organizationId;
+        this.organizationId = checkNotNull( organizationId, "Organization id cannot be null." );
     }
 
     @JsonProperty( SerializationConstants.ORGANIZATION_ID )

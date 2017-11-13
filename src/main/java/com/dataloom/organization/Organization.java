@@ -50,6 +50,11 @@ public class Organization {
         this.roles = checkNotNull( roles );
     }
 
+    @JsonProperty( SerializationConstants.ID_FIELD )
+    public UUID getId() {
+        return principal.getId();
+    }
+    
     @JsonProperty( SerializationConstants.TITLE_FIELD )
     public String getTitle() {
         return principal.getTitle();
