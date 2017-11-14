@@ -48,7 +48,7 @@ public class Role extends SecurablePrincipal {
     @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.PRINCIPAL;
+        return SecurableObjectType.Role;
     }
 
     @Override public boolean equals( Object o ) {

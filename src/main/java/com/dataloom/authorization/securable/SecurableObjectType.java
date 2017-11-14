@@ -26,6 +26,6 @@ public enum SecurableObjectType {
     LinkingEntityType,
     AssociationType,
     Organization,
-    PRINCIPAL,
-    @Deprecated Role
+    Principal,
+    Role
 }

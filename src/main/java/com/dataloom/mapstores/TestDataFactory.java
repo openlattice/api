@@ -32,6 +32,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import com.openlattice.authorization.AclKey;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -216,8 +217,8 @@ public final class TestDataFactory {
                 actions[ r.nextInt( actions.length ) ] );
     }
 
-    public static List<UUID> aclKey() {
-        return ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() );
+    public static AclKey aclKey() {
+        return new AclKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
     public static EdmDetails edmDetails() {
