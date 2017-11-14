@@ -3,6 +3,7 @@ package com.dataloom.authorization;
 import java.util.List;
 import java.util.UUID;
 
+import com.openlattice.authorization.AclKey;
 import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -37,7 +38,7 @@ public interface PermissionsApi {
      * @return The aces for the requested acl key.
      */
     @POST( BASE )
-    Acl getAcl( @Body List<UUID> aclKey );
+    Acl getAcl( @Body AclKey aclKey );
 
     /**
      * Retrieves the acl for a particular acl key, with explanation of where the permissions come from. Only return if
@@ -47,6 +48,6 @@ public interface PermissionsApi {
      * @return The aces for the requested acl key, together with the explanation.
      */
     @POST( BASE + EXPLAIN )
-    AclExplanation getAclExplanation( @Body List<UUID> aclKey );
+    AclExplanation getAclExplanation( @Body AclKey aclKey );
 
 }

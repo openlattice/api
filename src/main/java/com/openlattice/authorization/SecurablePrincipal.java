@@ -29,16 +29,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
+
 import java.util.List;
 import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 public class SecurablePrincipal extends AbstractSecurableObject {
-    private final List<UUID> aclKey;
-    private final Principal  principal;
+    private final AclKey    aclKey;
+    private final Principal principal;
 
     @JsonCreator
     public SecurablePrincipal(
@@ -47,9 +49,19 @@ public class SecurablePrincipal extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
 
-        super( id.or( UUID::randomUUID ), title, description );
+        super( id, title, description );
+        this.principal = checkNotNull( principal );
+        this.aclKey = new AclKey( getId() );
+    }
+
+    public SecurablePrincipal(
+            AclKey aclKey,
+            Principal principal,
+            String title,
+            Optional<String> description ) {
+        super( aclKey.get( aclKey.size() - 1 ), title, description );
         this.principal = principal;
-        this.aclKey = buildAclKey();
+        this.aclKey = aclKey;
     }
 
     public Principal getPrincipal() {
@@ -72,12 +84,27 @@ public class SecurablePrincipal extends AbstractSecurableObject {
         return principal.getId();
     }
 
-    public List<UUID> getAclKey() {
+    public AclKey getAclKey() {
         return aclKey;
     }
 
-    protected List<UUID> buildAclKey() {
-        return ImmutableList.of( id );
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) { return true; }
+        if ( !( o instanceof SecurablePrincipal ) ) { return false; }
+        if ( !super.equals( o ) ) { return false; }
+
+        SecurablePrincipal that = (SecurablePrincipal) o;
+
+        if ( !aclKey.equals( that.aclKey ) ) { return false; }
+        return principal.equals( that.principal );
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + aclKey.hashCode();
+        result = 31 * result + principal.hashCode();
+        return result;
     }
 
     @Override public String toString() {

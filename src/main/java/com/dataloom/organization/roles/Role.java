@@ -1,8 +1,5 @@
 package com.dataloom.organization.roles;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.dataloom.authorization.Principal;
 import com.dataloom.authorization.PrincipalType;
 import com.dataloom.authorization.securable.SecurableObjectType;
@@ -12,11 +9,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.openlattice.authorization.AclKey;
 import com.openlattice.authorization.SecurablePrincipal;
-import java.util.List;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Role extends SecurablePrincipal {
 
@@ -31,8 +32,7 @@ public class Role extends SecurablePrincipal {
             @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
-
-        super( id, principal, title, description );
+        super( new AclKey( ImmutableList.of( organizationId, id.or( UUID::randomUUID ) ) ), principal, title, description );
         checkArgument( principal.getType().equals( PrincipalType.ROLE ) );
         this.organizationId = checkNotNull( organizationId, "Organization id cannot be null." );
     }
@@ -48,14 +48,25 @@ public class Role extends SecurablePrincipal {
     }
 
     @Override
-    protected List<UUID> buildAclKey() {
-        return ImmutableList.of( organizationId, getId() );
-    }
-
-    @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.Role;
+        return SecurableObjectType.PRINCIPAL;
+    }
+
+    @Override public boolean equals( Object o ) {
+        if ( this == o ) { return true; }
+        if ( !( o instanceof Role ) ) { return false; }
+        if ( !super.equals( o ) ) { return false; }
+
+        Role role = (Role) o;
+
+        return organizationId.equals( role.organizationId );
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + organizationId.hashCode();
+        return result;
     }
 
     @Override public String toString() {

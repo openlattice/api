@@ -10,7 +10,6 @@ import com.dataloom.edm.EntitySet;
 import com.dataloom.edm.type.*;
 import com.dataloom.organization.Organization;
 import com.dataloom.organization.roles.Role;
-import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.Request;
 import com.dataloom.requests.RequestStatus;
@@ -160,6 +159,15 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
     }
 
+    public static Role role(UUID organizationId) {
+        return new Role(
+                Optional.of( UUID.randomUUID() ),
+                organizationId,
+                rolePrincipal(),
+                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
+    }
+
     public static SecurableObjectType securableObjectType() {
         return securableObjectTypes[ r.nextInt( securableObjectTypes.length ) ];
     }
@@ -261,10 +269,6 @@ public final class TestDataFactory {
 
     public static EntityKey entityKey( UUID entitySetId, UUID syncId ) {
         return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), syncId );
-    }
-
-    public static RoleKey roleKey() {
-        return new RoleKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
     public static ComplexType complexType() {
