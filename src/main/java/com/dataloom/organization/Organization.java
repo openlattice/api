@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Organization {
-    private final SecurablePrincipal principal;
+    private final SecurablePrincipal securablePrincipal;
     private final Set<String>        autoApprovedEmails;
     private final Set<Principal>     members;
     private final Set<Role>          roles;
@@ -39,12 +39,12 @@ public class Organization {
     }
 
     public Organization(
-            SecurablePrincipal principal,
+            SecurablePrincipal securablePrincipal,
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles ) {
-        checkArgument( principal.getPrincipalType().equals( PrincipalType.ORGANIZATION ) );
-        this.principal = principal;
+        checkArgument( securablePrincipal.getPrincipalType().equals( PrincipalType.ORGANIZATION ) );
+        this.securablePrincipal = securablePrincipal;
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
@@ -52,17 +52,22 @@ public class Organization {
 
     @JsonProperty( SerializationConstants.ID_FIELD )
     public UUID getId() {
-        return principal.getId();
+        return securablePrincipal.getId();
     }
-    
+
+    @JsonProperty( SerializationConstants.PRINCIPAL )
+    public Principal getPrincipal() {
+        return securablePrincipal.getPrincipal();
+    }
+
     @JsonProperty( SerializationConstants.TITLE_FIELD )
     public String getTitle() {
-        return principal.getTitle();
+        return securablePrincipal.getTitle();
     }
 
     @JsonProperty( SerializationConstants.DESCRIPTION_FIELD )
     public String getDescription() {
-        return principal.getDescription();
+        return securablePrincipal.getDescription();
     }
 
     @JsonProperty( SerializationConstants.EMAILS_FIELD )
@@ -80,62 +85,42 @@ public class Organization {
         return roles;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public boolean equals( Object o ) {
+        if ( this == o ) { return true; }
+        if ( !( o instanceof Organization ) ) { return false; }
+
+        Organization that = (Organization) o;
+
+        if ( h != that.h ) { return false; }
+        if ( !securablePrincipal.equals( that.securablePrincipal ) ) { return false; }
+        if ( !autoApprovedEmails.equals( that.autoApprovedEmails ) ) { return false; }
+        if ( !members.equals( that.members ) ) { return false; }
+        return roles.equals( that.roles );
+    }
+
+    @Override public int hashCode() {
         if ( h == 0 ) {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + ( ( autoApprovedEmails == null ) ? 0 : autoApprovedEmails.hashCode() );
-            result = prime * result + ( ( members == null ) ? 0 : members.hashCode() );
-            result = prime * result + ( ( roles == null ) ? 0 : roles.hashCode() );
+            int result = securablePrincipal.hashCode();
+            result = 31 * result + autoApprovedEmails.hashCode();
+            result = 31 * result + members.hashCode();
+            result = 31 * result + roles.hashCode();
+            result = 31 * result + h;
             h = result;
         }
+
         return h;
     }
 
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( !( obj instanceof Organization ) ) {
-            return false;
-        }
-        Organization other = (Organization) obj;
-        if ( autoApprovedEmails == null ) {
-            if ( other.autoApprovedEmails != null ) {
-                return false;
-            }
-        } else if ( !autoApprovedEmails.equals( other.autoApprovedEmails ) ) {
-            return false;
-        }
-        if ( members == null ) {
-            if ( other.members != null ) {
-                return false;
-            }
-        } else if ( !members.equals( other.members ) ) {
-            return false;
-        }
-        if ( roles == null ) {
-            if ( other.roles != null ) {
-                return false;
-            }
-        } else if ( !roles.equals( other.roles ) ) {
-            return false;
-        }
-        return true;
+    @Override public String toString() {
+        return "Organization{" +
+                "securablePrincipal=" + securablePrincipal +
+                ", autoApprovedEmails=" + autoApprovedEmails +
+                ", members=" + members +
+                ", roles=" + roles +
+                '}';
     }
 
-    @Override
-    public String toString() {
-        return "Organization [autoApprovedEmails="
-                + autoApprovedEmails + ", members=" + members + ", roles=" + roles + "]";
-    }
-
-    public SecurablePrincipal getPrincipal() {
-        return principal;
+    public SecurablePrincipal getSecurablePrincipal() {
+        return securablePrincipal;
     }
 }
