@@ -31,7 +31,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -54,13 +53,13 @@ public class SecurablePrincipal extends AbstractSecurableObject {
     }
 
     public SecurablePrincipal(
-            List<UUID> aclKey,
+            AclKey aclKey,
             Principal principal,
             String title,
             Optional<String> description ) {
-        super( aclKey.get( aclKey.size() - 1), title, description );
+        super( aclKey.get( aclKey.size() - 1 ), title, description );
         this.principal = principal;
-        this.aclKey = new AclKey( getId() );
+        this.aclKey = aclKey;
     }
 
     public Principal getPrincipal() {
