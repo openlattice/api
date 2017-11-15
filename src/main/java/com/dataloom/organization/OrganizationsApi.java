@@ -3,7 +3,6 @@ package com.dataloom.organization;
 import java.util.Set;
 import java.util.UUID;
 
-import com.dataloom.authorization.Principal;
 import com.dataloom.directory.pojo.Auth0UserBasic;
 import com.dataloom.organization.roles.Role;
 
@@ -107,7 +106,7 @@ public interface OrganizationsApi {
 
     //Endpoints about members
     @GET( BASE + ID_PATH + PRINCIPALS + MEMBERS )
-    Set<Principal> getMembers( @Path( ID ) UUID organizationId );
+    Iterable<OrganizationMember> getMembers( @Path( ID ) UUID organizationId );
 
     @PUT( BASE + ID_PATH + PRINCIPALS + MEMBERS + USER_ID_PATH )
     Void addMember( @Path( ID ) UUID organizationId, @Path( USER_ID ) String userId );
@@ -136,6 +135,9 @@ public interface OrganizationsApi {
 
     @GET( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS )
     Iterable<Auth0UserBasic> getAllUsersOfRole( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId );
+
+//    @GET( BASE + ID_PATH + MEMBERS )
+//    SetMultimap<SecurablePrincipal,SecurablePrincipal> getUsersAndRoles( UUID organizationsId );
 
     @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + MEMBERS + USER_ID_PATH )
     Void addRoleToUser( @Path( ID ) UUID organizationId, @Path( ROLE_ID ) UUID roleId, @Path( USER_ID ) String userId );

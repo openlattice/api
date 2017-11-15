@@ -37,61 +37,63 @@ public final class SerializationConstants {
     public static final String ENTITY_DEFINITIONS_FIELD = "entityDefinitions";
 
     public static final String ASSOCIATION_DEFINITIONS_FIELD = "associationDefinitions";
+
     public static final String ASSOCIATION_TYPES             = "associationTypes";
+    public static final String ACL_KEY                       = "aclKey";
 
-    public static final String ACL_KEY                  = "aclKey";
-    public static final String AUDIT_ID                 = "auditId";
-    public static final String BLOCK_ID                 = "blockId";
-    public static final String DATA_ID                  = "dataId";
-    public static final String DEFAULT_SHOW             = "defaultShow";
-    public static final String ENTITY_FIELD             = "entity";
-    public static final String ENTITY_ID                = "entityId";
-    public static final String ENTITY_SET_FIELD         = "entitySet";
-    public static final String ENTITY_SETS_FIELD        = "entitySets";
-    public static final String ENTITY_SET_NAME          = "entitySetName";
-    public static final String ENTITY_SET_ID            = "entitySetId";
-    public static final String ENTITY_SET_IDS           = "entitySetIds";
-    public static final String ENTITY_TYPE              = "entityType";
-    public static final String ENTITY_TYPES             = "entityTypes";
-    public static final String ENTITY_TYPE_IDS_FIELD    = "entityTypeIds";
-    public static final String FQN                      = "fqn";
-    public static final String KEY_FIELD                = "key";
-    public static final String ID_FIELD                 = "id";
-    public static final String IS_OWNER                 = "isOwner";
-    public static final String LINKING_ENTITY_SET_FIELD = "linkingEntitySet";
-    public static final String LINKING_PROPERTIES_FIELD = "linkingProperties";
-    public static final String NAME_FIELD               = "name";
-    public static final String NAMESPACE_FIELD          = "namespace";
-    public static final String PERMISSIONS              = "permissions";
-    public static final String PERMISSIONS_MAP          = "permissionsMap";
-    public static final String PRINCIPAL                = "principal";
-    public static final String PROPERTIES_FIELD         = "properties";
-    public static final String PROPERTY_FIELD           = "property";
-    public static final String PROPERTY_DEFINITIONS     = "propertyDefinitions";
-    public static final String PROPERTY_TYPES           = "propertyTypes";
-    public static final String PROPERTY_TYPE_ID_LIST    = "propertyTypeIds";
-    public static final String PROPERTY_TYPE_ID         = "propertyTypeId";
-    public static final String SYNC_ID                  = "syncId";
-    public static final String SYNC_IDS                 = "syncIds";
-    public static final String SYNC_TICKETS             = "syncTickets";
-    public static final String REQUEST                  = "request";
-    public static final String REQUEST_ID               = "requestId";
-    public static final String REQUESTING_USER          = "requestingUser";
-    public static final String REQUEST_STATUS           = "status";
-    public static final String SCHEMA                   = "schema";
-    public static final String SCHEMAS                  = "schemas";
-    public static final String TIME_ID                  = "timeId";
-    public static final String TIMESTAMP                = "timestamp";
-    public static final String TITLE_FIELD              = "title";                   // for EntitySet
-    public static final String TYPE_FIELD               = "type";
-    public static final String USER_ID                  = "userId";
-    public static final String ACL                      = "acl";
+    public static final String AUDIT_ID                      = "auditId";
+    public static final String BLOCK_ID                      = "blockId";
+    public static final String DATA_ID                       = "dataId";
+    public static final String DEFAULT_SHOW                  = "defaultShow";
+    public static final String ENTITY_FIELD                  = "entity";
+    public static final String ENTITY_ID                     = "entityId";
+    public static final String ENTITY_SET_FIELD              = "entitySet";
+    public static final String ENTITY_SETS_FIELD             = "entitySets";
+    public static final String ENTITY_SET_NAME               = "entitySetName";
+    public static final String ENTITY_SET_ID                 = "entitySetId";
+    public static final String ENTITY_SET_IDS                = "entitySetIds";
+    public static final String ENTITY_TYPE                   = "entityType";
+    public static final String ENTITY_TYPES                  = "entityTypes";
+    public static final String ENTITY_TYPE_IDS_FIELD         = "entityTypeIds";
+    public static final String FQN                           = "fqn";
+    public static final String KEY_FIELD                     = "key";
+    public static final String ID_FIELD                      = "id";
+    public static final String IS_OWNER                      = "isOwner";
+    public static final String LINKING_ENTITY_SET_FIELD      = "linkingEntitySet";
+    public static final String LINKING_PROPERTIES_FIELD      = "linkingProperties";
+    public static final String NAME_FIELD                    = "name";
+    public static final String NAMESPACE_FIELD               = "namespace";
+    public static final String PERMISSIONS                   = "permissions";
+    public static final String PERMISSIONS_MAP               = "permissionsMap";
+    public static final String PRINCIPAL                     = "principal";
+    public static final String PROFILE_FIELD                 = "profile";
+    public static final String PROPERTIES_FIELD              = "properties";
+    public static final String PROPERTY_FIELD                = "property";
+    public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";
+    public static final String PROPERTY_TYPES                = "propertyTypes";
+    public static final String PROPERTY_TYPE_ID_LIST         = "propertyTypeIds";
+    public static final String PROPERTY_TYPE_ID              = "propertyTypeId";
+    public static final String SYNC_ID                       = "syncId";
+    public static final String SYNC_IDS                      = "syncIds";
+    public static final String SYNC_TICKETS                  = "syncTickets";
+    public static final String REQUEST                       = "request";
+    public static final String REQUEST_ID                    = "requestId";
+    public static final String REQUESTING_USER               = "requestingUser";
+    public static final String REQUEST_STATUS                = "status";
+    public static final String SCHEMA                        = "schema";
+    public static final String SCHEMAS                       = "schemas";
+    public static final String TIME_ID                       = "timeId";
+    public static final String TIMESTAMP                     = "timestamp";
+    public static final String TITLE_FIELD                   = "title";                   // for EntitySet
+    public static final String TYPE_FIELD                    = "type";
+    public static final String USER_ID                       = "userId";
+    public static final String ACL                           = "acl";
 
-    public static final String ACE             = "ace";
-    public static final String ACES            = "aces";
-    public static final String ACL_OBJECT_PATH = "aclKey";                  // Correspond to
-    // List<AclKey>,
-    // a
+    public static final String ACE                           = "ace";
+    public static final String ACES                          = "aces";
+    public static final String ACL_OBJECT_PATH               = "aclKey";                  // Correspond to
+                                                                                          // List<AclKey>,
+                                                                                          // a
 
     // single hierarchy of
     // securable objects.
@@ -171,34 +173,6 @@ public final class SerializationConstants {
 
     public static final String CONFLICTS = "conflicts";
     public static final String DIFF      = "diff";
-
-    public static final String WEIGHTS                 = "weights";
-    public static final String BIAS                    = "bias";
-    public static final String FIRST_NAME_STRING       = "firstNameString";
-    public static final String FIRST_NAME_METAPHONE    = "firstNameMetaphone";
-    public static final String FIRST_NAME_PRESENCE     = "firstNamePresence";
-    public static final String MIDDLE_NAME_STRING      = "middleNameString";
-    public static final String MIDDLE_NAME_METAPHONE   = "middleNameMetaphone";
-    public static final String MIDDLE_NAME_PRESENCE    = "middleNamePresence";
-    public static final String LAST_NAME_STRING        = "lastNameString";
-    public static final String LAST_NAME_METAPHONE     = "lastNameMetaphone";
-    public static final String LAST_NAME_PRESENCE      = "lastNamePresence";
-    public static final String SEX_STRING              = "sexString";
-    public static final String SEX_PRESENCE            = "sexPresence";
-    public static final String RACE_STRING             = "raceString";
-    public static final String RACE_PRESENCE           = "racePresence";
-    public static final String ETHNICITY_STRING        = "ethnicityString";
-    public static final String ETHNICITY_PRESENCE      = "ethnicityPresence";
-    public static final String DOB_STRING              = "dobString";
-    public static final String DOB_PRESENCE            = "dobPresence";
-    public static final String IDENTIFICATION_STRING   = "identificationString";
-    public static final String IDENTIFICATION_PRESENCE = "identificationPresence";
-    public static final String SSN_STRING              = "ssnString";
-    public static final String SSN_PRESENCE            = "ssnPresence";
-    public static final String AGE_STRING              = "ageString";
-    public static final String AGE_PRESENCE            = "agePresence";
-    public static final String XREF_STRING             = "xrefString";
-    public static final String XREF_PRESENCE           = "xrefPresence";
 
     public static final String APP_TYPE_IDS_FIELD = "appTypeIds";
     public static final String APP_ID             = "appId";
