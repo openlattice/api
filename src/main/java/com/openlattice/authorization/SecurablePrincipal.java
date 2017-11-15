@@ -55,13 +55,13 @@ public class SecurablePrincipal extends AbstractSecurableObject {
     }
 
     public SecurablePrincipal(
-            AclKey aclKey,
+            List<UUID> aclKey,
             Principal principal,
             String title,
             Optional<String> description ) {
         super( aclKey.get( aclKey.size() - 1 ), title, description );
         this.principal = principal;
-        this.aclKey = aclKey;
+        this.aclKey = new AclKey( aclKey );
     }
 
     public Principal getPrincipal() {
@@ -71,7 +71,7 @@ public class SecurablePrincipal extends AbstractSecurableObject {
     @Override
     @JsonIgnore
     public SecurableObjectType getCategory() {
-        return SecurableObjectType.PRINCIPAL;
+        return SecurableObjectType.Principal;
     }
 
     @JsonIgnore

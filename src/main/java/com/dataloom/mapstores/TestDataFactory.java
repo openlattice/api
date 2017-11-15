@@ -17,6 +17,7 @@ import com.dataloom.requests.Status;
 import com.datastax.driver.core.utils.UUIDs;
 import com.google.common.base.Optional;
 import com.google.common.collect.*;
+import com.openlattice.authorization.AclKey;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -195,8 +196,8 @@ public final class TestDataFactory {
                 actions[ r.nextInt( actions.length ) ] );
     }
 
-    public static List<UUID> aclKey() {
-        return ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() );
+    public static AclKey aclKey() {
+        return new AclKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
     public static EdmDetails edmDetails() {

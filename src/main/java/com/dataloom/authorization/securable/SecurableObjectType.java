@@ -28,6 +28,6 @@ public enum SecurableObjectType {
     Organization,
     App,
     AppType,
-    PRINCIPAL,
-    @Deprecated Role
+    Principal,
+    Role
 }
