@@ -21,7 +21,6 @@ import com.dataloom.edm.type.EnumType;
 import com.dataloom.edm.type.PropertyType;
 import com.dataloom.organization.Organization;
 import com.dataloom.organization.roles.Role;
-import com.dataloom.organization.roles.RoleKey;
 import com.dataloom.requests.PermissionsRequestDetails;
 import com.dataloom.requests.Request;
 import com.dataloom.requests.RequestStatus;
@@ -33,6 +32,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import com.openlattice.authorization.AclKey;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -160,6 +160,7 @@ public final class TestDataFactory {
     public static Organization organization() {
         return new Organization(
                 Optional.of( UUID.randomUUID() ),
+                organizationPrincipal(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( RandomStringUtils.randomAlphanumeric( 5 ), RandomStringUtils.randomAlphanumeric( 5 ) ),
@@ -167,10 +168,24 @@ public final class TestDataFactory {
                 ImmutableSet.of( role() ) );
     }
 
+    public static Principal organizationPrincipal() {
+        return new Principal( PrincipalType.ORGANIZATION, RandomStringUtils.randomAlphanumeric( 10 ) );
+    }
+
     public static Role role() {
         return new Role(
                 Optional.of( UUID.randomUUID() ),
                 UUID.randomUUID(),
+                rolePrincipal(),
+                RandomStringUtils.randomAlphanumeric( 5 ),
+                Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
+    }
+
+    public static Role role(UUID organizationId) {
+        return new Role(
+                Optional.of( UUID.randomUUID() ),
+                organizationId,
+                rolePrincipal(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
     }
@@ -202,8 +217,8 @@ public final class TestDataFactory {
                 actions[ r.nextInt( actions.length ) ] );
     }
 
-    public static List<UUID> aclKey() {
-        return ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() );
+    public static AclKey aclKey() {
+        return new AclKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
     public static EdmDetails edmDetails() {
@@ -276,10 +291,6 @@ public final class TestDataFactory {
 
     public static EntityKey entityKey( UUID entitySetId, UUID syncId ) {
         return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), syncId );
-    }
-
-    public static RoleKey roleKey() {
-        return new RoleKey( UUID.randomUUID(), UUID.randomUUID() );
     }
 
     public static ComplexType complexType() {

@@ -36,9 +36,10 @@ public final class SerializationConstants {
     public static final String ENTITY_DEFINITIONS_FIELD      = "entityDefinitions";
 
     public static final String ASSOCIATION_DEFINITIONS_FIELD = "associationDefinitions";
-    public static final String ASSOCIATION_TYPES             = "associationTypes";
 
+    public static final String ASSOCIATION_TYPES             = "associationTypes";
     public static final String ACL_KEY                       = "aclKey";
+
     public static final String AUDIT_ID                      = "auditId";
     public static final String BLOCK_ID                      = "blockId";
     public static final String DATA_ID                       = "dataId";
@@ -64,6 +65,7 @@ public final class SerializationConstants {
     public static final String PERMISSIONS                   = "permissions";
     public static final String PERMISSIONS_MAP               = "permissionsMap";
     public static final String PRINCIPAL                     = "principal";
+    public static final String PROFILE_FIELD                 = "profile";
     public static final String PROPERTIES_FIELD              = "properties";
     public static final String PROPERTY_FIELD                = "property";
     public static final String PROPERTY_DEFINITIONS          = "propertyDefinitions";

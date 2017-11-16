@@ -1,13 +1,9 @@
 package com.dataloom.directory;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.dataloom.directory.pojo.Auth0UserBasic;
-
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
+import com.dataloom.organization.roles.Role;
+import com.openlattice.authorization.AclKey;
+import java.util.Map;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -16,9 +12,9 @@ public interface PrincipalApi {
     /*
      * These determine the service routing for the LB
      */
-    String SERVICE      = "/datastore";
-    String CONTROLLER   = "/principals";
-    String BASE         = SERVICE + CONTROLLER;
+    String SERVICE    = "/datastore";
+    String CONTROLLER = "/principals";
+    String BASE       = SERVICE + CONTROLLER;
 
     /*
      * Path variables
@@ -30,11 +26,11 @@ public interface PrincipalApi {
     /*
      * Fixed paths
      */
-    String EMAIL        = "/email";
-    String RESET        = "/reset";
-    String ROLES        = "/roles";
-    String SEARCH       = "/search";
-    String USERS        = "/users";
+    String EMAIL  = "/email";
+    String ROLES  = "/roles";
+    String SEARCH = "/search";
+    String USERS  = "/users";
+    String DB     = "/db";
 
     String SEARCH_EMAIL = SEARCH + EMAIL;
 
@@ -50,12 +46,28 @@ public interface PrincipalApi {
     @GET( BASE + USERS )
     Map<String, Auth0UserBasic> getAllUsers();
 
+    @GET( BASE + ROLES )
+    Map<AclKey, Role> getAvailableRoles();
+
     @GET( BASE + USERS + USER_ID_PATH )
     Auth0UserBasic getUser( @Path( USER_ID ) String userId );
+
+    @GET( BASE + DB + USER_ID_PATH )
+    String getDbAccessCredential( @Path( USER_ID ) String userId );
 
     @GET( BASE + USERS + SEARCH + SEARCH_QUERY_PATH )
     Map<String, Auth0UserBasic> searchAllUsers( @Path( SEARCH_QUERY ) String searchQuery );
 
     @GET( BASE + USERS + SEARCH_EMAIL + EMAIL_SEARCH_QUERY_PATH )
     Map<String, Auth0UserBasic> searchAllUsersByEmail( @Path( SEARCH_QUERY ) String emailSearchQuery );
+
+    /**
+     * Activates a user in the OpenLattice system. This call must be made once before a user will be available for use
+     * in authorization policies.
+     *
+     * @param userId The Auth0 user id of the user.
+     * @return Nothing
+     */
+    @PUT( BASE + USERS + USER_ID_PATH )
+    Void activateUser( @Path( USER_ID ) String userId );
 }

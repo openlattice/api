@@ -1,10 +1,14 @@
 package com.dataloom.authorization;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.Serializable;
 
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.StringUtils;
 
 public class Principal implements Comparable<Principal>, Serializable {
     private static final long   serialVersionUID = 3227310509765475747L;
@@ -28,6 +32,11 @@ public class Principal implements Comparable<Principal>, Serializable {
 
     @JsonProperty( SerializationConstants.ID_FIELD )
     public String getId() {
+        return id;
+    }
+
+    private String validate( String id ) {
+        checkArgument( StringUtils.isAllLowerCase( id ),"Principal id must be all lower case" );
         return id;
     }
 
