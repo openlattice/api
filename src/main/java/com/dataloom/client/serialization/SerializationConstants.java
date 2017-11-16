@@ -19,21 +19,22 @@ package com.dataloom.client.serialization;
 
 public final class SerializationConstants {
 
-    private SerializationConstants() {}
+    private SerializationConstants() {
+    }
 
-    public static final String ACL_ID_FIELD                  = "aclId";
+    public static final String ACL_ID_FIELD = "aclId";
 
-    public static final String ACTION                        = "action";
+    public static final String ACTION = "action";
 
-    public static final String DATATYPE_FIELD                = "datatype";
+    public static final String DATATYPE_FIELD = "datatype";
 
-    public static final String DEIDENTIFIED                  = "deidentified";
+    public static final String DEIDENTIFIED = "deidentified";
 
-    public static final String DETAILS_FIELD                 = "details";
+    public static final String DETAILS_FIELD = "details";
 
-    public static final String DESCRIPTION_FIELD             = "description";
+    public static final String DESCRIPTION_FIELD = "description";
 
-    public static final String ENTITY_DEFINITIONS_FIELD      = "entityDefinitions";
+    public static final String ENTITY_DEFINITIONS_FIELD = "entityDefinitions";
 
     public static final String ASSOCIATION_DEFINITIONS_FIELD = "associationDefinitions";
 
@@ -96,107 +97,86 @@ public final class SerializationConstants {
 
     // single hierarchy of
     // securable objects.
-    public static final String ACL_OBJECT_ROOT               = "aclRoot";
-    public static final String ACL_OBJECT_CHILD              = "aclChild";
-    public static final String ENTITIES                      = "entities";
-    public static final String ASSOCIATIONS                  = "associations";
-    public static final String ENTITY_ID_GENERATOR           = "entityIdGenerator";
+    public static final String ACL_OBJECT_ROOT     = "aclRoot";
+    public static final String ACL_OBJECT_CHILD    = "aclChild";
+    public static final String ENTITIES            = "entities";
+    public static final String ASSOCIATIONS        = "associations";
+    public static final String ENTITY_ID_GENERATOR = "entityIdGenerator";
 
-    public static final String MEMBERS_FIELD                 = "members";
-    public static final String ROLES                         = "roles";
-    public static final String TRUSTED_ORGANIZATIONS_FIELD   = "trustedOrganizations";
-    public static final String EMAILS_FIELD                  = "emails";
-    public static final String ENTITY_TYPE_ID_FIELD          = "entityTypeId";
-    public static final String STATUS                        = "status";
+    public static final String MEMBERS_FIELD               = "members";
+    public static final String ROLES                       = "roles";
+    public static final String TRUSTED_ORGANIZATIONS_FIELD = "trustedOrganizations";
+    public static final String EMAILS_FIELD                = "emails";
+    public static final String ENTITY_TYPE_ID_FIELD        = "entityTypeId";
+    public static final String STATUS                      = "status";
+    public static final String APPS                        = "apps";
 
-    public static final String KEYWORD                       = "kw";
+    public static final String KEYWORD = "kw";
 
-    public static final String ENTITY_TYPE_ID                = "eid";
-    public static final String PROPERTY_TYPE_IDS             = "pid";
-    public static final String INCLUDE_FIELD                 = "include";
+    public static final String ENTITY_TYPE_ID    = "eid";
+    public static final String PROPERTY_TYPE_IDS = "pid";
+    public static final String INCLUDE_FIELD     = "include";
 
-    public static final String SEARCH_TERM                   = "searchTerm";
-    public static final String SEARCH_FIELDS                 = "searchFields";
-    public static final String EXACT_SEARCH_FIELDS           = "exactSearchFields";
-    public static final String MAX_HITS                      = "maxHits";
-    public static final String START                         = "start";
-    public static final String EXACT                         = "exact";
+    public static final String SEARCH_TERM         = "searchTerm";
+    public static final String SEARCH_FIELDS       = "searchFields";
+    public static final String EXACT_SEARCH_FIELDS = "exactSearchFields";
+    public static final String MAX_HITS            = "maxHits";
+    public static final String START               = "start";
+    public static final String EXACT               = "exact";
 
-    public static final String VALUE_MAPPER                  = "valueMapper";
+    public static final String VALUE_MAPPER = "valueMapper";
 
-    public static final String PII_FIELD                     = "piiField";
-    public static final String ANALYZER                      = "analyzer";
+    public static final String PII_FIELD = "piiField";
+    public static final String ANALYZER  = "analyzer";
 
-    public static final String CONTACTS                      = "contacts";
+    public static final String CONTACTS = "contacts";
 
-    public static final String PAGING_TOKEN                  = "pagingToken";
-    public static final String AUTHORIZED_OBJECTS            = "authorizedObjects";
+    public static final String PAGING_TOKEN       = "pagingToken";
+    public static final String AUTHORIZED_OBJECTS = "authorizedObjects";
 
-    public static final String REASON                        = "reason";
+    public static final String REASON = "reason";
 
-    public static final String ORGANIZATION_ID               = "organizationId";
+    public static final String ORGANIZATION_ID = "organizationId";
 
-    public static final String FLAGS_FIELD                   = "flags";
-    public static final String PARENT_TYPE_FIELD             = "parentType";
+    public static final String FLAGS_FIELD       = "flags";
+    public static final String PARENT_TYPE_FIELD = "parentType";
 
-    public static final String BASE_TYPE_FIELD               = "baseType";
+    public static final String BASE_TYPE_FIELD = "baseType";
 
-    public static final String ERROR                         = "error";
-    public static final String ERRORS                        = "errors";
-    public static final String MESSAGE                       = "message";
-    public static final String HTTP_STATUS_CODE              = "code";
+    public static final String ERROR            = "error";
+    public static final String ERRORS           = "errors";
+    public static final String MESSAGE          = "message";
+    public static final String HTTP_STATUS_CODE = "code";
 
-    public static final String NAMESPACE                     = "namespace";
-    public static final String NAME                          = "name";
-    public static final String SRC                           = "src";
-    public static final String DST                           = "dst";
-    public static final String BIDIRECTIONAL                 = "bidirectional";
-    public static final String CATEGORY                      = "category";
+    public static final String NAMESPACE     = "namespace";
+    public static final String NAME          = "name";
+    public static final String SRC           = "src";
+    public static final String DST           = "dst";
+    public static final String BIDIRECTIONAL = "bidirectional";
+    public static final String CATEGORY      = "category";
 
-    public static final String EXPLANATION                   = "explanation";
+    public static final String EXPLANATION = "explanation";
 
-    public static final String ASSOCIATION_ENTITY_SET        = "associationEntitySet";
-    public static final String ASSOCIATION_DETAILS           = "associationDetails";
-    public static final String ASSOCIATION_PROPERTY_TYPES    = "associationPropertyTypes";
-    public static final String NEIGHBOR_ENTITY_SET           = "neighborEntitySet";
-    public static final String NEIGHBOR_ID                   = "neighborId";
-    public static final String NEIGHBOR_DETAILS              = "neighborDetails";
-    public static final String NEIGHBOR_PROPERTY_TYPES       = "neighborPropertyTypes";
+    public static final String ASSOCIATION_ENTITY_SET     = "associationEntitySet";
+    public static final String ASSOCIATION_DETAILS        = "associationDetails";
+    public static final String ASSOCIATION_PROPERTY_TYPES = "associationPropertyTypes";
+    public static final String NEIGHBOR_ENTITY_SET        = "neighborEntitySet";
+    public static final String NEIGHBOR_ID                = "neighborId";
+    public static final String NEIGHBOR_DETAILS           = "neighborDetails";
+    public static final String NEIGHBOR_PROPERTY_TYPES    = "neighborPropertyTypes";
 
-    public static final String ASSOCIATION_TYPE_ID           = "associationTypeId";
-    public static final String NEIGHBOR_TYPE_IDS             = "neighborTypeIds";
-    public static final String UTILIZER_IS_SRC               = "utilizerIsSrc";
+    public static final String ASSOCIATION_TYPE_ID = "associationTypeId";
+    public static final String NEIGHBOR_TYPE_IDS   = "neighborTypeIds";
+    public static final String UTILIZER_IS_SRC     = "utilizerIsSrc";
 
-    public static final String CURRENT_SYNC                  = "currentSync";
+    public static final String CURRENT_SYNC = "currentSync";
 
-    public static final String CONFLICTS                     = "conflicts";
-    public static final String DIFF                          = "diff";
+    public static final String CONFLICTS = "conflicts";
+    public static final String DIFF      = "diff";
 
-    public static final String WEIGHTS                       = "weights";
-    public static final String BIAS                          = "bias";
-    public static final String FIRST_NAME_STRING             = "firstNameString";
-    public static final String FIRST_NAME_METAPHONE          = "firstNameMetaphone";
-    public static final String FIRST_NAME_PRESENCE           = "firstNamePresence";
-    public static final String MIDDLE_NAME_STRING            = "middleNameString";
-    public static final String MIDDLE_NAME_METAPHONE         = "middleNameMetaphone";
-    public static final String MIDDLE_NAME_PRESENCE          = "middleNamePresence";
-    public static final String LAST_NAME_STRING              = "lastNameString";
-    public static final String LAST_NAME_METAPHONE           = "lastNameMetaphone";
-    public static final String LAST_NAME_PRESENCE            = "lastNamePresence";
-    public static final String SEX_STRING                    = "sexString";
-    public static final String SEX_PRESENCE                  = "sexPresence";
-    public static final String RACE_STRING                   = "raceString";
-    public static final String RACE_PRESENCE                 = "racePresence";
-    public static final String ETHNICITY_STRING              = "ethnicityString";
-    public static final String ETHNICITY_PRESENCE            = "ethnicityPresence";
-    public static final String DOB_STRING                    = "dobString";
-    public static final String DOB_PRESENCE                  = "dobPresence";
-    public static final String IDENTIFICATION_STRING         = "identificationString";
-    public static final String IDENTIFICATION_PRESENCE       = "identificationPresence";
-    public static final String SSN_STRING                    = "ssnString";
-    public static final String SSN_PRESENCE                  = "ssnPresence";
-    public static final String AGE_STRING                    = "ageString";
-    public static final String AGE_PRESENCE                  = "agePresence";
-    public static final String XREF_STRING                   = "xrefString";
-    public static final String XREF_PRESENCE                 = "xrefPresence";
+    public static final String APP_TYPE_IDS_FIELD = "appTypeIds";
+    public static final String APP_ID             = "appId";
+    public static final String APP_TYPE_ID        = "appTypeId";
+    public static final String ORGANIZATION       = "organization";
+    public static final String CONFIG             = "config";
 }

@@ -17,12 +17,6 @@
 
 package com.dataloom.edm.type;
 
-import java.util.Set;
-import java.util.UUID;
-
-import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import com.dataloom.authorization.securable.AbstractSchemaAssociatedSecurableType;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -30,12 +24,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  *
  */
 public class PropertyType extends AbstractSchemaAssociatedSecurableType {
+
     protected EdmPrimitiveTypeKind datatype;
     protected boolean              piiField;
     protected Analyzer             analyzer;

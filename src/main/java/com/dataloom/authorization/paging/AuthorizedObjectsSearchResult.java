@@ -1,17 +1,16 @@
 package com.dataloom.authorization.paging;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openlattice.authorization.AclKey;
+
+import java.util.Set;
 
 public class AuthorizedObjectsSearchResult {
-    private String          pagingToken;
-    private Set<List<UUID>> authorizedObjects;
+    private String      pagingToken;
+    private Set<AclKey> authorizedObjects;
 
-    public AuthorizedObjectsSearchResult( String pagingToken, Set<List<UUID>> authorizedObjects ) {
+    public AuthorizedObjectsSearchResult( String pagingToken, Set<AclKey> authorizedObjects ) {
         this.pagingToken = pagingToken;
         this.authorizedObjects = authorizedObjects;
     }
@@ -22,7 +21,7 @@ public class AuthorizedObjectsSearchResult {
     }
 
     @JsonProperty( SerializationConstants.AUTHORIZED_OBJECTS )
-    public Set<List<UUID>> getAuthorizedObjects() {
+    public Set<AclKey> getAuthorizedObjects() {
         return authorizedObjects;
     }
 

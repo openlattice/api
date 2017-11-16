@@ -59,6 +59,21 @@ public class Auth0UserBasic {
                         new ArrayList<String>() ) ) );
     }
 
+    public Auth0UserBasic( String userId, String email, String nickname, Set<String> roles, Set<String> organizations ) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        if ( this.email != null ) {
+            this.username = this.email;
+        } else if ( this.nickname != null ) {
+            this.username = this.nickname;
+        } else {
+            this.username = this.userId;
+        }
+        this.roles = roles;
+        this.organizations = organizations;
+    }
+
     @JsonProperty( USER_ID_FIELD )
     public String getUserId() {
         return userId;

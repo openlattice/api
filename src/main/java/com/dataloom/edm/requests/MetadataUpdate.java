@@ -14,9 +14,8 @@ import com.google.common.base.Preconditions;
 /**
  * Used for updating metadata of property type, entity type, or entity set. Non-existent fields for the specific object
  * would be ignored.
- * 
- * @author Ho Chung Siu
  *
+ * @author Ho Chung Siu
  */
 public class MetadataUpdate {
 
@@ -113,31 +112,48 @@ public class MetadataUpdate {
 
     @Override
     public boolean equals( Object obj ) {
-        if ( this == obj ) return true;
-        if ( obj == null ) return false;
-        if ( getClass() != obj.getClass() ) return false;
+        if ( this == obj )
+            return true;
+        if ( obj == null )
+            return false;
+        if ( getClass() != obj.getClass() )
+            return false;
         MetadataUpdate other = (MetadataUpdate) obj;
         if ( contacts == null ) {
-            if ( other.contacts != null ) return false;
-        } else if ( !contacts.equals( other.contacts ) ) return false;
+            if ( other.contacts != null )
+                return false;
+        } else if ( !contacts.equals( other.contacts ) )
+            return false;
         if ( defaultShow == null ) {
-            if ( other.defaultShow != null ) return false;
-        } else if ( !defaultShow.equals( other.defaultShow ) ) return false;
+            if ( other.defaultShow != null )
+                return false;
+        } else if ( !defaultShow.equals( other.defaultShow ) )
+            return false;
         if ( description == null ) {
-            if ( other.description != null ) return false;
-        } else if ( !description.equals( other.description ) ) return false;
+            if ( other.description != null )
+                return false;
+        } else if ( !description.equals( other.description ) )
+            return false;
         if ( name == null ) {
-            if ( other.name != null ) return false;
-        } else if ( !name.equals( other.name ) ) return false;
+            if ( other.name != null )
+                return false;
+        } else if ( !name.equals( other.name ) )
+            return false;
         if ( pii == null ) {
-            if ( other.pii != null ) return false;
-        } else if ( !pii.equals( other.pii ) ) return false;
+            if ( other.pii != null )
+                return false;
+        } else if ( !pii.equals( other.pii ) )
+            return false;
         if ( title == null ) {
-            if ( other.title != null ) return false;
-        } else if ( !title.equals( other.title ) ) return false;
+            if ( other.title != null )
+                return false;
+        } else if ( !title.equals( other.title ) )
+            return false;
         if ( type == null ) {
-            if ( other.type != null ) return false;
-        } else if ( !type.equals( other.type ) ) return false;
+            if ( other.type != null )
+                return false;
+        } else if ( !type.equals( other.type ) )
+            return false;
         return true;
     }
 
@@ -185,5 +201,27 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 update.getDefaultShow() );
+    }
+
+    public static MetadataUpdate trimToAppUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                update.getName(),
+                Optional.absent(),
+                Optional.absent(),
+                Optional.absent(),
+                Optional.absent() );
+    }
+
+    public static MetadataUpdate trimToAppTypeUpdate( MetadataUpdate update ) {
+        return new MetadataUpdate(
+                update.getTitle(),
+                update.getDescription(),
+                Optional.absent(),
+                Optional.absent(),
+                update.getType(),
+                Optional.absent(),
+                Optional.absent() );
     }
 }
