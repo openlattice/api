@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
+import com.openlattice.authorization.AclKey;
 import com.openlattice.authorization.SecurablePrincipal;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class Role extends SecurablePrincipal {
             @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description ) {
-        super( ImmutableList.of( organizationId, id.or( UUID::randomUUID ) ), principal, title, description );
+        super( new AclKey( organizationId, id.or( UUID::randomUUID ) ), principal, title, description );
         checkArgument( principal.getType().equals( PrincipalType.ROLE ) );
         this.organizationId = checkNotNull( organizationId, "Organization id cannot be null." );
     }
