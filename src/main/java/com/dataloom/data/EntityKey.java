@@ -1,21 +1,19 @@
 package com.dataloom.data;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Uniquely identifies a version of an entity in an entity set.
  *
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
-public class EntityKey implements Comparable<EntityKey>, Serializable {
-    private static final long serialVersionUID = -5735601133743963263L;
+public class EntityKey implements Comparable<EntityKey> {
 
     private final UUID entitySetId;
     private final String entityId;
