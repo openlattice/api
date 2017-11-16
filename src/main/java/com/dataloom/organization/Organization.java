@@ -5,6 +5,7 @@ import com.dataloom.authorization.PrincipalType;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.dataloom.organization.roles.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
@@ -72,6 +73,7 @@ public class Organization {
         this( id, principal, title, description, autoApprovedEmails, members, roles, ImmutableSet.of() );
     }
 
+    @JsonIgnore
     public List<UUID> getAclKey() {
         return securablePrincipal.getAclKey();
     }
