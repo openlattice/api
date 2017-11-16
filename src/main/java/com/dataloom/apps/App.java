@@ -63,7 +63,7 @@ public class App extends AbstractSecurableObject {
     }
 
     public void removeAppTypeIds( Set<UUID> appTypeIds ) {
-        appTypeIds.removeAll( appTypeIds );
+        this.appTypeIds.removeAll( appTypeIds );
     }
 
     @Override public boolean equals( Object o ) {
