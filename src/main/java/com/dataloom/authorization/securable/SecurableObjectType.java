@@ -29,5 +29,6 @@ public enum SecurableObjectType {
     App,
     AppType,
     Principal,
-    Role
+    Role,
+    Unknown
 }

@@ -3,35 +3,33 @@ package com.dataloom.authorization;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Arrays;
-import java.util.List;
+import com.openlattice.authorization.AclKey;
 import java.util.UUID;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public class AceKey {
-    private final List<UUID> keys;
-    private final Principal    principal;
+    private final AclKey    keys;
+    private final Principal principal;
 
     /**
      * This is a special constructor that puts the keys from a set in an canonical order
-     * 
+     *
      * @param key Set of object key to put in canonical order
      * @param principal The principal for this ACE
      */
-    public AceKey( List<UUID> key, Principal principal ) {
+    public AceKey( AclKey key, Principal principal ) {
         this.keys = checkNotNull( key );
         this.principal = checkNotNull( principal );
         checkArgument( key.size() > 0, "At least one key must be provided." );
     }
 
     public AceKey( Principal principal, UUID... key ) {
-        this( Arrays.asList( key ), principal );
+        this( new AclKey( key ), principal );
     }
 
-    public List<UUID> getKey() {
+    public AclKey getKey() {
         return keys;
     }
 

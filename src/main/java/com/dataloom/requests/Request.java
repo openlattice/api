@@ -3,33 +3,31 @@ package com.dataloom.requests;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.UUID;
-
 import com.dataloom.authorization.Permission;
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
+import com.openlattice.authorization.AclKey;
+import java.util.EnumSet;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public class Request {
-    protected final List<UUID>          aclKey;
+    protected final AclKey              aclKey;
     protected final EnumSet<Permission> permissions;
     protected final String              reason;
 
     @JsonCreator
     public Request(
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey,
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) AclKey aclKey,
             @JsonProperty( SerializationConstants.PERMISSIONS ) EnumSet<Permission> permissions,
             @JsonProperty( SerializationConstants.REASON ) Optional<String> reason ) {
         this( aclKey, permissions, reason.or( "" ) );
     }
 
-    public Request( List<UUID> aclKey, EnumSet<Permission> permissions, String reason ) {
+    public Request( AclKey aclKey, EnumSet<Permission> permissions, String reason ) {
         this.aclKey = checkNotNull( aclKey, "AclKey cannot be null." );
         checkState( aclKey.size() > 0, "AclKey must have at least one component." );
         this.permissions = permissions;
@@ -37,7 +35,7 @@ public class Request {
     }
 
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
-    public List<UUID> getAclKey() {
+    public AclKey getAclKey() {
         return aclKey;
     }
 
