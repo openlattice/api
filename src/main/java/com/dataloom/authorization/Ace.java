@@ -1,22 +1,22 @@
 package com.dataloom.authorization;
 
-import java.util.Set;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class Ace {
-    private final Principal       principal;
-    private final Set<Permission> permissions;
-    private transient int         h = 0;
+    private final Principal           principal;
+    private final EnumSet<Permission> permissions;
+    private transient int h = 0;
 
     @JsonCreator
     public Ace(
             @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.PERMISSIONS ) Set<Permission> permissions ) {
         this.principal = principal;
-        this.permissions = permissions;
+        this.permissions = EnumSet.copyOf( permissions );
     }
 
     @JsonProperty( SerializationConstants.PRINCIPAL )
@@ -25,7 +25,7 @@ public class Ace {
     }
 
     @JsonProperty( SerializationConstants.PERMISSIONS )
-    public Set<Permission> getPermissions() {
+    public EnumSet<Permission> getPermissions() {
         return permissions;
     }
 

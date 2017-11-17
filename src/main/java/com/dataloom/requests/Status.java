@@ -1,5 +1,6 @@
 package com.dataloom.requests;
 
+import com.openlattice.authorization.AclKey;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class Status {
     }
 
     public Status(
-            List<UUID> aclKey,
+            AclKey aclKey,
             EnumSet<Permission> permissions,
             String reason,
             Principal principal,

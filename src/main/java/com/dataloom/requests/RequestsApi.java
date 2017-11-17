@@ -1,5 +1,6 @@
 package com.dataloom.requests;
 
+import com.openlattice.authorization.AclKey;
 import retrofit2.http.*;
 
 import java.util.List;
@@ -53,22 +54,22 @@ public interface RequestsApi {
      * Retrieves all permission requests for a set of AclKeys.
      *
      * @param aclKeys A set of aclKeys for which to retrieve permission requests information.
-     * @return For each aclKey ( {@code List<UUID>} ) this will return all permission requests in any state across all users for
+     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in any state across all users for
      * callers who are owners and only the caller's permission requests in any state for callers who are not owners.
      */
     @POST( BASE )
-    Iterable<Status> getStatuses( @Body Set<List<UUID>> aclKeys );
+    Iterable<Status> getStatuses( @Body Set<AclKey> aclKeys );
 
     /**
      * Retrieves the permission requests for all objects in the state specified by {@code requestStatus}
      *
      * @param requestStatus The {@link RequestStatus} to match against.
      * @param requests      A list of acl keys whose permission requests will be checked against
-     * @return For each aclKey ( {@code List<UUID>} ) this will return all permission requests in the state specified by {@code requestStatus} across all users for
+     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in the state specified by {@code requestStatus} across all users for
      * callers who are owners and only the caller's permission requests in the state specified by {@code requestStatus} for callers who are not owners
      */
     @POST( BASE + REQUEST_STATUS_PATH )
-    Iterable<Status> getStatuses( @Path( REQUEST_STATUS ) RequestStatus requestStatus, @Body Set<List<UUID>> requests );
+    Iterable<Status> getStatuses( @Path( REQUEST_STATUS ) RequestStatus requestStatus, @Body Set<AclKey> requests );
 
     /**
      * Updates a set of permission requests.
