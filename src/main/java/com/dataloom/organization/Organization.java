@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.openlattice.authorization.*;
 import com.openlattice.authorization.SecurablePrincipal;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Organization {
-    private final SecurablePrincipal securablePrincipal;
+    private final OrganizationPrincipal securablePrincipal;
     private final Set<String>        autoApprovedEmails;
     private final Set<Principal>     members;
     private final Set<Role>          roles;
@@ -37,11 +37,11 @@ public class Organization {
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles,
             @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps ) {
-        this( new SecurablePrincipal( id, principal, title, description ), autoApprovedEmails, members, roles, apps );
+        this( new OrganizationPrincipal( id, principal, title, description ), autoApprovedEmails, members, roles, apps );
     }
 
     public Organization(
-            SecurablePrincipal securablePrincipal,
+            OrganizationPrincipal securablePrincipal,
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles,
@@ -55,7 +55,7 @@ public class Organization {
     }
 
     public Organization(
-            SecurablePrincipal principal,
+            OrganizationPrincipal principal,
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles ) {
@@ -74,7 +74,7 @@ public class Organization {
     }
 
     @JsonIgnore
-    public List<UUID> getAclKey() {
+    public AclKey getAclKey() {
         return securablePrincipal.getAclKey();
     }
 
@@ -163,7 +163,7 @@ public class Organization {
                 '}';
     }
 
-    public SecurablePrincipal getSecurablePrincipal() {
+    public OrganizationPrincipal getSecurablePrincipal() {
         return securablePrincipal;
     }
 

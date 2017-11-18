@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.authorization.SecurablePrincipal;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
