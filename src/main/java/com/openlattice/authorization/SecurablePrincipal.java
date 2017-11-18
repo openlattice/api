@@ -111,6 +111,7 @@ public class SecurablePrincipal extends AbstractSecurableObject {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", aclKey=" + aclKey +
                 ", principal=" + principal +
                 '}';
     }

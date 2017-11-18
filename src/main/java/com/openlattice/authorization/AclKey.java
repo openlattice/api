@@ -63,5 +63,4 @@ public class AclKey extends DelegatedUUIDList implements Comparable<AclKey> {
     public static AclKey wrap( ImmutableList<UUID> uuids ) {
         return new AclKey( uuids );
     }
-
 }
