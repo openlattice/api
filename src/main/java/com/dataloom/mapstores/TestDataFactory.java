@@ -36,6 +36,13 @@ public final class TestDataFactory {
     private TestDataFactory() {
     }
 
+    public static Long longValue() {
+        return r.nextLong();
+    }
+    public static Integer integer() {
+        return r.nextInt();
+    }
+
     public static Principal userPrincipal() {
         return new Principal( PrincipalType.USER, RandomStringUtils.randomAlphanumeric( 10 ) );
     }
