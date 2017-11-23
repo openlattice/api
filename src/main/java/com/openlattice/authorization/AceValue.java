@@ -20,6 +20,8 @@
 
 package com.openlattice.authorization;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.dataloom.authorization.Permission;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import java.util.Collection;
@@ -35,11 +37,11 @@ import java.util.stream.Stream;
  */
 public class AceValue implements Set<Permission> {
     private final EnumSet<Permission> permissions;
-    private SecurableObjectType       securableObjectType;
+    private       SecurableObjectType securableObjectType;
 
     public AceValue( EnumSet<Permission> permissions, SecurableObjectType objectType ) {
         this.permissions = permissions;
-        this.securableObjectType = objectType;
+        this.securableObjectType = checkNotNull( objectType, "Securable Object Type cannot be null" );
     }
 
     public EnumSet<Permission> getPermissions() {
