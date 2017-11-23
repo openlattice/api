@@ -37,16 +37,18 @@ public interface DataApi {
     String ENTITY_DATA      = "entitydata";
     String ASSOCIATION_DATA = "associationndata";
 
-    String TICKET           = "ticket";
-    String SET_ID           = "setId";
-    String SYNC_ID          = "syncId";
+    String ENTITY_KEY_ID = "entityKeyId";
+    String SET_ID        = "setId";
+    String SYNC_ID       = "syncId";
+    String TICKET        = "ticket";
 
-    String SET_ID_PATH      = "{" + SET_ID + "}";
-    String SYNC_ID_PATH     = "{" + SYNC_ID + "}";
-    String TICKET_PATH      = "{" + TICKET + "}";
+    String ENTITY_KEY_ID_PATH = "{" + ENTITY_KEY_ID + "}";
+    String SET_ID_PATH        = "{" + SET_ID + "}";
+    String SYNC_ID_PATH       = "{" + SYNC_ID + "}";
+    String TICKET_PATH        = "{" + TICKET + "}";
 
-    String FILE_TYPE        = "fileType";
-    String TOKEN            = "token";
+    String FILE_TYPE = "fileType";
+    String TOKEN     = "token";
 
     @POST( BASE + "/" + TICKET + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
     UUID acquireSyncTicket( @Path( SET_ID ) UUID entitySetId, @Path( SYNC_ID ) UUID syncId );
@@ -67,10 +69,9 @@ public interface DataApi {
             @Query( TOKEN ) String token );
 
     /**
-     * 
      * @param entitySetId
-     * @param req If syncId is not specified in the request, will retrieve the data from the current syncId's. If
-     *            selectedProperties are not specified, all readable properties will be fetched.
+     * @param req         If syncId is not specified in the request, will retrieve the data from the current syncId's. If
+     *                    selectedProperties are not specified, all readable properties will be fetched.
      * @param fileType
      * @return
      */
@@ -82,12 +83,12 @@ public interface DataApi {
 
     /**
      * Creates a new set of entities.
-     * 
+     *
      * @param entitySetId The id of the entity set to write to.
-     * @param syncId A time-uuid retrieved from data source api.
-     * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
-     *            and stable across repeated integrations of data. If either constraint is violated then data may be
-     *            overwritten or duplicated.
+     * @param syncId      A time-uuid retrieved from data source api.
+     * @param entities    A map describe the entities to create. Each key will be used as the entity id and must be unique
+     *                    and stable across repeated integrations of data. If either constraint is violated then data may be
+     *                    overwritten or duplicated.
      * @return
      */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
@@ -98,11 +99,11 @@ public interface DataApi {
 
     /**
      * Creates a new set of entities for the specified entity set's current sync id.
-     * 
+     *
      * @param entitySetId The id of the entity set to write to.
-     * @param entities A map describe the entities to create. Each key will be used as the entity id and must be unique
-     *            and stable across repeated integrations of data. If either constraint is violated then data may be
-     *            overwritten or duplicated.
+     * @param entities    A map describe the entities to create. Each key will be used as the entity id and must be unique
+     *                    and stable across repeated integrations of data. If either constraint is violated then data may be
+     *                    overwritten or duplicated.
      * @return
      */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
@@ -112,11 +113,11 @@ public interface DataApi {
 
     /**
      * Create a new set of associations
-     * 
-     * @param entitySetId The id of the edge entity set to write to
-     * @param syncId A time-uuid retrieved from data source api
+     *
+     * @param entitySetId  The id of the edge entity set to write to
+     * @param syncId       A time-uuid retrieved from data source api
      * @param associations Set of associations to create. An association is the usual (String entityId, SetMultimap &lt;
-     *            UUID, Object &gt; details of entity) pairing enriched with source/destination Entity Key
+     *                     UUID, Object &gt; details of entity) pairing enriched with source/destination Entity Key
      * @return
      */
     @PUT( BASE + "/" + ASSOCIATION_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
@@ -134,4 +135,40 @@ public interface DataApi {
     @PATCH( BASE + "/" + ENTITY_DATA )
     Void createEntityAndAssociationData( @Body BulkDataCreation data );
 
+    /**
+     * Deletes a single entity from an entity set
+     *
+     * @param entitySetId The id of the entity set to delete from to.
+     * @param entityKeyId The id of the entity to delete
+     * @return
+     */
+    @DELETE( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    Void deleteEntityFromEntitySet( @Path( SET_ID ) UUID entitySetId, @Path( ENTITY_KEY_ID ) UUID entityKeyId );
+
+
+    /**
+     * Deletes a single entity from an entity set
+     *
+     * @param entitySetId The id of the entity set to delete from to.
+     * @param entityKeyId The id of the entity to delete
+     * @return
+     */
+    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    Void replaceEntityInEntitySet(
+            @Path( SET_ID ) UUID entitySetId,
+            @Path( ENTITY_KEY_ID ) UUID entityKeyId,
+            @Body SetMultimap<UUID, Object> entity );
+
+    /**
+     * Deletes a single entity from an entity set
+     *
+     * @param entitySetId The id of the entity set to delete from to.
+     * @param entityKeyId The id of the entity to delete
+     * @return
+     */
+    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    Void replaceEntityInEntitySetUsingFqns(
+            @Path( SET_ID ) UUID entitySetId,
+            @Path( ENTITY_KEY_ID ) UUID entityKeyId,
+            @Body SetMultimap<FullQualifiedName, Object> entityByFqns );
 }
