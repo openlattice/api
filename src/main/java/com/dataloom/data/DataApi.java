@@ -153,7 +153,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to delete
      * @return
      */
-    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
     Void replaceEntityInEntitySet(
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
