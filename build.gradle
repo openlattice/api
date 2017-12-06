@@ -93,7 +93,7 @@ dependencies {
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jackson_version}"
     compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:${jackson_version}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jackson_version}"
-    compile 'org.yaml:snakeyaml:1.13'
+    compile "org.yaml:snakeyaml:${snakeyaml_version}"
 
 	/*
      * Kryptnostic dependencies
@@ -129,3 +129,4 @@ eclipse {
     ext.downloadJavadoc = true
     ext.sourceCompatibility=JavaVersion.VERSION_1_8
 }
+
