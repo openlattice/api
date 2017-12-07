@@ -16,7 +16,8 @@ public class Ace {
             @JsonProperty( SerializationConstants.PRINCIPAL ) Principal principal,
             @JsonProperty( SerializationConstants.PERMISSIONS ) Set<Permission> permissions ) {
         this.principal = principal;
-        this.permissions = EnumSet.copyOf( permissions );
+        this.permissions = EnumSet.noneOf( Permission.class );
+        this.permissions.addAll( permissions );
     }
 
     @JsonProperty( SerializationConstants.PRINCIPAL )
