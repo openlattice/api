@@ -1,15 +1,14 @@
 package com.dataloom.edm.requests;
 
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import com.dataloom.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+
+import java.util.Set;
 
 /**
  * Used for updating metadata of property type, entity type, or entity set. Non-existent fields for the specific object
@@ -31,6 +30,7 @@ public class MetadataUpdate {
     private Optional<Boolean>           pii;
     // Specific to entity set property type metadata
     private Optional<Boolean>           defaultShow;
+    private Optional<String>            url;
 
     @JsonCreator
     public MetadataUpdate(
@@ -40,7 +40,8 @@ public class MetadataUpdate {
             @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
             @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type,
             @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> pii,
-            @JsonProperty( SerializationConstants.DEFAULT_SHOW ) Optional<Boolean> defaultShow ) {
+            @JsonProperty( SerializationConstants.DEFAULT_SHOW ) Optional<Boolean> defaultShow,
+            @JsonProperty( SerializationConstants.URL ) Optional<String> url ) {
         // WARNING These checks have to be consistent with the same check elsewhere.
         Preconditions.checkArgument( !title.isPresent() || StringUtils.isNotBlank( title.get() ),
                 "Title cannot be blank." );
@@ -59,6 +60,7 @@ public class MetadataUpdate {
         this.type = type;
         this.pii = pii;
         this.defaultShow = defaultShow;
+        this.url = url;
     }
 
     @JsonProperty( SerializationConstants.TITLE_FIELD )
@@ -94,6 +96,11 @@ public class MetadataUpdate {
     @JsonProperty( SerializationConstants.DEFAULT_SHOW )
     public Optional<Boolean> getDefaultShow() {
         return defaultShow;
+    }
+
+    @JsonProperty( SerializationConstants.URL )
+    public Optional<String> getUrl() {
+        return url;
     }
 
     @Override
@@ -167,6 +174,7 @@ public class MetadataUpdate {
                 Optional.absent(),
                 update.getType(),
                 update.getPii(),
+                Optional.absent(),
                 Optional.absent() );
     }
 
@@ -178,6 +186,7 @@ public class MetadataUpdate {
                 Optional.absent(),
                 update.getType(),
                 Optional.absent(),
+                Optional.absent(),
                 Optional.absent() );
     }
 
@@ -187,6 +196,7 @@ public class MetadataUpdate {
                 update.getDescription(),
                 update.getName(),
                 update.getContacts(),
+                Optional.absent(),
                 Optional.absent(),
                 Optional.absent(),
                 Optional.absent() );
@@ -200,7 +210,8 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 Optional.absent(),
-                update.getDefaultShow() );
+                update.getDefaultShow(),
+                Optional.absent() );
     }
 
     public static MetadataUpdate trimToAppUpdate( MetadataUpdate update ) {
@@ -211,7 +222,8 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 Optional.absent(),
-                Optional.absent() );
+                Optional.absent(),
+                update.getUrl() );
     }
 
     public static MetadataUpdate trimToAppTypeUpdate( MetadataUpdate update ) {
@@ -221,6 +233,7 @@ public class MetadataUpdate {
                 Optional.absent(),
                 Optional.absent(),
                 update.getType(),
+                Optional.absent(),
                 Optional.absent(),
                 Optional.absent() );
     }
