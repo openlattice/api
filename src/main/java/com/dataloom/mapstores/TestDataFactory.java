@@ -187,6 +187,14 @@ public final class TestDataFactory {
                 .collect( Collectors.toCollection( () -> EnumSet.noneOf( Permission.class ) ) );
     }
 
+    public static EnumSet<Permission> nonEmptyPermissions() {
+        EnumSet<Permission> ps = permissions();
+        while( ps.isEmpty() ) {
+            ps = permissions();
+        }
+        return ps;
+    }
+
     public static Ace ace() {
         return new Ace( userPrincipal(), permissions() );
     }

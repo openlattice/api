@@ -29,7 +29,7 @@ public class AceKey {
         this( new AclKey( key ), principal );
     }
 
-    public AclKey getKey() {
+    public AclKey getAclKey() {
         return keys;
     }
 

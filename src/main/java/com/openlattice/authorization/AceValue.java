@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
-public class AceValue implements Set<Permission> {
+public class    AceValue implements Set<Permission> {
     private final EnumSet<Permission> permissions;
     private       SecurableObjectType securableObjectType;
 
