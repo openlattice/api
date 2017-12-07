@@ -16,7 +16,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class App extends AbstractSecurableObject {
 
-    private String              name;
+    private       String              name;
+    private       String              url;
     private final LinkedHashSet<UUID> appTypeIds;
 
     @JsonCreator
@@ -25,24 +26,43 @@ public class App extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.APP_TYPE_IDS_FIELD ) LinkedHashSet<UUID> appTypeIds ) {
+            @JsonProperty( SerializationConstants.APP_TYPE_IDS_FIELD ) LinkedHashSet<UUID> appTypeIds,
+            @JsonProperty( SerializationConstants.URL ) String url ) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "App name cannot be blank." );
         this.name = name;
         this.appTypeIds = appTypeIds;
+        this.url = url;
     }
 
-    public App( UUID id, String name, String title, Optional<String> description, LinkedHashSet<UUID> configTypeIds ) {
-        this( Optional.of( id ), name, title, description, configTypeIds );
+    public App(
+            UUID id,
+            String name,
+            String title,
+            Optional<String> description,
+            LinkedHashSet<UUID> configTypeIds,
+            String url ) {
+        this( Optional.of( id ), name, title, description, configTypeIds, url );
     }
 
-    public App( String name, String title, Optional<String> description, LinkedHashSet<UUID> configTypeIds ) {
-        this( Optional.absent(), name, title, description, configTypeIds );
+    public App(
+            String name,
+            String title,
+            Optional<String> description,
+            LinkedHashSet<UUID> configTypeIds,
+            String url ) {
+        this( Optional.absent(), name, title, description, configTypeIds, url );
     }
 
     @JsonProperty( SerializationConstants.NAME_FIELD )
     public String getName() {
         return name;
+    }
+
+    @JsonProperty( SerializationConstants.URL )
+    public String getUrl() {
+        return url;
+
     }
 
     @Override public SecurableObjectType getCategory() {
@@ -58,8 +78,12 @@ public class App extends AbstractSecurableObject {
         this.name = name;
     }
 
-    public void addAppTypeIds( Set<UUID> ids ) {
-        appTypeIds.addAll( ids );
+    public void setUrl( String url ) {
+        this.url = url;
+    }
+
+    public void addAppTypeIds( Set<UUID> appTypeIds ) {
+        appTypeIds.addAll( appTypeIds );
     }
 
     public void removeAppTypeIds( Set<UUID> appTypeIds ) {
@@ -76,15 +100,18 @@ public class App extends AbstractSecurableObject {
 
         App app = (App) o;
 
-        if ( !name.equals( app.name ) )
+        if ( name != null ? !name.equals( app.name ) : app.name != null )
             return false;
-        return appTypeIds.equals( app.appTypeIds );
+        if ( appTypeIds != null ? !appTypeIds.equals( app.appTypeIds ) : app.appTypeIds != null )
+            return false;
+        return url != null ? url.equals( app.url ) : app.url == null;
     }
 
     @Override public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + appTypeIds.hashCode();
+        result = 31 * result + ( name != null ? name.hashCode() : 0 );
+        result = 31 * result + ( appTypeIds != null ? appTypeIds.hashCode() : 0 );
+        result = 31 * result + ( url != null ? url.hashCode() : 0 );
         return result;
     }
 
