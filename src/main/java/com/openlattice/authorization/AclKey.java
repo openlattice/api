@@ -25,8 +25,11 @@ import com.google.common.collect.ImmutableList;
 import com.openlattice.rhizome.hazelcast.DelegatedUUIDList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
+ * Immutable list of uuids for use in Hazelcast
+ *
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 public class AclKey extends DelegatedUUIDList implements Comparable<AclKey> {
@@ -55,6 +58,10 @@ public class AclKey extends DelegatedUUIDList implements Comparable<AclKey> {
         return result;
     }
 
+    public String getIndex() {
+        return stream().map( UUID::toString ).collect( Collectors.joining() );
+    }
+
     public int getSize() {
         return size();
     }
@@ -63,4 +70,5 @@ public class AclKey extends DelegatedUUIDList implements Comparable<AclKey> {
     public static AclKey wrap( ImmutableList<UUID> uuids ) {
         return new AclKey( uuids );
     }
+
 }

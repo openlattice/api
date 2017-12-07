@@ -1,5 +1,6 @@
 package com.dataloom.authorization;
 
+import com.openlattice.authorization.AclKey;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -9,19 +10,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Authorization {
-    private List<UUID>               aclKey;
+    private AclKey               aclKey;
     private Map<Permission, Boolean> permissions;
 
     @JsonCreator
     public Authorization( 
-            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) List<UUID> aclKey, 
+            @JsonProperty( SerializationConstants.ACL_OBJECT_PATH ) AclKey aclKey,
             @JsonProperty( SerializationConstants.PERMISSIONS ) Map<Permission, Boolean> permissionsMap ) {
         this.aclKey = aclKey;
         this.permissions = permissionsMap;
     }
 
     @JsonProperty( SerializationConstants.ACL_OBJECT_PATH )
-    public List<UUID> getAclKey() {
+    public AclKey getAclKey() {
         return aclKey;
     }
 
