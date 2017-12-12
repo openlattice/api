@@ -3,20 +3,20 @@ package com.dataloom.analysis;
 import java.util.List;
 import java.util.UUID;
 
+import com.dataloom.analysis.requests.NeighborType;
 import com.dataloom.analysis.requests.TopUtilizerDetails;
 import com.dataloom.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
 
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 public interface AnalysisApi {
 
     String SERVICE            = "/datastore";
     String CONTROLLER         = "/analysis";
     String BASE               = SERVICE + CONTROLLER;
+
+    String TYPES_PATH         = "/types";
 
     String FILE_TYPE          = "fileType";
 
@@ -43,4 +43,7 @@ public interface AnalysisApi {
             @Path( NUM_RESULTS ) int numResults,
             @Body List<TopUtilizerDetails> topUtilizerDetails,
             @Query( FILE_TYPE ) FileType fileType );
+
+    @GET( BASE + ENTITY_SET_ID_PATH + TYPES_PATH )
+    Iterable<NeighborType> getNeighborTypes( @Path( ENTITY_SET_ID ) UUID entitySetId );
 }

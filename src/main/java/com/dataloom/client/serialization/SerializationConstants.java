@@ -158,9 +158,11 @@ public final class SerializationConstants {
     public static final String EXPLANATION = "explanation";
 
     public static final String ASSOCIATION_ENTITY_SET     = "associationEntitySet";
+    public static final String ASSOCIATION_ENTITY_TYPE    = "associationEntityType";
     public static final String ASSOCIATION_DETAILS        = "associationDetails";
     public static final String ASSOCIATION_PROPERTY_TYPES = "associationPropertyTypes";
     public static final String NEIGHBOR_ENTITY_SET        = "neighborEntitySet";
+    public static final String NEIGHBOR_ENTITY_TYPE       = "neighborEntityType";
     public static final String NEIGHBOR_ID                = "neighborId";
     public static final String NEIGHBOR_DETAILS           = "neighborDetails";
     public static final String NEIGHBOR_PROPERTY_TYPES    = "neighborPropertyTypes";
