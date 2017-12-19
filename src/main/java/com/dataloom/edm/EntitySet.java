@@ -20,11 +20,6 @@ package com.dataloom.edm;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Set;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.dataloom.authorization.securable.AbstractSecurableObject;
 import com.dataloom.authorization.securable.SecurableObjectType;
 import com.dataloom.client.serialization.SerializationConstants;
@@ -33,19 +28,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
+import java.util.Set;
+import java.util.UUID;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
- *
  */
 public class EntitySet extends AbstractSecurableObject {
-    private final UUID   entityTypeId;
-    private String name;
-    private Set<String> contacts;
+    private final UUID        entityTypeId;
+    private       String      name;
+    private       Set<String> contacts;
+    private final boolean     external;
 
     /**
      * Creates an entity set with provided parameters and will automatically generate a UUID if not provided.
-     * 
+     *
      * @param id An optional UUID for the entity set.
      * @param name The name of the entity set.
      * @param title The friendly name for the entity set.
@@ -58,14 +56,16 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.NAME_FIELD ) String name,
             @JsonProperty( SerializationConstants.TITLE_FIELD ) String title,
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts ) {
+            @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts,
+            @JsonProperty( SerializationConstants.EXTERNAL ) Optional<Boolean> external ) {
         super( id, title, description );
         checkArgument( StringUtils.isNotBlank( name ), "Entity set name cannot be blank." );
         // Temporary
-//        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
+        //        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
         this.contacts = Sets.newHashSet( contacts );
+        this.external = external.or( true ); //Default to external
     }
 
     public EntitySet(
@@ -75,7 +75,7 @@ public class EntitySet extends AbstractSecurableObject {
             String title,
             Optional<String> description,
             Set<String> contacts ) {
-        this( Optional.of( id ), entityTypeId, name, title, description, contacts );
+        this( Optional.of( id ), entityTypeId, name, title, description, contacts, Optional.of(true ));
     }
 
     public EntitySet(
@@ -84,7 +84,7 @@ public class EntitySet extends AbstractSecurableObject {
             String title,
             Optional<String> description,
             Set<String> contacts ) {
-        this( Optional.absent(), entityTypeId, name, title, description, contacts );
+        this( Optional.absent(), entityTypeId, name, title, description, contacts, Optional.of( true )) ;
     }
 
     @JsonProperty( SerializationConstants.ENTITY_TYPE_ID_FIELD )
@@ -97,63 +97,44 @@ public class EntitySet extends AbstractSecurableObject {
         return name;
     }
 
+    public void setName( String name ) {
+        this.name = name;
+    }
+
     @JsonProperty( SerializationConstants.CONTACTS )
     public Set<String> getContacts() {
         return contacts;
     }
-    
-    public void setName( String name ){
-        this.name = name;
-    }
-    
-    public void setContacts( Set<String> contacts ){
+
+    public void setContacts( Set<String> contacts ) {
         this.contacts = contacts;
     }
-    
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ( ( entityTypeId == null ) ? 0 : entityTypeId.hashCode() );
-        result = prime * result + ( ( name == null ) ? 0 : name.hashCode() );
-        result = prime * result + ( ( contacts == null ) ? 0 : contacts.hashCode() );
-        return result;
+
+    @JsonProperty(SerializationConstants.EXTERNAL)
+    public boolean isExternal() {
+        return external;
     }
 
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) {
-            return true;
-        }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( !( obj instanceof EntitySet ) ) {
-            return false;
-        }
-        EntitySet other = (EntitySet) obj;
-        if ( entityTypeId == null ) {
-            if ( other.entityTypeId != null ) {
-                return false;
-            }
-        } else if ( !entityTypeId.equals( other.entityTypeId ) ) {
-            return false;
-        }
-        if ( name == null ) {
-            if ( other.name != null ) {
-                return false;
-            }
-        } else if ( !name.equals( other.name ) ) {
-            return false;
-        }
-        if ( contacts == null ) {
-            if ( other.contacts != null ) {
-                return false;
-            }
-        } else if ( !contacts.equals( other.contacts ) ) {
-            return false;
-        }
-        return true;
+    @Override public boolean equals( Object o ) {
+        if ( this == o ) { return true; }
+        if ( !( o instanceof EntitySet ) ) { return false; }
+        if ( !super.equals( o ) ) { return false; }
+
+        EntitySet entitySet = (EntitySet) o;
+
+        if ( external != entitySet.external ) { return false; }
+        if ( !entityTypeId.equals( entitySet.entityTypeId ) ) { return false; }
+        if ( !name.equals( entitySet.name ) ) { return false; }
+        return contacts.equals( entitySet.contacts );
+    }
+
+    @Override public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + entityTypeId.hashCode();
+        result = 31 * result + ( external ? 1 : 0 );
+        result = 31 * result + name.hashCode();
+        result = 31 * result + contacts.hashCode();
+        return result;
     }
 
     @Override

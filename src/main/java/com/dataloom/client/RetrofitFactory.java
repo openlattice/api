@@ -76,7 +76,6 @@ public final class RetrofitFactory {
                 .addConverterFactory( new LoomJacksonConverterFactory( ObjectMappers.getJsonMapper() ) )
                 .addCallAdapterFactory( new LoomCallAdapterFactory() );
     }
-
     public static final OkHttpClient.Builder okhttpClientWithLoomAuth( Supplier<String> jwtToken ) {
         return new OkHttpClient.Builder()
                 .addInterceptor( chain -> chain

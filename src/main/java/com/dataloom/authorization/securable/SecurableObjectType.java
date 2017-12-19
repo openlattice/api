@@ -18,6 +18,7 @@
 package com.dataloom.authorization.securable;
 
 public enum SecurableObjectType {
+    EdmTemplate,
     EntityType,
     EntitySet,
     PropertyTypeInEntitySet,
