@@ -240,4 +240,10 @@ public interface SearchApi {
     @GET( BASE + EDM + INDEX )
     Void triggerEdmIndex();
 
+    @GET( BASE + ENTITY_SETS + INDEX + ENTITY_SET_ID_PATH )
+    Void trigerEntitySetDataIndex( @Path( ENTITY_SET_ID ) UUID entitySetId );
+
+    @GET( BASE + ENTITY_SETS + INDEX )
+    Void trigerAllEntitySetDataIndex();
+
 }
