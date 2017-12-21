@@ -83,7 +83,7 @@ public class App extends AbstractSecurableObject {
     }
 
     public void addAppTypeIds( Set<UUID> appTypeIds ) {
-        appTypeIds.addAll( appTypeIds );
+        this.appTypeIds.addAll( appTypeIds );
     }
 
     public void removeAppTypeIds( Set<UUID> appTypeIds ) {
