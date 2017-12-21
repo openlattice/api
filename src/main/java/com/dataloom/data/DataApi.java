@@ -1,25 +1,16 @@
 package com.dataloom.data;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import org.apache.olingo.commons.api.edm.FullQualifiedName;
-
 import com.dataloom.data.requests.Association;
 import com.dataloom.data.requests.BulkDataCreation;
 import com.dataloom.data.requests.EntitySetSelection;
 import com.dataloom.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
+import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import retrofit2.http.*;
 
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.PATCH;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public interface DataApi {
     /*
@@ -41,6 +32,7 @@ public interface DataApi {
     String SET_ID        = "setId";
     String SYNC_ID       = "syncId";
     String TICKET        = "ticket";
+    String COUNT         = "count";
 
     String ENTITY_KEY_ID_PATH = "{" + ENTITY_KEY_ID + "}";
     String SET_ID_PATH        = "{" + SET_ID + "}";
@@ -70,10 +62,10 @@ public interface DataApi {
 
     /**
      * @param entitySetId
-     * @param req         If syncId is not specified in the request, will retrieve the data from the current syncId's. If
+     * @param req         If syncId is not specified in the request, will retrieve the data from the current syncIds. If
      *                    selectedProperties are not specified, all readable properties will be fetched.
      * @param fileType
-     * @return
+     * @return An iterable containing the entity data, using property type FQNs as keys
      */
     @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
@@ -85,8 +77,8 @@ public interface DataApi {
      * Creates a new set of entities.
      *
      * @param entitySetId The id of the entity set to write to.
-     * @param syncId      A time-uuid retrieved from data source api.
-     * @param entities    A map describe the entities to create. Each key will be used as the entity id and must be unique
+     * @param syncId      A uuid retrieved from data source api.
+     * @param entities    A map describing the entities to create. Each key will be used as the entity id and must be unique
      *                    and stable across repeated integrations of data. If either constraint is violated then data may be
      *                    overwritten or duplicated.
      * @return
@@ -101,7 +93,7 @@ public interface DataApi {
      * Creates a new set of entities for the specified entity set's current sync id.
      *
      * @param entitySetId The id of the entity set to write to.
-     * @param entities    A map describe the entities to create. Each key will be used as the entity id and must be unique
+     * @param entities    A map describing the entities to create. Each key will be used as the entity id and must be unique.
      *                    and stable across repeated integrations of data. If either constraint is violated then data may be
      *                    overwritten or duplicated.
      * @return
@@ -112,12 +104,12 @@ public interface DataApi {
             @Body Map<String, SetMultimap<UUID, Object>> entities );
 
     /**
-     * Create a new set of associations
+     * Creates a new set of associations.
      *
-     * @param entitySetId  The id of the edge entity set to write to
-     * @param syncId       A time-uuid retrieved from data source api
+     * @param entitySetId  The id of the edge entity set to write to.
+     * @param syncId       A uuid retrieved from data source api.
      * @param associations Set of associations to create. An association is the usual (String entityId, SetMultimap &lt;
-     *                     UUID, Object &gt; details of entity) pairing enriched with source/destination Entity Key
+     *                     UUID, Object &gt; details of entity) pairing enriched with source/destination EntityKeys
      * @return
      */
     @PUT( BASE + "/" + ASSOCIATION_DATA + "/" + SET_ID_PATH + "/" + SYNC_ID_PATH )
@@ -136,21 +128,21 @@ public interface DataApi {
     Void createEntityAndAssociationData( @Body BulkDataCreation data );
 
     /**
-     * Deletes a single entity from an entity set
+     * Deletes a single entity from an entity set.
      *
-     * @param entitySetId The id of the entity set to delete from to.
-     * @param entityKeyId The id of the entity to delete
+     * @param entitySetId The id of the entity set to delete from.
+     * @param entityKeyId The id of the entity to delete.
      * @return
      */
     @DELETE( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
     Void deleteEntityFromEntitySet( @Path( SET_ID ) UUID entitySetId, @Path( ENTITY_KEY_ID ) UUID entityKeyId );
 
-
     /**
-     * Deletes a single entity from an entity set
+     * Replaces a single entity from an entity set.
      *
-     * @param entitySetId The id of the entity set to delete from to.
-     * @param entityKeyId The id of the entity to delete
+     * @param entitySetId The id of the entity set the entity belongs to.
+     * @param entityKeyId The id of the entity to replace.
+     * @param entity      The new entity details object that will replace the old value, with property type ids as keys.
      * @return
      */
     @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
@@ -160,10 +152,11 @@ public interface DataApi {
             @Body SetMultimap<UUID, Object> entity );
 
     /**
-     * Deletes a single entity from an entity set
+     * Replaces a single entity from an entity set.
      *
-     * @param entitySetId The id of the entity set to delete from to.
-     * @param entityKeyId The id of the entity to delete
+     * @param entitySetId  The id of the entity set the entity belongs to.
+     * @param entityKeyId  The id of the entity to replace.
+     * @param entityByFqns The new entity details object that will replace the old value, with property type FQNs as keys.
      * @return
      */
     @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
@@ -171,4 +164,13 @@ public interface DataApi {
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
             @Body SetMultimap<FullQualifiedName, Object> entityByFqns );
+
+    /**
+     * Gets the number of entities in an entity set.
+     *
+     * @param entitySetId The id of the entity set to return a count for.
+     * @return The number of entities in the entity set.
+     */
+    @GET( BASE + "/" + SET_ID_PATH + "/" + COUNT )
+    long getEntitySetSize( @Path( SET_ID ) UUID entitySetId );
 }
