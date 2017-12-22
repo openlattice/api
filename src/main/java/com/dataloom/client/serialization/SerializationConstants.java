@@ -39,12 +39,15 @@ public final class SerializationConstants {
     public static final String ASSOCIATION_DEFINITIONS_FIELD = "associationDefinitions";
 
     public static final String ASSOCIATION_TYPES = "associationTypes";
+
     public static final String ACL_KEY           = "aclKey";
 
     public static final String AUDIT_ID                 = "auditId";
     public static final String BLOCK_ID                 = "blockId";
+
     public static final String DATA_ID                  = "dataId";
     public static final String DEFAULT_SHOW             = "defaultShow";
+    public static final String EDM_TEMPLATES_FIELD      = "edmTemplates";
     public static final String ENTITY_FIELD             = "entity";
     public static final String ENTITY_ID                = "entityId";
     public static final String ENTITY_SET_FIELD         = "entitySet";
@@ -55,6 +58,7 @@ public final class SerializationConstants {
     public static final String ENTITY_TYPE              = "entityType";
     public static final String ENTITY_TYPES             = "entityTypes";
     public static final String ENTITY_TYPE_IDS_FIELD    = "entityTypeIds";
+    public static final String EXTERNAL                 = "external";
     public static final String FQN                      = "fqn";
     public static final String KEY_FIELD                = "key";
     public static final String ID_FIELD                 = "id";

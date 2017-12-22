@@ -10,8 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.StringUtils;
 
-public class Principal implements Comparable<Principal>, Serializable {
-    private static final long   serialVersionUID = 3227310509765475747L;
+public class Principal implements Comparable<Principal> {
 
     private final PrincipalType type;
 
