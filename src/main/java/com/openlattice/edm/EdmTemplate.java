@@ -91,8 +91,8 @@ public class EdmTemplate extends AbstractSecurableObject {
                 dsts.putAll( srcEntryMap );
             }
         }
-
-        Map<String, UUID> entityTypesToMerge = edmTemplate.getEntities();
+        //TODO: Merge entity types.
+        //Map<String, UUID> entityTypesToMerge = edmTemplate.getEntities();
     }
 
     public boolean isCompatible( EdmTemplate edmTemplate ) {
