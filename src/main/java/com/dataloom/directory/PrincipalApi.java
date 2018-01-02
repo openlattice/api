@@ -4,7 +4,9 @@ import com.dataloom.directory.pojo.Auth0UserBasic;
 import com.dataloom.organization.roles.Role;
 import com.openlattice.authorization.AclKey;
 import java.util.Map;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -68,6 +70,6 @@ public interface PrincipalApi {
      * @param userId The Auth0 user id of the user.
      * @return Nothing
      */
-    @PUT( BASE + USERS + USER_ID_PATH )
-    Void activateUser( @Path( USER_ID ) String userId );
+    @POST( BASE + USERS )
+    Void activateUser( @Body String accessToken );
 }
