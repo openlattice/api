@@ -1,3 +1,7 @@
+//buildscript {
+//    classpath('io.swagger:swagger-codegen:2.3.0')
+//}
+
 plugins {
   id 'java'
   id 'eclipse'
@@ -40,6 +44,33 @@ tasks.withType(Checkstyle) {
         html.enabled = true
     }
 }
+
+//def swaggerInput = "petstore.json"
+//def swaggerOutputDir = file('build/swagger')
+//task generateApi {
+//    inputs.file(swaggerInput)
+//    outputs.dir(swaggerOutputDir)
+//    doLast {
+//        def config = new CodegenConfigurator()
+//        config.setInputSpec(swaggerInput)
+//        config.setOutputDir(swaggerOutputDir.path)
+//        config.setLang('java')
+//        config.setAdditionalProperties([
+//                'invokerPackage': 'io.swagger.petstore.client',
+//                'modelPackage'  : 'io.swagger.petstore.client.model',
+//                'apiPackage'    : 'io.swagger.petstore.client.api',
+//                'dateLibrary'   : 'java8'
+//        ])
+//        config.setImportMappings([
+//                'Dog': 'io.swagger.petstore.client.model.Dog'
+//        ])
+//        new DefaultGenerator().opts(config.toClientOptInput()).generate()
+//    }
+//}
+//
+//clean.doFirst {
+//    delete(swaggerOutputDir)
+//}
 
 dependencies { 
     /*
