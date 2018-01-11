@@ -1,4 +1,7 @@
 buildscript {
+    repositories {
+        mavenCentral()
+    }
     dependencies {
         classpath('io.swagger:swagger-codegen:2.3.0')
     }
