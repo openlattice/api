@@ -158,9 +158,6 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jackson_version}"
     compile "org.yaml:snakeyaml:${snakeyaml_version}"
 
-    /*
-     * Kryptnostic dependencies
-     */
     if (project.hasProperty('developmentMode') && project.developmentMode) {
         logger.quiet(project.name + " using project dependencies.")
         compile(project(path: ":rhizome-client"))
