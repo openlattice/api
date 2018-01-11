@@ -33,6 +33,7 @@ public interface DataApi {
     String SYNC_ID       = "syncId";
     String TICKET        = "ticket";
     String COUNT         = "count";
+    String UPDATE        = "update";
 
     String ENTITY_KEY_ID_PATH = "{" + ENTITY_KEY_ID + "}";
     String SET_ID_PATH        = "{" + SET_ID + "}";
@@ -145,7 +146,7 @@ public interface DataApi {
      * @param entity      The new entity details object that will replace the old value, with property type ids as keys.
      * @return
      */
-    @PUT( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + "/" + ENTITY_DATA + "/" + UPDATE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
     Void replaceEntityInEntitySet(
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -159,7 +160,7 @@ public interface DataApi {
      * @param entityByFqns The new entity details object that will replace the old value, with property type FQNs as keys.
      * @return
      */
-    @POST( BASE + "/" + ENTITY_DATA + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @POST( BASE + "/" + ENTITY_DATA + "/" + UPDATE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
     Void replaceEntityInEntitySetUsingFqns(
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,

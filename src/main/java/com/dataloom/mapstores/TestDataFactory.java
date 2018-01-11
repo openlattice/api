@@ -307,7 +307,7 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey( UUID entitySetId, UUID syncId ) {
-        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), syncId );
+        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ).replace( Character.MIN_VALUE, '0' ), syncId );
     }
 
     public static ComplexType complexType() {
