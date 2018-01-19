@@ -174,4 +174,9 @@ public interface DataApi {
      */
     @GET( BASE + "/" + SET_ID_PATH + "/" + COUNT )
     long getEntitySetSize( @Path( SET_ID ) UUID entitySetId );
+
+    @GET( BASE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    SetMultimap<FullQualifiedName, Object> getEntity(
+            @Path( SET_ID ) UUID entitySetId,
+            @Path( ENTITY_KEY_ID ) UUID entityKeyId );
 }
