@@ -39,6 +39,7 @@ public final class TestDataFactory {
     public static Long longValue() {
         return r.nextLong();
     }
+
     public static Integer integer() {
         return r.nextInt();
     }
@@ -167,7 +168,7 @@ public final class TestDataFactory {
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ) );
     }
 
-    public static Role role(UUID organizationId) {
+    public static Role role( UUID organizationId ) {
         return new Role(
                 Optional.of( UUID.randomUUID() ),
                 organizationId,
@@ -189,7 +190,7 @@ public final class TestDataFactory {
 
     public static EnumSet<Permission> nonEmptyPermissions() {
         EnumSet<Permission> ps = permissions();
-        while( ps.isEmpty() ) {
+        while ( ps.isEmpty() ) {
             ps = permissions();
         }
         return ps;
@@ -284,7 +285,7 @@ public final class TestDataFactory {
     }
 
     public static EntityKey entityKey( UUID entitySetId, UUID syncId ) {
-        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ), syncId );
+        return new EntityKey( entitySetId, RandomStringUtils.random( 10 ).replace( Character.MIN_VALUE, '0' ), syncId );
     }
 
     public static ComplexType complexType() {
