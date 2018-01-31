@@ -4,7 +4,9 @@ import com.dataloom.directory.pojo.Auth0UserBasic;
 import com.dataloom.organization.roles.Role;
 import com.openlattice.authorization.AclKey;
 import java.util.Map;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -65,9 +67,9 @@ public interface PrincipalApi {
      * Activates a user in the OpenLattice system. This call must be made once before a user will be available for use
      * in authorization policies.
      *
-     * @param userId The Auth0 user id of the user.
+     * @param accessToken An access token that can be used to retrieve the user profile.
      * @return Nothing
      */
-    @PUT( BASE + USERS + USER_ID_PATH )
-    Void activateUser( @Path( USER_ID ) String userId );
+    @POST( BASE + USERS )
+    Void activateUser( @Body String accessToken );
 }

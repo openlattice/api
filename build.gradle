@@ -1,10 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('io.swagger:swagger-codegen:2.3.0')
+    }
+}
+
 plugins {
-  id 'java'
-  id 'eclipse'
-  id 'idea'
-  id 'jacoco'
-  id 'checkstyle'
-  id 'findbugs'
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'findbugs'
 }
 
 description = "Loom REST APIs"
@@ -17,14 +26,14 @@ ext.developerConnectionUrl = 'scm:git:https://github.com/dataloom/loom-api.git'
 
 apply from: "https://raw.githubusercontent.com/openlattice/gradles/master/openlattice.gradle"
 
-sourceCompatibility=JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 def versions = [
-  checkstyle: '7.4',
+        checkstyle: '7.4',
 ]
 
 checkstyle {
-  toolVersion = "${versions.checkstyle}"
+    toolVersion = "${versions.checkstyle}"
 }
 
 tasks.withType(FindBugs) {
@@ -41,12 +50,66 @@ tasks.withType(Checkstyle) {
     }
 }
 
-dependencies { 
+
+import io.swagger.codegen.DefaultGenerator
+import io.swagger.codegen.config.CodegenConfigurator
+
+def swaggerInput = "openlattice.yaml"
+def swaggerOutputDir = file('build/swagger')
+task swaggerDocs {
+    inputs.file(swaggerInput)
+    outputs.dir(swaggerOutputDir)
+    doLast {
+        def config = new CodegenConfigurator()
+        config.setInputSpec(swaggerInput)
+        config.setOutputDir(swaggerOutputDir.path)
+        config.setLang('html2')
+        config.setAdditionalProperties([
+                'invokerPackage': 'com.openlattice.client',
+                'modelPackage'  : 'com.openlattice.client.model',
+                'apiPackage'    : 'com.openlattice.client.api',
+                'dateLibrary'   : 'java8'
+        ])
+//        config.setImportMappings([
+//                'Dog': 'io.swagger.petstore.client.model.Dog'
+//        ])
+        new DefaultGenerator().opts(config.toClientOptInput()).generate()
+    }
+}
+
+task swaggerJava {
+    inputs.file(swaggerInput)
+    outputs.dir(swaggerOutputDir)
+    doLast {
+        def config = new CodegenConfigurator()
+        config.setInputSpec(swaggerInput)
+        config.setOutputDir(swaggerOutputDir.path)
+        config.setLang('java')
+        config.setAdditionalProperties([
+                'invokerPackage': 'com.openlattice.client',
+                'modelPackage'  : 'com.openlattice.client.model',
+                'apiPackage'    : 'com.openlattice.client.api',
+                'dateLibrary'   : 'java8'
+        ])
+        config.setImportMappings([
+                'Dog': 'io.swagger.petstore.client.model.Dog'
+        ])
+        new DefaultGenerator().opts(config.toClientOptInput()).generate()
+    }
+}
+
+
+
+clean.doFirst {
+    delete(swaggerOutputDir)
+}
+
+dependencies {
     /*
      * SL4J
      */
-    compile group: "org.slf4j", name: "slf4j-api", version:"${slf4j_version}"
-  
+    compile group: "org.slf4j", name: "slf4j-api", version: "${slf4j_version}"
+
     /*
      * @Inject and @Nullable support
      */
@@ -61,7 +124,7 @@ dependencies {
 
     compile "org.apache.commons:commons-lang3:${commonsLang_version}"
     compile "commons-io:commons-io:${commonsio_version}"
-    
+
     compile "com.google.guava:guava:${guava_version}"
     compile "org.apache.olingo:odata-commons-api:${odata_version}"
     compile "org.apache.olingo:odata-commons-core:${odata_version}"
@@ -95,14 +158,11 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:${jackson_version}"
     compile "org.yaml:snakeyaml:${snakeyaml_version}"
 
-	/*
-     * Kryptnostic dependencies
-     */
-    if( project.hasProperty('developmentMode') && project.developmentMode ) {
-        logger.quiet(project.name + " using project dependencies.")     
-        compile( project(path: ":rhizome-client" ))
-        testCompile( project(path: ":rhizome-client", configuration: "tests"))
-        testCompile( project(path: ":rhizome", configuration: "tests"))
+    if (project.hasProperty('developmentMode') && project.developmentMode) {
+        logger.quiet(project.name + " using project dependencies.")
+        compile(project(path: ":rhizome-client"))
+        testCompile(project(path: ":rhizome-client", configuration: "tests"))
+        testCompile(project(path: ":rhizome", configuration: "tests"))
     } else {
         logger.quiet(project.name + " using jar dependencies.")
         compile "com.openlattice:rhizome-client:${rhizome_client_version}"
@@ -114,19 +174,19 @@ dependencies {
      * TESTING
      */
     testCompile "junit:junit:${junit_version}"
-    testCompile( "org.mockito:mockito-all:${mockito_version}" ) {
-        exclude module : 'hamcrest'
-        exclude module : 'hamcrest-core'
+    testCompile("org.mockito:mockito-all:${mockito_version}") {
+        exclude module: 'hamcrest'
+        exclude module: 'hamcrest-core'
     }
 }
 
 install {
-	configuration = configurations.published
+    configuration = configurations.published
 }
 
 eclipse {
     ext.downloadSources = true
     ext.downloadJavadoc = true
-    ext.sourceCompatibility=JavaVersion.VERSION_1_8
+    ext.sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
