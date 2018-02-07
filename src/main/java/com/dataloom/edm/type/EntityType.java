@@ -31,13 +31,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@kryptnostic.com&gt;
  */
 public class EntityType extends ComplexType {
     private final LinkedHashSet<UUID> key;
     private final Optional<UUID>      baseType;
-    private transient int             h = 0;
+    private transient int h = 0;
 
     @JsonCreator
     public EntityType(
@@ -63,7 +65,8 @@ public class EntityType extends ComplexType {
         Preconditions.checkArgument( !key.isEmpty() || baseType.isPresent(), "Key properties cannot be empty" );
         Preconditions.checkNotNull( properties, "Entity set properties cannot be null" );
         Preconditions
-                .checkArgument( properties.containsAll( key ) || baseType.isPresent(), "Properties must include all the key property types" );
+                .checkArgument( properties.containsAll( key ) || baseType.isPresent(),
+                        "Properties must include all the key property types" );
         this.baseType = baseType;
     }
 
@@ -110,6 +113,14 @@ public class EntityType extends ComplexType {
     @JsonProperty( SerializationConstants.BASE_TYPE_FIELD )
     public Optional<UUID> getBaseType() {
         return baseType;
+    }
+
+    public void addPrimaryKeys( Set<UUID> propertyTypeIds ) {
+        key.addAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
+    }
+
+    public void removePrimaryKeys( Set<UUID> propertyTypeIds ) {
+        key.removeAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
     }
 
     @Override
