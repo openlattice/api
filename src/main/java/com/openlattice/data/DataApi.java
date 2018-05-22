@@ -23,6 +23,7 @@ import com.openlattice.data.requests.*;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import retrofit2.http.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -145,12 +146,31 @@ public interface DataApi {
     @PATCH( BASE + "/" + ENTITY_DATA )
     Void createEntityAndAssociationData( @Body BulkDataCreation data );
 
+    /**
+     * Gets existing or creates a new entityKeyId for the requested entityKey
+     *
+     * @param entityKey The entityKey to get or create an id for
+     * @return The id for the requested entityKey
+     */
     @POST( BASE + "/" + ENTITY_KEY_ID )
     UUID getEntityKeyId( @Body EntityKey entityKey );
 
+    /**
+     * Gets existing or creates new entityKeyIds for the requested entityKeys
+     *
+     * @param entityKeys A list of entityKeys to get or create ids for
+     * @return A list of ids for the requested entityKeys, in the same order as the entityKeys they
+     * correspond to (i.e. entityKeyId at index 0 corresponds to entityKey at index 0, etc)
+     */
     @POST( BASE + "/" + ENTITY_KEY_ID )
-    Map<EntityKey, UUID> getEntityKeyIds( @Body Set<EntityKey> entityKeys );
+    List<UUID> getEntityKeyIds( @Body Set<EntityKey> entityKeys );
 
+    /**
+     * Creates entities and associations for the request object
+     *
+     * @param data An object containing entity and association mappings to be written and stored in the graph.
+     * @return
+     */
     @PATCH( BASE + "/" + ENTITY_DATA + "/" + ASSOCIATION_DATA )
     Void bulkCreateEntityData( @Body CreateDataRequest data );
 
