@@ -18,14 +18,12 @@
 
 package com.openlattice.data;
 
-import com.openlattice.data.requests.Association;
-import com.openlattice.data.requests.BulkDataCreation;
-import com.openlattice.data.requests.EntitySetSelection;
-import com.openlattice.data.requests.FileType;
 import com.google.common.collect.SetMultimap;
+import com.openlattice.data.requests.*;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import retrofit2.http.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -44,19 +42,21 @@ public interface DataApi {
 
     String HISTORICAL       = "historical";
     String ENTITY_DATA      = "entitydata";
-    String ASSOCIATION_DATA = "associationndata";
+    String ASSOCIATION_DATA = "associationdata";
 
-    String ENTITY_KEY_ID = "entityKeyId";
-    String SET_ID        = "setId";
-    String SYNC_ID       = "syncId";
-    String TICKET        = "ticket";
-    String COUNT         = "count";
-    String UPDATE        = "update";
+    String ENTITY_KEY_ID           = "entityKeyId";
+    String SECONDARY_ENTITY_KEY_ID = "secondaryEntityKeyId";
+    String SET_ID                  = "setId";
+    String SYNC_ID                 = "syncId";
+    String TICKET                  = "ticket";
+    String COUNT                   = "count";
+    String UPDATE                  = "update";
 
-    String ENTITY_KEY_ID_PATH = "{" + ENTITY_KEY_ID + "}";
-    String SET_ID_PATH        = "{" + SET_ID + "}";
-    String SYNC_ID_PATH       = "{" + SYNC_ID + "}";
-    String TICKET_PATH        = "{" + TICKET + "}";
+    String ENTITY_KEY_ID_PATH           = "{" + ENTITY_KEY_ID + "}";
+    String SECONDARY_ENTITY_KEY_ID_PATH = "{" + SECONDARY_ENTITY_KEY_ID + "}";
+    String SET_ID_PATH                  = "{" + SET_ID + "}";
+    String SYNC_ID_PATH                 = "{" + SYNC_ID + "}";
+    String TICKET_PATH                  = "{" + TICKET + "}";
 
     String FILE_TYPE = "fileType";
     String TOKEN     = "token";
@@ -147,6 +147,34 @@ public interface DataApi {
     Void createEntityAndAssociationData( @Body BulkDataCreation data );
 
     /**
+     * Gets existing or creates a new entityKeyId for the requested entityKey
+     *
+     * @param entityKey The entityKey to get or create an id for
+     * @return The id for the requested entityKey
+     */
+    @POST( BASE + "/" + ENTITY_KEY_ID )
+    UUID getEntityKeyId( @Body EntityKey entityKey );
+
+    /**
+     * Gets existing or creates new entityKeyIds for the requested entityKeys
+     *
+     * @param entityKeys A list of entityKeys to get or create ids for
+     * @return A list of ids for the requested entityKeys, in the same order as the entityKeys they
+     * correspond to (i.e. entityKeyId at index 0 corresponds to entityKey at index 0, etc)
+     */
+    @POST( BASE + "/" + ENTITY_KEY_ID )
+    List<UUID> getEntityKeyIds( @Body Set<EntityKey> entityKeys );
+
+    /**
+     * Creates entities and associations for the request object
+     *
+     * @param data An object containing entity and association mappings to be written and stored in the graph.
+     * @return
+     */
+    @PATCH( BASE + "/" + ENTITY_DATA + "/" + ASSOCIATION_DATA )
+    Void bulkCreateEntityData( @Body CreateDataRequest data );
+
+    /**
      * Deletes a single entity from an entity set.
      *
      * @param entitySetId The id of the entity set to delete from.
@@ -204,4 +232,5 @@ public interface DataApi {
     SetMultimap<FullQualifiedName, Object> getEntity(
             @Path( SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId );
+
 }
