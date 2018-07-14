@@ -24,7 +24,6 @@ package com.openlattice.data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.client.serialization.SerializationConstants;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Objects;
@@ -33,7 +32,7 @@ import java.util.UUID;
 /**
  * Used to represent a property and all associated metadata for that property.
  */
-@SuppressFBWarnings( value = "", justification = "POJO for Rest APIs" )
+@SuppressWarnings( value = "" )
 public class Property {
     private final UUID           entitySetId;
     private final byte[]         hash;
