@@ -50,7 +50,6 @@ import com.openlattice.requests.PermissionsRequestDetails;
 import com.openlattice.requests.Request;
 import com.openlattice.requests.RequestStatus;
 import com.openlattice.requests.Status;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -66,7 +65,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
-@SuppressFBWarnings(value = "SECPR", justification = "Only used for testing.")
+@SuppressWarnings(value = "SECPR")
 public final class TestDataFactory {
     private static final SecurableObjectType[] securableObjectTypes = SecurableObjectType.values();
     private static final Permission[]          permissions          = Permission.values();
