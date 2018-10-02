@@ -19,12 +19,7 @@
 package com.openlattice.edm.requests;
 
 import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.SetMultimap;
-import com.openlattice.client.serialization.SerializationConstants;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,17 +49,16 @@ public class MetadataUpdate {
     private Optional<String>                           url;
     private Optional<LinkedHashMultimap<UUID, String>> propertyTags;
 
-    @JsonCreator
     public MetadataUpdate(
-            @JsonProperty( SerializationConstants.TITLE_FIELD ) Optional<String> title,
-            @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
-            @JsonProperty( SerializationConstants.NAME_FIELD ) Optional<String> name,
-            @JsonProperty( SerializationConstants.CONTACTS ) Optional<Set<String>> contacts,
-            @JsonProperty( SerializationConstants.TYPE_FIELD ) Optional<FullQualifiedName> type,
-            @JsonProperty( SerializationConstants.PII_FIELD ) Optional<Boolean> pii,
-            @JsonProperty( SerializationConstants.DEFAULT_SHOW ) Optional<Boolean> defaultShow,
-            @JsonProperty( SerializationConstants.URL ) Optional<String> url,
-            @JsonProperty( SerializationConstants.PROPERTY_TAGS ) Optional<LinkedHashMultimap<UUID, String>> propertyTags ) {
+            Optional<String> title,
+            Optional<String> description,
+            Optional<String> name,
+            Optional<Set<String>> contacts,
+            Optional<FullQualifiedName> type,
+            Optional<Boolean> pii,
+            Optional<Boolean> defaultShow,
+            Optional<String> url,
+            Optional<LinkedHashMultimap<UUID, String>> propertyTags ) {
         // WARNING These checks have to be consistent with the same check elsewhere.
         Preconditions.checkArgument( !title.isPresent() || StringUtils.isNotBlank( title.get() ),
                 "Title cannot be blank." );
@@ -87,47 +81,38 @@ public class MetadataUpdate {
         this.propertyTags = propertyTags;
     }
 
-    @JsonProperty( SerializationConstants.TITLE_FIELD )
     public Optional<String> getTitle() {
         return title;
     }
 
-    @JsonProperty( SerializationConstants.DESCRIPTION_FIELD )
     public Optional<String> getDescription() {
         return description;
     }
 
-    @JsonProperty( SerializationConstants.NAME_FIELD )
     public Optional<String> getName() {
         return name;
     }
 
-    @JsonProperty( SerializationConstants.CONTACTS )
     public Optional<Set<String>> getContacts() {
         return contacts;
     }
 
-    @JsonProperty( SerializationConstants.TYPE_FIELD )
     public Optional<FullQualifiedName> getType() {
         return type;
     }
 
-    @JsonProperty( SerializationConstants.PII_FIELD )
     public Optional<Boolean> getPii() {
         return pii;
     }
 
-    @JsonProperty( SerializationConstants.DEFAULT_SHOW )
     public Optional<Boolean> getDefaultShow() {
         return defaultShow;
     }
 
-    @JsonProperty( SerializationConstants.URL )
     public Optional<String> getUrl() {
         return url;
     }
 
-    @JsonProperty( SerializationConstants.PROPERTY_TAGS )
     public Optional<LinkedHashMultimap<UUID, String>> getPropertyTags() {
         return propertyTags;
     }
