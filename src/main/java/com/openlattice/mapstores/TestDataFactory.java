@@ -18,19 +18,8 @@
 
 package com.openlattice.mapstores;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-import com.openlattice.authorization.Ace;
-import com.openlattice.authorization.Acl;
-import com.openlattice.authorization.AclData;
-import com.openlattice.authorization.AclKey;
-import com.openlattice.authorization.Action;
-import com.openlattice.authorization.Permission;
-import com.openlattice.authorization.Principal;
-import com.openlattice.authorization.PrincipalType;
+import com.openlattice.authorization.*;
+import com.google.common.collect.*;
 import com.openlattice.authorization.securable.AbstractSecurableObject;
 import com.openlattice.authorization.securable.AbstractSecurableType;
 import com.openlattice.authorization.securable.SecurableObjectType;
@@ -38,6 +27,7 @@ import com.openlattice.data.EntityDataKey;
 import com.openlattice.data.EntityKey;
 import com.openlattice.edm.EdmDetails;
 import com.openlattice.edm.EntitySet;
+import com.openlattice.edm.requests.MetadataUpdate;
 import com.openlattice.edm.type.Analyzer;
 import com.openlattice.edm.type.AssociationType;
 import com.openlattice.edm.type.ComplexType;
@@ -51,18 +41,17 @@ import com.openlattice.requests.Request;
 import com.openlattice.requests.RequestStatus;
 import com.openlattice.requests.Status;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.olingo.commons.api.edm.EdmPrimitiveTypeKind;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 
@@ -116,6 +105,12 @@ public final class TestDataFactory {
                 ? Arrays.asList( keys ).stream().map( PropertyType::getId )
                 .collect( Collectors.toCollection( Sets::newLinkedHashSet ) )
                 : Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) );
+        var propertyTags = LinkedHashMultimap.<UUID, String>create();
+
+        for ( UUID id : k ) {
+            propertyTags.put( id, "PRIMARY KEY TAG" );
+        }
+
         return new EntityType(
                 UUID.randomUUID(),
                 fqn(),
@@ -125,6 +120,7 @@ public final class TestDataFactory {
                 k,
                 Sets.newLinkedHashSet( Sets
                         .union( k, propertyTypes ) ),
+                propertyTags,
                 Optional.ofNullable( parentId ),
                 Optional.of( SecurableObjectType.EntityType ) );
     }
@@ -282,6 +278,13 @@ public final class TestDataFactory {
         return new Ace( userPrincipal(), permissions() );
     }
 
+    public static AceValue aceValue() {
+        return new AceValue(
+                permissions(),
+                securableObjectType()
+        );
+    }
+
     public static Acl acl() {
         return new Acl(
                 ImmutableList.of( UUID.randomUUID(), UUID.randomUUID() ),
@@ -367,13 +370,17 @@ public final class TestDataFactory {
     }
 
     public static ComplexType complexType() {
+        final var ptId = UUID.randomUUID();
+        final var propertyTags = LinkedHashMultimap.<UUID, String>create();
+        propertyTags.put( ptId, "SOME PROPERTY TAG" );
         return new ComplexType(
                 UUID.randomUUID(),
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( "test complex type" ),
                 ImmutableSet.of( fqn(), fqn() ),
-                Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                Sets.newLinkedHashSet( Arrays.asList( ptId, UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
+                propertyTags,
                 Optional.empty(),
                 SecurableObjectType.ComplexType );
     }
@@ -419,6 +426,8 @@ public final class TestDataFactory {
     }
 
     public static EntityType entityTypesFromKeyAndTypes( PropertyType key, PropertyType... propertyTypes ) {
+        final var propertyTags = LinkedHashMultimap.<UUID, String>create();
+        propertyTags.put( key.getId(), "PRIMARY KEY TAG" );
         return new EntityType( UUID.randomUUID(),
                 fqn(),
                 RandomStringUtils.randomAlphanumeric( 5 ),
@@ -428,7 +437,43 @@ public final class TestDataFactory {
                         .collect( Collectors.toCollection( LinkedHashSet::new ) ),
                 Stream.concat( Stream.of( key ), Stream.of( propertyTypes ) ).map( PropertyType::getId )
                         .collect( Collectors.toCollection( LinkedHashSet::new ) ),
+                propertyTags,
                 Optional.empty(),
                 Optional.empty() );
+    }
+
+    public static Map<UUID, SetMultimap<UUID, Object>> randomBinaryData(
+            int numberOfEntries,
+            UUID keyType,
+            UUID binaryType ) {
+        Map<UUID, SetMultimap<UUID, Object>> data = new HashMap<>();
+        for ( int i = 0; i < numberOfEntries; i++ ) {
+            data.put( UUID.randomUUID(), randomElement( keyType, binaryType ) );
+        }
+
+        return data;
+    }
+
+    public static SetMultimap<UUID, Object> randomElement( UUID keyType, UUID binaryType ) {
+        SetMultimap<UUID, Object> element = HashMultimap.create();
+        element.put( keyType, RandomStringUtils.random( 5 ) );
+        element.put( binaryType, RandomUtils.nextBytes( 128 ) );
+        element.put( binaryType, RandomUtils.nextBytes( 128 ) );
+        element.put( binaryType, RandomUtils.nextBytes( 128 ) );
+        return element;
+    }
+
+    public static MetadataUpdate metadataUpdate() {
+        final var propertyTags = LinkedHashMultimap.<UUID, String>create();
+        propertyTags.put( UUID.randomUUID(), "SOME PROPERTY TAG" );
+        return new MetadataUpdate( Optional.of(RandomStringUtils.randomAlphanumeric( 5 )),
+                Optional.of(RandomStringUtils.randomAlphanumeric( 5 )),
+                Optional.empty(),
+                Optional.of(new HashSet<String>(Arrays.asList(RandomStringUtils.randomAlphanumeric( 3 ), RandomStringUtils.randomAlphanumeric( 5 )))),
+                Optional.of(fqn()),
+                Optional.of(r.nextBoolean()),
+                Optional.empty(),
+                Optional.of(RandomStringUtils.randomAlphanumeric( 4 )),
+                Optional.of(propertyTags));
     }
 }
