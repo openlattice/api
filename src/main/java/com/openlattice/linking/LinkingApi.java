@@ -62,7 +62,7 @@ public interface LinkingApi {
     Integer addEntitySetsToLinkingEntitySets( SetMultimap<UUID, UUID> entitySetId );
 
     @DELETE( BASE + "/" + SET )
-    Integer removeEntitySetsToLinkingEntitySets( SetMultimap<UUID, UUID> entitySetId );
+    Integer removeEntitySetsFromLinkingEntitySets( SetMultimap<UUID, UUID> entitySetId );
 
     @PUT( BASE + "/" + SET + "/{" + SET_ID + "}" )
     Integer addEntitySetsToLinkingEntitySets( Set<UUID> entitySetId );
