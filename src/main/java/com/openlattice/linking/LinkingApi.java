@@ -51,13 +51,6 @@ public interface LinkingApi {
     String SYNC_ID          = "syncId";
     String TYPE             = "type";
 
-    /**
-     * Create a new linking entity set.
-     * @param entitySets The entity sets to include in the linking entity set.
-     */
-    @POST( BASE + "/" + SET )
-    UUID createLinkingEntitySet( @Body Set<UUID> entitySets );
-
     @POST( BASE + "/" + SET )
     Integer addEntitySetsToLinkingEntitySets( SetMultimap<UUID, UUID> entitySetId );
 
