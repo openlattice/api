@@ -53,6 +53,7 @@ public final class SerializationConstants {
     public static final String BASE_TYPE_FIELD                  = "baseType";
     public static final String BIDIRECTIONAL                    = "bidirectional";
     public static final String BLOCK_ID                         = "blockId";
+    public static final String BUCKET_NAME                      = "bucketName";
     public static final String CATEGORY                         = "category";
     public static final String CHILD_CLAUSES                    = "childClauses";
     public static final String CHILD_QUERIES                    = "childQueries";
@@ -196,6 +197,7 @@ public final class SerializationConstants {
     public static final String SYNC_TICKETS                     = "syncTickets";
     public static final String TIMESTAMP                        = "timestamp";
     public static final String TIME_ID                          = "timeId";
+    public static final String TIME_TO_LIVE                     = "timeToLive";
     public static final String TITLE_FIELD                      = "title";                   // for EntitySet
     public static final String TRUSTED_ORGANIZATIONS_FIELD      = "trustedOrganizations";
     public static final String TYPE_FIELD                       = "type";
