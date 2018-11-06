@@ -173,6 +173,7 @@ public final class SerializationConstants {
     public static final String QUERY_ID                         = "queryId";
     public static final String RADIUS                           = "radius";
     public static final String REASON                           = "reason";
+    public static final String REGION_NAME                      = "regionName";
     public static final String REQUEST                          = "request";
     public static final String REQUESTING_USER                  = "requestingUser";
     public static final String REQUEST_ID                       = "requestId";
