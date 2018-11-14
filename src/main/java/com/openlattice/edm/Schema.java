@@ -20,6 +20,8 @@ package com.openlattice.edm;
 
 import com.openlattice.edm.type.EntityType;
 import com.openlattice.edm.type.PropertyType;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
@@ -99,7 +101,7 @@ public class Schema {
             if ( other.entityTypes != null ) {
                 return false;
             }
-        } else if ( !entityTypes.equals( other.entityTypes ) ) {
+        } else if ( !entityTypes.equals( new ArrayList<>(other.entityTypes) ) ) {
             return false;
         }
         if ( fqn == null ) {
@@ -113,7 +115,7 @@ public class Schema {
             if ( other.propertyTypes != null ) {
                 return false;
             }
-        } else if ( !propertyTypes.equals( other.propertyTypes ) ) {
+        } else if ( !propertyTypes.equals( new ArrayList<>(other.propertyTypes) ) ) {
             return false;
         }
         return true;
