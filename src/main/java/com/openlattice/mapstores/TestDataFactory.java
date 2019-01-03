@@ -40,6 +40,9 @@ import com.openlattice.requests.PermissionsRequestDetails;
 import com.openlattice.requests.Request;
 import com.openlattice.requests.RequestStatus;
 import com.openlattice.requests.Status;
+import com.openlattice.search.PersistentSearchNotificationType;
+import com.openlattice.search.requests.PersistentSearch;
+import com.openlattice.search.requests.SearchConstraints;
 import com.openlattice.search.requests.SearchDetails;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -96,8 +99,21 @@ public final class TestDataFactory {
         return childEntityType( null, category, keys );
     }
 
+    public static EntityType entityType(
+            Optional<FullQualifiedName> fqn,
+            SecurableObjectType category,
+            PropertyType... keys ) {
+        return childEntityTypeWithPropertyType(
+                null,
+                fqn,
+                ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ),
+                category,
+                keys );
+    }
+
     public static EntityType childEntityType( UUID parentId, SecurableObjectType category, PropertyType... keys ) {
         return childEntityTypeWithPropertyType( parentId,
+                Optional.empty(),
                 ImmutableSet.of( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ),
                 category,
                 keys );
@@ -105,6 +121,7 @@ public final class TestDataFactory {
 
     public static EntityType childEntityTypeWithPropertyType(
             UUID parentId,
+            Optional<FullQualifiedName> fqn,
             Set<UUID> propertyTypes,
             SecurableObjectType category,
             PropertyType... keys ) {
@@ -118,11 +135,11 @@ public final class TestDataFactory {
             propertyTags.put( id, "PRIMARY KEY TAG" );
         }
 
-        SecurableObjectType entityTypeCategory = (category == null) ? SecurableObjectType.EntityType : category;
+        SecurableObjectType entityTypeCategory = ( category == null ) ? SecurableObjectType.EntityType : category;
 
         return new EntityType(
                 UUID.randomUUID(),
-                fqn(),
+                fqn.orElseGet( TestDataFactory::fqn ),
                 RandomStringUtils.randomAlphanumeric( 5 ),
                 Optional.of( RandomStringUtils.randomAlphanumeric( 5 ) ),
                 ImmutableSet.of( fqn(), fqn(), fqn() ),
@@ -135,7 +152,7 @@ public final class TestDataFactory {
     }
 
     public static AssociationType associationType( PropertyType... keys ) {
-        EntityType et = entityType( SecurableObjectType.AssociationType,  keys );
+        EntityType et = entityType( SecurableObjectType.AssociationType, keys );
         return new AssociationType(
                 Optional.of( et ),
                 Sets.newLinkedHashSet( Arrays.asList( UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID() ) ),
@@ -145,7 +162,12 @@ public final class TestDataFactory {
 
     public static AssociationType associationTypeWithProperties( Set<UUID> propertyTypes, PropertyType... keys ) {
         if ( propertyTypes.size() == 0 ) { return associationType( keys ); }
-        EntityType et = childEntityTypeWithPropertyType( null, propertyTypes, SecurableObjectType.AssociationType, keys );
+        EntityType et = childEntityTypeWithPropertyType(
+                null,
+                Optional.empty(),
+                propertyTypes,
+                SecurableObjectType.AssociationType,
+                keys );
         UUID ptId = propertyTypes.iterator().next();
         return new AssociationType(
                 Optional.of( et ),
@@ -490,4 +512,21 @@ public final class TestDataFactory {
     public static SearchDetails searchDetails() {
         return new SearchDetails( RandomStringUtils.randomAlphanumeric( 10 ), UUID.randomUUID(), r.nextBoolean() );
     }
+
+    public static SearchConstraints simpleSearchConstraints() {
+        return SearchConstraints.simpleSearchConstraints( new UUID[] { UUID.randomUUID() },
+                r.nextInt( 1000 ),
+                r.nextInt( 1000 ),
+                RandomStringUtils.randomAlphanumeric( 10 ) );
+    }
+
+    public static PersistentSearch persistentSearch() {
+        return new PersistentSearch( Optional.empty(),
+                Optional.empty(),
+                OffsetDateTime.now(),
+                PersistentSearchNotificationType.ALPR_ALERT,
+                simpleSearchConstraints(),
+                ImmutableMap.of() );
+    }
+
 }

@@ -92,6 +92,34 @@ entitySet:
     title: This is the title of the entitySet
     contacts: ["support@openlattice.com"]
     description: This is a more elaborate description of the entity set.
+metaDataUpdate:
+  title: An update for an entity sets
+  type: object
+  properties:
+    name:
+      $ref: "./components.yaml#/entitySetName"
+    title:
+      type: string
+    contacts:
+      type: array
+      items:
+        type: string
+    description:
+      type: string
+    linking:
+      type: boolean
+    linked_entity_sets:
+      type: array
+      items:
+        type: string
+    external:
+      type: boolean
+    pii:
+      type: boolean
+    defaultShow:
+      type: boolean
+    propertyTags:
+      $ref: "./components.yaml#/propertyTags"
 
 # property type
 propertyTypeId:
@@ -151,7 +179,7 @@ entityType:
       items:
         type: string
     propertyTags:
-      type: object # <-- this is wrong and needs to be fixed !!
+      $ref: "./components.yaml#/propertyTags"
     basetype:
        type: string
     category:
@@ -168,8 +196,12 @@ entityType:
     key: [8f79e123-3411-4099-a41f-88e5d22d0e8d, e39dfdfa-a3e6-4f1f-b54b-646a723c3085]
     properties: [8f79e123-3411-4099-a41f-88e5d22d0e8d, e39dfdfa-a3e6-4f1f-b54b-646a723c3085, fae6af98-2675-45bd-9a5b-1619a87235a8]
     category: EntityType
-#
-# # association type
+propertyTags:
+  type: object
+  additionalProperties:
+    type: array
+    items:
+      type: string
 associationTypeId:
   type: string
   format: uuid
@@ -205,6 +237,10 @@ associationType:
     description: AssociationType Description
     bidirectional: true
     category: AssociationType
+allPropertyUsageSummary:
+  type: object
+  additionalProperties:
+    $ref:  "./components.yaml#/propertyUsageSummary"
 propertyUsageSummary:
   type: object
   properties:
@@ -212,5 +248,21 @@ propertyUsageSummary:
       type: string
     entitySetId:
       type: string
+    entitySetName:
+      type: string
     count:
       type: integer
+EdmRequest:
+  type: object
+  properties:
+    action:
+      type: string
+      enum: [ADD, REMOVE, REPLACE]
+    propertyTypes:
+      type: array
+      items:
+        type: string
+    entityTypes:
+      type: array
+      items:
+        type: string

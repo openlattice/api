@@ -32,6 +32,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,8 @@ public interface DataApi {
     String ENTITIES              = "entities";
     String ENTITY_SET            = "set";
     String ENTITY_SET_ID         = "setId";
+    String S3_URL                = "s3Url";
+    String S3_URLS               = "s3Urls";
     String FILE_TYPE             = "fileType";
     String NEIGHBORS             = "neighbors";
     String PARTIAL               = "partial";
@@ -67,6 +70,8 @@ public interface DataApi {
      * These determine the service routing for the LB
      */
     String SET_ID_PATH           = "{" + ENTITY_SET_ID + "}";
+    String S3_URL_PATH           = "{" + S3_URL + "}";
+    String S3_URLS_PATH          = "{" + S3_URLS + "}";
     String TOKEN                 = "token";
     String TYPE                  = "type";
     String UPDATE                = "update";
