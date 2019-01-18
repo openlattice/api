@@ -41,6 +41,8 @@ public class Organization {
     private final Set<Principal>     members;
     private final Set<Role>          roles;
     private final Set<UUID>          apps;
+    private final String             username;
+    private final String             password;
 
     private transient int h = 0;
 
@@ -53,8 +55,11 @@ public class Organization {
             @JsonProperty( SerializationConstants.EMAILS_FIELD ) Set<String> autoApprovedEmails,
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles,
-            @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps ) {
-        this( new OrganizationPrincipal( id, principal, title, description ), autoApprovedEmails, members, roles, apps );
+            @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps,
+            @JsonProperty( SerializationConstants.USERNAME ) String username,
+            @JsonProperty( SerializationConstants.PASSWORD ) String password
+            ) {
+        this( new OrganizationPrincipal( id, principal, title, description ), autoApprovedEmails, members, roles, apps, username, password );
     }
 
     public Organization(
@@ -62,13 +67,28 @@ public class Organization {
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles,
-            Set<UUID> apps ) {
+            Set<UUID> apps,
+            String username,
+            String password
+            ) {
         checkArgument( securablePrincipal.getPrincipalType().equals( PrincipalType.ORGANIZATION ) );
         this.securablePrincipal = securablePrincipal;
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
         this.apps = checkNotNull( apps );
+        this.username = username;
+        this.password = password;
+    }
+
+    public Organization(
+            OrganizationPrincipal securablePrincipal,
+            Set<String> autoApprovedEmails,
+            Set<Principal> members,
+            Set<Role> roles,
+            Set<UUID> apps
+    ) {
+        this( securablePrincipal, autoApprovedEmails, members, roles, ImmutableSet.of(), null, null);
     }
 
     public Organization(
@@ -76,7 +96,7 @@ public class Organization {
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles ) {
-        this( principal, autoApprovedEmails, members, roles, ImmutableSet.of() );
+        this( principal, autoApprovedEmails, members, roles, ImmutableSet.of());
     }
 
     public Organization(
@@ -87,7 +107,7 @@ public class Organization {
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles ) {
-        this( id, principal, title, description, autoApprovedEmails, members, roles, ImmutableSet.of() );
+        this( id, principal, title, description, autoApprovedEmails, members, roles, ImmutableSet.of(), null, null );
     }
 
     @JsonIgnore
@@ -135,6 +155,16 @@ public class Organization {
         return apps;
     }
 
+    @JsonProperty( SerializationConstants.USERNAME )
+    public String getUsername() {
+        return username;
+    }
+
+    @JsonProperty( SerializationConstants.PASSWORD )
+    public String getPassword() {
+        return password;
+    }
+
     @Override public boolean equals( Object o ) {
         if ( this == o )
             return true;
@@ -157,6 +187,12 @@ public class Organization {
             return false;
         if ( roles != null ? !roles.equals( that.roles ) : that.roles != null )
             return false;
+        if ( apps != null ? !apps.equals( that.apps ) : that.apps == null )
+            return false;
+        if (username != null ? !username.equals(that.username) : true ) // on or other can be null
+            return false;
+        if (password != null ? !password.equals(that.password) : true ) // on or other can be null
+            return false;
         return apps != null ? apps.equals( that.apps ) : that.apps == null;
     }
 
@@ -166,6 +202,8 @@ public class Organization {
         result = 31 * result + ( members != null ? members.hashCode() : 0 );
         result = 31 * result + ( roles != null ? roles.hashCode() : 0 );
         result = 31 * result + ( apps != null ? apps.hashCode() : 0 );
+        result = 31 * result + ( username != null ? username.hashCode() : 0 );
+        result = 31 * result + ( password != null ? password.hashCode() : 0 );
         result = 31 * result + h;
         return result;
     }
@@ -177,6 +215,8 @@ public class Organization {
                 ", members=" + members +
                 ", roles=" + roles +
                 ", apps=" + apps +
+                ", username=" + username +
+                ", password=" + password +
                 '}';
     }
 

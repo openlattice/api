@@ -217,6 +217,8 @@ public final class SerializationConstants {
     public static final String VERSIONS                         = "versions";
     public static final String WEIGHT                           = "weight";
     public static final String ZONES                            = "zones";
+    public static final String USERNAME                         = "username";
+    public static final String PASSWORD                         = "password";
 
     private SerializationConstants() {
     }
