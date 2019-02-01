@@ -18,15 +18,15 @@
 
 package com.openlattice.organization;
 
-import com.openlattice.authorization.Principal;
-import com.openlattice.authorization.PrincipalType;
-import com.openlattice.client.serialization.SerializationConstants;
-import com.openlattice.organization.roles.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableSet;
-import com.openlattice.authorization.*;
+import com.openlattice.authorization.AclKey;
+import com.openlattice.authorization.Principal;
+import com.openlattice.authorization.PrincipalType;
+import com.openlattice.client.serialization.SerializationConstants;
+import com.openlattice.organization.roles.Role;
 
 import java.util.Optional;
 import java.util.Set;
@@ -37,12 +37,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Organization {
     private final OrganizationPrincipal securablePrincipal;
-    private final Set<String>        autoApprovedEmails;
-    private final Set<Principal>     members;
-    private final Set<Role>          roles;
-    private final Set<UUID>          apps;
-    private final String             username;
-    private final String             password;
+    private final Set<String>           autoApprovedEmails;
+    private final Set<Principal>        members;
+    private final Set<Role>             roles;
+    private final Set<UUID>             apps;
+    private final String                atlasUsername;
+    private final String                atlasPassword;
 
     private transient int h = 0;
 
@@ -56,10 +56,16 @@ public class Organization {
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles,
             @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps,
-            @JsonProperty( SerializationConstants.USERNAME ) String username,
-            @JsonProperty( SerializationConstants.PASSWORD ) String password
-            ) {
-        this( new OrganizationPrincipal( id, principal, title, description ), autoApprovedEmails, members, roles, apps, username, password );
+            @JsonProperty( SerializationConstants.USERNAME ) String atlasUsername,
+            @JsonProperty( SerializationConstants.PASSWORD ) String atlasPassword
+    ) {
+        this( new OrganizationPrincipal( id, principal, title, description ),
+                autoApprovedEmails,
+                members,
+                roles,
+                apps,
+                atlasUsername,
+                atlasPassword );
     }
 
     public Organization(
@@ -68,17 +74,17 @@ public class Organization {
             Set<Principal> members,
             Set<Role> roles,
             Set<UUID> apps,
-            String username,
-            String password
-            ) {
+            String atlasUsername,
+            String atlasPassword
+    ) {
         checkArgument( securablePrincipal.getPrincipalType().equals( PrincipalType.ORGANIZATION ) );
         this.securablePrincipal = securablePrincipal;
         this.autoApprovedEmails = checkNotNull( autoApprovedEmails );
         this.members = checkNotNull( members );
         this.roles = checkNotNull( roles );
         this.apps = checkNotNull( apps );
-        this.username = username;
-        this.password = password;
+        this.atlasUsername = atlasUsername;
+        this.atlasPassword = atlasPassword;
     }
 
     public Organization(
@@ -88,7 +94,7 @@ public class Organization {
             Set<Role> roles,
             Set<UUID> apps
     ) {
-        this( securablePrincipal, autoApprovedEmails, members, roles, ImmutableSet.of(), null, null);
+        this( securablePrincipal, autoApprovedEmails, members, roles, ImmutableSet.of(), null, null );
     }
 
     public Organization(
@@ -96,7 +102,7 @@ public class Organization {
             Set<String> autoApprovedEmails,
             Set<Principal> members,
             Set<Role> roles ) {
-        this( principal, autoApprovedEmails, members, roles, ImmutableSet.of());
+        this( principal, autoApprovedEmails, members, roles, ImmutableSet.of() );
     }
 
     public Organization(
@@ -157,12 +163,12 @@ public class Organization {
 
     @JsonProperty( SerializationConstants.USERNAME )
     public String getUsername() {
-        return username;
+        return atlasUsername;
     }
 
     @JsonProperty( SerializationConstants.PASSWORD )
     public String getPassword() {
-        return password;
+        return atlasUsername;
     }
 
     @Override public boolean equals( Object o ) {
@@ -189,9 +195,9 @@ public class Organization {
             return false;
         if ( apps != null ? !apps.equals( that.apps ) : that.apps == null )
             return false;
-        if (username != null ? !username.equals(that.username) : true ) // on or other can be null
+        if ( atlasUsername != null ? !atlasUsername.equals( that.atlasUsername ) : true ) // on or other can be null
             return false;
-        if (password != null ? !password.equals(that.password) : true ) // on or other can be null
+        if ( atlasPassword != null ? !atlasPassword.equals( that.atlasPassword ) : true ) // on or other can be null
             return false;
         return apps != null ? apps.equals( that.apps ) : that.apps == null;
     }
@@ -202,8 +208,8 @@ public class Organization {
         result = 31 * result + ( members != null ? members.hashCode() : 0 );
         result = 31 * result + ( roles != null ? roles.hashCode() : 0 );
         result = 31 * result + ( apps != null ? apps.hashCode() : 0 );
-        result = 31 * result + ( username != null ? username.hashCode() : 0 );
-        result = 31 * result + ( password != null ? password.hashCode() : 0 );
+        result = 31 * result + ( atlasUsername != null ? atlasUsername.hashCode() : 0 );
+        result = 31 * result + ( atlasPassword != null ? atlasPassword.hashCode() : 0 );
         result = 31 * result + h;
         return result;
     }
@@ -215,8 +221,8 @@ public class Organization {
                 ", members=" + members +
                 ", roles=" + roles +
                 ", apps=" + apps +
-                ", username=" + username +
-                ", password=" + password +
+                ", atlasUsername=" + atlasUsername +
+                ", atlasPassword=" + atlasPassword +
                 '}';
     }
 
