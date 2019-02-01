@@ -112,8 +112,21 @@ public class Organization {
             Optional<String> description,
             Set<String> autoApprovedEmails,
             Set<Principal> members,
+            Set<Role> roles,
+            Set<UUID> apps
+            ) {
+        this( id, principal, title, description, autoApprovedEmails, members, roles, apps, Optional.empty(), Optional.empty() );
+    }
+
+    public Organization(
+            Optional<UUID> id,
+            Principal principal,
+            String title,
+            Optional<String> description,
+            Set<String> autoApprovedEmails,
+            Set<Principal> members,
             Set<Role> roles ) {
-        this( id, principal, title, description, autoApprovedEmails, members, roles, ImmutableSet.of(), null, null );
+        this( id, principal, title, description, autoApprovedEmails, members, roles, ImmutableSet.of(), Optional.empty(), Optional.empty() );
     }
 
     @JsonIgnore
