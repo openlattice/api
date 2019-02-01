@@ -56,16 +56,16 @@ public class Organization {
             @JsonProperty( SerializationConstants.MEMBERS_FIELD ) Set<Principal> members,
             @JsonProperty( SerializationConstants.ROLES ) Set<Role> roles,
             @JsonProperty( SerializationConstants.APPS ) Set<UUID> apps,
-            @JsonProperty( SerializationConstants.USERNAME ) String atlasUsername,
-            @JsonProperty( SerializationConstants.PASSWORD ) String atlasPassword
+            @JsonProperty( SerializationConstants.USERNAME ) Optional<String> atlasUsername,
+            @JsonProperty( SerializationConstants.PASSWORD ) Optional<String> atlasPassword
     ) {
         this( new OrganizationPrincipal( id, principal, title, description ),
                 autoApprovedEmails,
                 members,
                 roles,
                 apps,
-                atlasUsername,
-                atlasPassword );
+                atlasUsername.orElse(""),
+                atlasPassword.orElse("") );
     }
 
     public Organization(
