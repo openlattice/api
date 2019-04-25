@@ -52,6 +52,7 @@ def versions = [
 
 checkstyle {
     toolVersion = "${versions.checkstyle}"
+    configFile = new File("${projectDir}/config/checkstyle/checkstyle.xml")
 }
 
 spotbugs {
