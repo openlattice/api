@@ -18,6 +18,7 @@ const val RELOAD_CACHE = "/reload/cache"
 const val PRINCIPALS = "/principals"
 const val ENTITY_SETS = "/entity/sets"
 const val COUNT = "/count"
+const val QUERY = "/query"
 
 const val ID = "id"
 const val ID_PATH = "/{${ID}}"
@@ -41,5 +42,8 @@ interface AdminApi {
 
     @POST(BASE + ENTITY_SETS + COUNT)
     fun countEntitySetsOfEntityTypes(@Body entityTypeIds: Set<UUID>) :Map<UUID, Long>
+
+    @POST(BASE + ENTITY_SETS + QUERY + ID_PATH)
+    fun getEntitySetDataQuery(@Path(ID) entitySetId: UUID, @Body entityKeyIds: Set<UUID>): String
 
 }
