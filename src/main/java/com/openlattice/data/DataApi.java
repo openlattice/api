@@ -74,7 +74,7 @@ public interface DataApi {
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType,
-            @Query( TOKEN ) String token );
+            @Query( TOKEN ) String token ) throws InterruptedException;
 
     /**
      * @param req If syncId is not specified in the request, will retrieve the data from the current syncIds. If
@@ -85,12 +85,12 @@ public interface DataApi {
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
-            @Query( FILE_TYPE ) FileType fileType );
+            @Query( FILE_TYPE ) FileType fileType ) throws InterruptedException;
 
     @POST( BASE + "/" + ENTITY_SET + "/" )
     List<UUID> createEntities(
             @Query( ENTITY_SET_ID ) UUID entitySetId,
-            @Body List<Map<UUID, Set<Object>>> entities );
+            @Body List<Map<UUID, Set<Object>>> entities ) throws InterruptedException;
 
     /**
      * Replaces a single entity from an entity set.
@@ -103,7 +103,7 @@ public interface DataApi {
     Integer mergeIntoEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
-            @Body Map<UUID, Set<Object>> entity );
+            @Body Map<UUID, Set<Object>> entity ) throws InterruptedException;
 
     /**
      * Replaces a single entity from an entity set.
@@ -116,7 +116,7 @@ public interface DataApi {
     Integer replaceEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
-            @Body Map<UUID, Set<Object>> entity );
+            @Body Map<UUID, Set<Object>> entity ) throws InterruptedException;
 
     /**
      * Perform one of the following bulk update operations on entities.
@@ -137,12 +137,12 @@ public interface DataApi {
     Integer updateEntitiesInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Map<UUID, Map<UUID, Set<Object>>> entities,
-            @Query( TYPE ) UpdateType updateType );
+            @Query( TYPE ) UpdateType updateType ) throws InterruptedException;
 
     @PATCH( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
     Integer replaceEntityProperties(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
-            @Body Map<UUID, Map<UUID, Set<Map<ByteBuffer, Object>>>> entities );
+            @Body Map<UUID, Map<UUID, Set<Map<ByteBuffer, Object>>>> entities ) throws InterruptedException;
 
     /**
      * Creates a new set of associations.
@@ -160,15 +160,16 @@ public interface DataApi {
      *                     are the data to be created.
      */
     @POST( BASE + "/" + ASSOCIATION )
-    ListMultimap<UUID, UUID> createAssociations( @Body ListMultimap<UUID, DataEdge> associations );
+    ListMultimap<UUID, UUID> createAssociations( @Body ListMultimap<UUID, DataEdge> associations )
+            throws InterruptedException;
 
     @PATCH( BASE + "/" + ASSOCIATION )
     Integer replaceAssociationData(
             @Body Map<UUID, Map<UUID, DataEdge>> associations,
-            @Query( PARTIAL ) boolean partial );
+            @Query( PARTIAL ) boolean partial ) throws InterruptedException;
 
     @POST( BASE )
-    DataGraphIds createEntityAndAssociationData( @Body DataGraph data );
+    DataGraphIds createEntityAndAssociationData( @Body DataGraph data ) throws InterruptedException;
 
 
     /**
@@ -222,6 +223,7 @@ public interface DataApi {
             @Body Set<UUID> entityKeyIds,
             @Query( TYPE ) DeleteType deleteType );
 
+
     /**
      * Deletes properties from an entity.
      *
@@ -253,7 +255,7 @@ public interface DataApi {
     Integer replaceEntityInEntitySetUsingFqns(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
-            @Body Map<FullQualifiedName, Set<Object>> entityByFqns );
+            @Body Map<FullQualifiedName, Set<Object>> entityByFqns ) throws InterruptedException;
 
     /**
      * Gets the number of entities in an entity set.
