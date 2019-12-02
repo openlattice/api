@@ -18,6 +18,8 @@
 
 package com.openlattice.authorization;
 
+import com.openlattice.util.SingletonArrays;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,6 +57,6 @@ public enum SystemRole {
     }
     
     public static String[] valuesAsArray() {
-        return allRoles.toArray( new String[ 0 ] );
+        return allRoles.toArray( SingletonArrays.EMPTY_STRINGS );
     }
 };

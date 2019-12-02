@@ -24,15 +24,20 @@ package com.openlattice.data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.client.serialization.SerializationConstants;
+import com.openlattice.util.Hashcodes;
+
+import javax.annotation.concurrent.Immutable;
 import java.util.Objects;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
+@Immutable
 public class DataEdgeKey {
     private final EntityDataKey src;
     private final EntityDataKey dst;
     private final EntityDataKey edge;
+    private final int hc;
 
     @JsonCreator
     public DataEdgeKey(
@@ -42,6 +47,7 @@ public class DataEdgeKey {
         this.src = src;
         this.dst = dst;
         this.edge = edge;
+        this.hc = Hashcodes.generate(src, dst, edge);
     }
 
     @JsonProperty( SerializationConstants.SRC)
@@ -69,7 +75,7 @@ public class DataEdgeKey {
     }
 
     @Override public int hashCode() {
-        return Objects.hash( src, dst, edge );
+        return hc;
     }
 
     @Override public String toString() {

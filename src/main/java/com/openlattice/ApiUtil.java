@@ -22,6 +22,7 @@ import com.dataloom.mappers.ObjectMappers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
+import com.openlattice.util.SingletonArrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,7 @@ public class ApiUtil {
             return ObjectMappers.getJsonMapper().writeValueAsBytes( o );
         } catch ( JsonProcessingException e ) {
             logger.error( "Unable to serialize object for building entity id", e );
-            return new byte[ 0 ];
+            return SingletonArrays.EMPTY_BYTES;
         }
     }
 

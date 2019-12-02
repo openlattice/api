@@ -21,7 +21,9 @@ package com.openlattice.data;
 import com.openlattice.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openlattice.util.Hashcodes;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -32,10 +34,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
+@Immutable
 public class EntityKey implements Comparable<EntityKey> {
-
     private final UUID entitySetId;
     private final String entityId;
+    private final int hc;
 
     @JsonCreator
     public EntityKey(
@@ -43,6 +46,7 @@ public class EntityKey implements Comparable<EntityKey> {
             @JsonProperty( SerializationConstants.ENTITY_ID ) String entityId ) {
         this.entitySetId = checkNotNull( entitySetId );
         this.entityId = checkNotNull( entityId );
+        this.hc = Hashcodes.generate(entityId, entitySetId);
     }
 
     @JsonProperty( SerializationConstants.ENTITY_SET_ID )
@@ -55,16 +59,16 @@ public class EntityKey implements Comparable<EntityKey> {
         return entityId;
     }
 
-    @Override public boolean equals( Object o ) {
-        if ( this == o ) { return true; }
-        if ( !( o instanceof EntityKey ) ) { return false; }
-        EntityKey entityKey = (EntityKey) o;
+    @Override public boolean equals( Object obj ) {
+        if ( this == obj ) { return true; }
+        if ( !( obj instanceof EntityKey ) ) { return false; }
+        EntityKey entityKey = (EntityKey) obj;
         return Objects.equals( entitySetId, entityKey.entitySetId ) &&
                 Objects.equals( entityId, entityKey.entityId );
     }
 
     @Override public int hashCode() {
-        return Objects.hash( entitySetId, entityId );
+        return hc;
     }
 
     @Override

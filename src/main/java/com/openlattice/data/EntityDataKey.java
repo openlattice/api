@@ -23,16 +23,20 @@ package com.openlattice.data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.client.serialization.SerializationConstants;
+import com.openlattice.util.Hashcodes;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.UUID;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
+@Immutable
 public class EntityDataKey implements Comparable<EntityDataKey> {
     private final UUID entitySetId;
     private final UUID entityKeyId;
+    private final int    hc;
 
     @JsonCreator
     public EntityDataKey(
@@ -40,6 +44,7 @@ public class EntityDataKey implements Comparable<EntityDataKey> {
             @JsonProperty(SerializationConstants.ENTITY_KEY_ID) UUID entityKeyId ) {
         this.entitySetId = entitySetId;
         this.entityKeyId = entityKeyId;
+        this.hc = Hashcodes.generate(entityKeyId, entitySetId);
     }
 
     @JsonProperty(SerializationConstants.ENTITY_SET_ID)
@@ -63,9 +68,7 @@ public class EntityDataKey implements Comparable<EntityDataKey> {
     }
 
     @Override public int hashCode() {
-        int result = entitySetId.hashCode();
-        result = 31 * result + entityKeyId.hashCode();
-        return result;
+        return hc;
     }
 
     @Override public String toString() {
