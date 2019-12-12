@@ -23,6 +23,7 @@ package com.openlattice.data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.client.serialization.SerializationConstants;
+import com.openlattice.util.Hashcodes;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -63,9 +64,7 @@ public class EntityDataKey implements Comparable<EntityDataKey> {
     }
 
     @Override public int hashCode() {
-        int result = entitySetId.hashCode();
-        result = 31 * result + entityKeyId.hashCode();
-        return result;
+        return Hashcodes.generate( entitySetId, entityKeyId );
     }
 
     @Override public String toString() {
