@@ -33,45 +33,31 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface DataApi {
-    // @formatter:off
     String SERVICE               = "/datastore";
     String CONTROLLER            = "/data";
     String BASE                  = SERVICE + CONTROLLER;
-    // @formatter:on
 
-    String ASSOCIATION           = "association";
-
-    int    MAX_BATCH_SIZE        = 10_000;
-    String COUNT                 = "count";
-    String ENTITY_KEY_ID         = "entityKeyId";
-    String ENTITY_KEY_ID_PATH    = "{" + ENTITY_KEY_ID + "}";
-    /**
-     * To discuss paths later; perhaps batch this with EdmApi paths
-     */
-
-    String ALL                   = "all";
-    String PROPERTIES            = "properties";
-    String ENTITY_SET            = "set";
     String ENTITY_SET_ID         = "setId";
-    String S3_URL                = "s3Url";
-    String S3_URLS               = "s3Urls";
-    String FILE_TYPE             = "fileType";
-    String NEIGHBORS             = "neighbors";
-    String PARTIAL               = "partial";
-    String DETAILED              = "detailed";
+    String SET_ID_PATH           = "/{" + ENTITY_SET_ID + "}";
+    String ENTITY_KEY_ID         = "entityKeyId";
+    String ENTITY_KEY_ID_PATH    = "/{" + ENTITY_KEY_ID + "}";
     String PROPERTY_TYPE_ID      = "propertyTypeId";
-    String PROPERTY_TYPE_ID_PATH = "{" + PROPERTY_TYPE_ID + "}";
-    /*
-     * These determine the service routing for the LB
-     */
-    String SET_ID_PATH           = "{" + ENTITY_SET_ID + "}";
-    String S3_URL_PATH           = "{" + S3_URL + "}";
-    String S3_URLS_PATH          = "{" + S3_URLS + "}";
+    String PROPERTY_TYPE_ID_PATH = "/{" + PROPERTY_TYPE_ID + "}";
+
+    String ALL                   = "/all";
+    String ASSOCIATION           = "/association";
+    String COUNT                 = "/count";
+    String DETAILED              = "/detailed";
+    String ENTITY_SET            = "/set";
+    String NEIGHBORS             = "/neighbors";
+    String PROPERTIES            = "/properties";
+
+    String FILE_TYPE             = "fileType";
+    String PARTIAL               = "partial";
     String TOKEN                 = "token";
     String TYPE                  = "type";
-    String UPDATE                = "update";
 
-    @GET( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
+    @GET( BASE + ENTITY_SET + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType,
@@ -82,13 +68,13 @@ public interface DataApi {
      *            selectedProperties are not specified, all readable properties will be fetched.
      * @return An iterable containing the entity data, using property type FQNs as keys
      */
-    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
+    @POST( BASE + ENTITY_SET + SET_ID_PATH )
     Iterable<SetMultimap<FullQualifiedName, Object>> loadSelectedEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
-    @POST( BASE + "/" + ENTITY_SET + "/" )
+    @POST( BASE + ENTITY_SET + "/" )
     List<UUID> createEntities(
             @Query( ENTITY_SET_ID ) UUID entitySetId,
             @Body List<Map<UUID, Set<Object>>> entities );
@@ -100,7 +86,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to replace.
      * @param entity      The new entity details object that will be merged into old values, with property type ids as keys.
      */
-    @PUT( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer mergeIntoEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -113,7 +99,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to replace.
      * @param entity      The new entity details object that will replace the old value, with property type ids as keys.
      */
-    @PUT( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer replaceEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -134,13 +120,13 @@ public interface DataApi {
      * @param updateType  The update type to perform.
      * @return The total number of entities updated.
      */
-    @PUT( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
+    @PUT( BASE + ENTITY_SET + SET_ID_PATH )
     Integer updateEntitiesInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Map<UUID, Map<UUID, Set<Object>>> entities,
             @Query( TYPE ) UpdateType updateType );
 
-    @PATCH( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
+    @PATCH( BASE + ENTITY_SET + SET_ID_PATH )
     Integer replaceEntityProperties(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Map<UUID, Map<UUID, Set<Map<ByteBuffer, Object>>>> entities );
@@ -151,7 +137,7 @@ public interface DataApi {
      * @param associations Set of associations to create. An association is the triple of source, destination, and edge
      *                     entitiy data keys.
      */
-    @PUT( BASE + "/" + ASSOCIATION )
+    @PUT( BASE + ASSOCIATION )
     Integer createEdges( @Body Set<DataEdgeKey> associations );
 
     /**
@@ -160,10 +146,10 @@ public interface DataApi {
      * @param associations Set of associations to create. Keys are association entity set ids and values for each keys
      *                     are the data to be created.
      */
-    @POST( BASE + "/" + ASSOCIATION )
+    @POST( BASE + ASSOCIATION )
     ListMultimap<UUID, UUID> createAssociations( @Body ListMultimap<UUID, DataEdge> associations );
 
-    @PATCH( BASE + "/" + ASSOCIATION )
+    @PATCH( BASE + ASSOCIATION )
     Integer replaceAssociationData(
             @Body Map<UUID, Map<UUID, DataEdge>> associations,
             @Query( PARTIAL ) boolean partial );
@@ -180,7 +166,7 @@ public interface DataApi {
      *               to delete from.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + NEIGHBORS )
+    @POST( BASE + ENTITY_SET + SET_ID_PATH + NEIGHBORS )
     Long deleteEntitiesAndNeighbors(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntityNeighborsFilter filter,
@@ -192,7 +178,7 @@ public interface DataApi {
      * @param entitySetId The id of the entity set to delete from.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @DELETE( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ALL )
+    @DELETE( BASE + ENTITY_SET + SET_ID_PATH + ALL )
     Integer deleteAllEntitiesFromEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( TYPE ) DeleteType deleteType );
@@ -204,7 +190,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to delete.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @DELETE( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @DELETE( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer deleteEntity(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -217,7 +203,7 @@ public interface DataApi {
      * @param entityKeyIds The ids of the entities to delete.
      * @param deleteType   The delete type to perform (soft or hard delete).
      */
-    @HTTP( method = "DELETE", path = BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH, hasBody = true )
+    @HTTP( method = "DELETE", path = BASE + ENTITY_SET + SET_ID_PATH, hasBody = true )
     Integer deleteEntities(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Set<UUID> entityKeyIds,
@@ -234,7 +220,7 @@ public interface DataApi {
      */
     @HTTP(
             method = "DELETE",
-            path = BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH + "/" + PROPERTIES,
+            path = BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTIES,
             hasBody = true
     )
     Integer deleteEntityProperties(
@@ -250,7 +236,7 @@ public interface DataApi {
      * @param entityKeyId  The id of the entity to replace.
      * @param entityByFqns The new entity details object that will replace the old value, with property type FQNs as keys.
      */
-    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @POST( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer replaceEntityInEntitySetUsingFqns(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -262,7 +248,7 @@ public interface DataApi {
      * @param entitySetId The id of the entity set to return a count for.
      * @return The number of entities in the entity set.
      */
-    @GET( BASE + "/" + SET_ID_PATH + "/" + COUNT )
+    @GET( BASE + SET_ID_PATH + COUNT )
     long getEntitySetSize( @Path( ENTITY_SET_ID ) UUID entitySetId );
 
     /**
@@ -272,12 +258,12 @@ public interface DataApi {
      * @param entityKeyId The id of the requested entity.
      * @return A entity details object, with property type FQNs as keys.
      */
-    @GET( BASE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
+    @GET( BASE + SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Map<FullQualifiedName, Set<Object>> getEntity(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId );
 
-    @GET( BASE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH + "/" + PROPERTY_TYPE_ID_PATH )
+    @GET( BASE + SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTY_TYPE_ID_PATH )
     Set<Object> getEntityPropertyValues(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -291,7 +277,7 @@ public interface DataApi {
      * @return Returns linked entity set data detailed in a Map mapped by linking id, (normal) entity set id, origin id,
      * property type full qualified name and values respectively.
      */
-    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + DETAILED  )
+    @POST( BASE + ENTITY_SET + SET_ID_PATH + DETAILED  )
     Map<UUID, Map<UUID, Map<UUID, Map<FullQualifiedName, Set<Object>>>>> loadLinkedEntitySetBreakdown(
             @Path( ENTITY_SET_ID ) UUID linkedEntitySetId,
             @Body EntitySetSelection selection
