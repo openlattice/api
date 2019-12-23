@@ -48,7 +48,7 @@ interface SubscriptionApi {
      * Create or Update Subscription contact info
      */
     @PUT(BASE )
-    fun createOrUpdateSubscriptionContactInfo(@Body contactInfo: Subscription)
+    fun createOrUpdateSubscriptionContactInfo(@Body subscription: Subscription)
 
     /**
      * Returns all subscriptions
