@@ -39,7 +39,7 @@ public class DataGraphIds {
     @JsonCreator
     public DataGraphIds(
             @JsonProperty( SerializationConstants.ENTITY_KEY_IDS ) ListMultimap<UUID, UUID> entityKeyIds,
-            @JsonProperty( SerializationConstants.ENTITY_SET_IDS ) ListMultimap<UUID, UUID> associationEntityKeyIds ) {
+            @JsonProperty( SerializationConstants.ASSOCIATION_ENTITY_KEY_IDS ) ListMultimap<UUID, UUID> associationEntityKeyIds ) {
         this.entityKeyIds = entityKeyIds;
         this.associationEntityKeyIds = associationEntityKeyIds;
     }
@@ -69,7 +69,7 @@ public class DataGraphIds {
         return entityKeyIds;
     }
 
-    @JsonProperty( SerializationConstants.ENTITY_SET_IDS )
+    @JsonProperty( SerializationConstants.ASSOCIATION_ENTITY_KEY_IDS )
     public ListMultimap<UUID, UUID> getAssociationEntityKeyIds() {
         return associationEntityKeyIds;
     }
