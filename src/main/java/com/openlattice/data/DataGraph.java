@@ -28,65 +28,69 @@ import com.google.common.collect.Multimaps;
 import com.google.common.collect.SetMultimap;
 import com.openlattice.client.serialization.SerializationConstants;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 public class DataGraph {
-    private final ListMultimap<UUID, Map<UUID, Set<Object>>> entities;
-    private final ListMultimap<UUID, DataAssociation>        associations;
+    private final Map<UUID, List<Map<UUID, Set<Object>>>> entities;
+    private final Map<UUID, List<DataAssociation>>        associations;
 
     @JsonCreator
     public DataGraph(
-            @JsonProperty( SerializationConstants.ENTITIES ) ListMultimap<UUID, Map<UUID, Set<Object>>> entities,
-            @JsonProperty( SerializationConstants.ASSOCIATIONS ) ListMultimap<UUID, DataAssociation> associations ) {
+            @JsonProperty( SerializationConstants.ENTITIES ) Map<UUID, List<Map<UUID, Set<Object>>>> entities,
+            @JsonProperty( SerializationConstants.ASSOCIATIONS ) Map<UUID, List<DataAssociation>> associations ) {
         this.entities = entities;
         this.associations = associations;
     }
 
     @JsonProperty( SerializationConstants.ENTITIES )
-    public ListMultimap<UUID, Map<UUID, Set<Object>>> getEntities() {
+    public Map<UUID, List<Map<UUID, Set<Object>>>> getEntities() {
         return entities;
     }
 
     @JsonProperty( SerializationConstants.ASSOCIATIONS )
-    public ListMultimap<UUID, DataAssociation> getAssociations() {
+    public Map<UUID, List<DataAssociation>> getAssociations() {
         return associations;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "DataGraph{" +
                 "entities=" + entities +
                 ", associations=" + associations +
                 '}';
     }
 
-    @Override public boolean equals( Object o ) {
+    @Override
+    public boolean equals( Object o ) {
         if ( this == o ) { return true; }
         if ( !( o instanceof DataGraph ) ) { return false; }
-        DataGraph dataGraph = (DataGraph) o;
+        DataGraph dataGraph = ( DataGraph ) o;
         return Objects.equals( entities, dataGraph.entities ) &&
                 Objects.equals( associations, dataGraph.associations );
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
 
         return Objects.hash( entities, associations );
     }
 
     /**
-     * Compatibility method for building data graphs from set multimaps instead of maps of sets.
-     * @param entities The entities in the data graph.
+     * Compatibility method for building data graphs from multimaps instead of maps.
+     *
+     * @param entities     The entities in the data graph.
      * @param associations The associations in the data graph.
      * @return A data graph object.
      */
     public static DataGraph fromMultimap(
             @JsonProperty( SerializationConstants.ENTITIES ) ListMultimap<UUID, SetMultimap<UUID, Object>> entities,
             @JsonProperty( SerializationConstants.ASSOCIATIONS ) ListMultimap<UUID, DataAssociation> associations ) {
-        return new DataGraph( Multimaps.transformValues( entities, Multimaps::asMap ), associations );
+        return new DataGraph(
+                Multimaps.asMap( Multimaps.transformValues( entities, Multimaps::asMap ) ),
+                Multimaps.asMap( associations )
+        );
     }
 }
