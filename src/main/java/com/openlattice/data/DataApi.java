@@ -146,7 +146,7 @@ public interface DataApi {
      *                     are the data to be created.
      */
     @POST( BASE + ASSOCIATION )
-    Map<UUID, List<UUID>> createAssociations( @Body Map<UUID, DataEdge> associations );
+    Map<UUID, List<UUID>> createAssociations( @Body Map<UUID, List<DataEdge>> associations );
 
     @PATCH( BASE + ASSOCIATION )
     Integer replaceAssociationData(
