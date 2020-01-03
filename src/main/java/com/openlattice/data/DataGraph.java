@@ -57,10 +57,7 @@ public class DataGraph {
 
     @Override
     public String toString() {
-        return "DataGraph{" +
-                "entities=" + entities +
-                ", associations=" + associations +
-                '}';
+        return "DataGraph{entities=" + entities + ", associations=" + associations + '}';
     }
 
     @Override

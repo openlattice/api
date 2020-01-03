@@ -23,9 +23,10 @@ package com.openlattice.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ListMultimap;
 import com.openlattice.client.serialization.SerializationConstants;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -33,13 +34,13 @@ import java.util.UUID;
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 public class DataGraphIds {
-    private final ListMultimap<UUID, UUID> entityKeyIds;
-    private final ListMultimap<UUID, UUID> associationEntityKeyIds;
+    private final Map<UUID, List<UUID>> entityKeyIds;
+    private final Map<UUID, List<UUID>> associationEntityKeyIds;
 
     @JsonCreator
     public DataGraphIds(
-            @JsonProperty( SerializationConstants.ENTITY_KEY_IDS ) ListMultimap<UUID, UUID> entityKeyIds,
-            @JsonProperty( SerializationConstants.ENTITY_SET_IDS ) ListMultimap<UUID, UUID> associationEntityKeyIds ) {
+            @JsonProperty( SerializationConstants.ENTITY_KEY_IDS ) Map<UUID, List<UUID>> entityKeyIds,
+            @JsonProperty( SerializationConstants.ENTITY_SET_IDS ) Map<UUID, List<UUID>> associationEntityKeyIds ) {
         this.entityKeyIds = entityKeyIds;
         this.associationEntityKeyIds = associationEntityKeyIds;
     }
@@ -53,24 +54,21 @@ public class DataGraphIds {
     }
 
     @Override public int hashCode() {
-
         return Objects.hash( entityKeyIds, associationEntityKeyIds );
     }
 
     @Override public String toString() {
-        return "DataGraphIds{" +
-                "entityKeyIds=" + entityKeyIds +
-                ", associationEntityKeyIds=" + associationEntityKeyIds +
-                '}';
+        return "DataGraphIds{entityKeyIds=" + entityKeyIds +
+                ", associationEntityKeyIds=" + associationEntityKeyIds + '}';
     }
 
     @JsonProperty( SerializationConstants.ENTITY_KEY_IDS )
-    public ListMultimap<UUID, UUID> getEntityKeyIds() {
+    public Map<UUID, List<UUID>> getEntityKeyIds() {
         return entityKeyIds;
     }
 
     @JsonProperty( SerializationConstants.ENTITY_SET_IDS )
-    public ListMultimap<UUID, UUID> getAssociationEntityKeyIds() {
+    public Map<UUID, List<UUID>> getAssociationEntityKeyIds() {
         return associationEntityKeyIds;
     }
 }

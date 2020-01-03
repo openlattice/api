@@ -18,7 +18,6 @@
 
 package com.openlattice.data;
 
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.SetMultimap;
 import com.openlattice.data.requests.EntitySetSelection;
 import com.openlattice.data.requests.FileType;
@@ -147,7 +146,7 @@ public interface DataApi {
      *                     are the data to be created.
      */
     @POST( BASE + ASSOCIATION )
-    ListMultimap<UUID, UUID> createAssociations( @Body ListMultimap<UUID, DataEdge> associations );
+    Map<UUID, List<UUID>> createAssociations( @Body Map<UUID, DataEdge> associations );
 
     @PATCH( BASE + ASSOCIATION )
     Integer replaceAssociationData(
