@@ -18,7 +18,6 @@
 
 package com.openlattice.search;
 
-import com.google.common.collect.SetMultimap;
 import com.openlattice.data.requests.NeighborEntityIds;
 import com.openlattice.search.requests.*;
 
@@ -305,7 +304,7 @@ public interface SearchApi {
             @Body EntityNeighborsFilter filter );
 
     @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS + ADVANCED + IDS )
-    Map<UUID, Map<UUID, SetMultimap<UUID, NeighborEntityIds>>> executeFilteredEntityNeighborIdsSearch(
+    Map<UUID, Map<UUID, Map<UUID, Set<NeighborEntityIds>>>> executeFilteredEntityNeighborIdsSearch(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntityNeighborsFilter filter );
 
