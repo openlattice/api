@@ -158,16 +158,15 @@ public interface DataApi {
 
 
     /**
-     * Deletes the entities matching the given entity ids and all of its neighbor entities provided in the filter.
+     * Deletes the entities matching the given entity set ids and their entity ids and all of its neighbor entities
+     * provided in the filter.
      *
-     * @param entitySetId The id of the EntitySet to delete from.
-     * @param filter EntityNeighboursFilter containing which ids of entities to delete and entity set ids of neighbours
-     *               to delete from.
+     * @param filter EntityNeighboursFilter containing which ids of entities in entity set to delete and entity set ids
+     *               of neighbours to delete from.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @POST( BASE + ENTITY_SET + SET_ID_PATH + NEIGHBORS )
+    @POST( BASE + ENTITY_SET + NEIGHBORS )
     Long deleteEntitiesAndNeighbors(
-            @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntityNeighborsFilter filter,
             @Query( TYPE ) DeleteType deleteType );
 
