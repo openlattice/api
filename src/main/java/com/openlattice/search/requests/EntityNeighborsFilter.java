@@ -5,21 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.openlattice.client.serialization.SerializationConstants;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class EntityNeighborsFilter {
 
-    private Set<UUID>           entityKeyIds;
-    private Optional<Set<UUID>> srcEntitySetIds;
-    private Optional<Set<UUID>> dstEntitySetIds;
-    private Optional<Set<UUID>> associationEntitySetIds;
+    private Map<UUID, Set<UUID>> entityKeyIds;
+    private Optional<Set<UUID>>  srcEntitySetIds;
+    private Optional<Set<UUID>>  dstEntitySetIds;
+    private Optional<Set<UUID>>  associationEntitySetIds;
 
     @JsonCreator
     public EntityNeighborsFilter(
-            @JsonProperty( SerializationConstants.ENTITY_KEY_IDS ) Set<UUID> entityKeyIds,
+            @JsonProperty( SerializationConstants.ENTITY_KEY_IDS ) Map<UUID, Set<UUID>> entityKeyIds,
             @JsonProperty( SerializationConstants.SRC ) Optional<Set<UUID>> srcEntitySetIds,
             @JsonProperty( SerializationConstants.DST ) Optional<Set<UUID>> dstEntitySetIds,
             @JsonProperty( SerializationConstants.EDGE ) Optional<Set<UUID>> associationEntitySetIds ) {
@@ -30,12 +27,12 @@ public class EntityNeighborsFilter {
         this.associationEntitySetIds = associationEntitySetIds;
     }
 
-    public EntityNeighborsFilter( Set<UUID> entityKeyIds ) {
+    public EntityNeighborsFilter( Map<UUID, Set<UUID>> entityKeyIds ) {
         this( entityKeyIds, Optional.empty(), Optional.empty(), Optional.empty() );
     }
 
     @JsonProperty( SerializationConstants.ENTITY_KEY_IDS )
-    public Set<UUID> getEntityKeyIds() {
+    public Map<UUID, Set<UUID>> getEntityKeyIds() {
         return entityKeyIds;
     }
 
