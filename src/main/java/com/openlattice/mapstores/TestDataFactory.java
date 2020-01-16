@@ -316,10 +316,21 @@ public final class TestDataFactory {
     }
 
     public static PropertyType propertyType() {
-        return propertyType( indexType() );
+        return propertyType(
+                indexType(),
+                Optional.of( Sets.newHashSet( RandomStringUtils.random( 5 ), RandomStringUtils.random( 5 ) ) )
+        );
     }
 
+    /**
+     * Creates a property type without enum values and the specified index type.
+     * @param postgresIndexType The index type to use for the property type.
+     */
     public static PropertyType propertyType( IndexType postgresIndexType ) {
+        return propertyType( postgresIndexType, Optional.empty() );
+    }
+
+    public static PropertyType propertyType( IndexType postgresIndexType, Optional<Set<String>> enumValues ) {
         return new PropertyType(
                 UUID.randomUUID(),
                 fqn(),
@@ -327,7 +338,7 @@ public final class TestDataFactory {
                 Optional.of( randomAlphanumeric( 5 ) ),
                 ImmutableSet.of(),
                 EdmPrimitiveTypeKind.String,
-                Optional.of( Sets.newHashSet( RandomStringUtils.random( 5 ), RandomStringUtils.random( 5 ) ) ),
+                enumValues,
                 Optional.of( r.nextBoolean() ),
                 Optional.of( analyzer() ),
                 Optional.of( postgresIndexType ) );
