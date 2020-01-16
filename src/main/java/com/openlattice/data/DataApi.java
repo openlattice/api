@@ -18,7 +18,6 @@
 
 package com.openlattice.data;
 
-import com.google.common.collect.SetMultimap;
 import com.openlattice.data.requests.EntitySetSelection;
 import com.openlattice.data.requests.FileType;
 import com.openlattice.search.requests.EntityNeighborsFilter;
@@ -57,7 +56,7 @@ public interface DataApi {
     String TYPE                  = "type";
 
     @GET( BASE + ENTITY_SET + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
+    Iterable<Map<FullQualifiedName, Set<Object>>> loadEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType,
             @Query( TOKEN ) String token );
@@ -68,7 +67,7 @@ public interface DataApi {
      * @return An iterable containing the entity data, using property type FQNs as keys
      */
     @POST( BASE + ENTITY_SET + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> loadSelectedEntitySetData(
+    Iterable<Map<FullQualifiedName, Set<Object>>> loadSelectedEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
