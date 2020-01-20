@@ -58,6 +58,7 @@ public interface DataApi {
     String FILE_TYPE             = "fileType";
     String NEIGHBORS             = "neighbors";
     String PARTIAL               = "partial";
+    String DETAILED              = "detailed";
     String PROPERTY_TYPE_ID      = "propertyTypeId";
     String PROPERTY_TYPE_ID_PATH = "{" + PROPERTY_TYPE_ID + "}";
     /*
@@ -82,7 +83,7 @@ public interface DataApi {
      * @return An iterable containing the entity data, using property type FQNs as keys
      */
     @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
-    Iterable<SetMultimap<FullQualifiedName, Object>> loadEntitySetData(
+    Iterable<SetMultimap<FullQualifiedName, Object>> loadSelectedEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType ) throws InterruptedException;
@@ -148,10 +149,10 @@ public interface DataApi {
      * Creates a new set of associations.
      *
      * @param associations Set of associations to create. An association is the triple of source, destination, and edge
-     *                     entitiy key ids.
+     *                     entitiy data keys.
      */
     @PUT( BASE + "/" + ASSOCIATION )
-    Integer createAssociations( @Body Set<DataEdgeKey> associations );
+    Integer createEdges( @Body Set<DataEdgeKey> associations );
 
     /**
      * Creates a new set of associations.
@@ -271,7 +272,7 @@ public interface DataApi {
      *
      * @param entitySetId The entity set which the request entity belongs to.
      * @param entityKeyId The id of the requested entity.
-     * @return A enttity details object, with property type FQNs as keys.
+     * @return A entity details object, with property type FQNs as keys.
      */
     @GET( BASE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH )
     Map<FullQualifiedName, Set<Object>> getEntity(
@@ -279,8 +280,22 @@ public interface DataApi {
             @Path( ENTITY_KEY_ID ) UUID entityKeyId );
 
     @GET( BASE + "/" + SET_ID_PATH + "/" + ENTITY_KEY_ID_PATH + "/" + PROPERTY_TYPE_ID_PATH )
-    Set<Object> getEntity(
+    Set<Object> getEntityPropertyValues(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
             @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId );
+
+    /**
+     * Loads a linked entity set breakdown with the selected linked entities and properties.
+     *
+     * @param linkedEntitySetId The id of the linked entity set to load.
+     * @param selection The selection of properties and linking ids to load.
+     * @return Returns linked entity set data detailed in a Map mapped by linking id, (normal) entity set id, origin id,
+     * property type full qualified name and values respectively.
+     */
+    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH + "/" + DETAILED  )
+    Map<UUID, Map<UUID, Map<UUID, Map<FullQualifiedName, Set<Object>>>>> loadLinkedEntitySetBreakdown(
+            @Path( ENTITY_SET_ID ) UUID linkedEntitySetId,
+            @Body EntitySetSelection selection
+    );
 }

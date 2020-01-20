@@ -23,7 +23,6 @@ import com.openlattice.data.requests.FileType;
 import com.openlattice.edm.requests.EdmDetailsSelector;
 import com.openlattice.edm.requests.EdmRequest;
 import com.openlattice.edm.requests.MetadataUpdate;
-import com.openlattice.edm.set.EntitySetPropertyMetadata;
 import com.openlattice.edm.type.*;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
 import retrofit2.http.*;
@@ -547,7 +546,7 @@ public interface EdmApi {
 
     @POST( ENTITY_TYPE_BASE_PATH + ID_PATH + PROPERTY_TYPE_PATH + PROPERTY_TYPE_ID_PATH )
     Void updateEntityTypePropertyMetadata(
-            @Path( ID ) UUID entitySetId,
+            @Path( ID ) UUID entityTypeId,
             @Path( PROPERTY_TYPE_ID ) UUID propertyTypeId,
             @Body MetadataUpdate update );
 

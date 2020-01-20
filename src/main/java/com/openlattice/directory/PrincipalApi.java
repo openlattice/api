@@ -18,17 +18,20 @@
 
 package com.openlattice.directory;
 
+import com.auth0.json.mgmt.users.User;
 import com.openlattice.authorization.AclKey;
 import com.openlattice.authorization.Principal;
 import com.openlattice.authorization.SecurablePrincipal;
-import com.openlattice.directory.pojo.DirectedAclKeys;
 import com.openlattice.directory.pojo.Auth0UserBasic;
+import com.openlattice.directory.pojo.DirectedAclKeys;
 import com.openlattice.organization.roles.Role;
-import retrofit2.http.*;
-
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface PrincipalApi {
     /*
@@ -42,28 +45,25 @@ public interface PrincipalApi {
      * Path variables
      */
     String USER_ID      = "userId";
-    String ROLE         = "role";
     String SEARCH_QUERY = "searchQuery";
 
     /*
      * Fixed paths
      */
-    String EMAIL   = "/email";
-    String ROLES   = "/roles";
-    String SEARCH  = "/search";
-    String USERS   = "/users";
-    String DB      = "/db";
-    String CURRENT = "/current";
-    String UPDATE  = "/update";
-
+    String CURRENT  = "/current";
+    String DB       = "/db";
+    String EMAIL    = "/email";
+    String ROLES    = "/roles";
+    String SEARCH   = "/search";
+    String SYNC     = "/sync";
+    String UPDATE   = "/update";
+    String USERS    = "/users";
     String SEARCH_EMAIL = SEARCH + EMAIL;
 
     /*
      * Variable paths
      */
-
     String USER_ID_PATH            = "/{" + USER_ID + "}";
-    String ROLE_PATH               = "/{" + ROLE + "}";
     String SEARCH_QUERY_PATH       = "/{" + SEARCH_QUERY + "}";
     String EMAIL_SEARCH_QUERY_PATH = "/{" + SEARCH_QUERY + ":.+" + "}";
 
@@ -71,7 +71,7 @@ public interface PrincipalApi {
     SecurablePrincipal getSecurablePrincipal( @Body Principal principal );
 
     @GET( BASE + USERS )
-    Map<String, Auth0UserBasic> getAllUsers();
+    Map<String, User> getAllUsers();
 
     @GET( BASE + ROLES + CURRENT )
     Set<SecurablePrincipal> getCurrentRoles();
@@ -80,7 +80,7 @@ public interface PrincipalApi {
     Map<AclKey, Role> getAvailableRoles();
 
     @GET( BASE + USERS + USER_ID_PATH )
-    Auth0UserBasic getUser( @Path( USER_ID ) String userId );
+    User getUser( @Path( USER_ID ) String userId );
 
     @GET( BASE + DB )
     MaterializedViewAccount getMaterializedViewAccount();
@@ -95,11 +95,10 @@ public interface PrincipalApi {
      * Activates a user in the OpenLattice system. This call must be made once before a user will be available for use
      * in authorization policies.
      *
-     * @param accessToken An access token that can be used to retrieve the user profile.
      * @return Nothing
      */
-    @POST( BASE + USERS )
-    Collection<SecurablePrincipal> activateUser( @Body String accessToken );
+    @GET( BASE + SYNC )
+    Void syncCallingUser();
 
     @POST( BASE + UPDATE )
     Void addPrincipalToPrincipal( @Body DirectedAclKeys directedAclKeys );

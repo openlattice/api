@@ -18,9 +18,6 @@
 
 package com.openlattice.edm;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,6 +28,7 @@ import com.openlattice.authorization.securable.SecurableObjectType;
 import com.openlattice.client.serialization.SerializationConstants;
 import com.openlattice.data.DataExpiration;
 import com.openlattice.edm.set.EntitySetFlag;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -41,9 +39,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
-
-import javax.swing.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Describes an entity set and associated metadata, including the active audit record entity set.
@@ -80,7 +77,7 @@ public class EntitySet extends AbstractSecurableObject {
             @JsonProperty( SerializationConstants.DESCRIPTION_FIELD ) Optional<String> description,
             @JsonProperty( SerializationConstants.CONTACTS ) Set<String> contacts,
             @JsonProperty( SerializationConstants.LINKED_ENTITY_SETS ) Optional<Set<UUID>> linkedEntitySets,
-            @JsonProperty( SerializationConstants.ORGANIZATION_ID ) Optional<UUID> organizationId,
+            @JsonProperty( SerializationConstants.ORGANIZATION_ID ) UUID organizationId,
             @JsonProperty( SerializationConstants.FLAGS_FIELD ) Optional<EnumSet<EntitySetFlag>> flags,
             @JsonProperty( SerializationConstants.PARTITIONS ) Optional<LinkedHashSet<Integer>> partitions,
             @JsonProperty( SerializationConstants.EXPIRATION ) Optional<DataExpiration> expiration ) {
@@ -95,8 +92,12 @@ public class EntitySet extends AbstractSecurableObject {
         //        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
-        this.contacts = Sets.newHashSet( contacts );
-        this.organizationId = organizationId.orElse( IdConstants.GLOBAL_ORGANIZATION_ID.getId() );
+        if (contacts instanceof HashSet) {
+            this.contacts = contacts;
+        } else {
+            this.contacts = Sets.newHashSet( contacts );
+        }
+        this.organizationId = checkNotNull( organizationId );
         partitions.ifPresent( this.partitions::addAll );
         this.expiration = expiration.orElse( null );
     }
@@ -113,7 +114,6 @@ public class EntitySet extends AbstractSecurableObject {
             UUID organizationId,
             EnumSet<EntitySetFlag> flags,
             LinkedHashSet<Integer> partitions,
-            int partitionsVersion,
             DataExpiration expiration
     ) {
         super( id, title, description );
@@ -127,10 +127,13 @@ public class EntitySet extends AbstractSecurableObject {
         //        checkArgument( contacts != null && !contacts.isEmpty(), "Contacts cannot be blank." );
         this.name = name;
         this.entityTypeId = checkNotNull( entityTypeId );
-        this.contacts = Sets.newHashSet( contacts );
+        if (contacts instanceof HashSet) {
+            this.contacts = contacts;
+        } else {
+            this.contacts = Sets.newHashSet( contacts );
+        }
         this.organizationId = organizationId;
         this.partitions.addAll( partitions );
-        this.partitionsVersion = partitionsVersion;
         this.expiration = expiration;
     }
 
@@ -140,7 +143,8 @@ public class EntitySet extends AbstractSecurableObject {
             String name,
             String title,
             Optional<String> description,
-            Set<String> contacts ) {
+            Set<String> contacts,
+            UUID organizationId ) {
         this( Optional.of( id ),
                 entityTypeId,
                 name,
@@ -148,26 +152,7 @@ public class EntitySet extends AbstractSecurableObject {
                 description,
                 contacts,
                 Optional.empty(),
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty() );
-    }
-
-    public EntitySet(
-            UUID entityTypeId,
-            String name,
-            String title,
-            Optional<String> description,
-            Set<String> contacts ) {
-        this( Optional.empty(),
-                entityTypeId,
-                name,
-                title,
-                description,
-                contacts,
-                Optional.empty(),
-                Optional.empty(),
+                organizationId,
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty() );
@@ -180,7 +165,7 @@ public class EntitySet extends AbstractSecurableObject {
             Optional<String> description,
             Set<String> contacts,
             Optional<Set<UUID>> linkedEntitySets,
-            Optional<UUID> organizationId,
+            UUID organizationId,
             Optional<EnumSet<EntitySetFlag>> flags,
             Optional<LinkedHashSet<Integer>> partitions ) {
         this( Optional.empty(),
@@ -261,8 +246,7 @@ public class EntitySet extends AbstractSecurableObject {
         if ( !super.equals( o ) )
             return false;
         EntitySet entitySet = (EntitySet) o;
-        return partitionsVersion == entitySet.partitionsVersion &&
-                Objects.equals( entityTypeId, entitySet.entityTypeId ) &&
+        return Objects.equals( entityTypeId, entitySet.entityTypeId ) &&
                 Objects.equals( linkedEntitySets, entitySet.linkedEntitySets ) &&
                 Objects.equals( flags, entitySet.flags ) &&
                 Objects.equals( partitions, entitySet.partitions ) &&
@@ -282,7 +266,6 @@ public class EntitySet extends AbstractSecurableObject {
                 name,
                 contacts,
                 organizationId,
-                partitionsVersion,
                 expiration );
     }
 
@@ -307,7 +290,6 @@ public class EntitySet extends AbstractSecurableObject {
 
     void addPartitions( Collection<Integer> partitions ) {
         this.partitions.addAll( partitions );
-        partitionsVersion++;
     }
 
     @JsonIgnore
