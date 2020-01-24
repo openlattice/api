@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018. OpenLattice, Inc.
+ * Copyright (C) 2020. OpenLattice, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,14 +34,8 @@ public interface DataIntegrationApi {
     String CONTROLLER       = "/integration";
     String BASE             = SERVICE + CONTROLLER;
 
-    String DETAILED_RESULTS = "detailedResults";
     String ENTITY_KEY_IDS   = "entityKeyIds";
     String S3               = "s3";
-
-    @POST( BASE )
-    IntegrationResults integrateEntityAndAssociationData(
-            @Body BulkDataCreation data,
-            @Query( DETAILED_RESULTS ) boolean detailedResults );
 
     @POST( BASE + "/" + S3 )
     List<String> generatePresignedUrls( @Body Collection<S3EntityData> data );
