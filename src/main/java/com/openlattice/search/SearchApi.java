@@ -79,15 +79,12 @@ public interface SearchApi {
      *
      * @param search A JSON object that contains between three and five parameters. Required parameters are "start" and
      *               "maxHits, which specify the hit number to start returning results on for paging and the maximum
-     *               number
-     *               of hits to return. Optional parameters are "query" (specifies the keywords used to perform the
-     *               search), "eid" (UUID of the entity type of the entity sets that will be returned), and "pid" (a
-     *               set of
-     *               UUIDs of property types belonging to the entity sets that will be returned). All three of these
-     *               parameters are optional, but at least one must be specified otherwise an error will be thrown.
-     *               If eid
-     *               and pid are both specified, the pid param will be ignored.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *               number of hits to return. Optional parameters are "query" (specifies the keywords used to
+     *               perform the search), "eid" (UUID of the entity type of the entity sets that will be returned),
+     *               and "pid" (a set of UUIDs of property types belonging to the entity sets that will be returned).
+     *               All three of these parameters are optional, but at least one must be specified otherwise an
+     *               error will be thrown. If eid and pid are both specified, the pid param will be ignored.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE )
     SearchResult executeEntitySetKeywordQuery( @Body Search search );
@@ -109,28 +106,25 @@ public interface SearchApi {
             @Path( NUM_RESULTS ) int maxHits );
 
     /**
-     * Executes a search over the data of a given entity set to find rows that match the search term
+     * Executes a search over the data of a given entity set to find rows that match the search term.
      *
      * @param searchConstraints A JSON object that contains the entity set id(s) to search, the search type, the hit
-     *                          number
-     *                          to start returning results on for paging, the max number of hits to return, and any
-     *                          additional
-     *                          constraints specific to the search type
+     *                          number to start returning results on for paging, the max number of hits to return, and
+     *                          any additional constraints specific to the search type.
      * @return A data search result object, containing the total number of hits for the given query, and the hits
-     * themselves
+     * themselves.
      */
     @PATCH( BASE )
     DataSearchResult searchEntitySetData( @Body SearchConstraints searchConstraints );
 
     /**
-     * Executes a search over the data of a given entity set to find rows that match the search term
+     * Executes a search over the data of a given entity set to find rows that match the search term.
      *
      * @param entitySetId The id of the entity set the search will be executed within
      * @param searchTerm  A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                    returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                    return, and
-     *                    "searchTerm", which is the search term results will match on.
-     * @return A data search result object, containing the total number of hits for the given query, and the hits
+     *                    return, and "searchTerm", which is the search term results will match on.
+     * @return A data search result object, containing the total number of hits for the given query, and the hits.
      * themselves
      */
     @POST( BASE + ENTITY_SET_ID_PATH )
@@ -139,16 +133,14 @@ public interface SearchApi {
             @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over the data of a given entity set to find rows matching the specified property type values
+     * Executes a search over the data of a given entity set to find rows matching the specified property type values.
      *
      * @param entitySetId The id of the entity set the search will be executed within
      * @param search      A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                    returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                    return, and
-     *                    "searchFields", which is a map from property type ids to search terms to match on those
-     *                    property
-     *                    types.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                    return, and "searchFields", which is a map from property type ids to search terms to match on
+     *                    those property types.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ADVANCED + ENTITY_SET_ID_PATH )
     DataSearchResult executeAdvancedEntitySetDataQuery(
@@ -156,123 +148,114 @@ public interface SearchApi {
             @Body AdvancedSearch search );
 
     /**
-     * Executes a search over all organizations to find ones that match the given search term
+     * Executes a search over all organizations to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ORGANIZATIONS )
     SearchResult executeOrganizationSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all entity types to find ones that match the given search term
+     * Executes a search over all entity types to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ENTITY_TYPES )
     SearchResult executeEntityTypeSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all association types to find ones that match the given search term
+     * Executes a search over all association types to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ASSOCIATION_TYPES )
     SearchResult executeAssociationTypeSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all property types to find ones that match the given search term
+     * Executes a search over all property types to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + PROPERTY_TYPES )
     SearchResult executePropertyTypeSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all apps to find ones that match the given search term
+     * Executes a search over all apps to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + APP )
     SearchResult executeAppSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all EntityTypeCollections to find ones that match the given search term
+     * Executes a search over all EntityTypeCollections to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ENTITY_TYPES + COLLECTIONS )
     SearchResult executeEntityTypeCollectionSearch( @Body SearchTerm searchTerm );
 
     /**
-     * Executes a search over all authorized EntitySetCollections to find ones that match the given search term
+     * Executes a search over all authorized EntitySetCollections to find ones that match the given search term.
      *
      * @param searchTerm A JSON object that contains three parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return, and
-     *                   "searchTerm", which is the search term results will match on.
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, and "searchTerm", which is the search term results will match on.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ENTITY_SETS + COLLECTIONS )
     SearchResult executeEntitySetCollectionSearch( @Body SearchTerm searchTerm );
 
     /**
      * Executes a search over all entity types to find ones that match the given name and namespace, including partial
-     * matches
+     * matches.
      *
      * @param searchTerm A JSON object that contains four parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return,
-     *                   "name", which is the partial name to match, and "namespace" which is the partial namespace
-     *                   to match
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, "name", which is the partial name to match, and "namespace" which is the partial
+     *                   namespace to match.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + ENTITY_TYPES + FQN )
     SearchResult executeFQNEntityTypeSearch( @Body FQNSearchTerm searchTerm );
 
     /**
      * Executes a search over all property types to find ones that match the given name and namespace, including partial
-     * matches
+     * matches.
      *
      * @param searchTerm A JSON object that contains four parameters: "start", which specifies the hit number to start
      *                   returning results on for paging, "maxHits", which specifies the maximum number of hits to
-     *                   return,
-     *                   "name", which is the partial name to match, and "namespace" which is the partial namespace
-     *                   to match
-     * @return A search result object, containing the total number of hits for the given query, and the hits themselves
+     *                   return, "name", which is the partial name to match, and "namespace" which is the partial
+     *                   namespace to match.
+     * @return A search result object, containing the total number of hits for the given query, and the hits themselves.
      */
     @POST( BASE + PROPERTY_TYPES + FQN )
     SearchResult executeFQNPropertyTypeSearch( @Body FQNSearchTerm searchTerm );
 
     /**
-     * Executes a search for all neighbors of an entity that are connected by an association
+     * Executes a search for all neighbors of an entity that are connected by an association.
      *
      * @param entitySetId the entity set id of the entity
      * @param entityKeyId the entity key id of the entity
-     * @return A list of objects containing information about the neighbor and association
+     * @return A list of objects containing information about the neighbor and association.
      */
     @GET( BASE + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     List<NeighborEntityDetails> executeEntityNeighborSearch(
@@ -281,12 +264,12 @@ public interface SearchApi {
 
     /**
      * Executes a search for all neighbors of multiple entities of the same entity set that are connected by an
-     * association
+     * association.
      *
      * @param entitySetId  the entity set id of the entities
      * @param entityKeyIds the entity key ids of the entities
      * @return A map from each entity id to a list of objects containing information about the neighbors and
-     * associations of that entity
+     * associations of that entity.
      */
     @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS )
     Map<UUID, List<NeighborEntityDetails>> executeEntityNeighborSearchBulk(
