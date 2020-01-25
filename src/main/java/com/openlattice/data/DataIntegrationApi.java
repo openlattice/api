@@ -30,17 +30,50 @@ public interface DataIntegrationApi {
      * These determine the service routing for the LB
      */
 
-    String SERVICE          = "/datastore";
-    String CONTROLLER       = "/integration";
-    String BASE             = SERVICE + CONTROLLER;
+    // @formatter:off
+    String SERVICE               = "/datastore";
+    String CONTROLLER            = "/integration";
+    String BASE                  = SERVICE + CONTROLLER;
+    // @formatter:on
 
+    String ASSOCIATION      = "association";
+    String DETAILED_RESULTS = "detailedResults";
+    String EDGES            = "edges";
     String ENTITY_KEY_IDS   = "entityKeyIds";
+    String ENTITY_SET       = "set";
+    String ENTITY_SET_ID    = "setId";
+    String SET_ID_PATH      = "{" + ENTITY_SET_ID + "}";
     String S3               = "s3";
+
+    @POST( BASE + "/" + ENTITY_SET + "/" + SET_ID_PATH )
+    IntegrationResults integrateEntities(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Query( DETAILED_RESULTS ) boolean detailedResults,
+            @Body Map<String, Map<UUID, Set<Object>>> entities );
+
+    /**
+     * Creates a new set of associations.
+     *
+     * @param associations Set of associations to create. An association is the usual (String entityId, SetMultimap &lt;
+     *                     UUID, Object &gt; details of entity) pairing enriched with source/destination EntityKeys
+     */
+    @POST( BASE + "/" + ASSOCIATION + "/" + SET_ID_PATH )
+    IntegrationResults integrateAssociations(
+            @Body Set<Association> associations,
+            @Query( DETAILED_RESULTS ) boolean detailedResults );
+
+    @POST( BASE )
+    IntegrationResults integrateEntityAndAssociationData(
+            @Body BulkDataCreation data,
+            @Query( DETAILED_RESULTS ) boolean detailedResults );
 
     @POST( BASE + "/" + S3 )
     List<String> generatePresignedUrls( @Body Collection<S3EntityData> data );
 
     @POST( BASE + "/" + ENTITY_KEY_IDS )
     List<UUID> getEntityKeyIds( @Body Set<EntityKey> entityKeys );
+
+    @PUT( BASE + "/" + EDGES )
+    int createEdges( @Body Set<DataEdgeKey> edges );
 
 }
