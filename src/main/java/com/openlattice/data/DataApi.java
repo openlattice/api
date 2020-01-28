@@ -36,7 +36,7 @@ public interface DataApi {
     String BASE                  = SERVICE + CONTROLLER;
 
     String ENTITY_SET_ID         = "setId";
-    String SET_ID_PATH           = "/{" + ENTITY_SET_ID + "}";
+    String ENTITY_SET_ID_PATH    = "/{" + ENTITY_SET_ID + "}";
     String ENTITY_KEY_ID         = "entityKeyId";
     String ENTITY_KEY_ID_PATH    = "/{" + ENTITY_KEY_ID + "}";
     String PROPERTY_TYPE_ID      = "propertyTypeId";
@@ -55,7 +55,7 @@ public interface DataApi {
     String TOKEN                 = "token";
     String TYPE                  = "type";
 
-    @GET( BASE + ENTITY_SET + SET_ID_PATH )
+    @GET( BASE + ENTITY_SET + ENTITY_SET_ID_PATH )
     Iterable<Map<FullQualifiedName, Set<Object>>> loadEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( FILE_TYPE ) FileType fileType,
@@ -66,7 +66,7 @@ public interface DataApi {
      *            selectedProperties are not specified, all readable properties will be fetched.
      * @return An iterable containing the entity data, using property type FQNs as keys
      */
-    @POST( BASE + ENTITY_SET + SET_ID_PATH )
+    @POST( BASE + ENTITY_SET + ENTITY_SET_ID_PATH )
     Iterable<Map<FullQualifiedName, Set<Object>>> loadSelectedEntitySetData(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntitySetSelection req,
@@ -84,7 +84,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to replace.
      * @param entity      The new entity details object that will be merged into old values, with property type ids as keys.
      */
-    @PUT( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer mergeIntoEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -97,7 +97,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to replace.
      * @param entity      The new entity details object that will replace the old value, with property type ids as keys.
      */
-    @PUT( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
+    @PUT( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer replaceEntityInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -118,13 +118,13 @@ public interface DataApi {
      * @param updateType  The update type to perform.
      * @return The total number of entities updated.
      */
-    @PUT( BASE + ENTITY_SET + SET_ID_PATH )
+    @PUT( BASE + ENTITY_SET + ENTITY_SET_ID_PATH )
     Integer updateEntitiesInEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Map<UUID, Map<UUID, Set<Object>>> entities,
             @Query( TYPE ) UpdateType updateType );
 
-    @PATCH( BASE + ENTITY_SET + SET_ID_PATH )
+    @PATCH( BASE + ENTITY_SET + ENTITY_SET_ID_PATH )
     Integer replaceEntityProperties(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Map<UUID, Map<UUID, Set<Map<ByteBuffer, Object>>>> entities );
@@ -175,7 +175,7 @@ public interface DataApi {
      * @param entitySetId The id of the entity set to delete from.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @DELETE( BASE + ENTITY_SET + SET_ID_PATH + ALL )
+    @DELETE( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ALL )
     Integer deleteAllEntitiesFromEntitySet(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( TYPE ) DeleteType deleteType );
@@ -187,7 +187,7 @@ public interface DataApi {
      * @param entityKeyId The id of the entity to delete.
      * @param deleteType  The delete type to perform (soft or hard delete).
      */
-    @DELETE( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
+    @DELETE( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer deleteEntity(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -200,7 +200,7 @@ public interface DataApi {
      * @param entityKeyIds The ids of the entities to delete.
      * @param deleteType   The delete type to perform (soft or hard delete).
      */
-    @HTTP( method = "DELETE", path = BASE + ENTITY_SET + SET_ID_PATH, hasBody = true )
+    @HTTP( method = "DELETE", path = BASE + ENTITY_SET + ENTITY_SET_ID_PATH, hasBody = true )
     Integer deleteEntities(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body Set<UUID> entityKeyIds,
@@ -217,7 +217,7 @@ public interface DataApi {
      */
     @HTTP(
             method = "DELETE",
-            path = BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTIES,
+            path = BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTIES,
             hasBody = true
     )
     Integer deleteEntityProperties(
@@ -233,7 +233,7 @@ public interface DataApi {
      * @param entityKeyId  The id of the entity to replace.
      * @param entityByFqns The new entity details object that will replace the old value, with property type FQNs as keys.
      */
-    @POST( BASE + ENTITY_SET + SET_ID_PATH + ENTITY_KEY_ID_PATH )
+    @POST( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Integer replaceEntityInEntitySetUsingFqns(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -245,7 +245,7 @@ public interface DataApi {
      * @param entitySetId The id of the entity set to return a count for.
      * @return The number of entities in the entity set.
      */
-    @GET( BASE + SET_ID_PATH + COUNT )
+    @GET( BASE + ENTITY_SET_ID_PATH + COUNT )
     long getEntitySetSize( @Path( ENTITY_SET_ID ) UUID entitySetId );
 
     /**
@@ -255,12 +255,12 @@ public interface DataApi {
      * @param entityKeyId The id of the requested entity.
      * @return A entity details object, with property type FQNs as keys.
      */
-    @GET( BASE + SET_ID_PATH + ENTITY_KEY_ID_PATH )
+    @GET( BASE + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH )
     Map<FullQualifiedName, Set<Object>> getEntity(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId );
 
-    @GET( BASE + SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTY_TYPE_ID_PATH )
+    @GET( BASE + ENTITY_SET_ID_PATH + ENTITY_KEY_ID_PATH + PROPERTY_TYPE_ID_PATH )
     Set<Object> getEntityPropertyValues(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Path( ENTITY_KEY_ID ) UUID entityKeyId,
@@ -274,7 +274,7 @@ public interface DataApi {
      * @return Returns linked entity set data detailed in a Map mapped by linking id, (normal) entity set id, origin id,
      * property type full qualified name and values respectively.
      */
-    @POST( BASE + ENTITY_SET + SET_ID_PATH + DETAILED  )
+    @POST( BASE + ENTITY_SET + ENTITY_SET_ID_PATH + DETAILED  )
     Map<UUID, Map<UUID, Map<UUID, Map<FullQualifiedName, Set<Object>>>>> loadLinkedEntitySetBreakdown(
             @Path( ENTITY_SET_ID ) UUID linkedEntitySetId,
             @Body EntitySetSelection selection
