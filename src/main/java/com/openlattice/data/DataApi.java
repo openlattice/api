@@ -79,8 +79,13 @@ public interface DataApi {
             @Query( ENTITY_SET_ID ) UUID entitySetId,
             @Body List<Map<UUID, Set<Object>>> entities );
 
+    /**
+     * Creates entities in entity sets with the given property types and values.
+     * @param entities Map of entity set id to the list of entity values by property type ids.
+     * @return A map of ids of the created entities by each entity set id.
+     */
     @POST( BASE + ENTITY )
-    List<UUID> createEntities( @Body Map<UUID, List<Map<UUID, Set<Object>>>> entities );
+    Map<UUID, List<UUID>> createEntities( @Body Map<UUID, List<Map<UUID, Set<Object>>>> entities );
 
     /**
      * Replaces a single entity from an entity set.
