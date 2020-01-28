@@ -46,6 +46,7 @@ public interface DataApi {
     String ASSOCIATION           = "/association";
     String COUNT                 = "/count";
     String DETAILED              = "/detailed";
+    String ENTITY                = "/entity";
     String ENTITY_SET            = "/set";
     String NEIGHBORS             = "/neighbors";
     String PROPERTIES            = "/properties";
@@ -72,10 +73,14 @@ public interface DataApi {
             @Body EntitySetSelection req,
             @Query( FILE_TYPE ) FileType fileType );
 
+    @Deprecated(since = "Use other createEntities method instead")
     @POST( BASE + ENTITY_SET + "/" )
     List<UUID> createEntities(
             @Query( ENTITY_SET_ID ) UUID entitySetId,
             @Body List<Map<UUID, Set<Object>>> entities );
+
+    @POST( BASE + ENTITY )
+    List<UUID> createEntities( @Body Map<UUID, List<Map<UUID, Set<Object>>>> entities );
 
     /**
      * Replaces a single entity from an entity set.
