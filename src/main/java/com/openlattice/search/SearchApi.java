@@ -286,10 +286,35 @@ public interface SearchApi {
      * associations of that entity.
      */
     @POST( BASE + NEIGHBORS + ADVANCED )
-    Map<UUID, List<NeighborEntityDetails>> executeFilteredEntityNeighborSearch( @Body EntityNeighborsFilter filter );
+    Map<UUID, List<NeighborEntityDetails>> executeFilteredEntityNeighborSearch(
+            @Body EntityNeighborsFilterBulk filter
+    );
+
+    /**
+     * Executes a search for all neighbors of multiple entities of the same entity set that are connected by an
+     * association.
+     *
+     * @param entitySetId the entity set id of the entities.
+     * @param filter      optional constraints on entityKeyIds to include and filters on src/dst/edge entity set ids.
+     * @return A map from each entity id to a list of objects containing information about the neighbors and
+     * associations of that entity.
+     */
+    @Deprecated( since = "Use executeFilteredEntityNeighborSearch with bulk filter" )
+    @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS + ADVANCED )
+    Map<UUID, List<NeighborEntityDetails>> executeFilteredEntityNeighborSearch(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
+            @Body EntityNeighborsFilter filter
+    );
 
     @POST( BASE + NEIGHBORS + ADVANCED + IDS )
     Map<UUID, Map<UUID, Map<UUID, Set<NeighborEntityIds>>>> executeFilteredEntityNeighborIdsSearch(
+            @Body EntityNeighborsFilterBulk filter
+    );
+
+    @Deprecated( since = "Use executeFilteredEntityNeighborIdsSearch with bulk filter" )
+    @POST( BASE + ENTITY_SET_ID_PATH + NEIGHBORS + ADVANCED + IDS )
+    Map<UUID, Map<UUID, Map<UUID, Set<NeighborEntityIds>>>> executeFilteredEntityNeighborIdsSearch(
+            @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Body EntityNeighborsFilter filter
     );
 
