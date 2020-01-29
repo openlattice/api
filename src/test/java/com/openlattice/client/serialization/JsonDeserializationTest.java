@@ -22,12 +22,14 @@
 package com.openlattice.client.serialization;
 
 import com.dataloom.mappers.ObjectMappers;
-import com.esotericsoftware.kryo.util.ObjectMap;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.ImmutableMap;
+
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.ListMultimap;
 import org.junit.Test;
 
 /**
@@ -36,10 +38,42 @@ import org.junit.Test;
 public class JsonDeserializationTest {
     @Test
     public void testSerdes() throws IOException {
-        final var map = ImmutableMap.of( "a", 1, "b", "f", "c", 1.1, "d", Long.MAX_VALUE, "e", Double.MAX_VALUE-1 );
+        final var map = ImmutableMap.of(
+                "a", 1,
+                "b", "f",
+                "c", 1.1,
+                "d", Long.MAX_VALUE,
+                "e", Double.MAX_VALUE - 1
+        );
         final var json = ObjectMappers.getJsonMapper().writeValueAsString( map );
-        final var readValue = ObjectMappers.getJsonMapper().readValue( json, new TypeReference<Map<String, Object>>() {
-        } );
+        final var readValue = ObjectMappers.getJsonMapper()
+                .readValue( json, new TypeReference<Map<String, Object>>() {} );
         System.out.println( readValue.toString() );
+    }
+
+    @Test
+    public void testMultimapDeserialization() throws IOException {
+        final var json = "{\"a\": [1], \"a\": [1], \"b\": []}";
+
+        final var readMultimap = ObjectMappers.getJsonMapper()
+                .readValue( json, new TypeReference<ListMultimap<String, Object>>() {} );
+        System.out.println( readMultimap.toString() );
+
+        final var readMap = ObjectMappers.getJsonMapper()
+                .readValue( json, new TypeReference<Map<String, List<Object>>>() {} );
+        System.out.println( readMap.toString() );
+    }
+
+    @Test
+    public void testMultimapDeserializationWithCollectionTypes() throws IOException {
+        final var json = "{\"a\": [{\"a\": 1}], \"a\": [{\"a\": 1}], \"b\": [{}]}";
+
+        final var readMultimap = ObjectMappers.getJsonMapper()
+                .readValue( json, new TypeReference<ListMultimap<String, Map<String, Object>>>() {} );
+        System.out.println( readMultimap.toString() );
+
+        final var readMap = ObjectMappers.getJsonMapper()
+                .readValue( json, new TypeReference<Map<String, List<Map<String, Object>>>>() {} );
+        System.out.println( readMap.toString() );
     }
 }
