@@ -26,5 +26,5 @@ import java.util.UUID
 
 data class DataGraphIds(
         @JsonProperty(SerializationConstants.ENTITY_KEY_IDS) val entityKeyIds: Map<UUID, List<UUID>>,
-        @JsonProperty(SerializationConstants.ENTITY_SET_IDS) val associationEntityKeyIds: Map<UUID, List<UUID>>
+        @JsonProperty(SerializationConstants.ASSOCIATION_ENTITY_KEY_IDS) val associationEntityKeyIds: Map<UUID, List<UUID>>
 )
