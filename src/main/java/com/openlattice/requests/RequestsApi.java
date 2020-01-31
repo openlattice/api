@@ -34,8 +34,6 @@ public interface RequestsApi {
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
-
-    String STATUS              = "/status";
     String REQUEST_STATUS      = "reqStatus";
     String REQUEST_STATUS_PATH = "/{" + REQUEST_STATUS + "}";
 
@@ -50,7 +48,9 @@ public interface RequestsApi {
     Iterable<Status> getMyRequests();
 
     /**
-     * Retrieves all permission requests in a specified state specified by {@code requestStatus} (Example: ({@link RequestStatus#SUBMITTED }, {@link RequestStatus#APPROVED }, {@link RequestStatus#DECLINED }) for the current account.
+     * Retrieves all permission requests in a specified state specified by {@code requestStatus}
+     * (Example: ({@link RequestStatus#SUBMITTED }, {@link RequestStatus#APPROVED }, {@link RequestStatus#DECLINED })
+     * for the current account.
      *
      * @return All permission requests in a specified state specified by {@code requestStatus}.
      */
@@ -70,8 +70,8 @@ public interface RequestsApi {
      * Retrieves all permission requests for a set of AclKeys.
      *
      * @param aclKeys A set of aclKeys for which to retrieve permission requests information.
-     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in any state across all users for
-     * callers who are owners and only the caller's permission requests in any state for callers who are not owners.
+     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in any state across all users
+     * for callers who are owners and only the caller's permission requests in any state for callers who are not owners.
      */
     @POST( BASE )
     Iterable<Status> getStatuses( @Body Set<AclKey> aclKeys );
@@ -81,8 +81,9 @@ public interface RequestsApi {
      *
      * @param requestStatus The {@link RequestStatus} to match against.
      * @param requests      A list of acl keys whose permission requests will be checked against
-     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in the state specified by {@code requestStatus} across all users for
-     * callers who are owners and only the caller's permission requests in the state specified by {@code requestStatus} for callers who are not owners
+     * @return For each aclKey ( {@code AclKey} ) this will return all permission requests in the state specified by
+     * {@code requestStatus} across all users for callers who are owners and only the caller's permission requests in
+     * the state specified by {@code requestStatus} for callers who are not owners
      */
     @POST( BASE + REQUEST_STATUS_PATH )
     Iterable<Status> getStatuses( @Path( REQUEST_STATUS ) RequestStatus requestStatus, @Body Set<AclKey> requests );
@@ -91,7 +92,8 @@ public interface RequestsApi {
      * Updates a set of permission requests.
      *
      * @param statuses The permission requests updates to attempt to apply.
-     * @return 200 OK if request succeeds or 403 if the user doesn't have ownership over all objects he is attempting to update.
+     * @return 200 OK if request succeeds or 403 if the user doesn't have ownership over all objects he is attempting to
+     * update.
      */
     @PATCH( BASE )
     Void updateStatuses( @Body Set<Status> statuses );

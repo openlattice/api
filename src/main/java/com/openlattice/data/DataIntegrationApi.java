@@ -37,16 +37,17 @@ public interface DataIntegrationApi {
     String BASE                  = SERVICE + CONTROLLER;
     // @formatter:on
 
-    String ASSOCIATION        = "association";
-    String DETAILED_RESULTS   = "detailedResults";
-    String EDGES              = "edges";
-    String ENTITY_KEY_IDS     = "entityKeyIds";
-    String ENTITY_SET         = "set";
+    String ASSOCIATION        = "/association";
+    String EDGES              = "/edges";
+    String ENTITY_KEY_IDS     = "/entityKeyIds";
+    String S3                 = "/s3";
+    String ENTITY_SET         = "/set";
     String ENTITY_SET_ID      = "setId";
-    String ENTITY_SET_ID_PATH = "{" + ENTITY_SET_ID + "}";
-    String S3                 = "s3";
+    String ENTITY_SET_ID_PATH = "/{" + ENTITY_SET_ID + "}";
 
-    @POST( BASE + "/" + ENTITY_SET + "/" + ENTITY_SET_ID_PATH )
+    String DETAILED_RESULTS   = "detailedResults";
+
+    @POST( BASE + ENTITY_SET + ENTITY_SET_ID_PATH )
     IntegrationResults integrateEntities(
             @Path( ENTITY_SET_ID ) UUID entitySetId,
             @Query( DETAILED_RESULTS ) boolean detailedResults,
@@ -58,7 +59,7 @@ public interface DataIntegrationApi {
      * @param associations Set of associations to create. An association is the usual (String entityId, SetMultimap &lt;
      *                     UUID, Object &gt; details of entity) pairing enriched with source/destination EntityKeys
      */
-    @POST( BASE + "/" + ASSOCIATION + "/" + ENTITY_SET_ID_PATH )
+    @POST( BASE + ASSOCIATION + ENTITY_SET_ID_PATH )
     IntegrationResults integrateAssociations(
             @Body Set<Association> associations,
             @Query( DETAILED_RESULTS ) boolean detailedResults );
@@ -68,13 +69,13 @@ public interface DataIntegrationApi {
             @Body BulkDataCreation data,
             @Query( DETAILED_RESULTS ) boolean detailedResults );
 
-    @POST( BASE + "/" + S3 )
+    @POST( BASE + S3 )
     List<String> generatePresignedUrls( @Body Collection<S3EntityData> data );
 
-    @POST( BASE + "/" + ENTITY_KEY_IDS )
+    @POST( BASE + ENTITY_KEY_IDS )
     List<UUID> getEntityKeyIds( @Body Set<EntityKey> entityKeys );
 
-    @PUT( BASE + "/" + EDGES )
+    @PUT( BASE + EDGES )
     int createEdges( @Body Set<DataEdgeKey> edges );
 
 }

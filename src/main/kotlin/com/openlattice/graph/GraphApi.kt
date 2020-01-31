@@ -24,7 +24,7 @@ package com.openlattice.graph
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
-import java.util.*
+import java.util.UUID
 
 
 //@formatter:off
@@ -33,13 +33,9 @@ const val CONTROLLER = "/graph"
 const val BASE = SERVICE + CONTROLLER
 //@formatter:on
 
-const val NEIGHBORS = "neighbors"
+const val NEIGHBORS = "neighbors" // TODO this needs a slash
 const val ENTITY_SET_ID = "entitySetId"
 const val ENTITY_SET_ID_PATH = "/{$ENTITY_SET_ID}"
-const val ID = "id"
-const val ID_PATH = "/{$ID}"
-const val QUERY = "/query"
-const val RESULT = "/result"
 
 /**
  *

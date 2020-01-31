@@ -37,9 +37,9 @@ public interface PermissionsRequestsApi {
     /*
      * These are the actual components after {SERVICE}/{CONTROLLER}/
      */
-    String ADMIN       = "admin";
-    String UNRESOLVED  = "unresolved";
-    String RESOLVED    = "resolved";
+    String ADMIN       = "/admin";
+    String UNRESOLVED  = "/unresolved";
+    String RESOLVED    = "/resolved";
 
     /**
      * Update/Insert a Permission Request. For one user and one securable object List &lt;UUID &gt; , there should only be one unresolved request at any given time. 
@@ -68,7 +68,7 @@ public interface PermissionsRequestsApi {
      * @param aclRoot
      * @return
      */
-    @POST( BASE + "/" + UNRESOLVED )
+    @POST( BASE + UNRESOLVED )
     PermissionsRequest getUnresolvedRequestOfUser( @Body List<UUID> aclRoot );
 
     /**
@@ -76,7 +76,7 @@ public interface PermissionsRequestsApi {
      * @param aclRoot
      * @return
      */
-    @POST( BASE + "/" + RESOLVED )
+    @POST( BASE + RESOLVED )
     Iterable<PermissionsRequest> getResolvedRequestsOfUser( @Body List<UUID> aclRoot );
 
     /**
@@ -84,7 +84,7 @@ public interface PermissionsRequestsApi {
      * @param req Only aclRoot, user, and status has to be passed in.
      * @return
      */
-    @POST( BASE + "/" + ADMIN )
+    @POST( BASE + ADMIN )
     Void updateUnresolvedRequestStatus( @Body PermissionsRequest req );
 
     /**
@@ -92,7 +92,7 @@ public interface PermissionsRequestsApi {
      * @param req Both aclRoot and status can be missing. If aclRoot is missing, all authorized objects of user would be fetched. If status is missing, all RequestStatus would be fetched.
      * @return
      */
-    @POST( BASE + "/" + ADMIN + "/" + UNRESOLVED )
+    @POST( BASE + ADMIN + UNRESOLVED )
     Iterable<PermissionsRequest> getAllUnresolvedRequestsOfAdmin( @Body AclRootStatusPair req );
 
 }

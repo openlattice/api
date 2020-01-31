@@ -58,7 +58,6 @@ public interface EdmApi {
     String ENTITY_TYPES        = "entityTypes";
     String ASSOCIATION_TYPES   = "associationTypes";
     String PROPERTY_TYPES      = "propertyTypes";
-    String SCHEMA              = "schema";
     String SCHEMAS             = "schemas";
     String FILE_TYPE           = "fileType";
     String TOKEN               = "token";
@@ -72,12 +71,8 @@ public interface EdmApi {
 
     String IDS_PATH              = "/ids";
     String SCHEMA_PATH           = "/schema";
-    String ENUM_TYPE_PATH        = "/enum/type";
-    String ENTITY_SETS_PATH      = "/entity/set";
     String ENTITY_TYPE_PATH      = "/entity/type";
     String PROPERTY_TYPE_PATH    = "/property/type";
-    String PROPERTIES_PATH       = "/properties";
-    String COMPLEX_TYPE_PATH     = "/complex/type";
     String ASSOCIATION_TYPE_PATH = "/association/type";
     String HIERARCHY_PATH        = "/hierarchy";
     String DETAILED_PATH         = "/detailed";
@@ -100,7 +95,6 @@ public interface EdmApi {
     String PROPERTY_TYPE_ID_PATH         = "/{" + PROPERTY_TYPE_ID + "}";
 
     String SCHEMA_BASE_PATH           = BASE + SCHEMA_PATH;
-    String ENTITY_SETS_BASE_PATH      = BASE + ENTITY_SETS_PATH;
     String ENTITY_TYPE_BASE_PATH      = BASE + ENTITY_TYPE_PATH;
     String PROPERTY_TYPE_BASE_PATH    = BASE + PROPERTY_TYPE_PATH;
     String ASSOCIATION_TYPE_BASE_PATH = BASE + ASSOCIATION_TYPE_PATH;

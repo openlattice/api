@@ -49,14 +49,11 @@ public interface SearchApi {
     String PROPERTY_TYPES    = "/property_types";
     String APP               = "/app";
     String ADVANCED          = "/advanced";
-    String HOME              = "/home";
     String FQN               = "/fqn";
     String NEIGHBORS         = "/neighbors";
     String EDM               = "/edm";
     String INDEX             = "/index";
     String IDS               = "/ids";
-    String ENTITY_TYPE_ID    = "eid";
-    String PROPERTY_TYPE_ID  = "pid";
 
     String ENTITY_SET_ID   = "entitySetId";
     String ORGANIZATION_ID = "organizationId";

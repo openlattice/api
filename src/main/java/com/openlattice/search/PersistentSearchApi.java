@@ -13,11 +13,9 @@ public interface PersistentSearchApi {
     String CONTROLLER = "/persistentsearch";
     String BASE       = SERVICE + CONTROLLER;
 
-    String ID         = "id";
     String EXPIRATION = "/expiration";
-
-    String ID_PATH         = "/{" + ID + "}";
-    String EXPIRATION_PATH = "/{" + EXPIRATION + "}";
+    String ID         = "id";
+    String ID_PATH    = "/{" + ID + "}";
 
     String INCLUDE_EXPIRED = "includeExpired";
 

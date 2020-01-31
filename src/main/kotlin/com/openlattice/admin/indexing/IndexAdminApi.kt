@@ -22,7 +22,7 @@
 package com.openlattice.admin.indexing
 
 import retrofit2.http.*
-import java.util.*
+import java.util.UUID
 
 
 // @formatter:off
@@ -32,12 +32,7 @@ const val BASE = SERVICE + CONTROLLER
 // @formatter:on
 
 const val REINDEX = "/reindex"
-const val PRINCIPALS = "/principals"
 
-const val ID = "id"
-const val ID_PATH = "/{$ID}"
-const val NAME = "name"
-const val NAME_PATH = "/{$NAME}"
 
 interface IndexAdminApi {
 
