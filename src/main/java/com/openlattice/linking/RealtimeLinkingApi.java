@@ -20,9 +20,12 @@
 
 package com.openlattice.linking;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +39,7 @@ public interface RealtimeLinkingApi {
     String CONTROLLER            = "/linking";
     String BASE                  = SERVICE + CONTROLLER;
 
+    String MISSING               = "/missing";
     String FINISHED              = "/finished";
     String MATCHED               = "/matched";
 
@@ -49,4 +53,16 @@ public interface RealtimeLinkingApi {
 
     @GET( BASE + MATCHED + LINKING_ID_PATH )
     Set<MatchedEntityPair> getMatchedEntitiesForLinkingId( @Path( LINKING_ID ) UUID linkingId );
+
+    /**
+     * Description
+     *
+     * @param entitySetIds A JSON list with existing entitySetIds
+     * @return A map with entitySetIds as keys, and the entityKeyIds that haven't linked yet.
+     */
+    @POST( BASE + MISSING )
+    Map<UUID, Set<UUID>> getEntitiesMissingLinking(
+            @Body Set<UUID> entitySetIds
+    );
+
 }
