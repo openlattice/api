@@ -57,7 +57,7 @@ interface LinkingFeedbackApi {
      * Returns the feedback on the given entity pair along with their features
      */
     @POST(BASE + FEATURES)
-    fun getLinkingFeedbackWithFeatures(@Body entityPair: EntityKeyPair): EntityLinkingFeatures?
+    fun getLinkingFeedbackWithFeatures(@Body entityPair: EntityKeyPair): EntityLinkingFeatures
 
     /**
      * Returns all feedback submitted

@@ -32,21 +32,29 @@ import java.util.UUID;
  */
 public interface RealtimeLinkingApi {
 
-    String SERVICE               = "/linker";
-    String CONTROLLER            = "/linking";
-    String BASE                  = SERVICE + CONTROLLER;
+    String SERVICE                    = "/linker";
+    String CONTROLLER                 = "/linking";
+    String BASE                       = SERVICE + CONTROLLER;
 
-    String FINISHED              = "/finished";
-    String MATCHED               = "/matched";
-
-    String SET                   = "/set";
-    String LINKING_ID            = "linkingId";
-    String LINKING_ID_PATH       = "/{" + LINKING_ID + "}";
+    String FINISHED                   = "/finished";
+    String MATCHED                    = "/matched";
+    String SET                        = "/set";
+    String LINKING_ID                 = "linkingId";
+    String LINKING_ID_PATH            = "/{" + LINKING_ID + "}";
+    String LINKING_ENTITY_SET_ID      = "linkingIdEntitySetId";
+    String LINKING_ENTITY_SET_ID_PATH = "/{" + LINKING_ENTITY_SET_ID + "}";
 
 
     @GET( BASE + FINISHED + SET )
     Set<UUID> getLinkingFinishedEntitySets();
 
+    /**
+     * Returns all the matched entities for the requested linking id and their matching score.
+     * @param linkingEntitySetId The linking entity set id to get the matched entities for.
+     * @param linkingId The encrypted linking id.
+     */
     @GET( BASE + MATCHED + LINKING_ID_PATH )
-    Set<MatchedEntityPair> getMatchedEntitiesForLinkingId( @Path( LINKING_ID ) UUID linkingId );
+    Set<MatchedEntityPair> getMatchedEntitiesForLinkingId(
+            @Path(LINKING_ENTITY_SET_ID_PATH) UUID linkingEntitySetId, @Path( LINKING_ID ) UUID linkingId
+    );
 }
