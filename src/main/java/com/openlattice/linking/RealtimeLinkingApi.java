@@ -35,7 +35,7 @@ public interface RealtimeLinkingApi {
     String SERVICE                    = "/linker";
     String CONTROLLER                 = "/linking";
     String BASE                       = SERVICE + CONTROLLER;
-
+    
     String FINISHED                   = "/finished";
     String MATCHED                    = "/matched";
     String SET                        = "/set";
@@ -50,11 +50,12 @@ public interface RealtimeLinkingApi {
 
     /**
      * Returns all the matched entities for the requested linking id and their matching score.
+     *
      * @param linkingEntitySetId The linking entity set id to get the matched entities for.
-     * @param linkingId The encrypted linking id.
+     * @param linkingId          The encrypted linking id.
      */
-    @GET( BASE + MATCHED + LINKING_ID_PATH )
+    @GET( BASE + MATCHED + LINKING_ENTITY_SET_ID_PATH + LINKING_ID_PATH )
     Set<MatchedEntityPair> getMatchedEntitiesForLinkingId(
-            @Path(LINKING_ENTITY_SET_ID_PATH) UUID linkingEntitySetId, @Path( LINKING_ID ) UUID linkingId
+            @Path( LINKING_ENTITY_SET_ID ) UUID linkingEntitySetId, @Path( LINKING_ID ) UUID linkingId
     );
 }
