@@ -55,9 +55,9 @@ public interface RealtimeLinkingApi {
     Set<MatchedEntityPair> getMatchedEntitiesForLinkingId( @Path( LINKING_ID ) UUID linkingId );
 
     /**
-     * Description
+     * Get all entities that are not linked yet, grouped by entity set
      *
-     * @param entitySetIds A JSON list with existing entitySetIds
+     * @param entitySetIds A set of normal entity set ids
      * @return A map with entitySetIds as keys, and the entityKeyIds that haven't linked yet.
      */
     @POST( BASE + MISSING )
