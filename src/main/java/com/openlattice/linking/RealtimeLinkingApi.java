@@ -58,7 +58,7 @@ public interface RealtimeLinkingApi {
      * Get all entities that are not linked yet, grouped by entity set
      *
      * @param entitySetIds A set of normal entity set ids
-     * @return A map with entitySetIds as keys, and the entityKeyIds that haven't linked yet.
+     * @return A map with entitySetIds as keys, and as v alues a set of the entityKeyIds that haven't linked yet.
      */
     @POST( BASE + MISSING )
     Map<UUID, Set<UUID>> getEntitiesMissingLinking(
