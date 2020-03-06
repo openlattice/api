@@ -200,11 +200,18 @@ interface DatasetApi {
      * @param policyName The exact name of the row security policy
      */
     @GET(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + POLICY_NAME_PATH)
-    fun getExternalDatabaseRowSecurityPolicy(
+    fun getExternalDatabaseRowSecurityPolicyByName(
             @Path(ID) organizationId: UUID,
             @Path(TABLE_NAME) tableName: String,
             @Path(POLICY_NAME) policyName: String
-    )
+    ): Map<String, RowSecurityPolicy>
+
+    @GET(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + USER_ID_PATH)
+    fun getExternalDatabaseRowSecurityPolicyByUser(
+            @Path(ID) organizationId: UUID,
+            @Path(TABLE_NAME) tableName: String,
+            @Path(USER_ID) userId: String
+    ): Map<String, RowSecurityPolicy>
 
     /**
      * Deletes a RowSecurityPolicy for an OrganizationExternalDatabaseTable
