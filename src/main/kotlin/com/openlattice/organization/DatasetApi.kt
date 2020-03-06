@@ -1,6 +1,7 @@
 package com.openlattice.organization
 
 import com.openlattice.postgres.PostgresConnectionType
+import com.openlattice.postgres.RowSecurityPolicy
 import retrofit2.http.*
 import java.util.*
 
@@ -9,8 +10,9 @@ const val CONTROLLER = "/organization-database"
 const val BASE = SERVICE + CONTROLLER
 
 const val EXTERNAL_DATABASE = "/external-database"
-const val EXTERNAL_DATABASE_COLUMN = "/external-database-column"
-const val EXTERNAL_DATABASE_TABLE = "/external-database-table"
+const val EXTERNAL_DATABASE_COLUMN = "/column"
+const val EXTERNAL_DATABASE_TABLE = "/table"
+const val EXTERNAL_DATABASE_ROW = "/row"
 const val DATA = "/data"
 
 const val ID = "id"
@@ -27,6 +29,8 @@ const val USER_ID = "userId"
 const val USER_ID_PATH = "/{$USER_ID}"
 const val CONNECTION_TYPE = "connectionType"
 const val CONNECTION_TYPE_PATH = "/{$CONNECTION_TYPE}"
+const val POLICY_NAME = "policyName"
+const val POLICY_NAME_PATH = "/{$POLICY_NAME}"
 
 interface DatasetApi {
 
@@ -173,4 +177,45 @@ interface DatasetApi {
             @Path(ID) organizationId: UUID,
             @Path(TABLE_NAME) tableName: String,
             @Body columnNames: Set<String>)
+
+    /**
+     * Creates a RowSecurityPolicy for an OrganizationExternalDatabaseTable
+     * @param organizationId The organization's UUID
+     * @param tableName The exact name of the table in the database
+     * @param policyName The exact name of the row security policy
+     * @param rowPolicy The fields within the row security policy
+     */
+    @POST(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + POLICY_NAME_PATH)
+    fun createExternalDatabaseRowSecurityPolicy(
+            @Path(ID) organizationId: UUID,
+            @Path(TABLE_NAME) tableName: String,
+            @Path(POLICY_NAME) policyName: String,
+            @Body rowPolicy: RowSecurityPolicy
+    )
+
+    /**
+     * Gets a RowSecurityPolicy for an OrganizationExternalDatabaseTable
+     * @param organizationId The organization's UUID
+     * @param tableName The exact name of the table in the database
+     * @param policyName The exact name of the row security policy
+     */
+    @GET(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + POLICY_NAME_PATH)
+    fun getExternalDatabaseRowSecurityPolicy(
+            @Path(ID) organizationId: UUID,
+            @Path(TABLE_NAME) tableName: String,
+            @Path(POLICY_NAME) policyName: String
+    )
+
+    /**
+     * Deletes a RowSecurityPolicy for an OrganizationExternalDatabaseTable
+     * @param organizationId The organization's UUID
+     * @param tableName The exact name of the table in the database
+     * @param policyName The exact name of the row security policy
+     */
+    @DELETE(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + POLICY_NAME_PATH)
+    fun deleteExternalDatabaseRowSecurityPolicy(
+            @Path(ID) organizationId: UUID,
+            @Path(TABLE_NAME) tableName: String,
+            @Path(POLICY_NAME) policyName: String
+    )
 }
