@@ -64,7 +64,6 @@ public final class SerializationConstants {
     public static final String CALCULATION_TYPE                 = "calculationType";
     public static final String CALLBACK                         = "callback";
     public static final String CATEGORY                         = "category";
-    public static final String CHECK                            = "check";
     public static final String CHILD_CLAUSES                    = "childClauses";
     public static final String CHILD_QUERIES                    = "childQueries";
     public static final String CLAUSES                          = "clauses";
@@ -208,6 +207,7 @@ public final class SerializationConstants {
     public static final String PATH                             = "path";
     public static final String PERMISSIONS                      = "permissions";
     public static final String PERMISSIONS_MAP                  = "permissionsMap";
+    public static final String PERMISSIVENESS                   = "permissiveness";
     public static final String PHONE_NUMBER                     = "phoneNumber";
     public static final String PII_FIELD                        = "pii";
     public static final String ORDINAL_POSITION                 = "ordinalPosition";
@@ -228,6 +228,8 @@ public final class SerializationConstants {
     public static final String QUEUE                            = "queue";
     public static final String QUEUE_SIZE                       = "queueSize";
     public static final String RADIUS                           = "radius";
+    public static final String RANGES                           = "ranges";
+    public static final String READ_FILTER                      = "readFilter";
     public static final String REASON                           = "reason";
     public static final String REQUEST                          = "request";
     public static final String REQUESTING_USER                  = "requestingUser";
@@ -237,6 +239,7 @@ public final class SerializationConstants {
     public static final String RESULT                           = "result";
     public static final String RESULT_SUMMARY                   = "resultSummary";
     public static final String ROLES                            = "roles";
+    public static final String ROW_PERMISSIONS                  = "rowPermissions";
     public static final String S3_BUCKET                        = "s3Bucket";
     public static final String SCHEMA                           = "schema";
     public static final String SCHEMAS                          = "schemas";
@@ -288,6 +291,7 @@ public final class SerializationConstants {
     public static final String VERSION                          = "version";
     public static final String VERSIONS                         = "versions";
     public static final String WEIGHT                           = "weight";
+    public static final String WRITE_FILTER                     = "writeFilter";
     public static final String ZONES                            = "zones";
 
     private SerializationConstants() {
