@@ -3,8 +3,6 @@ package com.openlattice.postgres
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.openlattice.client.serialization.SerializationConstants
 
-//TODO link to pg_policies
-
 data class RowSecurityPolicy(
         @JsonProperty(SerializationConstants.PERMISSIVENESS) val permissiveness: String,
         @JsonProperty(SerializationConstants.USER_ID) val userIds: List<String>,
