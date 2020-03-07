@@ -2,6 +2,7 @@ package com.openlattice.organization
 
 import com.openlattice.postgres.PostgresConnectionType
 import com.openlattice.postgres.RowSecurityPolicy
+import com.openlattice.postgres.RowSecurityPolicyRequest
 import retrofit2.http.*
 import java.util.*
 
@@ -14,6 +15,7 @@ const val EXTERNAL_DATABASE_COLUMN = "/column"
 const val EXTERNAL_DATABASE_TABLE = "/table"
 const val EXTERNAL_DATABASE_ROW = "/row"
 const val DATA = "/data"
+const val SEARCH = "/search"
 
 const val ID = "id"
 const val ID_PATH = "/{$ID}"
@@ -192,6 +194,13 @@ interface DatasetApi {
             @Path(POLICY_NAME) policyName: String,
             @Body rowPolicy: RowSecurityPolicy
     )
+
+    @POST(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + SEARCH)
+    fun getExternalDatabaseRows(
+            @Path(ID) organizationId: UUID,
+            @Path(TABLE_NAME) tableName: String,
+            @Body rowPolicyRequest: RowSecurityPolicyRequest
+    ): Set<RowSecurityPolicy>
 
     /**
      * Gets a RowSecurityPolicy for an OrganizationExternalDatabaseTable
