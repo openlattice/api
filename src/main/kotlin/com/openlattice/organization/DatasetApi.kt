@@ -195,32 +195,19 @@ interface DatasetApi {
             @Body rowPolicy: RowSecurityPolicy
     )
 
+    /**
+     * Gets a RowSecurityPolicy for an OrganizationExternalDatabaseTable
+     * based on requested search fields
+     * @param organizationId The organization's UUID
+     * @param tableName The exact name of the table in the database
+     * @param rowPolicyRequest The values to be used in the search
+     */
     @POST(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + SEARCH)
     fun getExternalDatabaseRows(
             @Path(ID) organizationId: UUID,
             @Path(TABLE_NAME) tableName: String,
             @Body rowPolicyRequest: RowSecurityPolicyRequest
     ): Set<RowSecurityPolicy>
-
-    /**
-     * Gets a RowSecurityPolicy for an OrganizationExternalDatabaseTable
-     * @param organizationId The organization's UUID
-     * @param tableName The exact name of the table in the database
-     * @param policyName The exact name of the row security policy
-     */
-    @GET(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + POLICY_NAME_PATH)
-    fun getExternalDatabaseRowSecurityPolicyByName(
-            @Path(ID) organizationId: UUID,
-            @Path(TABLE_NAME) tableName: String,
-            @Path(POLICY_NAME) policyName: String
-    ): Map<String, RowSecurityPolicy>
-
-    @GET(BASE + ID_PATH + TABLE_NAME_PATH + EXTERNAL_DATABASE_ROW + USER_ID_PATH)
-    fun getExternalDatabaseRowSecurityPolicyByUser(
-            @Path(ID) organizationId: UUID,
-            @Path(TABLE_NAME) tableName: String,
-            @Path(USER_ID) userId: String
-    ): Map<String, RowSecurityPolicy>
 
     /**
      * Deletes a RowSecurityPolicy for an OrganizationExternalDatabaseTable
