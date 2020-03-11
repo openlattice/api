@@ -69,7 +69,7 @@ interface DatasetApi {
      * @param organizationId The organization's UUID
      */
     @GET(BASE + ID_PATH + EXTERNAL_DATABASE_TABLE)
-    fun getExternalDatabaseTables(@Path(ID) organizationId: UUID): Set<OrganizationExternalDatabaseTable>
+    fun getAuthorizedExternalDatabaseTables(@Path(ID) organizationId: UUID): Set<OrganizationExternalDatabaseTable>
 
     /**
      * Gets a map of all OrganizationExternalDatabaseTable objects to
@@ -77,7 +77,7 @@ interface DatasetApi {
      * @param organizationId The organization's UUID
      */
     @GET(BASE + ID_PATH + EXTERNAL_DATABASE_TABLE + EXTERNAL_DATABASE_COLUMN)
-    fun getExternalDatabaseTablesWithColumns(@Path(ID) organizationId: UUID): Map<OrganizationExternalDatabaseTable, Set<OrganizationExternalDatabaseColumn>>
+    fun getAuthorizedExternalDatabaseTablesWithColumns(@Path(ID) organizationId: UUID): Map<OrganizationExternalDatabaseTable, Set<OrganizationExternalDatabaseColumn>>
 
     /**
      * Gets an object containing an OrganizationExternalDatabaseTable
