@@ -45,13 +45,16 @@ data class EntitySet
                 EnumSet.of(EntitySetFlag.EXTERNAL),
         @JsonProperty(SerializationConstants.PARTITIONS) val partitions: LinkedHashSet<Int> = linkedSetOf(),
         @JsonProperty(SerializationConstants.EXPIRATION) var expiration: DataExpiration? = null,
-        @JsonProperty(SerializationConstants.STORAGE_TYPE) val storageType: StorageType = StorageType.OBJECT
+        @JsonProperty(SerializationConstants.STORAGE_TYPE) val storageType: StorageType = StorageType.STANDARD
 ) : AbstractSecurableObject(_id, _title, _description) {
 
     init {
         require(StringUtils.isNotBlank(name)) { "Entity set name cannot be blank." }
         require(this.linkedEntitySets.isEmpty() || isLinking) {
             "You cannot specify linked entity sets unless this is a linking entity set."
+        }
+        require( (storageType==StorageType.STANDARD) || !isLinking ) {
+            "Linking entity sets only support the standard storage type."
         }
     }
 
