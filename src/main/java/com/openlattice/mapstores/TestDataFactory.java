@@ -129,9 +129,10 @@ public final class TestDataFactory {
                     .stream()
                     .collect( Collectors.toMap( PropertyType::getId, TestDataFactory::randomElements ) ) );
             final var id = UUID.randomUUID();
+            final var lastWrite = OffsetDateTime.now();
             properties.put( IdConstants.ID_ID.getId(), Sets.newHashSet( id.toString() ) );
-            properties.put( IdConstants.LAST_WRITE_ID.getId(), Sets.newHashSet( OffsetDateTime.now() ) );
-            properties.put( IdConstants.VERSION_ID.getId(), Sets.newHashSet( System.currentTimeMillis() ) );
+            properties.put( IdConstants.LAST_WRITE_ID.getId(), Sets.newHashSet( lastWrite.toString() ) );
+            properties.put( IdConstants.VERSION_ID.getId(), Sets.newHashSet( lastWrite.toInstant().toEpochMilli() ) );
 
             entities.put( UUID.randomUUID(), properties );
         }
