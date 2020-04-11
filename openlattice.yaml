@@ -3964,6 +3964,61 @@ paths:
               schema:
                 type: integer
 
+  ####################
+  ## GEOCODING APIs ##
+  ####################
+  
+  /datastore/geocoding/autocomplete:
+    post:
+      summary: Get an autocomplete prediction from the geocoder for location strings.
+      operationId: autocomplete
+      tags:
+        - geocoding
+      security:
+        - openlattice_auth: []
+        - http_auth: []
+      requestBody:
+        required: true
+        description: An autocomplete request.
+        content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/AutocompleteRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AutocompletePrediction"
+  /datastore/geocoding/geocode:
+    post:
+      summary: Geocode location data.
+      operationId: geocode
+      tags:
+        - geocoding
+      security:
+        - openlattice_auth: []
+        - http_auth: []
+      requestBody:
+        required: true
+        description: A geocoding request.
+        content:
+          application/json:
+            schema:
+                $ref: "#/components/schemas/GeocodingRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeocodingResult"
+
 components:
   securitySchemes:
     http_auth:
@@ -4049,9 +4104,7 @@ components:
             type: string
         indexType:
           type: string
-          enum: [BTREE, HASH, GIN, NONE]
-      
-          
+          enum: [BTREE, HASH, GIN, NONE]          
     EntityType:
       title: An entity type
       type: object
@@ -5042,7 +5095,164 @@ components:
           type: integer
         count:
           type: integer
-    
+
+    LatLng:
+      type: object
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+    ComponentFilter:
+      type: object
+      properties:
+        component:
+          type: string
+        value:
+          type: string
+    AutocompleteRequest:
+      type: object
+      properties:
+        input:
+          type: string
+        sessionToken:
+          type: string
+          format: uuid
+        offset:
+          type: integer
+        location: 
+          $ref: "#/components/schemas/GoogleLatLng"
+        radius:
+          type: integer
+        types:
+          type: string # there's a ton of them
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/ComponentFilter"
+    MatchedSubstring:
+      type: object
+      properties:
+        length: 
+          type: integer
+        offset: 
+          type: integer
+    Term:
+      type: object
+      properties:
+        offset:
+          type: integer
+        value:
+          type: string
+    AutocompleteStructuredFormatting:
+      type: object
+      properties:
+        mainText:
+          type: string
+        mainTextMatchedSubstrings:
+          type: array
+          items:
+            $ref: "#/components/schemas/MatchedSubstring"            
+    AutocompletePrediction:
+      type: object
+      properties:
+        description:
+          type: string
+        matchedSubstrings:
+          type: array
+          items:
+            $ref: "#/components/schemas/MatchedSubstring"
+        placeId:
+          type: string
+        structuredFormatting:
+          $ref: "#/components/schemas/AutocompleteStructuredFormatting"
+        terms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Term"
+        types:
+          type: array
+          items:
+            type: string
+    AddressComponent:
+      type: object
+      properties:
+        longName:
+          type: string
+        shortName:
+          type: string
+        types:
+          type: array
+          items:
+            type: string # enum to be documented      
+    Bounds:
+      type: object
+      properties:
+        northeast:
+          $ref: "#/components/schemas/LatLng"
+        southwest:
+          $ref: "#/components/schemas/LatLng"
+    Geometry:
+      type: object
+      properties:
+        bounds:
+          $ref: "#/components/schemas/Bounds"
+        location:
+          $ref: "#/components/schemas/LatLng"
+        locationType:
+          type: string
+        viewport:
+          $ref: "#/components/schemas/Bounds"
+    PlusCode:
+      type: object
+      properties:
+        compoundCode:
+          type: string
+        globalCode:
+          type: string
+    GeocodingRequest:
+      type: object
+      properties:
+        address:
+          type: string
+        placeId:
+          type: string
+        location:
+          $ref: "#/components/schemas/GoogleLatLng"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/ComponentFilter"
+        resultType:
+          type: string # a lot of enum possibilities
+        locationType:
+          type: string # a lot of enum possibilities
+    GeocodingResult:
+      type: object
+      properties:
+        addressComponents:
+          type: array
+          items:
+            $ref: "#/components/schemas/AddressComponent"
+        formattedAddress:
+          type: string
+        geometry:
+          $ref: "#/components/schemas/Geometry"
+        partialMatch:
+          type: boolean
+        placeId:
+          type: string
+        plusCode:
+          $ref: "#/components/schemas/PlusCode"
+        postcodeLocalities:
+          type: array
+          items:
+            type: string
+        types:
+          type: array
+          items:
+            type: string # enum
+
 tags:
   - name: edm
     description: API endpoints to the entity data model.
