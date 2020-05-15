@@ -21,9 +21,19 @@ package com.openlattice.search;
 import com.google.common.collect.SetMultimap;
 import com.openlattice.data.requests.NeighborEntityDetails;
 import com.openlattice.data.requests.NeighborEntityIds;
-import com.openlattice.edm.EntitySet;
-import com.openlattice.search.requests.*;
-import retrofit2.http.*;
+import com.openlattice.search.requests.AdvancedSearch;
+import com.openlattice.search.requests.DataSearchResult;
+import com.openlattice.search.requests.EntityNeighborsFilter;
+import com.openlattice.search.requests.FQNSearchTerm;
+import com.openlattice.search.requests.Search;
+import com.openlattice.search.requests.SearchConstraints;
+import com.openlattice.search.requests.SearchResult;
+import com.openlattice.search.requests.SearchTerm;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +51,6 @@ public interface SearchApi {
     /*
      * Normal params
      */
-    String POPULAR           = "/popular";
     String ORGANIZATIONS     = "/organizations";
     String ENTITY_SETS       = "/entity_sets";
     String ENTITY_TYPES      = "/entity_types";
@@ -90,9 +99,6 @@ public interface SearchApi {
      */
     @POST( BASE )
     SearchResult executeEntitySetKeywordQuery( @Body Search search );
-
-    @GET( BASE + POPULAR )
-    Iterable<EntitySet> getPopularEntitySet();
 
     /**
      * Executes a search over all existing entity sets to populate the home page. The path parameters instruct which
