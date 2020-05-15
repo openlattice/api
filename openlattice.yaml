@@ -4676,9 +4676,6 @@ components:
           type: string
         description:
           type: string
-        "@class":
-          type: string
-          enum: ["com.openlattice.organization.roles.Role"]
     Organization:
       type: object
       properties:
@@ -4824,7 +4821,7 @@ components:
         type:
           type: string
           enum: [field, score, geoDistance]
-        isDescending:
+        descending:
           type: boolean
         propertyTypeId:
           type: string
