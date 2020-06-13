@@ -7,7 +7,7 @@ import com.openlattice.authorization.securable.SecurableObjectType
 import com.openlattice.client.serialization.SerializationConstants
 import com.openlattice.data.DataExpiration
 import com.openlattice.edm.set.EntitySetFlag
-import com.openlattice.data.storage.StorageType
+import com.openlattice.data.storage.Datastores
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
@@ -45,7 +45,7 @@ data class EntitySet
                 EnumSet.of(EntitySetFlag.EXTERNAL),
         @JsonProperty(SerializationConstants.PARTITIONS) val partitions: LinkedHashSet<Int> = linkedSetOf(),
         @JsonProperty(SerializationConstants.EXPIRATION) var expiration: DataExpiration? = null,
-        @JsonProperty(SerializationConstants.STORAGE_TYPE) val storageType: StorageType = StorageType.DEFAULT
+        @JsonProperty(SerializationConstants.STORAGE_TYPE) var datastore: String = ""
 ) : AbstractSecurableObject(_id, _title, _description) {
 
     init {
@@ -53,7 +53,7 @@ data class EntitySet
         require(this.linkedEntitySets.isEmpty() || isLinking) {
             "You cannot specify linked entity sets unless this is a linking entity set."
         }
-        require( (storageType== StorageType.DEFAULT) || !isLinking ) {
+        require((datastore == Datastores.DEFAULT) || !isLinking) {
             "Linking entity sets only support the standard storage type."
         }
     }
