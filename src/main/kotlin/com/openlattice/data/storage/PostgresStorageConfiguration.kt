@@ -1,7 +1,6 @@
 package com.openlattice.data.storage
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.geekbeast.configuration.postgres.*
 import java.util.*
 
 /**
