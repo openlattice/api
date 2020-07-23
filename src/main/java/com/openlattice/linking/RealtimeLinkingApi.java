@@ -55,7 +55,8 @@ public interface RealtimeLinkingApi {
     Set<MatchedEntityPair> getMatchedEntitiesForLinkingId( @Path( LINKING_ID ) UUID linkingId );
 
     /**
-     * Get counts of entities that haven't been linked yet, grouped by entity set
+     * Get counts of entities that are queued to be linked, grouped by entity set.  Records that
+     * have been updated after linking, are queued to be linked.
      *
      * @param entitySetIds A set of normal entity set ids
      * @return A map with entitySetIds as keys, and as values a count of the entityKeyIds that haven't been linked yet.
