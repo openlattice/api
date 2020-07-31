@@ -777,7 +777,8 @@ public final class TestDataFactory {
                 randomAlphanumeric( 12 ),
                 UUID.randomUUID(),
                 ImmutableSet.of( UUID.randomUUID() ),
-                ImmutableSet.of( randomAlphanumeric( 5 ), randomAlphanumeric( 5 ) )
+                ImmutableSet.of( randomAlphanumeric( 5 ), randomAlphanumeric( 5 ) ),
+                OffsetDateTime.now()
         );
     }
 
