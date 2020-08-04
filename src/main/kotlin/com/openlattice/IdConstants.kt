@@ -50,6 +50,7 @@ enum class IdConstants(val id: UUID) {
     LAST_LINK_ID(UUID(5L, 20L)),
     LAST_WRITE_ID(UUID(6L, 20L)),
     VERSION_ID(UUID(7L, 20L)),
+    VERSIONS_ID(UUID(8L, 20L)),
 
     // entity set ids
     CONTACT_INFO_ENTITY_SET_ID(UUID(8, 20)),

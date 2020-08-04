@@ -32,16 +32,16 @@ import java.util.*
  * Used to represent a property and all associated metadata for that property.
  * @param value The value of the property.
  * @param hash  The value of the property.
- * @param metadata A map of entity set ids to the corresponding metadata for the contribution from that entity set.
+ * @param propertyMetadata A map of entity set ids to the corresponding metadata for the contribution from that entity set.
  */
 @SuppressFBWarnings(value = [""], justification = "POJO for Rest APIs")
 data class Property(
         @JsonProperty(SerializationConstants.VALUE_FIELD) val value: Any,
         @JsonProperty(SerializationConstants.HASH) val hash: Optional<ByteArray> = Optional.empty(),
-        @JsonProperty(SerializationConstants.PROPERTY_METADATA) val metadata : Map<UUID, Metadata>
+        @JsonProperty(SerializationConstants.PROPERTY_METADATA) val propertyMetadata : Map<UUID, PropertyMetadata>
 )
 
-data class Metadata(
+data class PropertyMetadata(
         @JsonProperty(SerializationConstants.VERSION) val version: Optional<Long> = Optional.empty(),
         @JsonProperty(SerializationConstants.VERSIONS) val versions: Optional<LongArray> = Optional.empty(),
         @JsonProperty(SerializationConstants.ENTITY_SET_IDS) val entitySetIds: Optional<Set<UUID>> = Optional.empty(),
