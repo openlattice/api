@@ -157,6 +157,9 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
         return category;
     }
 
+    public int getH() {
+        return hashCode();
+    }
 
     public void addPrimaryKeys( Set<UUID> propertyTypeIds ) {
         key.addAll( checkNotNull( propertyTypeIds, "Property type ids cannot be null." ) );
@@ -204,6 +207,10 @@ public class EntityType extends AbstractSchemaAssociatedSecurableType {
 
     @Override
     public int hashCode() {
-        return Objects.hash( super.hashCode(), key, baseType, h, shards, category, propertyTags, properties );
+        if ( h == 0 ) {
+            return h = Objects.hash( super.hashCode(), key, baseType, shards, category, propertyTags, properties );
+        } else {
+            return h;
+        }
     }
 }

@@ -26,6 +26,7 @@ import com.openlattice.analysis.requests.OrientedPropertyFilter
 import com.openlattice.client.serialization.SerializationConstants
 import java.util.*
 
+@Deprecated("Unused, needs rewrite")
 data class AssemblyAggregationFilter(
         @JsonProperty(SerializationConstants.ORGANIZATION_ID) val organizationId: UUID,
         @JsonProperty(SerializationConstants.SRC_ENTITY_SET_ID) val srcEntitySetId: UUID,

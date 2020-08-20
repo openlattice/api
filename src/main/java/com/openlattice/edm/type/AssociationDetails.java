@@ -18,15 +18,15 @@
 
 package com.openlattice.edm.type;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openlattice.client.serialization.SerializationConstants;
+
 import java.util.LinkedHashSet;
 
-import com.openlattice.client.serialization.SerializationConstants;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class AssociationDetails {
-    private LinkedHashSet<EntityType> srcEntityTypes;
-    private LinkedHashSet<EntityType> dstEntityTypes;
-    private boolean                   bidirectional;
+    private final LinkedHashSet<EntityType> srcEntityTypes;
+    private final LinkedHashSet<EntityType> dstEntityTypes;
+    private final boolean                   bidirectional;
 
     public AssociationDetails(
             @JsonProperty( SerializationConstants.SRC ) LinkedHashSet<EntityType> srcEntityTypes,

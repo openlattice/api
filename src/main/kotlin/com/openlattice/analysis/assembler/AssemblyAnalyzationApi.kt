@@ -28,6 +28,7 @@ const val BASE = SERVICE + CONTROLLER
 
 const val SIMPLE_AGGREGATION = "/simple-aggregation"
 
+@Deprecated("Unused, needs rewrite")
 interface AssemblyAnalyzationApi {
 
     @POST(BASE + SIMPLE_AGGREGATION)

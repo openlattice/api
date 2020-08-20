@@ -2,8 +2,8 @@ package com.openlattice.organizations
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.openlattice.client.serialization.SerializationConstants
-import com.openlattice.users.isValidEmail
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import org.apache.commons.validator.routines.EmailValidator
 import java.io.Serializable
 
 /**
@@ -34,6 +34,11 @@ data class Grant(
                 "The following domains were not valid e-mails: $invalidDomains"
             }
         }
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val atIndex = email.indexOf("@")
+        return (atIndex != -1) && (atIndex != (email.length - 1)) && EmailValidator.getInstance().isValid(email)
     }
 }
 
