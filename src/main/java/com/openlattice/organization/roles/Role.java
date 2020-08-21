@@ -18,26 +18,23 @@
 
 package com.openlattice.organization.roles;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import com.openlattice.authorization.Principal;
-import com.openlattice.authorization.PrincipalType;
-import com.openlattice.authorization.securable.SecurableObjectType;
-import com.openlattice.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openlattice.authorization.AclKey;
+import com.openlattice.authorization.Principal;
+import com.openlattice.authorization.PrincipalType;
 import com.openlattice.authorization.SecurablePrincipal;
+import com.openlattice.authorization.securable.SecurableObjectType;
+import com.openlattice.client.serialization.SerializationConstants;
+
 import java.util.Optional;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Role extends SecurablePrincipal {
-
-    private static final Logger logger = LoggerFactory.getLogger( Role.class );
 
     private final UUID organizationId;
 

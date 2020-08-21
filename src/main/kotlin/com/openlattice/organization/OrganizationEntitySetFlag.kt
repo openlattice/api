@@ -26,11 +26,11 @@ package com.openlattice.organization
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 enum class OrganizationEntitySetFlag {
-    INTERNAL,
-    EXTERNAL,
-    MATERIALIZED,
-    EDM_UNSYNCHRONIZED,
-    DATA_UNSYNCHRONIZED,
-    MATERIALIZE_PERMISSION_UNSYNCHRONIZED, // materialize permission changes on property type
+    INTERNAL, // internally hosted data sets, standard, read/write all good
+    EXTERNAL, // externally hosted data sets, we should not be writing data through apps to these entity sets
+    MATERIALIZED, // materialized to an external datasource
+    EDM_UNSYNCHRONIZED, // marker for pending edm changes to materialized entity set
+    DATA_UNSYNCHRONIZED, // marker for pending updates to materialized entity set
+    MATERIALIZE_PERMISSION_UNSYNCHRONIZED, // marker for pending permission changes on property type
     MATERIALIZE_PERMISSION_REMOVED // materialize permission gets removed from entity set
 }
