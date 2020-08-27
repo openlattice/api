@@ -31,6 +31,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -87,6 +88,14 @@ public interface OrganizationsApi {
 
     @GET( BASE + ID_PATH + INTEGRATION )
     OrganizationIntegrationAccount getOrganizationIntegrationAccount( @Path( ID ) UUID organizationId );
+
+    /**
+     * Rolls the organization integration account credentials.
+     * @param organizationId The organization account for which to roll credentials.
+     * @return The new organization account credentials.
+     */
+    @PATCH( BASE + ID_PATH + INTEGRATION )
+    OrganizationIntegrationAccount rollOrganizationIntegrationAccount( @Path( ID ) UUID organizationId );
 
     /**
      * Retrieves all the organization entity sets without filtering.
@@ -247,7 +256,6 @@ public interface OrganizationsApi {
      * @param organizationId The organziation id for which to update the grant.
      * @param roleId The role for which to update the grant.
      * @param grant The grant to update.
-     *
      * @return Nothing.
      */
     @PUT( BASE + ID_PATH + PRINCIPALS + ROLES + ROLE_ID_PATH + GRANT )
