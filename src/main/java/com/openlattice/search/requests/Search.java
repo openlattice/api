@@ -34,17 +34,20 @@ public class Search {
     private final Optional<Set<UUID>> optionalPropertyTypes;
     private final int                 start;
     private final int                 maxHits;
+    private final Optional<UUID> organizationId;
 
     @JsonCreator
     public Search(
             @JsonProperty( SerializationConstants.KEYWORD ) Optional<String> keyword,
             @JsonProperty( SerializationConstants.ENTITY_TYPE_ID ) Optional<UUID> entityType,
             @JsonProperty( SerializationConstants.PROPERTY_TYPE_IDS ) Optional<Set<UUID>> propertyTypes,
+            @JsonProperty( SerializationConstants.ORGANIZATION_ID ) Optional<UUID> organizationId,
             @JsonProperty( SerializationConstants.START ) int start,
             @JsonProperty( SerializationConstants.MAX_HITS ) int maxHits ) {
         this.optionalKeyword = keyword.isPresent() ? Optional.of( keyword.get().trim() ) : Optional.empty();
         this.optionalEntityType = entityType;
         this.optionalPropertyTypes = propertyTypes;
+        this.organizationId = organizationId;
         this.start = start;
         this.maxHits = Math.min( maxHits, SearchApi.MAX_SEARCH_RESULTS );
     }
@@ -56,6 +59,11 @@ public class Search {
 
     @JsonProperty( SerializationConstants.ENTITY_TYPE_ID )
     public Optional<UUID> getOptionalEntityType() {
+        return optionalEntityType;
+    }
+
+    @JsonProperty( SerializationConstants.ORGANIZATION_ID )
+    public Optional<UUID> getOrganizationId() {
         return optionalEntityType;
     }
 

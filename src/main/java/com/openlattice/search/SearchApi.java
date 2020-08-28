@@ -90,6 +90,9 @@ public interface SearchApi {
     @POST( BASE )
     SearchResult executeEntitySetKeywordQuery( @Body Search search );
 
+    @POST( BASE + ORGANIZATION_ID )
+    SearchResult executeEntitySetKeywordByOrganization( @Body Search search );
+
     /**
      * Executes a search over all existing entity sets to populate the home page. The path parameters instruct which
      * page to return and how large the page should be.
