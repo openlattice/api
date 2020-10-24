@@ -18,13 +18,15 @@
 
 package com.openlattice.authorization;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
-import com.openlattice.client.serialization.SerializationConstants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
+import com.google.common.base.Preconditions;
+import com.openlattice.client.serialization.SerializationConstants;
+import com.openlattice.util.Hashcodes;
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This class represents a principal in the OpenLattice system. It is only serializable because it is used
@@ -32,9 +34,9 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Principal implements Comparable<Principal>, Serializable {
 
-    private final PrincipalType type;
-
-    private final String        id;
+    private final     PrincipalType type;
+    private final     String        id;
+    private transient int           h = 0;
 
     @JsonCreator
     public Principal(
@@ -54,31 +56,30 @@ public class Principal implements Comparable<Principal>, Serializable {
         return id;
     }
 
-    private String validate( String id ) {
-        checkArgument( StringUtils.isAllLowerCase( id ),"Principal id must be all lower case" );
+    private static String validate( String id ) {
+        Preconditions.checkArgument( StringUtils.isAllLowerCase( id ), "Principal id must be all lower case" );
         return id;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ( ( id == null ) ? 0 : id.hashCode() );
-        result = prime * result + ( ( type == null ) ? 0 : type.hashCode() );
-        return result;
+        if ( h == 0 ) {
+            h = Hashcodes.generate( id, type );
+        }
+        return h;
     }
 
-    @Override
-    public boolean equals( Object obj ) {
-        if ( this == obj ) return true;
-        if ( obj == null ) return false;
-        if ( getClass() != obj.getClass() ) return false;
-        Principal other = (Principal) obj;
-        if ( id == null ) {
-            if ( other.id != null ) return false;
-        } else if ( !id.equals( other.id ) ) return false;
-        if ( type != other.type ) return false;
-        return true;
+    @Override public boolean equals( Object o ) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( o == null || getClass() != o.getClass() ) {
+            return false;
+        }
+        Principal principal = (Principal) o;
+        return hashCode() == principal.hashCode() &&
+                type == principal.type &&
+                Objects.equals( id, principal.id );
     }
 
     @Override
@@ -89,11 +90,11 @@ public class Principal implements Comparable<Principal>, Serializable {
     @Override
     public int compareTo( Principal o ) {
         int result = type.compareTo( o.getType() );
-        
-        if( result == 0){
+
+        if ( result == 0 ) {
             result = id.compareTo( o.getId() );
         }
-        
+
         return result;
     }
 
