@@ -88,62 +88,6 @@ data class Organization @JvmOverloads constructor(
         check(securablePrincipal.principalType == PrincipalType.ORGANIZATION) { "Organization principal must be of PrincipalType.ORGANIZATION" }
     }
 
-    constructor(
-            principal: OrganizationPrincipal,
-            autoApprovedEmails: MutableSet<String>,
-            members: MutableSet<Principal>,
-            roles: MutableSet<Role>
-    ) : this(
-            principal,
-            autoApprovedEmails,
-            members,
-            roles,
-            mutableSetOf()
-    )
-
-    constructor(
-            id: Optional<UUID>,
-            principal: Principal,
-            title: String,
-            description: Optional<String>,
-            autoApprovedEmails: MutableSet<String>,
-            members: MutableSet<Principal>,
-            roles: MutableSet<Role>
-    ) : this(
-            id,
-            principal,
-            title,
-            description,
-            autoApprovedEmails,
-            members,
-            roles,
-            mutableSetOf<UUID>(),
-            Optional.empty(),
-            Optional.empty()
-    )
-
-    constructor(
-            id: Optional<UUID>,
-            principal: Principal,
-            title: String,
-            description: Optional<String>,
-            autoApprovedEmails: MutableSet<String>,
-            members: MutableSet<Principal>,
-            roles: MutableSet<Role>,
-            partitions: MutableList<Int>
-    ) : this(
-            id,
-            principal,
-            title,
-            description,
-            autoApprovedEmails,
-            members,
-            roles,
-            mutableSetOf(),
-            Optional.empty(),
-            Optional.of(partitions)
-    )
-
     @JsonIgnore
     fun getAclKey(): AclKey {
         return securablePrincipal.aclKey
