@@ -22,6 +22,7 @@ import java.util.*
 
 data class Organization @JvmOverloads constructor(
         var securablePrincipal: OrganizationPrincipal,
+        var adminRoleAclKey: AclKey = AclKey(securablePrincipal.id, UUID.randomUUID()),
         val emailDomains: MutableSet<String>,
         val members: MutableSet<Principal>,
         val roles: MutableSet<Role>,
@@ -53,6 +54,7 @@ data class Organization @JvmOverloads constructor(
     @JsonCreator
     constructor(
             @JsonProperty(SerializationConstants.ID_FIELD) id: Optional<UUID>,
+            @JsonProperty(SerializationConstants.ADMIN_ROLE_ACL_KEY) adminRoleAclKey: Optional<AclKey>,
             @JsonProperty(SerializationConstants.PRINCIPAL) principal: Principal,
             @JsonProperty(SerializationConstants.TITLE_FIELD) title: String,
             @JsonProperty(SerializationConstants.DESCRIPTION_FIELD) description: Optional<String>,
@@ -72,6 +74,7 @@ data class Organization @JvmOverloads constructor(
             ) organizationMetadataEntitySetIds: OrganizationMetadataEntitySetIds = OrganizationMetadataEntitySetIds()
     ) : this(
             OrganizationPrincipal(id, principal, title, description),
+            adminRoleAclKey.orElse(null),
             emailDomains,
             members,
             roles,

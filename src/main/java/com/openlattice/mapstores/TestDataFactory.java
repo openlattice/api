@@ -423,9 +423,11 @@ public final class TestDataFactory {
 
     public static Organization organization() {
         final var grant = grant();
+        final var orgPrincipal = securableOrganizationPrincipal();
 
         return new Organization(
-                securableOrganizationPrincipal(),
+                orgPrincipal,
+                new AclKey( orgPrincipal.getId(), UUID.randomUUID() ),
                 Sets.newHashSet( randomAlphanumeric( 5 ), randomAlphanumeric( 5 ) ),
                 Sets.newHashSet( userPrincipal() ),
                 Sets.newHashSet( role() ),
