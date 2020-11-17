@@ -53,7 +53,7 @@ data class Organization @JvmOverloads constructor(
 
     @JsonCreator
     constructor(
-            @JsonProperty(SerializationConstants.ID_FIELD) id: Optional<UUID>,
+            @JsonProperty(SerializationConstants.ID_FIELD) id: Optional<UUID> = Optional.of(UUID.randomUUID()),
             @JsonProperty(SerializationConstants.ADMIN_ROLE_ACL_KEY) adminRoleAclKey: Optional<AclKey>,
             @JsonProperty(SerializationConstants.PRINCIPAL) principal: Principal,
             @JsonProperty(SerializationConstants.TITLE_FIELD) title: String,
@@ -73,17 +73,17 @@ data class Organization @JvmOverloads constructor(
                     SerializationConstants.METADATA_ENTITY_SETS_IDS
             ) organizationMetadataEntitySetIds: OrganizationMetadataEntitySetIds = OrganizationMetadataEntitySetIds()
     ) : this(
-            OrganizationPrincipal(id, principal, title, description),
-            adminRoleAclKey.orElse(null),
-            emailDomains,
-            members,
-            roles,
-            smsEntitySetInfo.orElse(mutableSetOf<SmsEntitySetInformation>()),
-            partitions.orElse(mutableListOf()),
-            apps,
-            connections,
-            grants,
-            organizationMetadataEntitySetIds
+            securablePrincipal = OrganizationPrincipal(id, principal, title, description),
+            adminRoleAclKey = adminRoleAclKey.orElse(AclKey(id.get(), UUID.randomUUID())),
+            emailDomains = emailDomains,
+            members = members,
+            roles = roles,
+            smsEntitySetInfo = smsEntitySetInfo.orElse(mutableSetOf<SmsEntitySetInformation>()),
+            partitions = partitions.orElse(mutableListOf()),
+            apps = apps,
+            connections = connections,
+            grants = grants,
+            organizationMetadataEntitySetIds = organizationMetadataEntitySetIds
     )
 
 
