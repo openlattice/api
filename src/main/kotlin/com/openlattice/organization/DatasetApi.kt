@@ -36,6 +36,7 @@ const val CONNECTION_TYPE = "connectionType"
 const val CONNECTION_TYPE_PATH = "/{$CONNECTION_TYPE}"
 const val PERMISSION = "permission"
 const val PERMISSION_PATH = "/{$PERMISSION}"
+const val SCHEMA_PATH = "/schema"
 
 interface DatasetApi {
 
@@ -155,6 +156,9 @@ interface DatasetApi {
             @Path(TABLE_NAME) tableName: String,
             @Path(COLUMN_NAME) columnName: String
     ): OrganizationExternalDatabaseColumn
+
+    @GET( BASE + ID_PATH + TABLE_ID_PATH + SCHEMA_PATH )
+    fun getExternalDatabaseTableSchema( @Path(ID) organizationId: UUID, @Path(TABLE_ID) tableId: UUID ): String?
 
     //update
 
